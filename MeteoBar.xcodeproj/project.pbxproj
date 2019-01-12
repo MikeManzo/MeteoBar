@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
+		277658DD21EA6063007BA05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277658DC21EA6063007BA05A /* Assets.xcassets */; };
+		277658E021EA6063007BA05A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277658DE21EA6063007BA05A /* MainMenu.xib */; };
+		277658EC21EA6063007BA05A /* MeteoBarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658EB21EA6063007BA05A /* MeteoBarTests.swift */; };
+		277658F721EA6063007BA05A /* MeteoBarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658F621EA6063007BA05A /* MeteoBarUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		277658E821EA6063007BA05A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 277658CF21EA6062007BA05A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 277658D621EA6062007BA05A;
+			remoteInfo = MeteoBar;
+		};
+		277658F321EA6063007BA05A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 277658CF21EA6062007BA05A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 277658D621EA6062007BA05A;
+			remoteInfo = MeteoBar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		277658DA21EA6062007BA05A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		277658DC21EA6063007BA05A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		277658DF21EA6063007BA05A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		277658E121EA6063007BA05A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		277658E221EA6063007BA05A /* MeteoBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MeteoBar.entitlements; sourceTree = "<group>"; };
+		277658E721EA6063007BA05A /* MeteoBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeteoBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		277658EB21EA6063007BA05A /* MeteoBarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoBarTests.swift; sourceTree = "<group>"; };
+		277658ED21EA6063007BA05A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		277658F221EA6063007BA05A /* MeteoBarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeteoBarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		277658F621EA6063007BA05A /* MeteoBarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoBarUITests.swift; sourceTree = "<group>"; };
+		277658F821EA6063007BA05A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		277658D421EA6062007BA05A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658E421EA6063007BA05A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658EF21EA6063007BA05A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		277658CE21EA6062007BA05A = {
+			isa = PBXGroup;
+			children = (
+				277658D921EA6062007BA05A /* MeteoBar */,
+				277658EA21EA6063007BA05A /* MeteoBarTests */,
+				277658F521EA6063007BA05A /* MeteoBarUITests */,
+				277658D821EA6062007BA05A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		277658D821EA6062007BA05A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				277658D721EA6062007BA05A /* MeteoBar.app */,
+				277658E721EA6063007BA05A /* MeteoBarTests.xctest */,
+				277658F221EA6063007BA05A /* MeteoBarUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		277658D921EA6062007BA05A /* MeteoBar */ = {
+			isa = PBXGroup;
+			children = (
+				277658DA21EA6062007BA05A /* AppDelegate.swift */,
+				277658DC21EA6063007BA05A /* Assets.xcassets */,
+				277658DE21EA6063007BA05A /* MainMenu.xib */,
+				277658E121EA6063007BA05A /* Info.plist */,
+				277658E221EA6063007BA05A /* MeteoBar.entitlements */,
+			);
+			path = MeteoBar;
+			sourceTree = "<group>";
+		};
+		277658EA21EA6063007BA05A /* MeteoBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				277658EB21EA6063007BA05A /* MeteoBarTests.swift */,
+				277658ED21EA6063007BA05A /* Info.plist */,
+			);
+			path = MeteoBarTests;
+			sourceTree = "<group>";
+		};
+		277658F521EA6063007BA05A /* MeteoBarUITests */ = {
+			isa = PBXGroup;
+			children = (
+				277658F621EA6063007BA05A /* MeteoBarUITests.swift */,
+				277658F821EA6063007BA05A /* Info.plist */,
+			);
+			path = MeteoBarUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		277658D621EA6062007BA05A /* MeteoBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 277658FB21EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBar" */;
+			buildPhases = (
+				277658D321EA6062007BA05A /* Sources */,
+				277658D421EA6062007BA05A /* Frameworks */,
+				277658D521EA6062007BA05A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeteoBar;
+			productName = MeteoBar;
+			productReference = 277658D721EA6062007BA05A /* MeteoBar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		277658E621EA6063007BA05A /* MeteoBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 277658FE21EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBarTests" */;
+			buildPhases = (
+				277658E321EA6063007BA05A /* Sources */,
+				277658E421EA6063007BA05A /* Frameworks */,
+				277658E521EA6063007BA05A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				277658E921EA6063007BA05A /* PBXTargetDependency */,
+			);
+			name = MeteoBarTests;
+			productName = MeteoBarTests;
+			productReference = 277658E721EA6063007BA05A /* MeteoBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		277658F121EA6063007BA05A /* MeteoBarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2776590121EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBarUITests" */;
+			buildPhases = (
+				277658EE21EA6063007BA05A /* Sources */,
+				277658EF21EA6063007BA05A /* Frameworks */,
+				277658F021EA6063007BA05A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				277658F421EA6063007BA05A /* PBXTargetDependency */,
+			);
+			name = MeteoBarUITests;
+			productName = MeteoBarUITests;
+			productReference = 277658F221EA6063007BA05A /* MeteoBarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		277658CF21EA6062007BA05A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1010;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = "Quantum Joker";
+				TargetAttributes = {
+					277658D621EA6062007BA05A = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					277658E621EA6063007BA05A = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 277658D621EA6062007BA05A;
+					};
+					277658F121EA6063007BA05A = {
+						CreatedOnToolsVersion = 10.1;
+						TestTargetID = 277658D621EA6062007BA05A;
+					};
+				};
+			};
+			buildConfigurationList = 277658D221EA6062007BA05A /* Build configuration list for PBXProject "MeteoBar" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 277658CE21EA6062007BA05A;
+			productRefGroup = 277658D821EA6062007BA05A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				277658D621EA6062007BA05A /* MeteoBar */,
+				277658E621EA6063007BA05A /* MeteoBarTests */,
+				277658F121EA6063007BA05A /* MeteoBarUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		277658D521EA6062007BA05A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				277658DD21EA6063007BA05A /* Assets.xcassets in Resources */,
+				277658E021EA6063007BA05A /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658E521EA6063007BA05A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658F021EA6063007BA05A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		277658D321EA6062007BA05A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658E321EA6063007BA05A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				277658EC21EA6063007BA05A /* MeteoBarTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		277658EE21EA6063007BA05A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				277658F721EA6063007BA05A /* MeteoBarUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		277658E921EA6063007BA05A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 277658D621EA6062007BA05A /* MeteoBar */;
+			targetProxy = 277658E821EA6063007BA05A /* PBXContainerItemProxy */;
+		};
+		277658F421EA6063007BA05A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 277658D621EA6062007BA05A /* MeteoBar */;
+			targetProxy = 277658F321EA6063007BA05A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		277658DE21EA6063007BA05A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				277658DF21EA6063007BA05A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		277658F921EA6063007BA05A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		277658FA21EA6063007BA05A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		277658FC21EA6063007BA05A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MeteoBar/MeteoBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		277658FD21EA6063007BA05A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MeteoBar/MeteoBar.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBar/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBar;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		277658FF21EA6063007BA05A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MeteoBar.app/Contents/MacOS/MeteoBar";
+			};
+			name = Debug;
+		};
+		2776590021EA6063007BA05A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBarTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBarTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MeteoBar.app/Contents/MacOS/MeteoBar";
+			};
+			name = Release;
+		};
+		2776590221EA6063007BA05A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = MeteoBar;
+			};
+			name = Debug;
+		};
+		2776590321EA6063007BA05A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				INFOPLIST_FILE = MeteoBarUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.MeteoBarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = MeteoBar;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		277658D221EA6062007BA05A /* Build configuration list for PBXProject "MeteoBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				277658F921EA6063007BA05A /* Debug */,
+				277658FA21EA6063007BA05A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		277658FB21EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				277658FC21EA6063007BA05A /* Debug */,
+				277658FD21EA6063007BA05A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		277658FE21EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				277658FF21EA6063007BA05A /* Debug */,
+				2776590021EA6063007BA05A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2776590121EA6063007BA05A /* Build configuration list for PBXNativeTarget "MeteoBarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2776590221EA6063007BA05A /* Debug */,
+				2776590321EA6063007BA05A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 277658CF21EA6062007BA05A /* Project object */;
+}
