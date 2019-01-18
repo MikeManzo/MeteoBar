@@ -88,13 +88,14 @@
         }
     },
     "sensors": {
-        "0": {
+        "Zero": {
             "Temperature": {
                 "thb0temp": [
                     {
                         "description": "Indoor Temperature",
                         "type": "Temperature",
                         "outdoor": false,
+                        "battery_parameter": "[thb0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -114,6 +115,7 @@
                         "description": "Outdoor Temperature",
                         "type": "Temperature",
                         "outdoor": true,
+                        "battery_parameter": "[th0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -133,6 +135,7 @@
                         "description": "Outdoor Dew-Point",
                         "type": "Temperature",
                         "outdoor": true,
+                        "battery_parameter": "[th0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -152,6 +155,7 @@
                         "description": "Indoor Dew-Point",
                         "type": "Temperature",
                         "outdoor": true,
+                        "battery_parameter": "[thb0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -171,6 +175,7 @@
                         "description": "Heat Index",
                         "type": "Temperature",
                         "outdoor": true,
+                        "battery_parameter": "[th0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -190,6 +195,7 @@
                         "description": "Wind Chill",
                         "type": "Temperature",
                         "outdoor": true,
+                        "battery_parameter": "[th0lowbat-act:---]",
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
@@ -211,6 +217,7 @@
                         "description": "Outdoor Humidity",
                         "type": "Humidity",
                         "outdoor": true,
+                        "battery_parameter": "[th0lowbat-act:---]",
                         "supported_units": {
                             "Percentage": {
                                 "unit": "%",
@@ -225,6 +232,7 @@
                         "description": "Indoor Humidity",
                         "type": "Humidity",
                         "outdoor": false,
+                        "battery_parameter": "[thb0lowbat-act:---]",
                         "supported_units": {
                             "Percentage": {
                                 "unit": "%",
@@ -241,6 +249,7 @@
                         "description": "Station Pressure",
                         "type": "Pressure",
                         "outdoor": true,
+                        "battery_parameter": "[thb0lowbat-act:---]",
                         "supported_units": {
                             "Hectopascals": {
                                 "unit": "hPa",
@@ -270,6 +279,7 @@
                         "description": "Normalized Station Pressure (Computed to sea level)",
                         "type": "Pressure",
                         "outdoor": true,
+                        "battery_parameter": "[thb0lowbat-act:---]",
                         "supported_units": {
                             "Hectopascals": {
                                 "unit": "hPa",
@@ -301,6 +311,7 @@
                         "description": "Wind Speed",
                         "type": "Wind",
                         "outdoor": true,
+                        "battery_parameter": "[wind0lowbat-act:---]",
                         "supported_units": {
                             "Meters per Second": {
                                 "unit": "m/s",
@@ -335,6 +346,7 @@
                         "description": "Average Wind Speed",
                         "type": "Wind",
                         "outdoor": true,
+                        "battery_parameter": "[wind0lowbat-act:---]",
                         "supported_units": {
                             "Meters per Second": {
                                 "unit": "m/s",
@@ -369,6 +381,7 @@
                         "description": "Wind Direction (0° is North)",
                         "type": "Wind",
                         "outdoor": true,
+                        "battery_parameter": "[wind0lowbat-act:---]",
                         "supported_units": {
                             "Degrees": {
                                 "unit": "",
@@ -400,6 +413,7 @@
                         "description": "Rain Rate",
                         "type": "Rain",
                         "outdoor": true,
+                        "battery_parameter": "[rain0lowbat-act:---]",
                         "supported_units": {
                             "Millimeters per Hour": {
                                 "unit": "mm/h",
@@ -419,6 +433,7 @@
                         "description": "Rain Fall",
                         "type": "Rain",
                         "outdoor": true,
+                        "battery_parameter": "[rain0lowbat-act:---]",
                         "supported_units": {
                             "Millimeters": {
                                 "unit": "mm/h",
@@ -440,6 +455,7 @@
                         "description": "Ultraviolet Index",
                         "type": "Solar",
                         "outdoor": true,
+                        "battery_parameter": "[sol0lowbat-act:---]",
                         "supported_units": {
                             "Ultraviolet": {
                                 "unit": "uv",
@@ -454,6 +470,7 @@
                         "description": "Solar Radiation",
                         "type": "Solar",
                         "outdoor": true,
+                        "battery_parameter": "[sol0lowbat-act:---]",
                         "supported_units": {
                             "Watts per Square Meter": {
                                 "unit": "W/m^2",
@@ -468,6 +485,7 @@
                         "description": "Evapotranspiration",
                         "type": "Solar",
                         "outdoor": true,
+                        "battery_parameter": "[sol0lowbat-act:---]",
                         "supported_units": {
                             "Millimeter": {
                                 "unit": "mm",
@@ -487,6 +505,7 @@
                         "description": "Sunshine Duration",
                         "type": "Solar",
                         "outdoor": true,
+                        "battery_parameter": "[sol0lowbat-act:---]",
                         "supported_units": {
                             "Hours": {
                                 "unit": "hrs",
@@ -503,6 +522,7 @@
                         "description": "Distance to Lightning",
                         "type": "Energy",
                         "outdoor": true,
+                        "battery_parameter": "[lgt0lowbat-act:---]",
                         "supported_units": {
                             "Kilometers": {
                                 "unit": "km",
@@ -522,6 +542,7 @@
                         "description": "Energy of Lightning Strike",
                         "type": "Energy",
                         "outdoor": true,
+                        "battery_parameter": "[lgt0lowbat-act:---]",
                         "supported_units": {
                             "N/A": {
                                 "unit": "",
@@ -536,6 +557,7 @@
                         "description": "Number of Lightning Strokes",
                         "type": "Energy",
                         "outdoor": true,
+                        "battery_parameter": "[lgt0lowbat-act:---]",
                         "supported_units": {
                             "N/A": {
                                 "unit": "",

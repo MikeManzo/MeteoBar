@@ -20,6 +20,8 @@
 		27CA786721EBC06A000D517D /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CA786521EBC06A000D517D /* About.xib */; };
 		27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786821EC19DE000D517D /* QJHyperTextField.swift */; };
 		27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */; };
+		27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */; };
+		27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */; };
 		27DAC2F421F0E3E30013834E /* meteobridge.json in Resources */ = {isa = PBXBuildFile; fileRef = 27DAC2F321F0E3E30013834E /* meteobridge.json */; };
 		27E6C5BD21ED58C800548CF0 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C5BC21ED58C800548CF0 /* books.png */; };
 		27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C5BE21ED595500548CF0 /* QLExtensions.swift */; };
@@ -64,6 +66,8 @@
 		27CA786521EBC06A000D517D /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		27CA786821EC19DE000D517D /* QJHyperTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QJHyperTextField.swift; sourceTree = "<group>"; };
 		27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QJQuickResponseTableView.swift; sourceTree = "<group>"; };
+		27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteobridgeSensor.swift; sourceTree = "<group>"; };
+		27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorUnit.swift; sourceTree = "<group>"; };
 		27DAC2F321F0E3E30013834E /* meteobridge.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = meteobridge.json; sourceTree = "<group>"; };
 		27E6C5BC21ED58C800548CF0 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		27E6C5BE21ED595500548CF0 /* QLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLExtensions.swift; sourceTree = "<group>"; };
@@ -170,6 +174,7 @@
 		27A0545421EB829A001F4913 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				27CC8FE921F1816700CDDF66 /* Weather */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -207,6 +212,15 @@
 				27CA786021EBA7CD000D517D /* .swiftlint.yml */,
 			);
 			name = "External Config";
+			sourceTree = "<group>";
+		};
+		27CC8FE921F1816700CDDF66 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */,
+				27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 		27DAC2F221F0E3980013834E /* Config */ = {
@@ -452,8 +466,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
 				277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */,
 				27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */,
+				27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */,
 				27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */,
 				27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */,
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
