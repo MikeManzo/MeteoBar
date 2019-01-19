@@ -37,10 +37,15 @@ class WeatherPlatform: Weather {
     /// Private init for the singleton
     private init() { }
   
-    /// Based on th JSON model(s) in the "/Config" directory, build the represetnation of the Meteobridge that we can use throughout the app
+    /// Based on the JSON model(s) in the "/Config" directory, build the represetnation of the Meteobridge that we can use throughout the app
     ///
     /// Our Structure for the model is as follows
-    /// [0] <-- Only sensor group "Zero" is supported
+    ///
+    /// Instruments
+    /// Simmplistic structure
+    /// log.info("Sensor:\(sensor) --> Info:\(data[0]["description"]) -> Info:\(data[0]["type"]) -> Param:\(data[0]["parameter"])")
+    ///
+    /// [0] <-- Only weather sensor group "Zero" is supported
     ///     Then we have the categories for the group (Currently, 7: Temp, Humidity, Pressure, Wind, Rain, Solar, Energy)
     ///     Once we get the category, we want to look at each sensor available for that category
     ///     In the nested for loops below, we have the following
@@ -75,22 +80,29 @@ class WeatherPlatform: Weather {
                             
                             theBridge = Meteobridge(bridgeIP: ipAddress, bridgeName: bridgeName)
                             
-                            for (category, sensors) in bridgeModel["sensors"]["0"] {    // <-- Sensor 0
-                                for sensor in sensors {                                 // <-- Categoruies (e.g., Temperature, wind, etc.)
+                            for (sensor, data) in bridgeModel["system"]["instruments"] {    // System Sensors
+                                let theSensor = MeteobridgeSensor(sensorName: sensor, sensorCat: MeteoSensorCategory(rawValue: data[0]["type"].string!)!,
+                                                                  isSensorOutdoor: false, batteryParam: data[0]["parameter"].string!,
+                                                                  info: data[0]["description"].string!)
+                                theBridge?.addSensor(sensor: theSensor)
+                            }
+                            
+                            for (category, sensors) in bridgeModel["sensors"]["0"] {        // <-- Weather Sensors 0
+                                for sensor in sensors {                                     // <-- Categoruies (e.g., Temperature, wind, etc.)
                                     let theSensor = MeteobridgeSensor(sensorName: sensor.0, sensorCat: MeteoSensorCategory(rawValue: category)!,
                                                                       isSensorOutdoor: sensor.1[0]["outdoor"].bool!, batteryParam: sensor.1[0]["battery_parameter"].string!,
                                                                       info: sensor.1[0]["description"].string!)
                                     
-                                    for unit in sensor.1[0]["supported_units"] {        // <-- Compatible Units
+                                    for unit in sensor.1[0]["supported_units"] {            // <-- Compatible Units
                                         theSensor.addSuppoortedUnit(unit: MeteoSensorUnit(unitName: unit.0, unitParam: unit.1["parameter"].string!,
                                                                                           unitRep: unit.1["unit"].string!, unitDefault: unit.1["default"].bool!))
                                     }
                                     theBridge?.addSensor(sensor: theSensor)
                                 }
                             }
-                            callback (theBridge, nil)                                   // <-- We're finished; we should return the populated Meteobridge object
-                        case .failure(let error):   // JSON Read Failed
-                            callback(nil, error)
+                            callback (theBridge, nil)                                       // <-- We're finished; we should return the populated Meteobridge object
+                        case .failure(let jsonError):   // JSON Read Failed
+                            callback(nil, jsonError)
                         }
                     }
                 }

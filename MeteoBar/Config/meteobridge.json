@@ -1,12 +1,12 @@
 {
     "system": {
         "description": "Available Sensors, units and System Calls for Meteobridge",
+        "copyright": "Mike Manzo, Quantum Joker©",
+        "version": 1.0,
         "compatible_bridge_versions": [
             3.8,
             3.9
         ],
-        "version": 1.0,
-        "copyright": "Mike Manzo, Quantum Joker©",
         "instruments": {
             "mac": [
                 {
