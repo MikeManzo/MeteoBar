@@ -10,6 +10,7 @@ import Cocoa
 
 class Meteobridge: NSObject, Codable, Copyable {
     /// Properties
+    var instruments = [MeteoSensorCategory: [MeteoInstrument]]()
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
     var ipAddress: String
     var uuid: String
@@ -51,5 +52,16 @@ class Meteobridge: NSObject, Codable, Copyable {
     ///  - Returns: nothing
     func addSensor(sensor: MeteobridgeSensor) {
         sensors[sensor.category, default: []].append(sensor)
+    }
+    
+    /// Add a sensor to the bridge
+    ///
+    ///  - Note: [Dictonary Reference](https://stackoverflow.com/questions/47739325/make-statement-more-clear-checking-object-for-key-in-dictionary/47739419#47739419)
+    ///
+    ///  - Parameter sensor: fully-formed MeteobridgeSensor
+    ///
+    ///  - Returns: nothing
+    func addSensor(instrument: MeteoInstrument) {
+        instruments[instrument.category, default: []].append(instrument)
     }
 }

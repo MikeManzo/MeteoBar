@@ -16,6 +16,18 @@ let theDelegate = AppDelegate.self
 let log = QuantumLogger.self
 /// The only globals we're going to use
 
+enum PlatformError: Error, CustomStringConvertible {
+    case passthroughSystem(systemError: Error)
+    case custom(message: String)
+    
+    var description: String {
+        switch self {
+        case .passthroughSystem(let systemError): return systemError.localizedDescription
+        case .custom(let message): return message
+        }
+    }
+}
+
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -31,7 +43,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.addDestination(console)
         // SwiftyBeaver Config
         
-        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge")
+        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge", callback: { response, error in
+            if error != nil {
+                let theBridge = response
+            }
+        })
     }
 
     /// MeteoBar is about to close ... clean-up

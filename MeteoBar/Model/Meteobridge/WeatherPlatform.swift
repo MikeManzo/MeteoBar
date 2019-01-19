@@ -11,12 +11,22 @@ import Alamofire
 import SwiftyJSON
 
 protocol Weather {
-    func initializeBridgeSpecification(ipAddress: String, bridgeName: String) -> Meteobridge?
+    func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
 }
 
 extension Weather {
-    func initializeBridgeSpecification(ipAddress: String, bridgeName: String) -> Meteobridge? {
-        return WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: ipAddress, bridgeName: bridgeName)
+    func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: ipAddress, bridgeName: bridgeName, callback: { _, _ in })
+    }
+}
+
+enum WeatherPlatformError: Error, CustomStringConvertible {
+    case jsonModelError
+    
+    var description: String {
+        switch self {
+        case .jsonModelError: return "Error reading Meteobridge configuration file"
+        }
     }
 }
 
@@ -29,12 +39,25 @@ class WeatherPlatform: Weather {
   
     /// Based on th JSON model(s) in the "/Config" directory, build the represetnation of the Meteobridge that we can use throughout the app
     ///
+    /// Our Structure for the model is as follows
+    /// [0] <-- Only sensor group "Zero" is supported
+    ///     Then we have the categories for the group (Currently, 7: Temp, Humidity, Pressure, Wind, Rain, Solar, Energy)
+    ///     Once we get the category, we want to look at each sensor available for that category
+    ///     In the nested for loops below, we have the following
+    ///     [0]
+    ///         sensor.0 <-- Sensor Name
+    ///         sensor.1[0][<custom_tag>] <-- These are the child properties of the sensor
+    ///         sensor.1[0]["supported_units"] <-- These are the child units that the sensor can support
+    ///             unit.0 <-- Unit Name
+    ///             unit.1[<custom_tag>] <-- These ar the child attributes of the supported unit
+    ///
     /// - Parameters:
     ///   - ipAddress: ipAddress of the briegd we want to connect to
     ///   - bridgeName: name of the bridge (does not need to be unique)
     ///
     /// - Returns: fully constructed Meteobridge object (our model)
-    func initializeBridgeSpecification(ipAddress: String, bridgeName: String) -> Meteobridge? {
+    ///
+    func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void) {
         var theBridge: Meteobridge?
         
         do {
@@ -47,40 +70,34 @@ class WeatherPlatform: Weather {
                     
                     Alamofire.request(file).responseJSON { jsonResponse in
                         switch jsonResponse.result {
-                        case .success(let jsonModel):
+                        case .success(let jsonModel):   // JSON Read Successful
                             var bridgeModel: JSON = JSON(jsonModel)
                             
                             theBridge = Meteobridge(bridgeIP: ipAddress, bridgeName: bridgeName)
                             
-                            for (category, sensors) in bridgeModel["sensors"]["0"] {   // <-- Sensor 0
-                                log.info("Categpry:\(category)")
+                            for (category, sensors) in bridgeModel["sensors"]["0"] {    // <-- Sensor 0
                                 for sensor in sensors {                                 // <-- Categoruies (e.g., Temperature, wind, etc.)
-                                    log.info("\t\tSensor:\(sensor.0) -> Desc: \(sensor.1[0]["description"]) -> Type: \(sensor.1[0]["type"]) -> Outdoor: \(sensor.1[0]["outdoor"]) -> Param: \(sensor.1[0]["battery_parameter"])")
-                                    
                                     let theSensor = MeteobridgeSensor(sensorName: sensor.0, sensorCat: MeteoSensorCategory(rawValue: category)!,
-                                                                      isSensorOutdoor: sensor.1[0]["outdoor"].bool!, batteryParam: sensor.1[0]["battery_parameter"].string!)
+                                                                      isSensorOutdoor: sensor.1[0]["outdoor"].bool!, batteryParam: sensor.1[0]["battery_parameter"].string!,
+                                                                      info: sensor.1[0]["description"].string!)
                                     
                                     for unit in sensor.1[0]["supported_units"] {        // <-- Compatible Units
-                                        log.info("\t\t\tUnit Name:\(unit.0) -> Rep: \(unit.1["unit"]) -> Param: \(unit.1["parameter"]) -> Default: \(unit.1["default"])")
                                         theSensor.addSuppoortedUnit(unit: MeteoSensorUnit(unitName: unit.0, unitParam: unit.1["parameter"].string!,
                                                                                           unitRep: unit.1["unit"].string!, unitDefault: unit.1["default"].bool!))
                                     }
                                     theBridge?.addSensor(sensor: theSensor)
                                 }
                             }
-                            log.info("Made it")
-                        case .failure(let error):
-                            log.error(error)
-                            return
+                            callback (theBridge, nil)                                   // <-- We're finished; we should return the populated Meteobridge object
+                        case .failure(let error):   // JSON Read Failed
+                            callback(nil, error)
                         }
                     }
                 }
             }
             
         } catch {
-            log.error("Error reading Meteobridge configuration file. [Message]-->\(error)")
+            callback(nil, PlatformError.passthroughSystem(systemError: error))
         }
-        
-        return theBridge
     }
 }

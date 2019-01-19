@@ -17,13 +17,14 @@ enum SensorBatteryStatus: String, Codable { case
 
 /// Enum to describe the type of sensor
 enum MeteoSensorCategory: String, Codable { case
-    energy         = "Energy",
-    humidity       = "Humidity",
-    temperature    = "Temperature",
-    pressure       = "Pressure",
-    rain           = "Rain",
-    solar          = "Solar",
-    wind           = "Wind"
+    energy          = "Energy",
+    humidity        = "Humidity",
+    temperature     = "Temperature",
+    pressure        = "Pressure",
+    rain            = "Rain",
+    solar           = "Solar",
+    wind            = "Wind",
+    system          = "System"
 }
 
 /// Atomic class to describe a Meteobridge sensor
@@ -33,6 +34,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     var category: MeteoSensorCategory
     var batteryParamater: String
     var measurement: String?
+    var information: String
     var isOutdoor: Bool
     var name: String
     
@@ -48,13 +50,15 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     ///
     ///   - Returns: fully-formed Meteobridge object
     required init (sensorName: String, sensorCat: MeteoSensorCategory, isSensorOutdoor: Bool, batteryParam: String,
-                   sensorUnits: [MeteoSensorUnit]? = nil, sensorMeasurement: String? = nil, sensorBattery: SensorBatteryStatus = .unknown) {
+                   info: String, sensorUnits: [MeteoSensorUnit]? = nil, sensorMeasurement: String? = nil,
+                   sensorBattery: SensorBatteryStatus = .unknown) {
         
-        self.batteryParamater = batteryParam
-        self.batteryStatus = sensorBattery
-        self.isOutdoor  = isSensorOutdoor
-        self.category = sensorCat
-        self.name = sensorName
+        self.isOutdoor          = isSensorOutdoor
+        self.batteryStatus      = sensorBattery
+        self.batteryParamater   = batteryParam
+        self.name               = sensorName
+        self.category           = sensorCat
+        self.information        = info
 
         if sensorMeasurement != nil {
             self.measurement = sensorMeasurement
@@ -71,8 +75,9 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     ///
     /// - Returns: fully constructed MeteobridgeSensor object
     func copy() -> Self {
-        return type(of: self).init(sensorName: self.name, sensorCat: self.category, isSensorOutdoor: self.isOutdoor, batteryParam: self.batteryParamater,
-                                   sensorUnits: self.supportedUnits, sensorMeasurement: self.measurement, sensorBattery: self.batteryStatus)
+        return type(of: self).init(sensorName: self.name, sensorCat: self.category, isSensorOutdoor: self.isOutdoor,
+                                   batteryParam: self.batteryParamater, info: self.information, sensorUnits: self.supportedUnits,
+                                   sensorMeasurement: self.measurement, sensorBattery: self.batteryStatus)
     }
     
     /// Helper to add a supported unit to the sensor
