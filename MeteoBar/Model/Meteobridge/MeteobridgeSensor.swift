@@ -16,7 +16,7 @@ enum SensorBatteryStatus: String, Codable { case
 }
 
 /// Enum to describe the type of sensor
-enum MeteoSensorType: String, Codable { case
+enum MeteoSensorCategory: String, Codable { case
     energy         = "Energy",
     humidity       = "Humidity",
     temperature    = "Temperature",
@@ -27,14 +27,15 @@ enum MeteoSensorType: String, Codable { case
 }
 
 /// Atomic class to describe a Meteobridge sensor
-class MeteobridgeSensor: NSObject, Codable {
+class MeteobridgeSensor: NSObject, Codable, Copyable {
     var supportedUnits = [MeteoSensorUnit]()
     var batteryStatus: SensorBatteryStatus
-    var type: MeteoSensorType
+    var category: MeteoSensorCategory
+    var batteryParamater: String
     var measurement: String?
     var isOutdoor: Bool
     var name: String
-
+    
     /// Initialize the sensor
     ///
     /// - Parameters:
@@ -44,18 +45,40 @@ class MeteobridgeSensor: NSObject, Codable {
     ///   - sensorUnits: which units can this sensor support?
     ///   - sensorMeasurement: the latest measurement
     ///   - sensorBattery: battery status for this sensor
-    init (sensorName: String, sensorType: MeteoSensorType, isSensorOutdoor: Bool, sensorUnits: [MeteoSensorUnit],
-          sensorMeasurement: String?, sensorBattery: SensorBatteryStatus = .unknown) {
+    ///
+    ///   - Returns: fully-formed Meteobridge object
+    required init (sensorName: String, sensorCat: MeteoSensorCategory, isSensorOutdoor: Bool, batteryParam: String,
+                   sensorUnits: [MeteoSensorUnit]? = nil, sensorMeasurement: String? = nil, sensorBattery: SensorBatteryStatus = .unknown) {
         
+        self.batteryParamater = batteryParam
         self.batteryStatus = sensorBattery
         self.isOutdoor  = isSensorOutdoor
+        self.category = sensorCat
         self.name = sensorName
-        self.type = sensorType
 
         if sensorMeasurement != nil {
             self.measurement = sensorMeasurement
         }
         
+        if sensorUnits != nil {
+            self.supportedUnits = sensorUnits!
+        }
+        
         super.init()
+    }
+    
+    /// Copy MeteobridgeSensor
+    ///
+    /// - Returns: fully constructed MeteobridgeSensor object
+    func copy() -> Self {
+        return type(of: self).init(sensorName: self.name, sensorCat: self.category, isSensorOutdoor: self.isOutdoor, batteryParam: self.batteryParamater,
+                                   sensorUnits: self.supportedUnits, sensorMeasurement: self.measurement, sensorBattery: self.batteryStatus)
+    }
+    
+    /// Helper to add a supported unit to the sensor
+    ///
+    ///  - Parameter unit: fully-formed MeteoSensorUnit (based on Meteobridge specification)
+    func addSuppoortedUnit(unit: MeteoSensorUnit) {
+        supportedUnits.append(unit)
     }
 }

@@ -6,89 +6,89 @@
             3.9
         ],
         "version": 1.0,
-        "author": "Mike Manzo, Quantum Joker©",
+        "copyright": "Mike Manzo, Quantum Joker©",
         "instruments": {
             "mac": [
                 {
                     "description": "Meteobridge Hardware Address",
                     "type": "System",
-                    "paramater": "[mbsystem-mac:--]"
+                    "parameter": "[mbsystem-mac:--]"
                 }
             ],
             "swversion": [
                 {
                     "description": "Meteobridge Software Version",
                     "type": "System",
-                    "paramater": "[mbsystem-swversion:--]"
+                    "parameter": "[mbsystem-swversion:--]"
                 }
             ],
             "buildnum": [
                 {
                     "description": "Meteobridge Software Version Build Number",
                     "type": "System",
-                    "paramater": "[mbsystem-buildnum:--]"
+                    "parameter": "[mbsystem-buildnum:--]"
                 }
             ],
             "platform": [
                 {
                     "description": "Platform Hosting Meteobridge",
                     "type": "System",
-                    "paramater": "[mbsystem-platform:--]"
+                    "parameter": "[mbsystem-platform:--]"
                 }
             ],
             "station": [
                 {
                     "description": "Weather station connected to Meteobridge",
                     "type": "System",
-                    "paramater": "[mbsystem-station:--]"
+                    "parameter": "[mbsystem-station:--]"
                 }
             ],
             "stationnum": [
                 {
                     "description": "Weather station Number",
                     "type": "System",
-                    "paramater": "[mbsystem-stationnum:--]"
+                    "parameter": "[mbsystem-stationnum:--]"
                 }
             ],
             "timezone": [
                 {
                     "description": "Timezone",
                     "type": "System",
-                    "paramater": "[mbsystem-timezone:--]"
+                    "parameter": "[mbsystem-timezone:--]"
                 }
             ],
             "altitude": [
                 {
                     "description": "Altitude of Weather Station",
                     "type": "System",
-                    "paramater": "[mbsystem-altitude:--]"
+                    "parameter": "[mbsystem-altitude:--]"
                 }
             ],
             "latitude": [
                 {
                     "description": "Latitude of Weather Station",
                     "type": "System",
-                    "paramater": "[mbsystem-latitude:--]"
+                    "parameter": "[mbsystem-latitude:--]"
                 }
             ],
             "longitude": [
                 {
                     "description": "Longitude of Weather Station",
                     "type": "System",
-                    "paramater": "[mbsystem-longitude:--]"
+                    "parameter": "[mbsystem-longitude:--]"
                 }
             ],
             "uptime": [
                 {
                     "description": "meteobridge uptime",
                     "type": "System",
-                    "paramater": "[mbsystem-uptime:--]"
+                    "parameter": "[mbsystem-uptime:--]"
                 }
             ]
         }
     },
     "sensors": {
-        "Zero": {
+        "0": {
             "Temperature": {
                 "thb0temp": [
                     {
@@ -99,12 +99,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[thb0temp-act=.1:--]",
+                                "parameter": "[thb0temp-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[thb0temp-act=F.1:--]",
+                                "parameter": "[thb0temp-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -119,12 +119,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[th0temp-act=.1:--]",
+                                "parameter": "[th0temp-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[th0temp-act=F.1:--]",
+                                "parameter": "[th0temp-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -139,12 +139,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[th0dew-act=.1:--]",
+                                "parameter": "[th0dew-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[th0dew-act=F.1:--]",
+                                "parameter": "[th0dew-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -159,12 +159,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[thb0dew-act=.1:--]",
+                                "parameter": "[thb0dew-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[thb0dew-act=F.1:--]",
+                                "parameter": "[thb0dew-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -179,12 +179,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[th0heatindex-act=.1:--]",
+                                "parameter": "[th0heatindex-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[th0heatindex-act=F.1:--]",
+                                "parameter": "[th0heatindex-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -199,12 +199,12 @@
                         "supported_units": {
                             "Celcius": {
                                 "unit": "°C",
-                                "paramater": "[wind0chill-act=.1:--]",
+                                "parameter": "[wind0chill-act=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
-                                "paramater": "[wind0chill-act=F.1:--]",
+                                "parameter": "[wind0chill-act=F.1:--]",
                                 "default": false
                             }
                         }
@@ -253,22 +253,22 @@
                         "supported_units": {
                             "Hectopascals": {
                                 "unit": "hPa",
-                                "paramater": "[thb0press-act=.1:--]",
+                                "parameter": "[thb0press-act=.1:--]",
                                 "default": true
                             },
                             "Pounds per Square Inch": {
                                 "unit": "psi",
-                                "paramater": "[thb0press-act=psi.1:--]",
+                                "parameter": "[thb0press-act=psi.1:--]",
                                 "default": false
                             },
                             "Inches of Mercury": {
                                 "unit": "inHg",
-                                "paramater": "[thb0press-act=inHg.1:--]",
+                                "parameter": "[thb0press-act=inHg.1:--]",
                                 "default": false
                             },
                             "Millimeters of Mercury": {
                                 "unit": "mmHg",
-                                "paramater": "[thb0press-act=mmHg.1:--]",
+                                "parameter": "[thb0press-act=mmHg.1:--]",
                                 "default": false
                             }
                         }
@@ -283,22 +283,22 @@
                         "supported_units": {
                             "Hectopascals": {
                                 "unit": "hPa",
-                                "paramater": "[thb0seapress-act=.1:--]",
+                                "parameter": "[thb0seapress-act=.1:--]",
                                 "default": true
                             },
                             "Pounds per Square Inch": {
                                 "unit": "psi",
-                                "paramater": "[thb0seapress-act=psi.1:--]",
+                                "parameter": "[thb0seapress-act=psi.1:--]",
                                 "default": false
                             },
                             "Inches of Mercury": {
                                 "unit": "inHg",
-                                "paramater": "[thb0seapress-act=inHg.1:--]",
+                                "parameter": "[thb0seapress-act=inHg.1:--]",
                                 "default": false
                             },
                             "Millimeters of Mercury": {
                                 "unit": "mmHg",
-                                "paramater": "[thb0seapress-act=mmHg.1:--]",
+                                "parameter": "[thb0seapress-act=mmHg.1:--]",
                                 "default": false
                             }
                         }
@@ -315,27 +315,27 @@
                         "supported_units": {
                             "Meters per Second": {
                                 "unit": "m/s",
-                                "paramater": "[wind0wind-act=.1:--]",
+                                "parameter": "[wind0wind-act=.1:--]",
                                 "default": true
                             },
                             "Miles per Hour": {
                                 "unit": "mph",
-                                "paramater": "[wind0wind-act=mph.1:--]",
+                                "parameter": "[wind0wind-act=mph.1:--]",
                                 "default": false
                             },
                             "Kilometers per Hour": {
                                 "unit": "kph",
-                                "paramater": "[wind0wind-act=kmh.1:--]",
+                                "parameter": "[wind0wind-act=kmh.1:--]",
                                 "default": false
                             },
                             "Knots": {
                                 "unit": "kn",
-                                "paramater": "[wind0wind-act=kn.1:--]",
+                                "parameter": "[wind0wind-act=kn.1:--]",
                                 "default": false
                             },
                             "Beaufort scale": {
                                 "unit": "bft",
-                                "paramater": "[wind0wind-act=bft.1:--]",
+                                "parameter": "[wind0wind-act=bft.1:--]",
                                 "default": false
                             }
                         }
@@ -350,27 +350,27 @@
                         "supported_units": {
                             "Meters per Second": {
                                 "unit": "m/s",
-                                "paramater": "[wind0avgwind-act=.1:--]",
+                                "parameter": "[wind0avgwind-act=.1:--]",
                                 "default": true
                             },
                             "Miles per Hour": {
                                 "unit": "mph",
-                                "paramater": "[wind0avgwind-act=mph.1:--]",
+                                "parameter": "[wind0avgwind-act=mph.1:--]",
                                 "default": false
                             },
                             "Kilometers per Hour": {
                                 "unit": "kph",
-                                "paramater": "[wind0avgwind-act=kmh.1:--]",
+                                "parameter": "[wind0avgwind-act=kmh.1:--]",
                                 "default": false
                             },
                             "Knots": {
                                 "unit": "kn",
-                                "paramater": "[wind0avgwind-act=kn.1:--]",
+                                "parameter": "[wind0avgwind-act=kn.1:--]",
                                 "default": false
                             },
                             "Beaufort scale": {
                                 "unit": "bft",
-                                "paramater": "[wind0avgwind-act=bft.1:--]",
+                                "parameter": "[wind0avgwind-act=bft.1:--]",
                                 "default": false
                             }
                         }
@@ -385,22 +385,22 @@
                         "supported_units": {
                             "Degrees": {
                                 "unit": "",
-                                "paramater": "[wind0dir-act=.1:--]",
+                                "parameter": "[wind0dir-act=.1:--]",
                                 "default": true
                             },
                             "16 English Directions": {
                                 "unit": "",
-                                "paramater": "[wind0dir-act=endir:--]",
+                                "parameter": "[wind0dir-act=endir:--]",
                                 "default": false
                             },
                             "16 Dutch Directions": {
                                 "unit": "",
-                                "paramater": "[wind0dir-act=nldir:--]",
+                                "parameter": "[wind0dir-act=nldir:--]",
                                 "default": false
                             },
                             "16 German Directions": {
                                 "unit": "",
-                                "paramater": "[wind0dir-act=dedir:--]",
+                                "parameter": "[wind0dir-act=dedir:--]",
                                 "default": false
                             }
                         }
@@ -417,12 +417,12 @@
                         "supported_units": {
                             "Millimeters per Hour": {
                                 "unit": "mm/h",
-                                "paramater": "[rain0rate-act=.1:--]",
+                                "parameter": "[rain0rate-act=.1:--]",
                                 "default": true
                             },
                             "Inches per Hour": {
                                 "unit": "in/hr",
-                                "paramater": "[rain0rate-act=in.1:--]",
+                                "parameter": "[rain0rate-act=in.1:--]",
                                 "default": false
                             }
                         }
@@ -437,12 +437,12 @@
                         "supported_units": {
                             "Millimeters": {
                                 "unit": "mm/h",
-                                "paramater": "[rain0total-act=.1:--]",
+                                "parameter": "[rain0total-act=.1:--]",
                                 "default": true
                             },
                             "Inches": {
                                 "unit": "in/hr",
-                                "paramater": "[rain0total-act=in.1:--]",
+                                "parameter": "[rain0total-act=in.1:--]",
                                 "default": false
                             }
                         }
@@ -494,7 +494,7 @@
                             },
                             "Inches": {
                                 "unit": "in",
-                                "paramater": "[sol0evo-act=in.1:--]",
+                                "parameter": "[sol0evo-act=in.1:--]",
                                 "default": false
                             }
                         }
@@ -531,7 +531,7 @@
                             },
                             "Miles": {
                                 "unit": "mls",
-                                "paramater": "[lgt0dist-act=mls.1:--]",
+                                "parameter": "[lgt0dist-act=mls.1:--]",
                                 "default": false
                             }
                         }

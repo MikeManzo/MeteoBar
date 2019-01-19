@@ -30,6 +30,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         console.useNSLog    = true
         log.addDestination(console)
         // SwiftyBeaver Config
+        
+        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge")
     }
 
     /// MeteoBar is about to close ... clean-up

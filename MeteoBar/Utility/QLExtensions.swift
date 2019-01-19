@@ -54,3 +54,8 @@ extension NSApplicationDelegate {
         return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?  true : false
     }
 }
+
+/// Handy protocols
+protocol Copyable: class {
+    func copy() -> Self
+}
