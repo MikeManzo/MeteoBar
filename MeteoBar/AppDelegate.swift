@@ -51,13 +51,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.addDestination(console)
         // SwiftyBeaver Config
         
+        /// Test Stub
         if theBridge == nil {
             WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge", callback: { [unowned self] response, error in
                 if error == nil {
                     self.theBridge = response
+                    
+                    self.theBridge?.getObservation({ bridge, error in
+                        if error == nil {
+                            log.info("\(bridge?.name ?? "")")
+                        } else {
+                            log.error(error.value)
+                        }
+                    })
                 }
             })
         }
+        /// Test Stub
     }
 
     /// MeteoBar is about to close ... clean-up

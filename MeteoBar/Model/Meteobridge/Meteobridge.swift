@@ -9,6 +9,20 @@
 import Cocoa
 import SwiftyUserDefaults
 
+enum MeteobridgeError: Error, CustomStringConvertible {
+    case observationError
+    case unknownSensor
+    case dataError
+    
+    var description: String {
+        switch self {
+        case .observationError: return "Error reading observation from Meteobridge"
+        case .dataError: return "Error reading data from Meteobridg"
+        case .unknownSensor: return "Unknown sensor detected"
+        }
+    }
+}
+
 final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
@@ -56,5 +70,73 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     ///  - Returns: nothing
     func addSensor(sensor: MeteobridgeSensor) {
         sensors[sensor.category, default: []].append(sensor)
+    }
+    
+    /// Since we have a dictonary of sensors organized by Category, we need an additional step to get a discreet sensor
+    ///
+    /// - Parameter sensorName: sensorName
+    /// - Returns: a valid sensor OR nil if no sensor was found
+    ///
+    func findSensor(sensorName: String) -> MeteobridgeSensor? {
+        var theSensor: MeteobridgeSensor?
+        
+        for (_, catSensors) in sensors {
+            theSensor = catSensors.filter { $0.name == sensorName }.first
+            if theSensor != nil {
+                break
+            }
+        }
+        
+        return theSensor
+    }
+    
+    /// Interrogate the bridge for data
+    ///
+    /// - Parameter callback: return function
+    ///
+    func getObservation(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.shared.getConditions(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
+            if bridgeError != nil {
+                callback(nil, bridgeError)
+            }
+            
+            guard let validData = bridgeData as? Data else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            
+            for pair in bridgeResponse {
+                let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
+                if subPair[0] != "Time" {
+                guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {       // Find the sensor with this tag
+                    callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                    return
+                }
+                    let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
+                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect))     // Record the observation
+                    filteredSensor.updateBatteryHealth(observation: battPair[1])                // Record the battery health
+                }
+            }
+            
+            callback(self, nil)
+        })
     }
 }

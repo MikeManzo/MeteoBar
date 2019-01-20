@@ -12,20 +12,27 @@ import SwiftyJSON
 
 protocol Weather {
     func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
+    func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
 }
 
 extension Weather {
     func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void) {
         WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: ipAddress, bridgeName: bridgeName, callback: { _, _ in })
     }
+    
+    func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        WeatherPlatform.shared.getConditions(theBridge: theBridge, callback: { _, _ in })
+    }
 }
 
 enum WeatherPlatformError: Error, CustomStringConvertible {
     case jsonModelError
+    case urlError
     
     var description: String {
         switch self {
         case .jsonModelError: return "Error reading Meteobridge configuration file"
+        case .urlError: return "Failed to form proper URL to retrieve Meteobridge parameters"
         }
     }
 }
@@ -36,7 +43,40 @@ class WeatherPlatform: Weather {
     
     /// Private init for the singleton
     private init() { }
-  
+
+    /// Get current readings from the metebridge
+    ///
+    /// - Parameters:
+    ///   - theBridge: the Meteobridge we wish to interrogate
+    ///   - callback: callback to recieve the results
+    ///
+    func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        var templateString = "Time:[hh];[mm];[ss],"
+        
+        for (category, sensors) in theBridge.sensors {
+            for sensor in sensors where category != .system {
+                templateString.append("\(sensor.bridgeTemplate),")
+            }
+        }
+        
+        templateString = String(templateString[..<templateString.index(before: templateString.endIndex)])   // Remove the trailing ","
+        templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
+        
+        guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {
+            callback(nil, WeatherPlatformError.urlError)
+            return
+        }
+        
+        Alamofire.request(bridgeEndpoint).responseData { bridgeResponse in
+            switch bridgeResponse.result {
+            case .success (let stationData):
+                callback(stationData as AnyObject, nil)
+            case .failure(let stationError):
+                callback(nil, PlatformError.passthroughSystem(systemError: stationError))
+            }
+        }
+    }
+    
     /// Based on the JSON model(s) in the "/Config" directory, build the represetnation of the Meteobridge that we can use throughout the app
     ///
     /// Our Structure for the model is as follows

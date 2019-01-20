@@ -59,6 +59,27 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         }
     }
     
+    /// Return the template required to get something from the Meteobridge
+    ///
+    /// - Format:
+    ///   - We prepend the sensor name and append the battery parameter
+    ///   - Example **sensorName:sensorTemplate|batteryTemplate**
+    ///     - th0temp:[th0temp-act=.1:--]|[th0lowbat-act.0:--]
+    ///   - If it works we get:
+    ///     - th0temp:54.2|0.0 <-- **Sensor:** _th0temp_, **Reading:** _54.2_, **Battery Health:** _Good_
+    ///
+    var bridgeTemplate: String {
+        var strResult = ""
+        
+        let activeUnit = supportedUnits.filter { $0.isCurrent == true }
+        
+        if !activeUnit.isEmpty {
+            strResult = "\(name):\(activeUnit.first!.parameter)|\(batteryParamater)"
+        }
+        
+        return strResult
+    }
+    
     /// Initialize the sensor
     ///
     /// - Parameters:
@@ -108,31 +129,28 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     func addSuppoortedUnit(unit: MeteoSensorUnit) {
         supportedUnits.append(unit)
     }
-
-    /// Return the string required to get take a weather measurement from the Meteobridge (e.g., non-system)
-    ///
-    /// We prepend the sensor name to the request.  We'll get something back like: th0temp:54.2.  We can then
-    /// parse parse teh sensor name and measurement and feed it back as an observation
-    ///
-    /// - Returns: formatted string for a measurement --> (e.g., th0temp:[th0temp-act=.1:---] )
-    ///
-    func getFormattedWeatherMeasurement( ) -> String {
-        var strResult = ""
-        
-        let activeUnit = supportedUnits.filter { $0.isCurrent == true}
-        
-        if !activeUnit.isEmpty {
-            strResult = "\(activeUnit.first!.name):\(activeUnit.first!.parameter))"
-        }
-        
-        return strResult
-    }
-    
+   
     /// Update the sensor with the latest data
     ///
     /// - Parameter newMeasurement: formatted measurement
     ///
     func updateMeasurement(newMeasurement: MeteoObservation) {
         _measurement.update(observation: newMeasurement)
+    }
+    
+    /// Updte the health of the battery
+    ///
+    /// - Parameter observation: battery descriptor
+    func updateBatteryHealth(observation: String) {
+        switch observation {
+        case "0.0":
+            batteryStatus = .good
+        case "1.0":
+            batteryStatus = .low
+        case "--":
+            batteryStatus = .unknown
+        default:
+            batteryStatus = .unknown
+        }
     }
 }
