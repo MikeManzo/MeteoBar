@@ -16,6 +16,12 @@ let theDelegate = AppDelegate.self
 let log = QuantumLogger.self
 /// The only globals we're going to use
 
+/// User Defaults
+extension DefaultsKeys {
+    static let defaultBridges = DefaultsKey<Meteobridge?>("DefaultBridges")
+}
+/// User Defaults
+
 enum PlatformError: Error, CustomStringConvertible {
     case passthroughSystem(systemError: Error)
     case custom(message: String)
@@ -31,6 +37,8 @@ enum PlatformError: Error, CustomStringConvertible {
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var theBridge = Defaults[.defaultBridges]
+    
     /// Meteobar is up and we're ready to go
     ///
     /// - Parameter aNotification: <#aNotification description#>
@@ -43,17 +51,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.addDestination(console)
         // SwiftyBeaver Config
         
-        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge", callback: { response, error in
-            if error != nil {
-                let theBridge = response
-            }
-        })
+        if theBridge == nil {
+            WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge", callback: { [unowned self] response, error in
+                if error == nil {
+                    self.theBridge = response
+                }
+            })
+        }
     }
 
     /// MeteoBar is about to close ... clean-up
     ///
     /// - Parameter aNotification: <#aNotification description#>
     func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
+        Defaults[.defaultBridges] = theBridge
     }
 }
+
+//  To clear the defaults: Open terminal and type <defaults delete com.StraightOnTillDawn.Solis>

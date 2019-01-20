@@ -17,6 +17,18 @@ class MeteoSensorUnit: NSObject, Codable, Copyable {
     var isDefault: Bool
     var name: String
     
+    private var _isCurrent: Bool
+    
+    /// We can have a default sensor that is not active ... so, let's be explicit
+    var isCurrent: Bool {
+        get {
+            return _isCurrent
+        }
+        set {
+            _isCurrent = newValue
+        }
+    }
+    
     /// Initialize the Sensor Unit
     ///
     /// - Parameters:
@@ -25,7 +37,7 @@ class MeteoSensorUnit: NSObject, Codable, Copyable {
     ///   - unitRep: unit representation (e.g., mm, in, m/s, etc.)
     ///   - unitDefault: is this THE default sensor unit?
     required init (unitName: String, unitParam: String, unitRep: String, unitDefault: Bool) {
-        
+        self._isCurrent     = unitDefault ? true : false
         self.isDefault      = unitDefault
         self.parameter      = unitParam
         self.name           = unitName

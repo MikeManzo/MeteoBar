@@ -27,6 +27,7 @@
 		27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F8901A21F252BA00F8605E /* Meteobridge.swift */; };
 		27F8901D21F2A25D00F8605E /* WeatherPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */; };
 		27F8902121F2D24B00F8605E /* Config in Resources */ = {isa = PBXBuildFile; fileRef = 27F8902021F2D24B00F8605E /* Config */; };
+		27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FCB6FC21F4199700A90715 /* MeteoObservation.swift */; };
 		90741511A36FDD592ADA1C91 /* Pods_MeteoBar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949E236247E7C9ADBF55C395 /* Pods_MeteoBar.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		27F8901A21F252BA00F8605E /* Meteobridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meteobridge.swift; sourceTree = "<group>"; };
 		27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPlatform.swift; sourceTree = "<group>"; };
 		27F8902021F2D24B00F8605E /* Config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Config; path = MeteoBar/Config; sourceTree = "<group>"; };
+		27FCB6FC21F4199700A90715 /* MeteoObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoObservation.swift; sourceTree = "<group>"; };
 		700F686E201CF540D2B18B66 /* Pods-MeteoBar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteoBar.release.xcconfig"; path = "Pods/Target Support Files/Pods-MeteoBar/Pods-MeteoBar.release.xcconfig"; sourceTree = "<group>"; };
 		949E236247E7C9ADBF55C395 /* Pods_MeteoBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteoBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CECC9637FB5045AF87C31A /* Pods-MeteoBar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteoBar.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MeteoBar/Pods-MeteoBar.debug.xcconfig"; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */,
+				27FCB6FC21F4199700A90715 /* MeteoObservation.swift */,
 				27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */,
 				27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */,
 				27F8901A21F252BA00F8605E /* Meteobridge.swift */,
@@ -480,6 +483,7 @@
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
 				27CA786621EBC06A000D517D /* AboutController.swift in Sources */,
+				27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

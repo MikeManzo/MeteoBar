@@ -7,8 +7,9 @@
 //
 
 import Cocoa
+import SwiftyUserDefaults
 
-class Meteobridge: NSObject, Codable, Copyable {
+final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
     var ipAddress: String
@@ -21,7 +22,7 @@ class Meteobridge: NSObject, Codable, Copyable {
     ///   - bridgeIP: IP Address of the meteobridge
     ///   - bridgeName: the name we are giving the meteobridge
     ///   - bridgeSensors: the collection of sensors that this meteobridge has
-    required init? (bridgeIP: String, bridgeName: String, bridgeSensors: [MeteoSensorCategory: [MeteobridgeSensor]]? = nil) {
+    required init? (bridgeIP: String, bridgeName: String, bridgeSensors: [MeteoSensorCategory: [MeteobridgeSensor]]? = nil, uniqueID: String? = nil) {
         self.uuid = UUID().uuidString
         self.ipAddress = bridgeIP
         self.name = bridgeName
@@ -32,6 +33,10 @@ class Meteobridge: NSObject, Codable, Copyable {
             }
         }
         
+        if uniqueID != nil {
+            self.uuid = uniqueID!
+        }
+        
         super.init()
     }
     
@@ -39,7 +44,7 @@ class Meteobridge: NSObject, Codable, Copyable {
     ///
     /// - Returns: fully constructed Meteobridge object
     func copy() -> Self {
-        return type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors)!
+        return type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid)!
     }
     
     /// Add a sensor to the bridge
@@ -51,5 +56,5 @@ class Meteobridge: NSObject, Codable, Copyable {
     ///  - Returns: nothing
     func addSensor(sensor: MeteobridgeSensor) {
         sensors[sensor.category, default: []].append(sensor)
-    }   
+    }
 }

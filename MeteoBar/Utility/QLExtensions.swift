@@ -55,6 +55,17 @@ extension NSApplicationDelegate {
     }
 }
 
+extension Optional {
+    public var value: String {
+        switch self {
+        case .some(let wrappedValue):
+            return "\(wrappedValue)"
+        default:
+            return "<nil>"
+        }
+    }
+}
+
 /// Handy protocols
 protocol Copyable: class {
     func copy() -> Self
