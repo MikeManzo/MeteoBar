@@ -9,6 +9,7 @@ target 'MeteoBar' do
     pod 'Preferences'
     pod 'Alamofire'
     pod 'SwiftyJSON'
+    pod 'Repeat'
     pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
 end
 

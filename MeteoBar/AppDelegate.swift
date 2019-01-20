@@ -64,6 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                             log.error(error.value)
                         }
                     })
+                    Defaults[.defaultBridges] = self.theBridge
                 }
             })
         }
