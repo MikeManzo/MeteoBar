@@ -92,6 +92,14 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     
     /// Interrogate the bridge for data
     ///
+    /// ## Important Notes ##
+    /// The data comes to us in a response array like
+    /// 1. [0] == Time:12;00;00 <-- Always
+    /// 2. [1] == THB0TEMP:29.9 <-- Optional
+    /// 3. [2] == ... etc.
+    ///
+    /// We want to separate the keys and values so we can apply them to the appropriate sensors
+    ///
     /// - Parameter callback: return function
     ///
     func getObservation(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {

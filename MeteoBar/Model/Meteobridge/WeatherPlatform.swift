@@ -54,7 +54,7 @@ class WeatherPlatform: Weather {
         var templateString = "Time:[hh];[mm];[ss],"
         
         for (category, sensors) in theBridge.sensors {
-            for sensor in sensors where category != .system {
+            for sensor in sensors where category != .system  && sensor.isObserving {
                 templateString.append("\(sensor.bridgeTemplate),")
             }
         }
