@@ -20,6 +20,13 @@ class AboutController: NSViewController {
     
     /// Custom variables
     let tableViewData = [
+        ["copyImage": "pressure.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Air Pressure Sensor Icon",
+         "copyHolder": "Swifticons",
+         "copyURL": "https://www.flaticon.com/authors/swifticons"
+        ],
         ["copyImage": "books.png",
          "copyType": "Library",
          "invertable": "yes",
@@ -34,6 +41,20 @@ class AboutController: NSViewController {
          "copyHolder": "Iconfu",
          "copyURL": "https://iconfu.com"
         ],
+        ["copyImage": "energy.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Energy Sensor Icon",
+         "copyHolder": "Freepik",
+         "copyURL": "https://www.freepik.com/"
+        ],
+        ["copyImage": "humidity.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Humidity Sensor Icon",
+         "copyHolder": "Freepik",
+         "copyURL": "https://www.freepik.com/"
+        ],
         ["copyImage": "books.png",
          "copyType": "Icon",
          "invertable": "yes",
@@ -47,6 +68,20 @@ class AboutController: NSViewController {
          "copyName": "Preferences: Flexible User Preferences",
          "copyHolder": "Sindre Sorhus",
          "copyURL": "https://github.com/sindresorhus/Preferences"
+        ],
+        ["copyImage": "drop.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Rain Sensor Icon",
+         "copyHolder": "Freepik",
+         "copyURL": "https://www.freepik.com/"
+        ],
+        ["copyImage": "solar-energy.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Solar Sensor Icon",
+         "copyHolder": "Prettycons",
+         "copyURL": "https://www.flaticon.com/authors/prettycons/"
         ],
         ["copyImage": "books.png",
          "copyType": "Library",
@@ -68,6 +103,27 @@ class AboutController: NSViewController {
          "copyName": "SwiftyUserDefaults: Modern Swift API for NSUserDefaults",
          "copyHolder": "Radek Pietruszewski",
          "copyURL": "https://github.com/radex/SwiftyUserDefaults"
+        ],
+        ["copyImage": "system.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "System Sensor Icon",
+         "copyHolder": "Phatplus",
+         "copyURL": "https://www.flaticon.com/authors/phatplus"
+        ],
+       ["copyImage": "thermometer.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Thermometer Sensor Icon",
+         "copyHolder": "Epic Coders",
+         "copyURL": "https://www.flaticon.com/authors/epiccoders"
+        ],
+        ["copyImage": "wind-sock.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Wind Sensor Icon",
+         "copyHolder": "Yannick",
+         "copyURL": "https://www.flaticon.com/authors/yannick"
         ]
     ]
         
