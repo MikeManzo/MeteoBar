@@ -19,6 +19,7 @@
 		27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */; };
 		27ACA77621FCA99400E226C2 /* BridgePreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA77421FCA99400E226C2 /* BridgePreferences.xib */; };
 		27ACA77821FCB40B00E226C2 /* MeteoCompassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */; };
+		27ACA77A21FE018A00E226C2 /* MeteoPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */; };
 		27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA785D21EBA22B000D517D /* QuantumLogger.swift */; };
 		27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 27CA786021EBA7CD000D517D /* .swiftlint.yml */; };
 		27CA786621EBC06A000D517D /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786421EBC06A000D517D /* AboutController.swift */; };
@@ -73,6 +74,7 @@
 		27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgePreferencesController.swift; sourceTree = "<group>"; };
 		27ACA77421FCA99400E226C2 /* BridgePreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BridgePreferences.xib; sourceTree = "<group>"; };
 		27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoCompassView.swift; sourceTree = "<group>"; };
+		27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoPreferences.swift; sourceTree = "<group>"; };
 		27CA785D21EBA22B000D517D /* QuantumLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantumLogger.swift; sourceTree = "<group>"; };
 		27CA786021EBA7CD000D517D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		27CA786421EBC06A000D517D /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
@@ -221,8 +223,9 @@
 		27CA785C21EBA1F0000D517D /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				27CA785D21EBA22B000D517D /* QuantumLogger.swift */,
+				27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */,
 				27E6C5BE21ED595500548CF0 /* QLExtensions.swift */,
+				27CA785D21EBA22B000D517D /* QuantumLogger.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */,
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
+				27ACA77A21FE018A00E226C2 /* MeteoPreferences.swift in Sources */,
 				27CA786621EBC06A000D517D /* AboutController.swift in Sources */,
 				27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */,
 			);

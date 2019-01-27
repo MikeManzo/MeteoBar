@@ -23,14 +23,29 @@ class MeteoCompassView: SKView {
     var tickOffset = 0.0
     var prevDirection = 0.0
 
-    var theKitScene: SKScene?
+    var compassNeedle: SKShapeNode?
     var compassFace: SKShapeNode?
     var centerNode: SKShapeNode?
-    var compassNeedle: SKShapeNode?
+    var theKitScene: SKScene?
 
     // MARK: - Overrides
     override convenience init(frame frameRect: NSRect) {
         self.init(frame: frameRect)
+    }
+    
+    /// Make sure we save the user's preferences for the compass
+    func updatePreferences() {
+        log.info("ToDo: Compass Prferences Saved ...")
+/*
+        (theDelegate?.theDefaults?.compassCardinalMinorTickColor)! =
+        (theDelegate?.theDefaults?.compassCardinalMajorTickColor)! =
+        (theDelegate?.theDefaults?.compassCrosshairColor)! =
+        (theDelegate?.theDefaults?.compassRingColor)! =
+        (theDelegate?.theDefaults?.compassFrameColor)! =
+        (theDelegate?.theDefaults?.compassFaceColor)! =
+        (theDelegate?.theDefaults?.compassCaratColor)! =
+        (theDelegate?.theDefaults?.compassShowSensorBox)! = false
+*/
     }
     
     ///
@@ -45,7 +60,7 @@ class MeteoCompassView: SKView {
 
         // Create a scene, add something to it
         theKitScene = SKScene(size: frame.size)
-        theKitScene!.backgroundColor = SKColor.black
+        theKitScene!.backgroundColor = (theDelegate?.theDefaults?.compassFrameColor)! // NSColor.black
 
         // Determine radian spacing...
         tickOffset = (Double(radiusCompass) - Double(kSize * 1.75))
@@ -56,28 +71,26 @@ class MeteoCompassView: SKView {
         
         // Place a compassFace node in the center
         compassFace = nodeGenerator(size: CGFloat(radiusCompass), point: CGPoint(x: midPoint.x, y: midPoint.y), scene: theKitScene!)
-        compassFace!.fillColor = SKColor.black
-        compassFace!.strokeColor = SKColor.yellow
+        compassFace!.fillColor =  (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        compassFace!.strokeColor = (theDelegate?.theDefaults?.compassRingColor)! // SKColor.yellow
         
         // Place a normal node in the center
         centerNode = nodeGenerator(size: 3, point: CGPoint(x: midPoint.x, y: midPoint.y), scene: theKitScene!)
-        centerNode!.fillColor = SKColor.white
+        centerNode!.fillColor = (theDelegate?.theDefaults?.compassCrosshairColor)! // SKColor.white
         
         // Create the carat for discreet wind direction
         compassNeedle = createRoundedTriangle(centerPoint: CGPoint(x: 0, y: 0), width: 24, height: 24, radius: 2, degrees: 90, scene: theKitScene)!
         compassNeedle!.zPosition = 10
-
-        theKitScene!.backgroundColor = NSColor.black
-        
+      
         drawCardinalTicks(scene: theKitScene!)
         
         drawCardinalDirections(scene: theKitScene!)
         
-        fourQuadsMajorMinor(border: true)
+        fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
                 
         self.presentScene(theKitScene)
       }
-
+    
     // MARK: - Shapes
 
     /// Move the carat to face the direction the wind is blowing
@@ -138,21 +151,21 @@ class MeteoCompassView: SKView {
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
-                myLine?.strokeColor = SKColor.blue
+                myLine?.strokeColor = (theDelegate?.theDefaults?.compassCardinalMajorTickColor)! //SKColor.blue
                 myLine?.lineWidth = 4
             } else if index % 2 == 0 {   // Major ticks (N, NW, W, SW, S, SE, E, NE) %2
                 pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.36), y: radius + sin(CGFloat(angle)) * (frame.width*0.36)))
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
-                myLine?.strokeColor = SKColor.white
+                myLine?.strokeColor = (theDelegate?.theDefaults?.compassCardinalMinorTickColor)! // SKColor.white
                 myLine?.lineWidth = 2
             } else { // Minor ticks (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE)
                 pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.38), y: radius + sin(CGFloat(angle)) * (frame.width*0.38)))
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
-                myLine?.strokeColor = SKColor.white
+                myLine?.strokeColor = (theDelegate?.theDefaults?.compassCardinalMinorTickColor)! // SKColor.white
                 myLine?.lineWidth = 1
             }
 
@@ -178,7 +191,7 @@ class MeteoCompassView: SKView {
 
             let label: SKLabelNode = SKLabelNode(text: cardinalDict[index])
             node.addChild(label)
-            node.fillColor = SKColor.black
+            node.fillColor = (theDelegate?.theDefaults?.compassFrameColor)! // SKColor.black
             node.strokeColor = SKColor.clear
             label.verticalAlignmentMode = SKLabelVerticalAlignmentMode.center
             label.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.center
@@ -229,7 +242,7 @@ class MeteoCompassView: SKView {
         }
         
         triangle.strokeColor    = SKColor.clear
-        triangle.fillColor      = SKColor.red
+        triangle.fillColor      = (theDelegate?.theDefaults?.compassCaratColor)! // SKColor.red
         triangle.position       = centerPoint
         triangle.alpha          = 0.50
         triangle.glowWidth      = 0.1
@@ -289,7 +302,7 @@ class MeteoCompassView: SKView {
         verticalPath.closeSubpath()
         let verticalLine = SKShapeNode(path: verticalPath)
         verticalLine.path = verticalPath
-        verticalLine.strokeColor = SKColor.white
+        verticalLine.strokeColor = (theDelegate?.theDefaults?.compassCrosshairColor)! // SKColor.white
         theKitScene!.addChild(verticalLine)
         
         // Horizontlal Line
@@ -299,7 +312,7 @@ class MeteoCompassView: SKView {
         horizontalPath.closeSubpath()
         let horizontalLine = SKShapeNode(path: horizontalPath)
         horizontalLine.path = horizontalPath
-        horizontalLine.strokeColor = SKColor.white
+        horizontalLine.strokeColor = (theDelegate?.theDefaults?.compassCrosshairColor)!
         theKitScene!.addChild(horizontalLine)
         
         // Upper Left
@@ -311,8 +324,8 @@ class MeteoCompassView: SKView {
         upperRightMajorLabel.horizontalAlignmentMode = .center
         upperRightMajorLabel.fontSize = 18
         upperRightMajor.addChild(upperRightMajorLabel)
-        upperRightMajor.fillColor = SKColor.black
-        upperRightMajor.strokeColor = border ? SKColor.white : SKColor.clear
+        upperRightMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        upperRightMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         let upperRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
@@ -322,8 +335,8 @@ class MeteoCompassView: SKView {
         upperRightMinorLabel.horizontalAlignmentMode = .center
         upperRightMinorLabel.fontSize = 12
         upperRightMinor.addChild(upperRightMinorLabel)
-        upperRightMinor.fillColor = SKColor.black
-        upperRightMinor.strokeColor = border ? SKColor.white : SKColor.clear
+        upperRightMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        upperRightMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         // Upper Right
         let upperLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -334,8 +347,8 @@ class MeteoCompassView: SKView {
         upperLeftMajorLabel.horizontalAlignmentMode = .center
         upperLeftMajorLabel.fontSize = 18
         upperLeftMajor.addChild(upperLeftMajorLabel)
-        upperLeftMajor.fillColor = SKColor.black
-        upperLeftMajor.strokeColor = border ? SKColor.white : SKColor.clear
+        upperLeftMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        upperLeftMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         let upperLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
@@ -345,8 +358,8 @@ class MeteoCompassView: SKView {
         upperLeftMinorLabel.horizontalAlignmentMode = .center
         upperLeftMinorLabel.fontSize = 12
         upperLeftMinor.addChild(upperLeftMinorLabel)
-        upperLeftMinor.fillColor = SKColor.black
-        upperLeftMinor.strokeColor = border ? SKColor.white : SKColor.clear
+        upperLeftMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        upperLeftMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         // Lower Left
         let lowerRightMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -357,8 +370,8 @@ class MeteoCompassView: SKView {
         lowerRightMajorLabel.horizontalAlignmentMode = .center
         lowerRightMajorLabel.fontSize = 18
         lowerRightMajor.addChild(lowerRightMajorLabel)
-        lowerRightMajor.fillColor = SKColor.black
-        lowerRightMajor.strokeColor = border ? SKColor.white : SKColor.clear
+        lowerRightMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        lowerRightMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         let lowerRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
@@ -368,8 +381,8 @@ class MeteoCompassView: SKView {
         lowerRightMinorLabel.horizontalAlignmentMode = .center
         lowerRightMinorLabel.fontSize = 12
         lowerRightMinor.addChild(lowerRightMinorLabel)
-        lowerRightMinor.fillColor = SKColor.black
-        lowerRightMinor.strokeColor = border ? SKColor.white : SKColor.clear
+        lowerRightMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        lowerRightMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         // Lower Right
         let lowerLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -380,8 +393,8 @@ class MeteoCompassView: SKView {
         lowerLeftMajorLabel.horizontalAlignmentMode = .center
         lowerLeftMajorLabel.fontSize = 18
         lowerLeftMajor.addChild(lowerLeftMajorLabel)
-        lowerLeftMajor.fillColor = SKColor.black
-        lowerLeftMajor.strokeColor = border ? SKColor.white : SKColor.clear
+        lowerLeftMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        lowerLeftMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         let lowerLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
@@ -391,7 +404,7 @@ class MeteoCompassView: SKView {
         lowerLeftMinorLabel.horizontalAlignmentMode = .center
         lowerLeftMinorLabel.fontSize = 12
         lowerLeftMinor.addChild(lowerLeftMinorLabel)
-        lowerLeftMinor.fillColor = SKColor.black
-        lowerLeftMinor.strokeColor = border ? SKColor.white : SKColor.clear
+        lowerLeftMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
+        lowerLeftMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
     }
 }

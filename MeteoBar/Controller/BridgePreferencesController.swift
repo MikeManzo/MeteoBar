@@ -29,4 +29,9 @@ class BridgePreferencesController: NSViewController, Preferenceable {
        
         compassView.windDirection(direction: 90.0)
     }
+    
+    /// Cleanup and save data to user preferences
+    override func viewDidDisappear() {
+        compassView.updatePreferences()
+    }
 }

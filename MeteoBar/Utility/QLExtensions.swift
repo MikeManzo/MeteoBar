@@ -7,8 +7,18 @@
 //
 
 import Foundation
+import SpriteKit
 import Cocoa
 
+/// Handy non-class related variables
+var theDelegate: AppDelegate? {
+    guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
+        return nil
+    }
+    return appDelegate
+}
+
+/// Extensions
 extension Bundle {
     class var applicationVersionNumber: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -28,7 +38,7 @@ extension NSApplicationDelegate {
     /// Ask the system if it's in Dark Mode
     ///
     /// - Returns: Yes if the Mac is in Dark Mode, No if it is not
-    static func isVibrantMode() -> Bool {
+    func isVibrantMode() -> Bool {
         return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?  true : false
     }
 }

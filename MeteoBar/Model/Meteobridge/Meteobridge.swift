@@ -6,8 +6,8 @@
 //  Copyright © 2019 Quantum Joker. All rights reserved.
 //
 
-import Cocoa
 import SwiftyUserDefaults
+import Cocoa
 
 enum MeteobridgeError: Error, CustomStringConvertible {
     case observationError

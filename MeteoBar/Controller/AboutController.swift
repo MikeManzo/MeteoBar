@@ -114,7 +114,7 @@ extension AboutController: NSTableViewDataSource, NSTableViewDelegate {
                 return nil
             }
             
-            result.imgView.image                    = (theDelegate.isVibrantMode() && tableViewData[row]["invertable"] == "yes") ? icon.filter(filter: "CIColorInvert") : icon
+            result.imgView.image                    = ((theDelegate?.isVibrantMode())! && tableViewData[row]["invertable"] == "yes") ? icon.filter(filter: "CIColorInvert") : icon
             result.imageView?.toolTip               = tableViewData[row]["copyType"] ?? "Error"
             result.summaryTextField.stringValue     = tableViewData[row]["copyName"] ?? "Error"
             result.descriptionTextField.stringValue = tableViewData[row]["copyHolder"] ?? "Error"
