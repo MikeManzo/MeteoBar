@@ -24,6 +24,27 @@ extension Bundle {
         return "Build Number Not Available"
     }    
 }
+extension NSApplicationDelegate {
+    /// Ask the system if it's in Dark Mode
+    ///
+    /// - Returns: Yes if the Mac is in Dark Mode, No if it is not
+    static func isVibrantMode() -> Bool {
+        return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?  true : false
+    }
+}
+
+extension CGFloat {
+    var degreesToRadians: CGFloat { return self * .pi / 180 }
+    var radiansToDegrees: CGFloat { return self * 180 / .pi }
+}
+
+extension Int64 {
+    static func randomNumber<T: SignedInteger>(inRange range: ClosedRange<T> = 1...6) -> T {
+        let length = Int64(range.upperBound - range.lowerBound + 1)
+        let value = Int64(arc4random()) % length + Int64(range.lowerBound)
+        return T(value)
+    }
+}
 
 extension NSImage {
     /// Apply snadard filters to an NSImage
@@ -43,15 +64,6 @@ extension NSImage {
                 } else {return nil}
             } else {return nil}
         } else {return nil}
-    }
-}
-
-extension NSApplicationDelegate {
-    /// Ask the system if it's in Dark Mode
-    ///
-    /// - Returns: Yes if the Mac is in Dark Mode, No if it is not
-    static func isVibrantMode() -> Bool {
-        return UserDefaults.standard.string(forKey: "AppleInterfaceStyle") == "Dark" ?  true : false
     }
 }
 

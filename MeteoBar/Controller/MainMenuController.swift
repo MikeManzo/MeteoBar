@@ -7,6 +7,7 @@
 //
 
 import SwiftyUserDefaults
+import Preferences
 import Repeat
 import Cocoa
 
@@ -26,18 +27,27 @@ enum MeteobarError: Error, CustomStringConvertible {
 
 class MainMenuController: NSViewController {
 
-    /// Outlets
+    // MARK: - Outlets
     @IBOutlet weak var menuMain: NSMenu!
     
-    /// Local Variables
+    // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
     var observerQueue   = [String: Repeater]()
     
-    /// Local Views
-    lazy var aboutWindow: NSViewController = {
+    // MARK: - Views
+    /// About View
+    lazy var aboutView: NSViewController = {
         return AboutController(nibName: NSNib.Name("About"), bundle: nil)
     }()
     
+    /// Preferences
+    lazy var preferencesView: PreferencesWindowController = {
+        return PreferencesWindowController(viewControllers: [ BridgePreferencesController(),
+                                                              GeneralPreferencesController()
+                                                            ])
+    }()
+    
+    // MARK: - Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -132,13 +142,14 @@ class MainMenuController: NSViewController {
     ///
     /// - Parameter sender: The Caller who sent the message
     @IBAction func aboutMeteoBar(_ sender: Any) {
-        presentAsModalWindow(aboutWindow)
+        presentAsModalWindow(aboutView)
     }
     
     /// Show the preferences window
     ///
     /// - Parameter sender: The Caller who sent the message
     @IBAction func meteoBarPreferences(_ sender: Any) {
+        preferencesView.showWindow()
     }
     
     /// Quit - we're done!
