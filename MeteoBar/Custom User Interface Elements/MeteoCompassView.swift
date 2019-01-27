@@ -41,7 +41,7 @@ class MeteoCompassView: SKView {
         midPoint = CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0)
         
         // Radius of the planned compassFace
-        radiusCompass = (min(frame.height, frame.width)) * 0.333
+        radiusCompass = (min(frame.height, frame.width)) * 0.4 //0.333
 
         // Create a scene, add something to it
         theKitScene = SKScene(size: frame.size)
@@ -73,7 +73,7 @@ class MeteoCompassView: SKView {
         
         drawCardinalDirections(scene: theKitScene!)
         
-        fourQuadsMajorMinor(border: false)
+        fourQuadsMajorMinor(border: true)
                 
         self.presentScene(theKitScene)
       }
@@ -134,21 +134,21 @@ class MeteoCompassView: SKView {
                                         y: midPoint.y + (radiusCompass - 1) * sin(CGFloat(angle)) ))
             
             if index % 4 == 0 {   // Major ticks (N, NW, W, SW, S, SE, E, NE) %2
-                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.286), y: radius + sin(CGFloat(angle)) * (frame.width*0.286)))
+                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.34), y: radius + sin(CGFloat(angle)) * (frame.width*0.34)))
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
                 myLine?.strokeColor = SKColor.blue
                 myLine?.lineWidth = 4
             } else if index % 2 == 0 {   // Major ticks (N, NW, W, SW, S, SE, E, NE) %2
-                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.291), y: radius + sin(CGFloat(angle)) * (frame.width*0.291)))
+                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.36), y: radius + sin(CGFloat(angle)) * (frame.width*0.36)))
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
                 myLine?.strokeColor = SKColor.white
                 myLine?.lineWidth = 2
             } else { // Minor ticks (NNW, WNW, WSW, SSW, SSE, ESE, ENE, NNE)
-                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.312), y: radius + sin(CGFloat(angle)) * (frame.width*0.312)))
+                pathToDraw.addLine(to: CGPoint(x: radius + cos(CGFloat(angle)) * (frame.width*0.38), y: radius + sin(CGFloat(angle)) * (frame.width*0.38)))
                 pathToDraw.closeSubpath()
                 myLine = SKShapeNode(path: pathToDraw)
                 myLine?.path = pathToDraw
@@ -302,72 +302,79 @@ class MeteoCompassView: SKView {
         horizontalLine.strokeColor = SKColor.white
         theKitScene!.addChild(horizontalLine)
         
-        // Upper Right
+        // Upper Left
         let upperRightMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
-                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.343, y: midPoint.y + radiusCompass * 0.406), scene: theKitScene!)
+                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
+                                                        scene: theKitScene!)
         let upperRightMajorLabel: SKLabelNode = SKLabelNode(text: "UL Major")
         upperRightMajorLabel.verticalAlignmentMode = .center
         upperRightMajorLabel.horizontalAlignmentMode = .center
-        upperRightMajorLabel.fontSize = 16
+        upperRightMajorLabel.fontSize = 18
         upperRightMajor.addChild(upperRightMajorLabel)
         upperRightMajor.fillColor = SKColor.black
         upperRightMajor.strokeColor = border ? SKColor.white : SKColor.clear
         
         let upperRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
-                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.343, y: midPoint.y + radiusCompass * 0.156), scene: theKitScene!)
+                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
+                                                        scene: theKitScene!)
         let upperRightMinorLabel: SKLabelNode = SKLabelNode(text: "UL Minor")
         upperRightMinorLabel.verticalAlignmentMode = .center
         upperRightMinorLabel.horizontalAlignmentMode = .center
-        upperRightMinorLabel.fontSize = 11
+        upperRightMinorLabel.fontSize = 12
         upperRightMinor.addChild(upperRightMinorLabel)
         upperRightMinor.fillColor = SKColor.black
         upperRightMinor.strokeColor = border ? SKColor.white : SKColor.clear
         
-        // Upper Left
+        // Upper Right
         let upperLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
-                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.343, y: midPoint.y + radiusCompass * 0.406), scene: theKitScene!)
+                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
+                                                       scene: theKitScene!)
         let upperLeftMajorLabel: SKLabelNode = SKLabelNode(text: "UR Major")
         upperLeftMajorLabel.verticalAlignmentMode = .center
         upperLeftMajorLabel.horizontalAlignmentMode = .center
-        upperLeftMajorLabel.fontSize = 16
+        upperLeftMajorLabel.fontSize = 18
         upperLeftMajor.addChild(upperLeftMajorLabel)
         upperLeftMajor.fillColor = SKColor.black
         upperLeftMajor.strokeColor = border ? SKColor.white : SKColor.clear
         
         let upperLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
-                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.343, y: midPoint.y + radiusCompass * 0.156), scene: theKitScene!)
+                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
+                                                       scene: theKitScene!)
         let upperLeftMinorLabel: SKLabelNode = SKLabelNode(text: "UR Minor")
         upperLeftMinorLabel.verticalAlignmentMode = .center
         upperLeftMinorLabel.horizontalAlignmentMode = .center
-        upperLeftMinorLabel.fontSize = 11
+        upperLeftMinorLabel.fontSize = 12
         upperLeftMinor.addChild(upperLeftMinorLabel)
         upperLeftMinor.fillColor = SKColor.black
         upperLeftMinor.strokeColor = border ? SKColor.white : SKColor.clear
         
-        // Lower Right
+        // Lower Left
         let lowerRightMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
-                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.343, y: midPoint.y - radiusCompass * 0.281), scene: theKitScene!)
+                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
+                                                        scene: theKitScene!)
         let lowerRightMajorLabel: SKLabelNode = SKLabelNode(text: "LL Major")
         lowerRightMajorLabel.verticalAlignmentMode = .center
         lowerRightMajorLabel.horizontalAlignmentMode = .center
-        lowerRightMajorLabel.fontSize = 16
+        lowerRightMajorLabel.fontSize = 18
         lowerRightMajor.addChild(lowerRightMajorLabel)
         lowerRightMajor.fillColor = SKColor.black
         lowerRightMajor.strokeColor = border ? SKColor.white : SKColor.clear
         
         let lowerRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
-                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.343, y: midPoint.y - radiusCompass * 0.531), scene: theKitScene!)
+                                                        point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
+                                                        scene: theKitScene!)
         let lowerRightMinorLabel: SKLabelNode = SKLabelNode(text: "LL Minor")
         lowerRightMinorLabel.verticalAlignmentMode = .center
         lowerRightMinorLabel.horizontalAlignmentMode = .center
-        lowerRightMinorLabel.fontSize = 11
+        lowerRightMinorLabel.fontSize = 12
         lowerRightMinor.addChild(lowerRightMinorLabel)
         lowerRightMinor.fillColor = SKColor.black
         lowerRightMinor.strokeColor = border ? SKColor.white : SKColor.clear
         
-        // Lower Left
+        // Lower Right
         let lowerLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
-                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.343, y: midPoint.y - radiusCompass * 0.281), scene: theKitScene!)
+                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
+                                                       scene: theKitScene!)
         let lowerLeftMajorLabel: SKLabelNode = SKLabelNode(text: "LR Major")
         lowerLeftMajorLabel.verticalAlignmentMode = .center
         lowerLeftMajorLabel.horizontalAlignmentMode = .center
@@ -377,7 +384,8 @@ class MeteoCompassView: SKView {
         lowerLeftMajor.strokeColor = border ? SKColor.white : SKColor.clear
         
         let lowerLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
-                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.343, y: midPoint.y - radiusCompass * 0.531), scene: theKitScene!)
+                                                       point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
+                                                       scene: theKitScene!)
         let lowerLeftMinorLabel: SKLabelNode = SKLabelNode(text: "LR Minor")
         lowerLeftMinorLabel.verticalAlignmentMode = .center
         lowerLeftMinorLabel.horizontalAlignmentMode = .center
