@@ -13,6 +13,7 @@ import SwiftyJSON
 protocol Weather {
     func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
     func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    func findSensorInBridge(searchID: String) -> MeteobridgeSensor?
 }
 
 extension Weather {
@@ -22,6 +23,10 @@ extension Weather {
     
     func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
         WeatherPlatform.shared.getConditions(theBridge: theBridge, callback: { _, _ in })
+    }
+    
+    func findSensorInBridge(searchID: String) -> MeteobridgeSensor? {
+        return WeatherPlatform.shared.findSensorInBridge(searchID: searchID)
     }
 }
 
@@ -151,5 +156,24 @@ class WeatherPlatform: Weather {
         } catch {
             callback(nil, PlatformError.passthroughSystem(systemError: error))
         }
+    }
+    
+    /// Find a particular sensor in the Bridge
+    ///
+    /// - Parameter searchID: ID to search for
+    /// - Returns: fully formed Meteobridge Sensor ... or nil if nothing was found
+    ///
+    func findSensorInBridge(searchID: String) -> MeteobridgeSensor? {
+        var foundSensor: MeteobridgeSensor?
+        
+        for (_, sensors) in (theDelegate?.theBridge?.sensors)! {
+            foundSensor = sensors.filter {
+                $0.sensorID == searchID }.first
+            if foundSensor != nil {
+                break
+            }
+        }
+        
+        return foundSensor
     }
 }

@@ -80,6 +80,11 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         return strResult
     }
     
+    /// Return the Name as our Unique SensorID (by definition the sensors are unique)
+    var sensorID: String {
+        return name
+    }
+    
     /// Initialize the sensor
     ///
     /// - Parameters:

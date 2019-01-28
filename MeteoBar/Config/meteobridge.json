@@ -276,7 +276,7 @@
                 ],
                 "thb0seapress": [
                     {
-                        "description": "Normalized Station Pressure (Computed to sea level)",
+                        "description": "Station Pressure At Sea Level",
                         "type": "Pressure",
                         "outdoor": true,
                         "battery_parameter": "[thb0lowbat-act:---]",
@@ -519,7 +519,7 @@
             "Energy": {
                 "lgt0dist": [
                     {
-                        "description": "Distance to Lightning",
+                        "description": "Distance to Lightning Strike",
                         "type": "Energy",
                         "outdoor": true,
                         "battery_parameter": "[lgt0lowbat-act:---]",

@@ -28,6 +28,15 @@
 		27ACA78621FE4CD500E226C2 /* pressure.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78521FE4CD500E226C2 /* pressure.png */; };
 		27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78721FE4D4800E226C2 /* solar-energy.png */; };
 		27ACA78A21FE4DEE00E226C2 /* system.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78921FE4DEE00E226C2 /* system.png */; };
+		27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */; };
+		27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */; };
+		27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */; };
+		27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */; };
+		27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */; };
+		27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */; };
+		27ACA79A21FF4CCC00E226C2 /* empty-battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79921FF4CCC00E226C2 /* empty-battery.png */; };
+		27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79B21FF4CD300E226C2 /* full-battery.png */; };
+		27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79D21FF4CDE00E226C2 /* no-battery.png */; };
 		27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA785D21EBA22B000D517D /* QuantumLogger.swift */; };
 		27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 27CA786021EBA7CD000D517D /* .swiftlint.yml */; };
 		27CA786621EBC06A000D517D /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786421EBC06A000D517D /* AboutController.swift */; };
@@ -91,6 +100,15 @@
 		27ACA78521FE4CD500E226C2 /* pressure.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pressure.png; sourceTree = "<group>"; };
 		27ACA78721FE4D4800E226C2 /* solar-energy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "solar-energy.png"; sourceTree = "<group>"; };
 		27ACA78921FE4DEE00E226C2 /* system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = system.png; sourceTree = "<group>"; };
+		27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorCollectionHeader.xib; sourceTree = "<group>"; };
+		27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionHeaderView.swift; sourceTree = "<group>"; };
+		27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionItemController.swift; sourceTree = "<group>"; };
+		27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorCollectionItem.xib; sourceTree = "<group>"; };
+		27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionModel.swift; sourceTree = "<group>"; };
+		27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorImage.swift; sourceTree = "<group>"; };
+		27ACA79921FF4CCC00E226C2 /* empty-battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty-battery.png"; sourceTree = "<group>"; };
+		27ACA79B21FF4CD300E226C2 /* full-battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "full-battery.png"; sourceTree = "<group>"; };
+		27ACA79D21FF4CDE00E226C2 /* no-battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-battery.png"; sourceTree = "<group>"; };
 		27CA785D21EBA22B000D517D /* QuantumLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantumLogger.swift; sourceTree = "<group>"; };
 		27CA786021EBA7CD000D517D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		27CA786421EBC06A000D517D /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
@@ -199,9 +217,10 @@
 			isa = PBXGroup;
 			children = (
 				27E6C5BB21ED58B200548CF0 /* Graphics */,
+				27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */,
 				27CA786821EC19DE000D517D /* QJHyperTextField.swift */,
 				27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */,
-				27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */,
+				27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */,
 			);
 			path = "Custom User Interface Elements";
 			sourceTree = "<group>";
@@ -210,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				27CC8FE921F1816700CDDF66 /* Meteobridge */,
+				27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */,
+				27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -221,6 +242,8 @@
 				27ACA77421FCA99400E226C2 /* BridgePreferences.xib */,
 				27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */,
 				277658DE21EA6063007BA05A /* MainMenu.xib */,
+				27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */,
+				27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -232,6 +255,7 @@
 				27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */,
 				27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */,
 				27A0545721EB8520001F4913 /* MainMenuController.swift */,
+				27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -272,7 +296,10 @@
 				27E6C5BC21ED58C800548CF0 /* books.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
+				27ACA79B21FF4CD300E226C2 /* full-battery.png */,
+				27ACA79921FF4CCC00E226C2 /* empty-battery.png */,
 				27ACA78321FE4BFF00E226C2 /* humidity.png */,
+				27ACA79D21FF4CDE00E226C2 /* no-battery.png */,
 				27ACA78521FE4CD500E226C2 /* pressure.png */,
 				27ACA78721FE4D4800E226C2 /* solar-energy.png */,
 				27ACA78921FE4DEE00E226C2 /* system.png */,
@@ -418,16 +445,21 @@
 				27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */,
 				2780456821EAB9290026E1F7 /* README.md in Resources */,
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,
+				27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */,
 				27CA786721EBC06A000D517D /* About.xib in Resources */,
 				27ACA78621FE4CD500E226C2 /* pressure.png in Resources */,
 				27ACA78A21FE4DEE00E226C2 /* system.png in Resources */,
 				27ACA78421FE4BFF00E226C2 /* humidity.png in Resources */,
 				277658DD21EA6063007BA05A /* Assets.xcassets in Resources */,
 				27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */,
+				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
+				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
+				27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */,
 				27ACA77621FCA99400E226C2 /* BridgePreferences.xib in Resources */,
 				27F8902121F2D24B00F8605E /* Config in Resources */,
 				277658E021EA6063007BA05A /* MainMenu.xib in Resources */,
+				27ACA79A21FF4CCC00E226C2 /* empty-battery.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,17 +560,21 @@
 			files = (
 				27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */,
 				27ACA77821FCB40B00E226C2 /* MeteoCompassView.swift in Sources */,
+				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
 				27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */,
 				277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */,
 				27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */,
+				27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */,
+				27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */,
 				27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */,
 				27F8901D21F2A25D00F8605E /* WeatherPlatform.swift in Sources */,
 				27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */,
 				27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */,
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
+				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,
 				27ACA77A21FE018A00E226C2 /* MeteoPreferences.swift in Sources */,
 				27CA786621EBC06A000D517D /* AboutController.swift in Sources */,
 				27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */,
