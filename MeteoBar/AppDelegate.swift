@@ -80,7 +80,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Parameter aNotification: <#aNotification description#>
     func applicationWillTerminate(_ aNotification: Notification) {
+        updateDefaults()
+    }
+    
+    func updateDefaults() {
         Defaults[.bridgesDefaults]  = theBridge
         Defaults[.meteoBarDefaults] = theDefaults
-    }   
+    }
 }

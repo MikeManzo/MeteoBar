@@ -33,10 +33,15 @@ enum SensorCollectionModelError: Error, CustomStringConvertible {
 ///
 ///
 class SensorCollectionModel: NSObject {
-    private var sections            = [Int: [MeteoSensorImage?]]()
+    private var sections = [Int: [MeteoSensorImage?]]()
+    private var _modelLoaded = false
     
     var numberOfSections: Int {
         return sections.count
+    }
+    
+    var validModel: Bool {
+        return _modelLoaded
     }
     
     ///
@@ -122,6 +127,7 @@ class SensorCollectionModel: NSObject {
                 sections[sectionNumber]?.append(meteoSensor)
             }
         }
+        _modelLoaded = true
         return nil
     }
 
@@ -257,5 +263,6 @@ class SensorCollectionModel: NSObject {
             sections[key]?.removeAll()
         }
         sections.removeAll()
+        _modelLoaded = false
     }
 }

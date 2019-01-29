@@ -27,6 +27,16 @@ enum MeteoSensorCategory: String, Codable { case
     system          = "System"
 }
 
+enum MeteobridgeSensorError: Error, CustomStringConvertible {
+    case sensorNotFound
+    
+    var description: String {
+        switch self {
+        case .sensorNotFound: return "Unable to find unit in available units for given sensor"
+        }
+    }
+}
+
 /// Atomic class to describe a Meteobridge sensor
 class MeteobridgeSensor: NSObject, Codable, Copyable {
     var supportedUnits = [MeteoSensorUnit]()
@@ -157,5 +167,35 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         default:
             batteryStatus = .unknown
         }
+    }
+    
+    /// Update the sensor with one of the validated (and available) units
+    ///
+    /// - Parameter stringUnit: Desired Unit
+    /// - Returns: success or falure of the set
+    ///
+    func setCurrentUnit(stringUnit: String) -> Error? {
+        guard let unit = supportedUnits.filter({ $0.name == stringUnit}).first else {
+            return MeteobridgeSensorError.sensorNotFound
+        }
+        
+        return setCurrentUnit(meteoUnit: unit)
+    }
+    
+    /// Update the sensor with one of the validated (and available) units
+    ///
+    /// - Parameter meteoUnit: Sensor Unit
+    /// - Returns: success or falure of the set
+    ///
+    func setCurrentUnit(meteoUnit: MeteoSensorUnit) -> Error? {
+
+        guard let currentUnit = supportedUnits.filter({ $0.isCurrent == true}).first else {
+            return MeteobridgeSensorError.sensorNotFound
+        }
+
+        currentUnit.isCurrent   = false
+        meteoUnit.isCurrent     = true
+
+        return nil
     }
 }

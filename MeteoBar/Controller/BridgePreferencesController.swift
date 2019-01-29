@@ -41,7 +41,7 @@ class BridgePreferencesController: NSViewController, Preferenceable {
         flowLayout.minimumLineSpacing       = 5.0
         
         collectionView.collectionViewLayout = flowLayout
-        collectionView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeImage as String)])
+//        collectionView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeImage as String)])
         collectionView.setDraggingSourceOperationMask(.every, forLocal: true)
         collectionView.setDraggingSourceOperationMask(.every, forLocal: false)
     }
@@ -81,11 +81,13 @@ class BridgePreferencesController: NSViewController, Preferenceable {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        collectionView.reloadData()
+  //      collectionView.reloadData()
     }
     
     /// Cleanup and save data to user preferences
     override func viewDidDisappear() {
+        super.viewDidDisappear()
+        
         compassView.updatePreferences()
     }
     
@@ -357,7 +359,7 @@ extension BridgePreferencesController: NSCollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> NSSize {
         
-        return NSSize(width: 137, height: 110)
+        return NSSize(width: 146, height: 110)
     }
     
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

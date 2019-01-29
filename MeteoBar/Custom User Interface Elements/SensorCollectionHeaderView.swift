@@ -8,6 +8,7 @@
 
 import Cocoa
 
+/// Helper for the header in the collectionview of the bridge configuration in preferences
 class SensorCollectionHeaderView: NSView {
 
     @IBOutlet weak var sensorIcon: NSImageView!

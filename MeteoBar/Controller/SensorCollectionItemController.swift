@@ -29,7 +29,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
                     sensorImage?.contentFilters = ([filter] as? [CIFilter])!
                 }
                 
-                // Update the units & select the current
+                // Populate the Popup with the available units & select the unit currently collecting
                 guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: imageFile.sensorID!) else {
                     log.warning("Unable to find a sensor with ID:\(imageFile.sensorID!)")
                     return
@@ -41,16 +41,19 @@ class SensorCollectionItemController: NSCollectionViewItem {
                       sensorUnits.selectItem(withTitle: unit.name)
                     }
                 }
-                // Update the units & select the current
+                // Populate the Popup with the available units & select the unit currently collecting
 
                 // Update the battery status
                 switch sensor.batteryStatus {
                 case .good:
-                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "full-battery.png")!.filter(filter: "CIColorInvert") : NSImage(named: "full-battery.png")
+                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "full-battery.png")!.filter(filter: "CIColorInvert") :
+                        NSImage(named: "full-battery.png")
                 case .low:
-                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "empty-battery.png")!.filter(filter: "CIColorInvert") : NSImage(named: "empty-battery.png")
+                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "empty-battery.png")!.filter(filter: "CIColorInvert") :
+                        NSImage(named: "empty-battery.png")
                 case .unknown:
-                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "no-battery.png")!.filter(filter: "CIColorInvert") : NSImage(named: "no-battery.png")
+                    sensorBattery.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "no-battery.png")!.filter(filter: "CIColorInvert") :
+                        NSImage(named: "no-battery.png")
                 }
                 // Update the battery status
 
@@ -71,9 +74,10 @@ class SensorCollectionItemController: NSCollectionViewItem {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.wantsLayer                 = true
+
         view.layer?.backgroundColor     = NSColor.controlBackgroundColor.cgColor
         view.layer?.borderColor         = NSColor.systemBlue.cgColor
-        view.wantsLayer                 = true
         view.layer?.borderWidth         = 0.0
     }
     
@@ -105,6 +109,23 @@ class SensorCollectionItemController: NSCollectionViewItem {
     override var isSelected: Bool {
         didSet {
             view.layer?.borderWidth = isSelected ? 2.0 : 0.0
+        }
+    }
+    
+    /// Update the sensor with the selected unit
+    ///
+    /// - Parameter sender: NSPopUpButton that has changed
+    ///
+    @IBAction func unitChanged(_ sender: NSPopUpButton) {
+        guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: imageFile!.sensorID!) else {
+            log.warning("Unable to find a sensor with ID:\(imageFile!.sensorID!)")
+            return
+        }
+        
+        if let error = sensor.setCurrentUnit(stringUnit: (sender.selectedItem?.title)!) {
+            log.error(error.localizedDescription)
+        } else {
+            log.info("Sensor:\(imageFile?.sensorID ?? "UNKNOWN") colelction unit has changed to: \(sender.selectedItem?.title ?? "UNKNOWN")")
         }
     }
 }
