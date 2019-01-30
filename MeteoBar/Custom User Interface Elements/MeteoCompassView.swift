@@ -27,6 +27,8 @@ class MeteoCompassView: SKView {
     var compassFace: SKShapeNode?
     var centerNode: SKShapeNode?
     var theKitScene: SKScene?
+    
+    var testViews = [CollectionItemDropView]()
 
     // MARK: - Overrides
     override convenience init(frame frameRect: NSRect) {
@@ -89,6 +91,35 @@ class MeteoCompassView: SKView {
         fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
                 
         self.presentScene(theKitScene)
+        
+        /// TESTING
+        var viewPoint = theKitScene!.convertPoint(toView: midPoint)
+        viewPoint.x += 8
+        viewPoint.y += 9
+        
+        var testView = CollectionItemDropView(identifier: "Upper Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+        testView.wantsLayer = true
+        testView.delegate = self
+        testViews.append(testView)
+
+        viewPoint.x -= 97
+        testView = CollectionItemDropView(identifier: "Upper Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+        testViews.append(testView)
+
+        viewPoint.y -= 107
+        testView = CollectionItemDropView(identifier: "Lower Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+        testViews.append(testView)
+
+        viewPoint = theKitScene!.convertPoint(toView: midPoint)
+        viewPoint.x += 8
+        viewPoint.y -= 97
+        testView = CollectionItemDropView(identifier: "Lower Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+        testViews.append(testView)
+        
+        for myView in testViews {
+            addSubview(myView)
+        }
+        /// TESTING
       }
     
     // MARK: - Shapes
@@ -319,7 +350,7 @@ class MeteoCompassView: SKView {
         let upperRightMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
                                                         scene: theKitScene!)
-        let upperRightMajorLabel: SKLabelNode = SKLabelNode(text: "UL Major")
+        let upperRightMajorLabel: SKLabelNode = SKLabelNode(text: "") // UL Major
         upperRightMajorLabel.verticalAlignmentMode = .center
         upperRightMajorLabel.horizontalAlignmentMode = .center
         upperRightMajorLabel.fontSize = 18
@@ -330,7 +361,7 @@ class MeteoCompassView: SKView {
         let upperRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
                                                         scene: theKitScene!)
-        let upperRightMinorLabel: SKLabelNode = SKLabelNode(text: "UL Minor")
+        let upperRightMinorLabel: SKLabelNode = SKLabelNode(text: "") // UL Minor
         upperRightMinorLabel.verticalAlignmentMode = .center
         upperRightMinorLabel.horizontalAlignmentMode = .center
         upperRightMinorLabel.fontSize = 12
@@ -342,7 +373,7 @@ class MeteoCompassView: SKView {
         let upperLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
                                                        scene: theKitScene!)
-        let upperLeftMajorLabel: SKLabelNode = SKLabelNode(text: "UR Major")
+        let upperLeftMajorLabel: SKLabelNode = SKLabelNode(text: "") // UR Major
         upperLeftMajorLabel.verticalAlignmentMode = .center
         upperLeftMajorLabel.horizontalAlignmentMode = .center
         upperLeftMajorLabel.fontSize = 18
@@ -353,7 +384,7 @@ class MeteoCompassView: SKView {
         let upperLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.156),
                                                        scene: theKitScene!)
-        let upperLeftMinorLabel: SKLabelNode = SKLabelNode(text: "UR Minor")
+        let upperLeftMinorLabel: SKLabelNode = SKLabelNode(text: "") // UR Minor
         upperLeftMinorLabel.verticalAlignmentMode = .center
         upperLeftMinorLabel.horizontalAlignmentMode = .center
         upperLeftMinorLabel.fontSize = 12
@@ -365,7 +396,7 @@ class MeteoCompassView: SKView {
         let lowerRightMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
                                                         scene: theKitScene!)
-        let lowerRightMajorLabel: SKLabelNode = SKLabelNode(text: "LL Major")
+        let lowerRightMajorLabel: SKLabelNode = SKLabelNode(text: "") // LL Major
         lowerRightMajorLabel.verticalAlignmentMode = .center
         lowerRightMajorLabel.horizontalAlignmentMode = .center
         lowerRightMajorLabel.fontSize = 18
@@ -376,7 +407,7 @@ class MeteoCompassView: SKView {
         let lowerRightMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
                                                         scene: theKitScene!)
-        let lowerRightMinorLabel: SKLabelNode = SKLabelNode(text: "LL Minor")
+        let lowerRightMinorLabel: SKLabelNode = SKLabelNode(text: "") // LL Minor
         lowerRightMinorLabel.verticalAlignmentMode = .center
         lowerRightMinorLabel.horizontalAlignmentMode = .center
         lowerRightMinorLabel.fontSize = 12
@@ -388,7 +419,7 @@ class MeteoCompassView: SKView {
         let lowerLeftMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
                                                        scene: theKitScene!)
-        let lowerLeftMajorLabel: SKLabelNode = SKLabelNode(text: "LR Major")
+        let lowerLeftMajorLabel: SKLabelNode = SKLabelNode(text: "") // LR Major
         lowerLeftMajorLabel.verticalAlignmentMode = .center
         lowerLeftMajorLabel.horizontalAlignmentMode = .center
         lowerLeftMajorLabel.fontSize = 18
@@ -399,12 +430,26 @@ class MeteoCompassView: SKView {
         let lowerLeftMinor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.125),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.515),
                                                        scene: theKitScene!)
-        let lowerLeftMinorLabel: SKLabelNode = SKLabelNode(text: "LR Minor")
+        let lowerLeftMinorLabel: SKLabelNode = SKLabelNode(text: "") // LR Minor
         lowerLeftMinorLabel.verticalAlignmentMode = .center
         lowerLeftMinorLabel.horizontalAlignmentMode = .center
         lowerLeftMinorLabel.fontSize = 12
         lowerLeftMinor.addChild(lowerLeftMinorLabel)
         lowerLeftMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         lowerLeftMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
+    }
+}
+
+extension MeteoCompassView: CollectionItemDropViewDelegate {
+    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFileWithURL URL: URL) {
+        log.info("Hello!")
+    }
+    
+    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFilesWithURLs URLs: [URL]) {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = "Please drop only one file"
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
     }
 }

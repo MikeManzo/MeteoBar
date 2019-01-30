@@ -245,10 +245,24 @@ extension BridgePreferencesController: NSCollectionViewDelegate {
         return true
     }
     
+    /// Prepare the dragged item to be the sensorID associated wiht the dragged image
+    ///
+    /// Original return was: <return sensorImage.thumb> --> This wrote a TIFF image to the pasteboard
+    /// Changed it to return the sensorID so the reciever can do whatever w/ it
+    ///
+    /// ///  # Notes #
+    ///  - [Inspired By](https://github.com/cupnoodle/ADragDropView)
+    ///  - [Custom Pastebord](http://swiftrien.blogspot.com/2015/06/using-drag-drop-from-swift.html)
+    ///
+    /// - Parameters:
+    ///   - collectionView: <#collectionView description#>
+    ///   - indexPath: <#indexPath description#>
+    /// - Returns: string representing the sensorID of the dragged image
+    ///
     func collectionView(_ collectionView: NSCollectionView, pasteboardWriterForItemAt indexPath: IndexPath) -> NSPasteboardWriting? {
         let sensorImage = sensorCollectionModel.sensorImageForIndexPath((indexPath as NSIndexPath) as IndexPath)
         
-        return sensorImage.thumb
+        return sensorImage.sensorID! as NSPasteboardWriting
     }
     
     func collectionView(_ collectionView: NSCollectionView, draggingSession session: NSDraggingSession,
