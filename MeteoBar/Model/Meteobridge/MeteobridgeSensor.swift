@@ -59,6 +59,25 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
             _measurement.update(observation: newValue)
         }
     }
+
+    /// Current Unit
+    var currentUnit: MeteoSensorUnit? {
+        return supportedUnits.filter {$0.isCurrent == true}.first
+    }
+    
+    /// Formatted Measurement
+    var formattedMeasurement: String? {
+        var prettyMeasurement: String?
+        
+        switch category {
+        case .energy, .humidity, .pressure, .rain, .solar, .wind, .temperature:
+            prettyMeasurement = String("\(measurement.value ?? "--") \(currentUnit!.representation)")
+        case .system:
+            break
+        }
+        
+        return prettyMeasurement
+    }
     
     /// Observing property
     var isObserving: Bool {

@@ -49,7 +49,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DmE-NY-rfz" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DmE-NY-rfz" customClass="MeteoCompassSettingsView" customModule="MeteoBar" customModuleProvider="target">
                     <rect key="frame" x="499" y="20" width="400" height="400"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>

@@ -72,6 +72,19 @@ final class MeteoSensorNodePair {
         }
     }
     
+    /// Update the pair with the latest data
+    ///
+    /// - Returns: true if we succeeded; false if we could not find the sensor
+    ///
+    func update() {
+        if _sensorID != nil {
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: _sensorID!) else {
+                return
+            }
+            majorText = sensor.formattedMeasurement
+        }
+    }
+    
     /// <#Description#>
     ///
     /// - Parameters:

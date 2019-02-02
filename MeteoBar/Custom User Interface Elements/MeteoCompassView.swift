@@ -39,20 +39,7 @@ class MeteoCompassView: SKView {
     var centerNode: SKShapeNode?
     var theKitScene: SKScene?
     
-    // MARK: - Sensors
-    var dropViews   = [CollectionItemDropView]()    // Sensor "Vew" Drop Sites
-    
-    ///
-    /// These represent the dictonaries for the quadrants; each quadrant has a major and minor sensor
-    /// The structure is as follows:
-    /// upperLeft will have two nodes:
-    ///     "Major"
-    ///     "Minor"
-    ///     Then, each node has a sensor ID associated with it's node:
-    ///         variable  == ["Tag" : "SensorID" : ShapeNodeObject]
-    ///         upperLeft == ["Major" : "lgt0dist" : "ShapeNode1"]
-    ///         upperLeft == ["Minor" : "wind0dir" : "ShapeNode2"]
-    ///
+    // MARK: - Sensor Pairs
     var upperLeft: MeteoSensorNodePair?     // Upper Left Sensor Grouping <major, minor>
     var upperRight: MeteoSensorNodePair?    // Upper Right Sensor Grouping <major, minor>
     var lowerLeft: MeteoSensorNodePair?     // Lower Left Sensor Grouping <major, minor>
@@ -119,42 +106,7 @@ class MeteoCompassView: SKView {
         fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
                 
         self.presentScene(theKitScene)
-        
-        /// TESTING
-        var viewPoint = theKitScene!.convertPoint(toView: midPoint)
-        viewPoint.x += 8
-        viewPoint.y += 9
-        
-        var dropView = CollectionItemDropView(identifier: "Upper Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        dropViews.append(dropView)
-
-        viewPoint.x -= 97
-        dropView = CollectionItemDropView(identifier: "Upper Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        dropViews.append(dropView)
-
-        viewPoint.y -= 107
-        dropView = CollectionItemDropView(identifier: "Lower Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        dropViews.append(dropView)
-
-        viewPoint = theKitScene!.convertPoint(toView: midPoint)
-        viewPoint.x += 8
-        viewPoint.y -= 97
-        dropView = CollectionItemDropView(identifier: "Lower Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        dropViews.append(dropView)
-        
-        for myView in dropViews {
-            addSubview(myView)
-        }
-        /// TESTING
-      }
+    }
     
     // MARK: - Shapes
 
@@ -478,31 +430,5 @@ class MeteoCompassView: SKView {
         LRMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
         lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor)
-    }
-}
-
-extension MeteoCompassView: CollectionItemDropViewDelegate {
-    func dragDropView(_ dragDropView: CollectionItemDropView, uuID: String, dropValue: String) {
-        log.info("[**\(uuID)**] recieved a valid sensor drop for:\(dropValue)")
-        switch uuID {
-        case "Upper Left":
-            if upperLeft != nil {
-                upperLeft?.sensorID = dropValue
-            }
-        case "Upper Right":
-            if upperRight != nil {
-                upperRight?.sensorID = dropValue
-            }
-        case "Lower Left":
-            if lowerLeft != nil {
-                lowerLeft?.sensorID = dropValue
-            }
-        case "Lower Right":
-            if lowerRight != nil {
-                lowerRight?.sensorID = dropValue
-            }
-        default:
-            log.error(MeteoCompassViewError.unknownView)
-        }
     }
 }
