@@ -97,13 +97,13 @@ public final class CollectionItemDropView: NSView {
         let offset = -size / 6.0
         let arrowColor = NSColor.gray
 
-        arrowPath.move(to: CGPoint(x: bounds.size.width / 2.0 - baseWidth, y: bounds.size.height / 2.0 + baseHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + baseWidth, y: bounds.size.height / 2.0 + baseHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + baseWidth, y: bounds.size.height / 2.0 - baseHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + arrowWidth, y: bounds.size.height / 2.0 - baseHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0, y: bounds.size.height / 2.0 - pointHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 - arrowWidth, y: bounds.size.height / 2.0 - baseHeight - offset))
-        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 - baseWidth, y: bounds.size.height / 2.0 - baseHeight - offset))
+        arrowPath.move(to: CGPoint(x: bounds.size.width / 2.0 - baseWidth, y: bounds.size.height / 2.0 + baseHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + baseWidth, y: bounds.size.height / 2.0 + baseHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + baseWidth, y: bounds.size.height / 2.0 - baseHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 + arrowWidth, y: bounds.size.height / 2.0 - baseHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0, y: bounds.size.height / 2.0 - pointHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 - arrowWidth, y: bounds.size.height / 2.0 - baseHeight - offset+8))
+        arrowPath.line(to: CGPoint(x: bounds.size.width / 2.0 - baseWidth, y: bounds.size.height / 2.0 - baseHeight - offset+8))
         arrowColor.set()
         arrowColor.setFill()
         arrowPath.fill()
@@ -112,13 +112,13 @@ public final class CollectionItemDropView: NSView {
         paragraphStyle.alignment = .center
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
-            .font: NSFont.systemFont(ofSize: 14.0),
+            .font: NSFont.systemFont(ofSize: 12.0),
             .foregroundColor: NSColor.white
         ]
         
-        let myText = "Drop"
+        let myText = "Sensor Drop"
         let attributedString = NSAttributedString(string: myText, attributes: attributes)
-        let stringRect = CGRect(x: 8.0 , y: height - 50, width: bounds.size.width - 16.0, height: bounds.size.height - 8.0)
+        let stringRect = CGRect(x: 8.0 , y: height - 37, width: bounds.size.width - 16.0, height: bounds.size.height - 8.0)
         attributedString.draw(in: stringRect)
     }
 
@@ -153,7 +153,7 @@ public final class CollectionItemDropView: NSView {
             return false
         }
         
-        log.info("View:\(_uniqueIdentifier!) recieved a valid sensor drop for:\(sensorID)")
+        delegate?.dragDropView(self, uuID: _uniqueIdentifier!, dropValue: sensorID)
 
         return true
     }
@@ -172,12 +172,5 @@ public final class CollectionItemDropView: NSView {
 }
 
 public protocol CollectionItemDropViewDelegate: class {
-    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFileWithURL  URL: URL)
-    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFilesWithURLs URLs: [URL])
-}
-
-extension CollectionItemDropViewDelegate {
-    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFileWithURL  URL: URL) {}
-    
-    func dragDropView(_ dragDropView: CollectionItemDropView, droppedFilesWithURLs URLs: [URL]) {}
+    func dragDropView(_ dragDropView: CollectionItemDropView, uuID: String, dropValue: String)
 }
