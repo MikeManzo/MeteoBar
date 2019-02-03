@@ -20,6 +20,10 @@ enum CodingKeys: String, CodingKey {
     case compassRingColor
     case compassFaceColor
     case compassCaratColor
+    case compassULSensor
+    case compassURSensor
+    case compassLLSensor
+    case compassLRSensor
 }
 
 ///
@@ -27,7 +31,6 @@ enum CodingKeys: String, CodingKey {
 /// To clear the defaults, open terminal and type: defaults delete com.quantumjoker.MeteoBar
 ///
 final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
-
     // MARK: - Compass Preferences
     var compassCardinalMinorTickColor: SKColor = SKColor.white
     var compassCardinalMajorTickColor: SKColor = SKColor.blue
@@ -38,6 +41,10 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var compassFaceColor: SKColor = SKColor.black
     var compassCaratColor: SKColor = SKColor.red
     var compassShowSensorBox: Bool = false
+    var compassULSensor: String = ""
+    var compassURSensor: String = ""
+    var compassLLSensor: String = ""
+    var compassLRSensor: String = ""
 
     // MARK: - Codable Compliance
     
@@ -79,6 +86,18 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
 
         colorData = try container.decode(Data.self, forKey: .compassCrosshairColor)
         compassCrosshairColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
+    
+        var strSensor = try container.decode(Data.self, forKey: .compassULSensor)
+        compassULSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
+        
+        strSensor = try container.decode(Data.self, forKey: .compassURSensor)
+        compassURSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
+
+        strSensor = try container.decode(Data.self, forKey: .compassLLSensor)
+        compassLLSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
+
+        strSensor = try container.decode(Data.self, forKey: .compassLRSensor)
+        compassLRSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
     }
     
     /// We have to roll our own Codable class due to SKColor (aka NSColor)
@@ -112,5 +131,17 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         
         colorData = NSKeyedArchiver.archivedData(withRootObject: compassCrosshairColor)
         try container.encode(colorData, forKey: .compassCrosshairColor)
+        
+        var strSensor = NSKeyedArchiver.archivedData(withRootObject: compassULSensor)
+        try container.encode(strSensor, forKey: .compassULSensor)
+
+        strSensor = NSKeyedArchiver.archivedData(withRootObject: compassURSensor)
+        try container.encode(strSensor, forKey: .compassURSensor)
+
+        strSensor = NSKeyedArchiver.archivedData(withRootObject: compassLLSensor)
+        try container.encode(strSensor, forKey: .compassLLSensor)
+
+        strSensor = NSKeyedArchiver.archivedData(withRootObject: compassLRSensor)
+        try container.encode(strSensor, forKey: .compassLRSensor)
     }
 }

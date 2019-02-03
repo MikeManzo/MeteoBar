@@ -22,18 +22,36 @@ class MeteoCompassSettingsView: MeteoCompassView {
         var dropView = CollectionItemDropView(identifier: "Upper Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
         dropView.wantsLayer = true
         dropView.delegate = self
+        if (theDelegate?.theDefaults?.compassURSensor.isEmpty)! {
+           dropView.showDrop = true
+        } else {
+            upperRight?.update()
+            dropView.showDrop = false
+        }
         dropViews.append(dropView)
         
         viewPoint.x -= 97
         dropView = CollectionItemDropView(identifier: "Upper Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
         dropView.wantsLayer = true
         dropView.delegate = self
+        if (theDelegate?.theDefaults?.compassULSensor.isEmpty)! {
+            dropView.showDrop = true
+        } else {
+            upperLeft?.update()
+            dropView.showDrop = false
+        }
         dropViews.append(dropView)
         
         viewPoint.y -= 107
         dropView = CollectionItemDropView(identifier: "Lower Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
         dropView.wantsLayer = true
         dropView.delegate = self
+        if (theDelegate?.theDefaults?.compassLLSensor.isEmpty)! {
+            dropView.showDrop = true
+        } else {
+            lowerLeft?.update()
+            dropView.showDrop = false
+        }
         dropViews.append(dropView)
         
         viewPoint = theKitScene!.convertPoint(toView: midPoint)
@@ -42,11 +60,21 @@ class MeteoCompassSettingsView: MeteoCompassView {
         dropView = CollectionItemDropView(identifier: "Lower Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
         dropView.wantsLayer = true
         dropView.delegate = self
+        if (theDelegate?.theDefaults?.compassLRSensor.isEmpty)! {
+            dropView.showDrop = true
+        } else {
+            lowerRight?.update()
+            dropView.showDrop = false
+        }
         dropViews.append(dropView)
         
         for myView in dropViews {
             addSubview(myView)
         }
+    }
+    
+    override func updatePreferences() {
+        super.updatePreferences()
     }
 }
 

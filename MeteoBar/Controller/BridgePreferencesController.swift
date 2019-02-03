@@ -16,7 +16,7 @@ class BridgePreferencesController: NSViewController, Preferenceable {
     let toolbarItemIcon = NSImage(named: NSImage.preferencesGeneralName)!
     
     // MARK: - Outlets
-    @IBOutlet weak var compassView: MeteoCompassView!
+    @IBOutlet weak var compassView: MeteoCompassSettingsView!
     @IBOutlet weak var collectionView: NSCollectionView!
     
     // Custom Properties
@@ -80,8 +80,6 @@ class BridgePreferencesController: NSViewController, Preferenceable {
     ///
     override func viewDidAppear() {
         super.viewDidAppear()
-        
-  //      collectionView.reloadData()
     }
     
     /// Cleanup and save data to user preferences

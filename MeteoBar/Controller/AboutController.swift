@@ -41,9 +41,16 @@ class AboutController: NSViewController {
          "copyHolder": "Iconfu",
          "copyURL": "https://iconfu.com"
         ],
-        ["copyImage": "empty-battery-green.png",
+        ["copyImage": "unknown-battery-color.png",
          "copyType": "Icon",
-         "invertable": "yes",
+         "invertable": "no",
+         "copyName": "Unknown Battery Icon (Yellow)",
+         "copyHolder": "Icons8",
+         "copyURL": "https://icons8.it/icon/53345/batterie-inconnue"
+        ],
+        ["copyImage": "empty-battery-color.png",
+         "copyType": "Icon",
+         "invertable": "no",
          "copyName": "Empty Battery Icon (Red)",
          "copyHolder": "Round Icons",
          "copyURL": "https://www.flaticon.com/authors/roundicons"
@@ -55,9 +62,9 @@ class AboutController: NSViewController {
          "copyHolder": "Freepik",
          "copyURL": "https://www.freepik.com/"
         ],
-        ["copyImage": "full-battery-green.png",
+        ["copyImage": "full-battery-color.png",
          "copyType": "Icon",
-         "invertable": "yes",
+         "invertable": "no",
          "copyName": "Full Battery Icon (Green)",
          "copyHolder": "Round Icons",
          "copyURL": "https://www.flaticon.com/authors/roundicons"

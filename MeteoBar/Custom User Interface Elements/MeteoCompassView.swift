@@ -51,18 +51,22 @@ class MeteoCompassView: SKView {
     }
     
     /// Make sure we save the user's preferences for the compass
-    func updatePreferences() {
+    open func updatePreferences() {
         log.info("ToDo: Compass Prferences Saved ...")
 /*
-        (theDelegate?.theDefaults?.compassCardinalMinorTickColor)! =
-        (theDelegate?.theDefaults?.compassCardinalMajorTickColor)! =
-        (theDelegate?.theDefaults?.compassCrosshairColor)! =
-        (theDelegate?.theDefaults?.compassRingColor)! =
-        (theDelegate?.theDefaults?.compassFrameColor)! =
-        (theDelegate?.theDefaults?.compassFaceColor)! =
-        (theDelegate?.theDefaults?.compassCaratColor)! =
-        (theDelegate?.theDefaults?.compassShowSensorBox)! = false
+        theDelegate?.theDefaults?.compassCardinalMinorTickColor =
+        theDelegate?.theDefaults?.compassCardinalMajorTickColor =
+        theDelegate?.theDefaults?.compassCrosshairColor =
+        theDelegate?.theDefaults?.compassRingColor =
+        theDelegate?.theDefaults?.compassFrameColor =
+        theDelegate?.theDefaults?.compassFaceColor =
+        theDelegate?.theDefaults?.compassCaratColor =
+        theDelegate?.theDefaults?.compassShowSensorBox =
 */
+        theDelegate?.theDefaults?.compassULSensor = (upperLeft?.sensorID)!
+        theDelegate?.theDefaults?.compassURSensor = (upperRight?.sensorID)!
+        theDelegate?.theDefaults?.compassLLSensor = (lowerLeft?.sensorID)!
+        theDelegate?.theDefaults?.compassLRSensor = (lowerRight?.sensorID)!
     }
     
     ///
@@ -360,7 +364,7 @@ class MeteoCompassView: SKView {
         ULBattery.isHidden = true
         ULMajor.addChild(ULBattery)
         
-        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery)
+        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery, sensorID: theDelegate?.theDefaults?.compassULSensor)
         
         // Upper Right
         let URMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -391,7 +395,7 @@ class MeteoCompassView: SKView {
         URBattery.isHidden = true
         URMajor.addChild(URBattery)
 
-        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery)
+        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery, sensorID: theDelegate?.theDefaults?.compassURSensor)
         
         // Lower Left
         let LLMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -422,7 +426,7 @@ class MeteoCompassView: SKView {
         LLBattery.isHidden = true
         LLMajor.addChild(LLBattery)
         
-        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery)
+        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery, sensorID: theDelegate?.theDefaults?.compassLLSensor)
 
         // Lower Right
         let LRMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -453,6 +457,6 @@ class MeteoCompassView: SKView {
         LRBattery.isHidden = true
         LRMajor.addChild(LRBattery)
         
-        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery)
+        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery, sensorID: theDelegate?.theDefaults?.compassLRSensor)
     }
 }
