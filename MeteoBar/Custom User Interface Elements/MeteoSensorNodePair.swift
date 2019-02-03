@@ -14,6 +14,7 @@ import SceneKit
 final class MeteoSensorNodePair {
     private var _majorNode: SKShapeNode?
     private var _minorNode: SKShapeNode?
+    private var _battery: SKSpriteNode?
     private var _sensorID: String?
     
     /// Major Shape Node
@@ -24,6 +25,10 @@ final class MeteoSensorNodePair {
     /// Minor Shape Node
     var minor: SKShapeNode? {
         return _minorNode
+    }
+
+    var battery: SKSpriteNode? {
+        return _battery
     }
     
     /// Sensor ID assigned to the pair
@@ -82,6 +87,16 @@ final class MeteoSensorNodePair {
                 return
             }
             majorText = sensor.formattedMeasurement
+            
+            battery?.isHidden = false
+            switch sensor.batteryStatus {
+            case .good:
+                battery?.texture = SKTexture(imageNamed: "full-battery-color")
+            case .low:
+                battery?.texture = SKTexture(imageNamed: "empty-battery-color")
+            case .unknown:
+                battery?.texture = SKTexture(imageNamed: "unknown-battery-color")
+            }
         }
     }
     
@@ -92,8 +107,9 @@ final class MeteoSensorNodePair {
     ///   - minor: preformed SKShapeNode representing the major node
     ///   - sensorID: sensorID assigned to teh node
     ///
-    init(major: SKShapeNode, minor: SKShapeNode, sensorID: String? = nil) {
+    init(major: SKShapeNode, minor: SKShapeNode, battery: SKSpriteNode, sensorID: String? = nil) {
         _sensorID   = sensorID
+        _battery    = battery
         _majorNode  = major
         _minorNode  = minor
     }

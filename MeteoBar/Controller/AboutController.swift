@@ -41,12 +41,26 @@ class AboutController: NSViewController {
          "copyHolder": "Iconfu",
          "copyURL": "https://iconfu.com"
         ],
+        ["copyImage": "empty-battery-green.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Empty Battery Icon (Red)",
+         "copyHolder": "Round Icons",
+         "copyURL": "https://www.flaticon.com/authors/roundicons"
+        ],
         ["copyImage": "energy.png",
          "copyType": "Icon",
          "invertable": "yes",
          "copyName": "Energy Sensor Icon",
          "copyHolder": "Freepik",
          "copyURL": "https://www.freepik.com/"
+        ],
+        ["copyImage": "full-battery-green.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Full Battery Icon (Green)",
+         "copyHolder": "Round Icons",
+         "copyURL": "https://www.flaticon.com/authors/roundicons"
         ],
         ["copyImage": "humidity.png",
          "copyType": "Icon",

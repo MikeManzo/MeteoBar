@@ -48,6 +48,9 @@
 		27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */; };
 		27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */; };
 		27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */; };
+		27CF0429220735D9007DFFDF /* full-battery-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF0428220735D9007DFFDF /* full-battery-color.png */; };
+		27CF042B22073675007DFFDF /* empty-battery-rcolor.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF042A22073675007DFFDF /* empty-battery-rcolor.png */; };
+		27CF042D22073A18007DFFDF /* unknown-battery-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF042C22073A18007DFFDF /* unknown-battery-color.png */; };
 		27E6C5BD21ED58C800548CF0 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C5BC21ED58C800548CF0 /* books.png */; };
 		27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C5BE21ED595500548CF0 /* QLExtensions.swift */; };
 		27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F8901A21F252BA00F8605E /* Meteobridge.swift */; };
@@ -123,6 +126,9 @@
 		27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QJQuickResponseTableView.swift; sourceTree = "<group>"; };
 		27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteobridgeSensor.swift; sourceTree = "<group>"; };
 		27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorUnit.swift; sourceTree = "<group>"; };
+		27CF0428220735D9007DFFDF /* full-battery-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "full-battery-color.png"; sourceTree = "<group>"; };
+		27CF042A22073675007DFFDF /* empty-battery-rcolor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "empty-battery-rcolor.png"; sourceTree = "<group>"; };
+		27CF042C22073A18007DFFDF /* unknown-battery-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unknown-battery-color.png"; sourceTree = "<group>"; };
 		27E6C5BC21ED58C800548CF0 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		27E6C5BE21ED595500548CF0 /* QLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLExtensions.swift; sourceTree = "<group>"; };
 		27F8901A21F252BA00F8605E /* Meteobridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meteobridge.swift; sourceTree = "<group>"; };
@@ -305,14 +311,17 @@
 				27E6C5BC21ED58C800548CF0 /* books.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
+				27CF0428220735D9007DFFDF /* full-battery-color.png */,
 				27ACA79B21FF4CD300E226C2 /* full-battery.png */,
 				27ACA79921FF4CCC00E226C2 /* empty-battery.png */,
+				27CF042A22073675007DFFDF /* empty-battery-rcolor.png */,
 				27ACA78321FE4BFF00E226C2 /* humidity.png */,
 				27ACA79D21FF4CDE00E226C2 /* no-battery.png */,
 				27ACA78521FE4CD500E226C2 /* pressure.png */,
 				27ACA78721FE4D4800E226C2 /* solar-energy.png */,
 				27ACA78921FE4DEE00E226C2 /* system.png */,
 				27ACA77B21FE492100E226C2 /* thermometer.png */,
+				27CF042C22073A18007DFFDF /* unknown-battery-color.png */,
 				27ACA77D21FE4A1A00E226C2 /* wind-sock.png */,
 			);
 			path = Graphics;
@@ -452,13 +461,16 @@
 				27ACA77E21FE4A1A00E226C2 /* wind-sock.png in Resources */,
 				27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */,
 				27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */,
+				27CF042B22073675007DFFDF /* empty-battery-rcolor.png in Resources */,
 				2780456821EAB9290026E1F7 /* README.md in Resources */,
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,
+				27CF0429220735D9007DFFDF /* full-battery-color.png in Resources */,
 				27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */,
 				27CA786721EBC06A000D517D /* About.xib in Resources */,
 				27ACA78621FE4CD500E226C2 /* pressure.png in Resources */,
 				27ACA78A21FE4DEE00E226C2 /* system.png in Resources */,
 				27ACA78421FE4BFF00E226C2 /* humidity.png in Resources */,
+				27CF042D22073A18007DFFDF /* unknown-battery-color.png in Resources */,
 				277658DD21EA6063007BA05A /* Assets.xcassets in Resources */,
 				27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */,
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,

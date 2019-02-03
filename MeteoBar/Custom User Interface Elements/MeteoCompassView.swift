@@ -104,7 +104,7 @@ class MeteoCompassView: SKView {
         drawCardinalDirections(scene: theKitScene!)
         
         fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
-                
+        
         self.presentScene(theKitScene)
     }
     
@@ -354,7 +354,13 @@ class MeteoCompassView: SKView {
         ULMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         ULMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
-        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor)
+        let ULBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
+        ULBattery.size = CGSize(width: 18.0, height: 18.0)
+        ULBattery.position = CGPoint(x: ULMajor.frame.width - 50.0, y: (ULMajor.frame.height / 2.0) - 8.0)
+        ULBattery.isHidden = true
+        ULMajor.addChild(ULBattery)
+        
+        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery)
         
         // Upper Right
         let URMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -378,8 +384,14 @@ class MeteoCompassView: SKView {
         URMinor.addChild(URMinorLabel)
         URMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         URMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
+        
+        let URBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
+        URBattery.size = CGSize(width: 18.0, height: 18.0)
+        URBattery.position = CGPoint(x: URMajor.frame.width - 50.0, y: (URMajor.frame.height / 2.0) - 8.0)
+        URBattery.isHidden = true
+        URMajor.addChild(URBattery)
 
-        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor)
+        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery)
         
         // Lower Left
         let LLMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -404,7 +416,13 @@ class MeteoCompassView: SKView {
         LLMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         LLMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
-        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor)
+        let LLBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
+        LLBattery.size = CGSize(width: 18.0, height: 18.0)
+        LLBattery.position = CGPoint(x: LLMajor.frame.width - 50.0, y: (LLMajor.frame.height / 2.0) - 8.0)
+        LLBattery.isHidden = true
+        LLMajor.addChild(LLBattery)
+        
+        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery)
 
         // Lower Right
         let LRMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -429,6 +447,12 @@ class MeteoCompassView: SKView {
         LRMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         LRMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
-        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor)
+        let LRBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
+        LRBattery.size = CGSize(width: 18.0, height: 18.0)
+        LRBattery.position = CGPoint(x: LRMajor.frame.width - 50.0, y: (LRMajor.frame.height / 2.0) - 8.0)
+        LRBattery.isHidden = true
+        LRMajor.addChild(LRBattery)
+        
+        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery)
     }
 }

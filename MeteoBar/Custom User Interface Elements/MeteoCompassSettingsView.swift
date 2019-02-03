@@ -14,7 +14,7 @@ class MeteoCompassSettingsView: MeteoCompassView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         var viewPoint = theKitScene!.convertPoint(toView: midPoint)
         viewPoint.x += 8
         viewPoint.y += 9
