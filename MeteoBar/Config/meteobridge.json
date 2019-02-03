@@ -100,11 +100,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[thb0temp-act=.1:--]",
+                                "dayMax": "[thb0temp-dmax=.1:--]",
+                                "dayMin": "[thb0temp-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[thb0temp-act=F.1:--]",
+                                "dayMax": "[thb0temp-dmax=F.1:--]",
+                                "dayMin": "[thb0temp-dmin=F.1:--]",
                                 "default": false
                             }
                         }
@@ -120,11 +124,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[th0temp-act=.1:--]",
+                                "dayMax": "[th0temp-dmax=.1:--]",
+                                "dayMin": "[th0temp-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[th0temp-act=F.1:--]",
+                                "dayMax": "[th0temp-dmax=F.1:--]",
+                                "dayMin": "[th0temp-dmin=F.1:--]",
                                 "default": false
                             }
                         }
@@ -140,11 +148,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[th0dew-act=.1:--]",
+                                "dayMax": "[th0dew-dmax=.1:--]",
+                                "dayMin": "[th0dew-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[th0dew-act=F.1:--]",
+                                "dayMax": "[th0dew-dmax=.F1:--]",
+                                "dayMin": "[th0dew-dmin=.F1:--]",
                                 "default": false
                             }
                         }
@@ -160,11 +172,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[thb0dew-act=.1:--]",
+                                "dayMax": "[thb0dew-dmax=.1:--]",
+                                "dayMin": "[thb0dew-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[thb0dew-act=F.1:--]",
+                                "dayMax": "[thb0dew-dmax=F.1:--]",
+                                "dayMin": "[thb0dew-dmin=F.1:--]",
                                 "default": false
                             }
                         }
@@ -180,11 +196,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[th0heatindex-act=.1:--]",
+                                "dayMax": "[th0heatindex-dmax=.1:--]",
+                                "dayMin": "[th0heatindex-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[th0heatindex-act=F.1:--]",
+                                "dayMax": "[th0heatindex-dmax=F.1:--]",
+                                "dayMin": "[th0heatindex-dmin=F.1:--]",
                                 "default": false
                             }
                         }
@@ -200,11 +220,15 @@
                             "Celcius": {
                                 "unit": "°C",
                                 "parameter": "[wind0chill-act=.1:--]",
+                                "dayMax": "[wind0chill-dmax=.1:--]",
+                                "dayMin": "[wind0chill-dmin=.1:--]",
                                 "default": true
                             },
                             "Fahrenheit": {
                                 "unit": "°F",
                                 "parameter": "[wind0chill-act=F.1:--]",
+                                "dayMax": "[wind0chill-dmax=F.1:--]",
+                                "dayMin": "[wind0chill-dmin=F.1:--]",
                                 "default": false
                             }
                         }
@@ -222,6 +246,8 @@
                             "Percentage": {
                                 "unit": "%",
                                 "parameter": "[th0hum-act:--]",
+                                "dayMax": "[th0hum-dmax=.1:--]",
+                                "dayMin": "[th0hum-dmin=.1:--]",
                                 "default": true
                             }
                         }
@@ -237,6 +263,8 @@
                             "Percentage": {
                                 "unit": "%",
                                 "parameter": "[thb0hum-act:--]",
+                                "dayMax": "[thb0hum-dmax=.1:--]",
+                                "dayMin": "[thb0hum-dmin=.1:--]",
                                 "default": true
                             }
                         }
@@ -254,21 +282,29 @@
                             "Hectopascals": {
                                 "unit": "hPa",
                                 "parameter": "[thb0press-act=.1:--]",
+                                "dayMax": "[thb0press-dmax=.1:--]",
+                                "dayMin": "[thb0press-dmin=.1:--]",
                                 "default": true
                             },
                             "Pounds per Square Inch": {
                                 "unit": "psi",
                                 "parameter": "[thb0press-act=psi.1:--]",
+                                "dayMax": "[thb0press-dmax=psi.1:--]",
+                                "dayMin": "[thb0press-dmin=psi.1:--]",
                                 "default": false
                             },
                             "Inches of Mercury": {
                                 "unit": "inHg",
                                 "parameter": "[thb0press-act=inHg.1:--]",
+                                "dayMax": "[thb0press-dmax=inHG.1:--]",
+                                "dayMin": "[thb0press-dmin=inHG.1:--]",
                                 "default": false
                             },
                             "Millimeters of Mercury": {
                                 "unit": "mmHg",
                                 "parameter": "[thb0press-act=mmHg.1:--]",
+                                "dayMax": "[thb0press-dmax=mmHg.1:--]",
+                                "dayMin": "[thb0press-dmin=mmHg.1:--]",
                                 "default": false
                             }
                         }
@@ -284,21 +320,29 @@
                             "Hectopascals": {
                                 "unit": "hPa",
                                 "parameter": "[thb0seapress-act=.1:--]",
+                                "dayMax": "[thb0seapress-dmax=.1:--]",
+                                "dayMin": "[thb0seapress-dmin=.1:--]",
                                 "default": true
                             },
                             "Pounds per Square Inch": {
                                 "unit": "psi",
                                 "parameter": "[thb0seapress-act=psi.1:--]",
+                                "dayMax": "[thb0seapress-dmax=psi.1:--]",
+                                "dayMin": "[thb0seapress-dmin=psi.1:--]",
                                 "default": false
                             },
                             "Inches of Mercury": {
                                 "unit": "inHg",
                                 "parameter": "[thb0seapress-act=inHg.1:--]",
+                                "dayMax": "[thb0seapress-dmax=inHg.1:--]",
+                                "dayMin": "[thb0seapress-dmin=inHg.1:--]",
                                 "default": false
                             },
                             "Millimeters of Mercury": {
                                 "unit": "mmHg",
                                 "parameter": "[thb0seapress-act=mmHg.1:--]",
+                                "dayMax": "[thb0seapress-dmax=mmHg.1:--]",
+                                "dayMin": "[thb0seapress-dmin=mmHg.1:--]",
                                 "default": false
                             }
                         }
@@ -316,26 +360,36 @@
                             "Meters per Second": {
                                 "unit": "m/s",
                                 "parameter": "[wind0wind-act=.1:--]",
+                                "dayMax": "[wind0wind-dmax=.1:--]",
+                                "dayMin": "[wind0wind-dmin=.1:--]",
                                 "default": true
                             },
                             "Miles per Hour": {
                                 "unit": "mph",
                                 "parameter": "[wind0wind-act=mph.1:--]",
+                                "dayMax": "[wind0wind-dmax=mph.1:--]",
+                                "dayMin": "[wind0wind-dmin=mph.1:--]",
                                 "default": false
                             },
                             "Kilometers per Hour": {
                                 "unit": "kph",
                                 "parameter": "[wind0wind-act=kmh.1:--]",
+                                "dayMax": "[wind0wind-dmax=kmh.1:--]",
+                                "dayMin": "[wind0wind-dmin=kmh.1:--]",
                                 "default": false
                             },
                             "Knots": {
                                 "unit": "kn",
                                 "parameter": "[wind0wind-act=kn.1:--]",
+                                "dayMax": "[wind0wind-dmax=kn.1:--]",
+                                "dayMin": "[wind0wind-dmin=kn.1:--]",
                                 "default": false
                             },
                             "Beaufort scale": {
                                 "unit": "bft",
                                 "parameter": "[wind0wind-act=bft.1:--]",
+                                "dayMax": "[wind0wind-dmax=bft.1:--]",
+                                "dayMin": "[wind0wind-dmin=bft.1:--]",
                                 "default": false
                             }
                         }
@@ -351,26 +405,36 @@
                             "Meters per Second": {
                                 "unit": "m/s",
                                 "parameter": "[wind0avgwind-act=.1:--]",
+                                "dayMax": "[wind0avgwind-dmax=.1:--]",
+                                "dayMin": "[wind0avgwind-dmin=.1:--]",
                                 "default": true
                             },
                             "Miles per Hour": {
                                 "unit": "mph",
                                 "parameter": "[wind0avgwind-act=mph.1:--]",
+                                "dayMax": "[wind0avgwind-dmax=mph.1:--]",
+                                "dayMin": "[wind0avgwind-dmin=mph.1:--]",
                                 "default": false
                             },
                             "Kilometers per Hour": {
                                 "unit": "kph",
                                 "parameter": "[wind0avgwind-act=kmh.1:--]",
+                                "dayMax": "[wind0avgwind-dmax=kmh.1:--]",
+                                "dayMin": "[wind0avgwind-dmin=kmh.1:--]",
                                 "default": false
                             },
                             "Knots": {
                                 "unit": "kn",
                                 "parameter": "[wind0avgwind-act=kn.1:--]",
+                                "dayMax": "[wind0avgwind-dmax=kn.1:--]",
+                                "dayMin": "[wind0avgwind-dmin=kn.1:--]",
                                 "default": false
                             },
                             "Beaufort scale": {
                                 "unit": "bft",
                                 "parameter": "[wind0avgwind-act=bft.1:--]",
+                                "dayMax": "[wind0avgwind-dmax=bft.1:--]",
+                                "dayMin": "[wind0avgwind-dmin=bft.1:--]",
                                 "default": false
                             }
                         }
@@ -386,21 +450,29 @@
                             "Degrees": {
                                 "unit": "",
                                 "parameter": "[wind0dir-act=.1:--]",
+                                "dayMax": "[wind0dir-dmax=.1:--]",
+                                "dayMin": "[wind0dir-dmin=.1:--]",
                                 "default": true
                             },
                             "16 English Directions": {
                                 "unit": "",
                                 "parameter": "[wind0dir-act=endir:--]",
+                                "dayMax": "[wind0dir-dmax=endir.1:--]",
+                                "dayMin": "[wind0dir-dmin=endir.1:--]",
                                 "default": false
                             },
                             "16 Dutch Directions": {
                                 "unit": "",
                                 "parameter": "[wind0dir-act=nldir:--]",
+                                "dayMax": "[wind0dir-dmax=nldir.1:--]",
+                                "dayMin": "[wind0dir-dmin=nldir.1:--]",
                                 "default": false
                             },
                             "16 German Directions": {
                                 "unit": "",
                                 "parameter": "[wind0dir-act=dedir:--]",
+                                "dayMax": "[wind0dir-dmax=dedir.1:--]",
+                                "dayMin": "[wind0dir-dmin=dedir.1:--]",
                                 "default": false
                             }
                         }
@@ -418,11 +490,15 @@
                             "Millimeters per Hour": {
                                 "unit": "mm/h",
                                 "parameter": "[rain0rate-act=.1:--]",
+                                "dayMax": "[rain0rate-dmax=.1:--]",
+                                "dayMin": "[rain0rate-dmin=.1:--]",
                                 "default": true
                             },
                             "Inches per Hour": {
                                 "unit": "in/hr",
                                 "parameter": "[rain0rate-act=in.1:--]",
+                                "dayMax": "[rain0rate-dmax=in.1:--]",
+                                "dayMin": "[rain0rate-dmin=in.1:--]",
                                 "default": false
                             }
                         }
@@ -438,11 +514,15 @@
                             "Millimeters": {
                                 "unit": "mm/h",
                                 "parameter": "[rain0total-act=.1:--]",
+                                "dayMax": "[rain0total-dmax=.1:--]",
+                                "dayMin": "[rain0total-dmin=.1:--]",
                                 "default": true
                             },
                             "Inches": {
                                 "unit": "in/hr",
                                 "parameter": "[rain0total-act=in.1:--]",
+                                "dayMax": "[rain0total-dmax=in.1:--]",
+                                "dayMin": "[rain0total-dmin=in.1:--]",
                                 "default": false
                             }
                         }
@@ -460,6 +540,8 @@
                             "Ultraviolet": {
                                 "unit": "uv",
                                 "parameter": "[uv0index-act:--]",
+                                "dayMax": "[uv0index-dmax:--]",
+                                "dayMin": "[uv0index-dmin:--]",
                                 "default": true
                             }
                         }
@@ -475,6 +557,8 @@
                             "Watts per Square Meter": {
                                 "unit": "W/m^2",
                                 "parameter": "[sol0rad-act:--]",
+                                "dayMax": "[sol0rad-dmax:--]",
+                                "dayMin": "[sol0rad-dmin:--]",
                                 "default": true
                             }
                         }
@@ -490,11 +574,15 @@
                             "Millimeter": {
                                 "unit": "mm",
                                 "parameter": "[sol0evo-act:--]",
+                                "dayMax": "[sol0evo-dmax:--]",
+                                "dayMin": "[sol0evo-dmin:--]",
                                 "default": true
                             },
                             "Inches": {
                                 "unit": "in",
                                 "parameter": "[sol0evo-act=in.1:--]",
+                                "dayMax": "[sol0evo-dmax=in.1:--]",
+                                "dayMin": "[sol0evo-dmin=in.1:--]",
                                 "default": false
                             }
                         }
@@ -510,6 +598,8 @@
                             "Hours": {
                                 "unit": "hrs",
                                 "parameter": "[sun0total-act:--]",
+                                "dayMax": "[sun0total-dmax:--]",
+                                "dayMin": "[sun0total-dmin:--]",
                                 "default": true
                             }
                         }
@@ -527,11 +617,15 @@
                             "Kilometers": {
                                 "unit": "km",
                                 "parameter": "[lgt0dist-act:--]",
+                                "dayMax": "[lgt0dist-dmax:--]",
+                                "dayMin": "[lgt0dist-dmin:--]",
                                 "default": true
                             },
                             "Miles": {
                                 "unit": "mls",
                                 "parameter": "[lgt0dist-act=mls.1:--]",
+                                "dayMax": "[lgt0dist-dmax=in.1:--]",
+                                "dayMin": "[lgt0dist-dmin=in.1:--]",
                                 "default": false
                             }
                         }
@@ -547,6 +641,8 @@
                             "N/A": {
                                 "unit": "",
                                 "parameter": "[lgt0energy-act:--]",
+                                "dayMax": "[lgt0energy-dmax:--]",
+                                "dayMin": "[lgt0energy-dmin:--]",
                                 "default": true
                             }
                         }
@@ -562,6 +658,8 @@
                             "N/A": {
                                 "unit": "",
                                 "parameter": "[lgt0total-act:--]",
+                                "dayMax": "[lgt0total-dmax:--]",
+                                "dayMin": "[lgt0total-dmin:--]",
                                 "default": true
                             }
                         }

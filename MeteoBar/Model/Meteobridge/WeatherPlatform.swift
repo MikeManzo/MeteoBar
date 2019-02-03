@@ -140,6 +140,7 @@ class WeatherPlatform: Weather {
                                     
                                     for unit in sensor.1[0]["supported_units"] {            // <-- Compatible Units
                                         theSensor.addSuppoortedUnit(unit: MeteoSensorUnit(unitName: unit.0, unitParam: unit.1["parameter"].string!,
+                                                                                          unitMax: unit.1["dayMax"].string!, unitMin: unit.1["dayMin"].string!,
                                                                                           unitRep: unit.1["unit"].string!, unitDefault: unit.1["default"].bool!))
                                     }
                                     theBridge?.addSensor(sensor: theSensor)
