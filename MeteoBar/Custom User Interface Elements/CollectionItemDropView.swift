@@ -169,6 +169,7 @@ public final class CollectionItemDropView: NSView {
         }
         
         delegate?.dragDropView(self, uuID: _uniqueIdentifier!, dropValue: sensorID)
+        toolTip = sensorID
 
         return true
     }

@@ -27,6 +27,11 @@ class MeteoCompassSettingsView: MeteoCompassView {
         } else {
             upperRight?.update()
             dropView.showDrop = false
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassURSensor)!)) else {
+                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassURSensor ?? "") for display")
+                return
+            }
+            dropView.toolTip = sensor.formattedSummary
         }
         dropViews.append(dropView)
         
@@ -39,6 +44,11 @@ class MeteoCompassSettingsView: MeteoCompassView {
         } else {
             upperLeft?.update()
             dropView.showDrop = false
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassULSensor)!)) else {
+                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassULSensor ?? "") for display")
+                return
+            }
+            dropView.toolTip = sensor.formattedSummary
         }
         dropViews.append(dropView)
         
@@ -51,6 +61,11 @@ class MeteoCompassSettingsView: MeteoCompassView {
         } else {
             lowerLeft?.update()
             dropView.showDrop = false
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLLSensor)!)) else {
+                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLLSensor ?? "") for display")
+                return
+            }
+            dropView.toolTip = sensor.formattedSummary
         }
         dropViews.append(dropView)
         
@@ -65,6 +80,11 @@ class MeteoCompassSettingsView: MeteoCompassView {
         } else {
             lowerRight?.update()
             dropView.showDrop = false
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLRSensor)!)) else {
+                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLRSensor ?? "") for display")
+                return
+            }
+            dropView.toolTip = sensor.formattedSummary
         }
         dropViews.append(dropView)
         

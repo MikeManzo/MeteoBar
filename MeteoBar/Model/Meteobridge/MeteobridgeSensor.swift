@@ -88,6 +88,11 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         }
     }
     
+    /// Summary string of sensor information
+    var formattedSummary: String? {
+        return String("Sensor: \(name)\nCategory: \(category)\nDescription: \(information)")
+    }
+    
     /// Return the template required to get something from the Meteobridge
     ///
     /// - Format:
