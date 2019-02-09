@@ -8,6 +8,7 @@ target 'MeteoBar' do
     pod 'SwiftyBeaver'
     pod 'Preferences'
     pod 'Alamofire'
+    pod 'AlamofireImage'
     pod 'SwiftyJSON'
     pod 'Repeat'
     pod 'SwiftyUserDefaults', '4.0.0-alpha.1'

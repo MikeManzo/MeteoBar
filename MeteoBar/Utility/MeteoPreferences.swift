@@ -28,7 +28,7 @@ enum CodingKeys: String, CodingKey {
 
 ///
 /// Class to store MeteoBar's User Defaults
-/// To clear the defaults, open terminal and type: defaults delete com.quantumjoker.MeteoBar
+/// To clear the defaults, open terminal and type: defaults delete com.quantumjoker.meteobar
 ///
 final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     // MARK: - Compass Preferences

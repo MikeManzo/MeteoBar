@@ -5,6 +5,7 @@
 //  Created by Mike Manzo on 1/12/19.
 //  Copyright © 2019 Quantum Joker. All rights reserved.
 //
+// [Design Guidlines](https://developer.apple.com/design/human-interface-guidelines/macos/icons-and-images/system-icons/)
 
 import Cocoa
 import Preferences
@@ -52,28 +53,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.addDestination(console)
         // SwiftyBeaver Config
         
-        /// Test Stub
         if theDefaults == nil {
             theDefaults = MeteoPreferences()
         }
-        
-        if theBridge == nil {
-            WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: "10.0.0.137", bridgeName: "Test Bridge", callback: { [unowned self] response, error in
-                if error == nil {
-                    self.theBridge = response
-                    
-                    self.theBridge?.getObservation({ bridge, error in
-                        if error == nil {
-                            log.info("\(bridge?.name ?? "")")
-                        } else {
-                            log.error(error.value)
-                        }
-                    })
-                    Defaults[.bridgesDefaults] = self.theBridge
-                }
-            })
-        }
-        /// Test Stub
     }
 
     /// MeteoBar is about to close ... clean-up

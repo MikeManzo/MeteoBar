@@ -73,7 +73,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         case .energy, .humidity, .pressure, .rain, .solar, .wind, .temperature:
             prettyMeasurement = String("\(measurement.value ?? "--") \(currentUnit!.representation)")
         case .system:
-            break
+            prettyMeasurement = (measurement.value?.isEmpty)! ? "Unknown" : measurement.value
         }
         
         return prettyMeasurement
@@ -105,10 +105,14 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     var bridgeTemplate: String {
         var strResult = ""
         
-        let activeUnit = supportedUnits.filter { $0.isCurrent == true }
-        
-        if !activeUnit.isEmpty {
-            strResult = "\(name):\(activeUnit.first!.parameter)|\(batteryParamater)"
+        if category == .system {
+            //strResult = "\(name):\(batteryParamater)"
+            strResult = "\(name)|\(batteryParamater)"
+        } else {
+            let activeUnit = supportedUnits.filter { $0.isCurrent == true }
+            if !activeUnit.isEmpty {
+                strResult = "\(name):\(activeUnit.first!.parameter)|\(batteryParamater)"
+            }
         }
         
         return strResult

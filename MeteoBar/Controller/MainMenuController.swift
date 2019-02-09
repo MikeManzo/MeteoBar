@@ -42,8 +42,9 @@ class MainMenuController: NSViewController {
     
     /// Preferences
     lazy var preferencesView: PreferencesWindowController = {
-        return PreferencesWindowController(viewControllers: [ BridgePreferencesController(),
-                                                              GeneralPreferencesController()
+        return PreferencesWindowController(viewControllers: [ GeneralPreferencesController(),
+                                                              BridgeSetupController(),
+                                                              BridgePreferencesController()
                                                             ])
     }()
     

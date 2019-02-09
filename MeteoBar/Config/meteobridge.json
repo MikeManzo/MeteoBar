@@ -78,9 +78,16 @@
                     "parameter": "[mbsystem-longitude:--]"
                 }
             ],
+            "lastgooddata": [
+                {
+                    "description": "Seconds since last meaningful sensor data recorded",
+                    "type": "System",
+                    "parameter": "[mbsystem-lastgooddata:--]"
+                }
+            ],
             "uptime": [
                 {
-                    "description": "meteobridge uptime",
+                    "description": "Meteobridge uptime",
                     "type": "System",
                     "parameter": "[mbsystem-uptime:--]"
                 }

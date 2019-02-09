@@ -11,8 +11,8 @@ import Preferences
 import SceneKit
 
 class BridgePreferencesController: NSViewController, Preferenceable {
-    // MARK: - Protocol Varioables
-    let toolbarItemTitle = "Bridge"
+    // MARK: - Protocol Variables
+    let toolbarItemTitle = "Bridge Config"
     let toolbarItemIcon = NSImage(named: NSImage.preferencesGeneralName)!
     
     // MARK: - Outlets
@@ -41,7 +41,6 @@ class BridgePreferencesController: NSViewController, Preferenceable {
         flowLayout.minimumLineSpacing       = 5.0
         
         collectionView.collectionViewLayout = flowLayout
-//        collectionView.registerForDraggedTypes([NSPasteboard.PasteboardType(kUTTypeImage as String)])
         collectionView.setDraggingSourceOperationMask(.every, forLocal: true)
         collectionView.setDraggingSourceOperationMask(.every, forLocal: false)
     }
@@ -60,10 +59,12 @@ class BridgePreferencesController: NSViewController, Preferenceable {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        if let error = sensorCollectionModel.setupModel() {
-            log.error(error.localizedDescription)
-        } else {
-            collectionView.reloadData()
+        if theDelegate?.theBridge != nil {
+            if let error = sensorCollectionModel.setupModel() {
+                log.error(error.localizedDescription)
+            } else {
+                collectionView.reloadData()
+            }
         }
     }
 

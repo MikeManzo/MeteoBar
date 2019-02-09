@@ -27,6 +27,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
+            <point key="canvasLocation" x="91" y="35"/>
         </customView>
     </objects>
 </document>

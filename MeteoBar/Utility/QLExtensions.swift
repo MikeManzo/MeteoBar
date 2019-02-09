@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import MapKit
 import Cocoa
 
 /// Handy non-class related variables
@@ -34,6 +35,37 @@ extension Bundle {
         return "Build Number Not Available"
     }    
 }
+
+extension FloatingPoint {
+    var minutes: Self {
+        return (self*3600)
+            .truncatingRemainder(dividingBy: 3600)/60
+    }
+    var seconds: Self {
+        return (self*3600)
+            .truncatingRemainder(dividingBy: 3600)
+            .truncatingRemainder(dividingBy: 60)
+    }
+}
+
+extension CLLocationCoordinate2D {
+    ///
+    /// [Reference](https://www.latlong.net/lat-long-dms.html)
+    ///
+    var dms: (latitude: String, longitude: String) {
+        return (String(format: "%d° %d' %.2f\" %@",
+                       Int(abs(latitude)),
+                       Int(abs(latitude.minutes)),
+                       abs(latitude.seconds),
+                       latitude >= 0 ? "N" : "S"),
+                String(format: "%d° %d' %.2f\" %@",
+                       Int(abs(longitude)),
+                       Int(abs(longitude.minutes)),
+                       abs(longitude.seconds),
+                       longitude >= 0 ? "E" : "W"))
+    }
+}
+
 extension NSApplicationDelegate {
     /// Ask the system if it's in Dark Mode
     ///
@@ -77,6 +109,23 @@ extension NSImage {
     }
 }
 
+extension NSTextField {
+    func bestheight(text: String, width: CGFloat) -> CGFloat {
+        self.stringValue = text
+        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0), width: width, height: CGFloat(CGFloat.greatestFiniteMagnitude))).height
+        
+        return getnumber
+    }
+
+    func bestwidth(text: String, height: CGFloat) -> CGFloat {
+
+        self.stringValue = text
+        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0), width: CGFloat(CGFloat.greatestFiniteMagnitude), height: height)).width
+        
+        return getnumber
+    }
+}
+
 extension Optional {
     public var value: String {
         switch self {
@@ -85,6 +134,12 @@ extension Optional {
         default:
             return "<nil>"
         }
+    }
+}
+
+extension String {
+    func toDouble() -> Double? {
+        return NumberFormatter().number(from: self)?.doubleValue
     }
 }
 

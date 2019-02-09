@@ -7,6 +7,7 @@
 //
 
 import SwiftyUserDefaults
+import MapKit
 import Cocoa
 
 enum MeteobridgeError: Error, CustomStringConvertible {
@@ -23,7 +24,43 @@ enum MeteobridgeError: Error, CustomStringConvertible {
     }
 }
 
-final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
+enum MeteobridgeSystemParameter: String {
+    case mac
+    case swversion
+    case buildnum
+    case platform
+    case station
+    case stationnum
+    case timezone
+    case altitude
+    case latitude
+    case longitude
+    case lastgooddate
+    case uptime
+}
+
+let platformImages = [
+                        "TL-MR3020": "/meteobridge/pix/TL-MR3020.png",
+                        "TL-WR902AC": "/meteobridge/pix/TL-WR902AC.png",
+                        "TL-MR3020v3": "/meteobridge/pix/TL-MR3020V3.png",
+                        "TL-WR703N": "/meteobridge/pix/TL-WR703N.png",
+                        "WL-330N3G": "/meteobridge/pix/WL-330N3G.png",
+                        "DIR-505": "/meteobridge/pix/DIR-505.png",
+                        "TL-MR3040": "/meteobridge/pix/TL-MR3040.png",
+                        "Meteobridge PRO": "/meteobridge/pix/mbpro.png"
+                     ]
+
+/*
+ let stationImages = [
+
+                    ]
+*/
+///
+/// As an homage to smartbedded, we will default the lat/lon to their headquarters.
+/// Assuming the
+/// [Location](https://www.google.com/maps/place/smartbedded+UG+(haftungsbeschränkt)/@53.8772027,9.8823447,16.99z/data=!4m5!3m4!1s0x0:0xc777d79da56902d4!8m2!3d53.8772!4d9.8845699)
+///
+final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAnnotation {
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
     var updateInterval: Int
@@ -31,6 +68,30 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     var uuid: String
     var name: String
 
+    var latitude: Double {
+        var lat = 53.877382 // Defaults to the latitude of smartbedded GmbH
+        guard let sensor = (sensors[.system]?.filter {$0.name == "latitude"}.first) else {
+            log.warning("Check Bridge Latitude.  Using Default longitude.  The Meteobridge is either not configured with a valid latitude or there is a different problem.")
+            return lat
+        }
+
+        lat = (sensor.formattedMeasurement?.toDouble())!
+        
+        return lat
+    }
+
+    var longitude: Double {
+        var lon = 9.884578 // Defaults to the longitude of smartbedded GmbH
+        guard let sensor = (sensors[.system]?.filter {$0.name == "longitude"}.first) else {
+            log.warning("Check Bridge longitude.  Using Default longitude.  The Meteobridge is either not configured with a valid longitude or there is a different problem.")
+            return lon
+        }
+        
+        lon = (sensor.formattedMeasurement?.toDouble())!
+        
+        return lon
+    }
+    
     /// Initialize the Meteobridge object
     ///
     /// - Parameters:
@@ -62,7 +123,15 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
     ///
     /// - Returns: fully constructed Meteobridge object
     func copy() -> Self {
-        return type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid)!
+        guard let copy = type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid) else {
+            return self
+        }
+        
+//        copy._latitude   = _latitude
+//        copy._longitude  = _longitude
+
+        return copy
+//        return type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid)!
     }
     
     /// Add a sensor to the bridge
@@ -94,7 +163,106 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
         return theSensor
     }
     
-    /// Interrogate the bridge for data
+    /// Interrogate the bridge for system parameter "X"
+    ///
+    /// - Parameters:
+    ///   - systemParam: parameter needed
+    ///   - callback: return function
+    ///
+    func getSystemParameter(systemParam: MeteobridgeSystemParameter, callback: @escaping (_ theBridge: MeteobridgeSensor?, _ error: Error?) -> Void) {
+        WeatherPlatform.shared.getBridgeParameter(theBridge: self, param: systemParam, callback: { [unowned self] bridgeData, bridgeError in
+            if bridgeError != nil {
+                callback(nil, bridgeError)
+            }
+            
+            guard let validData = bridgeData as? Data else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            
+            for pair in bridgeResponse {
+                let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
+                if subPair[0] != "Time" {
+                    guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {   // Find the sensor with this tag
+                        callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                        return
+                    }
+                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+                    callback(filteredSensor, nil) // <-- Just return the filtered (and now populated) system sensor
+                }
+            }
+//            callback(self, nil)
+        })
+    }
+ 
+    /// Interrogate the bridge for all supported system parameters
+    ///
+    /// - Parameters:
+    ///   - systemParam: parameter needed
+    ///   - callback: return function
+    ///
+    func getAllSystemParameters(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.shared.getAllSupportedSystemParameters(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
+            if bridgeError != nil {
+                callback(nil, bridgeError)
+            }
+            
+            guard let validData = bridgeData as? Data else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let hourPair = timeArray[0].components(separatedBy: "|")  as Array? else {  // [0] = Time [1] = HH
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            
+            for pair in bridgeResponse {
+                let subPair = pair.components(separatedBy: "|")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
+                if subPair[0] != "Time" {
+                    guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {   // Find the sensor with this tag
+                        callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                        return
+                    }
+                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+                }
+            }
+            callback(self, nil)
+        })
+    }
+
+    /// Interrogate the bridge for an observation of all present sensors
     ///
     /// ## Important Notes ##
     /// The data comes to us in a response array like
@@ -150,5 +318,19 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable {
             
             callback(self, nil)
         })
+    }
+    
+    // MARK: - MKAnnotation Conformance
+    public var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    public var title: String? {
+        return String("Bridge: \(name)")
+    }
+    
+    public var subtitle: String? {
+        let dms = coordinate.dms
+        return String("Lat: \(dms.latitude)\nLon: \(dms.longitude)\nIP: \(ipAddress)")
     }
 }
