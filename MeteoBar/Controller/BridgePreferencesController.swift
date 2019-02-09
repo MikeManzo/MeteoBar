@@ -13,7 +13,7 @@ import SceneKit
 class BridgePreferencesController: NSViewController, Preferenceable {
     // MARK: - Protocol Variables
     let toolbarItemTitle = "Bridge Config"
-    let toolbarItemIcon = NSImage(named: NSImage.preferencesGeneralName)!
+    let toolbarItemIcon = NSImage(named: "compass-north.png")!
     
     // MARK: - Outlets
     @IBOutlet weak var compassView: MeteoCompassSettingsView!

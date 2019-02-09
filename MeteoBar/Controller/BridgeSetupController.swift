@@ -23,7 +23,7 @@ enum BridgeSetupControllerError: Error, CustomStringConvertible {
 class BridgeSetupController: NSViewController, Preferenceable {
     // MARK: - Protocol Variables
     let toolbarItemTitle = "Bridge Setup"
-    let toolbarItemIcon = NSImage(named: NSImage.preferencesGeneralName)!
+    let toolbarItemIcon = NSImage(named: "configurator.png")!
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!

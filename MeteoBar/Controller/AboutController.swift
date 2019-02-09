@@ -41,6 +41,20 @@ class AboutController: NSViewController {
          "copyHolder": "Iconfu",
          "copyURL": "https://iconfu.com"
         ],
+        ["copyImage": "compass-north.png",
+         "copyType": "Icon",
+         "invertable": "no",
+         "copyName": "Compass facing North Icon",
+         "copyHolder": "Icons8",
+         "copyURL": "https://icons8.com/icon/set/compass/color"
+        ],
+        ["copyImage": "configurator.png",
+         "copyType": "Icon",
+         "invertable": "no",
+         "copyName": "Configuration Icon",
+         "copyHolder": "Icons8",
+         "copyURL": "https://icons8.com/icon/set/config/color"
+        ],
         ["copyImage": "unknown-battery-color.png",
          "copyType": "Icon",
          "invertable": "no",

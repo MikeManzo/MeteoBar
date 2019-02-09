@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2744B782220E793600A61514 /* compass-north.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B781220E793600A61514 /* compass-north.png */; };
+		2744B784220E79FC00A61514 /* configurator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B783220E79FC00A61514 /* configurator.png */; };
 		2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2771085322011CA0009A3C86 /* CollectionItemDropView.swift */; };
 		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
 		277658DD21EA6063007BA05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277658DC21EA6063007BA05A /* Assets.xcassets */; };
@@ -81,6 +83,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2744B781220E793600A61514 /* compass-north.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compass-north.png"; sourceTree = "<group>"; };
+		2744B783220E79FC00A61514 /* configurator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = configurator.png; sourceTree = "<group>"; };
 		2771085322011CA0009A3C86 /* CollectionItemDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemDropView.swift; sourceTree = "<group>"; };
 		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277658DA21EA6062007BA05A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -317,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				27E6C5BC21ED58C800548CF0 /* books.png */,
+				2744B781220E793600A61514 /* compass-north.png */,
+				2744B783220E79FC00A61514 /* configurator.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
 				27CF0428220735D9007DFFDF /* full-battery-color.png */,
@@ -483,12 +489,14 @@
 				27CF042D22073A18007DFFDF /* unknown-battery-color.png in Resources */,
 				277658DD21EA6063007BA05A /* Assets.xcassets in Resources */,
 				27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */,
+				2744B782220E793600A61514 /* compass-north.png in Resources */,
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
 				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
 				27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */,
 				27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */,
 				27ACA77621FCA99400E226C2 /* BridgePreferences.xib in Resources */,
+				2744B784220E79FC00A61514 /* configurator.png in Resources */,
 				27F8902121F2D24B00F8605E /* Config in Resources */,
 				277658E021EA6063007BA05A /* MainMenu.xib in Resources */,
 				27ACA79A21FF4CCC00E226C2 /* empty-battery.png in Resources */,
