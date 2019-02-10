@@ -24,11 +24,10 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         return "GeneralPreferences"
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    override func viewWillAppear() {
+        super.viewWillAppear()
         /// Do we have a valid meteobridge?
-        if theDelegate?.theBridge != nil {
+        if theDelegate?.theBridge != nil {  // Yes ... setup the model
             for (category, _) in (theDelegate?.theBridge?.sensors)! {   // Create a simple model for our OutlineView
                 categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
             }
@@ -36,10 +35,31 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
                 $0.cat.rawValue < $1.cat.rawValue
             }
             sensorTree.reloadData() // Reload the OutlineView
+            if !(theDelegate?.theDefaults?.menubarSensor.isEmpty)! {
+                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: (theDelegate?.theDefaults?.menubarSensor)!) else {
+                    return
+                }
+                let sensorCat = categories.filter {
+                    $0.cat == sensor.category}.first
+                sensorTree.expandItem(sensorCat, expandChildren: true)
+                let rowIndex = sensorTree.row(forItem: sensor)  // Annoyingly, the outline won't find rows unless they are expanded
+                sensorTree.selectRowIndexes(IndexSet(integer: rowIndex), byExtendingSelection: true)
+                sensorTree.scrollRowToVisible(rowIndex)
+            }
         }
+    }
+    
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        categories.removeAll()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 }
 
+/// We are the data delegate ... let's setup the model to be the data-pump
 extension GeneralPreferencesController: NSOutlineViewDataSource {
     // Tell how many children each row has:
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
@@ -66,12 +86,17 @@ extension GeneralPreferencesController: NSOutlineViewDataSource {
     }
 }
 
+/// We are the view delegate ... let's setup the view to consume the model data
 extension GeneralPreferencesController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, shouldShowCellExpansionFor tableColumn: NSTableColumn?, item: Any) -> Bool {
         return true
     }
     
     func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
+        return true
+    }
+    
+    func outlineView(_ outlineView: NSOutlineView, shouldExpandItem: Any) -> Bool {
         return true
     }
     
@@ -134,7 +159,7 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
         guard let sensor = outlineView.item(atRow: selectedIndex) as? MeteobridgeSensor else {
             return
         }
-        print("Sensor[\(sensor.name)] selected")
+        theDelegate?.theDefaults?.menubarSensor = sensor.name
     }
 }
 

@@ -24,6 +24,7 @@ enum CodingKeys: String, CodingKey {
     case compassURSensor
     case compassLLSensor
     case compassLRSensor
+    case menubarSensor
 }
 
 ///
@@ -45,6 +46,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var compassURSensor: String = ""
     var compassLLSensor: String = ""
     var compassLRSensor: String = ""
+    var menubarSensor: String = ""
 
     // MARK: - Codable Compliance
     
@@ -98,6 +100,9 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
 
         strSensor = try container.decode(Data.self, forKey: .compassLRSensor)
         compassLRSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
+
+        strSensor = try container.decode(Data.self, forKey: .menubarSensor)
+        menubarSensor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(strSensor) as? String ?? ""
     }
     
     /// We have to roll our own Codable class due to SKColor (aka NSColor)
@@ -143,5 +148,8 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
 
         strSensor = NSKeyedArchiver.archivedData(withRootObject: compassLRSensor)
         try container.encode(strSensor, forKey: .compassLRSensor)
+        
+        strSensor = NSKeyedArchiver.archivedData(withRootObject: menubarSensor)
+        try container.encode(strSensor, forKey: .menubarSensor)
     }
 }
