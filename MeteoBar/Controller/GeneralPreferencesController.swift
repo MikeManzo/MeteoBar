@@ -35,15 +35,15 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
                 $0.cat.rawValue < $1.cat.rawValue
             }
             sensorTree.reloadData() // Reload the OutlineView
-            if !(theDelegate?.theDefaults?.menubarSensor.isEmpty)! {
+            if !(theDelegate?.theDefaults?.menubarSensor.isEmpty)! {    // Select the current sensor that is reporting to the menubar
                 guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     return
                 }
-                let sensorCat = categories.filter {
+                let sensorCat = categories.filter { // Get the category
                     $0.cat == sensor.category}.first
-                sensorTree.expandItem(sensorCat, expandChildren: true)
-                let rowIndex = sensorTree.row(forItem: sensor)  // Annoyingly, the outline won't find rows unless they are expanded
-                sensorTree.selectRowIndexes(IndexSet(integer: rowIndex), byExtendingSelection: true)
+                sensorTree.expandItem(sensorCat, expandChildren: true)  // Epand the tree
+                let rowIndex = sensorTree.row(forItem: sensor)  // Now: Annoyingly, the outline won't find rows unless they are expanded
+                sensorTree.selectRowIndexes(IndexSet(integer: rowIndex), byExtendingSelection: true) // Select the c
                 sensorTree.scrollRowToVisible(rowIndex)
             }
         }
@@ -112,7 +112,7 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         var view: NSTableCellView?
       
-        if let category = item as? SensorCat {
+        if let category = item as? SensorCat {  // Show the categories (individual roots)
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "CategoryView"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
                 textField.stringValue = category.name
@@ -137,14 +137,14 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
                 }
             }
             
-        } else if let sensor = item as? MeteobridgeSensor {
+        } else if let sensor = item as? MeteobridgeSensor { // Show the sensors ... the brances of the roots
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
                 textField.stringValue = sensor.information
                 textField.toolTip = sensor.information
             }
         } else {
-            log.error("Unknown type item=\(item)")
+            log.error("SensorTree: Unknown type[\(item)]")
         }
         
         return view
