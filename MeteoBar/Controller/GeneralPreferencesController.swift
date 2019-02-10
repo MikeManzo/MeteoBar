@@ -27,10 +27,16 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        for (category, _) in (theDelegate?.theBridge?.sensors)! {
-            categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
+        /// Do we have a valid meteobridge?
+        if theDelegate?.theBridge != nil {
+            for (category, _) in (theDelegate?.theBridge?.sensors)! {   // Create a simple model for our OutlineView
+                categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
+            }
+            categories.sort {   // Sort the model alphabetically
+                $0.cat.rawValue < $1.cat.rawValue
+            }
+            sensorTree.reloadData() // Reload the OutlineView
         }
-        sensorTree.reloadData()
     }
 }
 
