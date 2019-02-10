@@ -68,6 +68,18 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     var uuid: String
     var name: String
 
+    var totalSensors: Int {
+        var numSensor = 0
+        
+        for (_, sensors) in sensors {
+            for _ in sensors {
+                numSensor += 1
+            }
+        }
+
+        return numSensor
+    }
+    
     var latitude: Double {
         var lat = 53.877382 // Defaults to the latitude of smartbedded GmbH
         guard let sensor = (sensors[.system]?.filter {$0.name == "latitude"}.first) else {

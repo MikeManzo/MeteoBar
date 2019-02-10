@@ -24,7 +24,34 @@ enum MeteoSensorCategory: String, Codable { case
     rain            = "Rain",
     solar           = "Solar",
     wind            = "Wind",
-    system          = "System"
+    system          = "System",
+    unk             = "Unknown"
+    
+    static func getType(sensorCat: String) -> MeteoSensorCategory {
+        var newType: MeteoSensorCategory
+        
+        switch sensorCat {
+        case "Energy":
+            newType = .energy
+        case "Humidity":
+            newType = .humidity
+        case "Temperature":
+            newType = .temperature
+        case "Pressure":
+            newType = .pressure
+        case "Rain":
+            newType = .rain
+        case "Solar":
+            newType = .solar
+        case "Wind":
+            newType = .wind
+        case "System":
+            newType = .system
+        default:
+            newType = .unk
+        }
+        return newType
+    }
 }
 
 enum MeteobridgeSensorError: Error, CustomStringConvertible {
@@ -72,7 +99,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         switch category {
         case .energy, .humidity, .pressure, .rain, .solar, .wind, .temperature:
             prettyMeasurement = String("\(measurement.value ?? "--") \(currentUnit!.representation)")
-        case .system:
+        case .system, .unk:
             prettyMeasurement = (measurement.value?.isEmpty)! ? "Unknown" : measurement.value
         }
         
@@ -87,7 +114,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
             _isObserving = newValue
         }
     }
-    
+        
     /// Summary string of sensor information
     var formattedSummary: String? {
         return String("Sensor: \(name)\nCategory: \(category)\nDescription: \(information)")

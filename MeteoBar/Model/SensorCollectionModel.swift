@@ -113,7 +113,7 @@ class SensorCollectionModel: NSObject {
                 case .wind:
                     sensorImage = "wind-sock.png"
                     sectionNumber = 6
-                case .system:
+                case .system, .unk:
                     sensorImage = "system.png"
                     sectionNumber = 7
                 }
