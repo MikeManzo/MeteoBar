@@ -156,11 +156,19 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
                     break
                 }
             }
-            
         } else if let sensor = item as? MeteobridgeSensor { // Show the sensors ... the brances of the roots
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
                 //textField.stringValue = sensor.information
+
+                if sensor.isObserving {
+                    view?.imageView!.image = NSImage(named: NSImage.statusAvailableName)
+                    view?.imageView?.toolTip = "Sensor is observing"
+                } else {
+                    view?.imageView!.image = NSImage(named: NSImage.statusUnavailableName)
+                    view?.imageView?.toolTip = "Check Bridge config: Sensor is not observing"
+                }
+                
                 let strokeTextAttributes: [NSAttributedString.Key: Any]?
                 if sensor.name == theDelegate?.theDefaults?.menubarSensor {
                     strokeTextAttributes = [
