@@ -25,6 +25,7 @@ enum CodingKeys: String, CodingKey {
     case compassLLSensor
     case compassLRSensor
     case menubarSensor
+    case weatherAlerts
 }
 
 ///
@@ -42,11 +43,12 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var compassFaceColor: SKColor = SKColor.black
     var compassCaratColor: SKColor = SKColor.red
     var compassShowSensorBox: Bool = false
+    var menubarSensor: String = "th0temp"   // Plain and simple - qhat's the temp outside?! :)
     var compassULSensor: String = ""
     var compassURSensor: String = ""
     var compassLLSensor: String = ""
     var compassLRSensor: String = ""
-    var menubarSensor: String = ""
+    var weatherAlerts: Bool = true
 
     // MARK: - Codable Compliance
     
@@ -64,6 +66,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         compassShowSensorBox = try container.decode(Bool.self, forKey: .compassShowSensorBox)
+        weatherAlerts = try container.decode(Bool.self, forKey: .weatherAlerts)
         
         var colorData = try container.decode(Data.self, forKey: .compassCardinalMinorTickColor)
         compassCardinalMinorTickColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
@@ -112,7 +115,8 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(compassShowSensorBox, forKey: .compassShowSensorBox)
-        
+        try container.encode(weatherAlerts, forKey: .weatherAlerts)
+
         var colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMinorTickColor)
         try container.encode(colorData, forKey: .compassCardinalMinorTickColor)
 

@@ -194,6 +194,21 @@ class BridgeSetupController: NSViewController, Preferenceable {
             initializeBridge()
         }
     }
+    
+    ///
+    /// Detect when the user hits the return key of the ipField.  If we hve a valid IP, GO!
+    /// ## Special Note ##
+    ///  We need to change the TextField to send the notification on return
+    ///
+    /// - Parameter sender: intercept the change notification and check validity
+    ///
+    @IBAction func ipReturnSelected(_ sender: Any) {
+        if let textField = sender as? NSTextField {
+            if validateIPAddress(textField.stringValue) {
+                connectClicked(textField)
+            }
+        }
+    }
 }
 
 // MARK: - Support for MKMapViewDelegate
@@ -256,19 +271,6 @@ extension BridgeSetupController: NSControlTextEditingDelegate {
                 connectButton.isEnabled = true
             } else {
                 connectButton.isEnabled = false
-            }
-        }
-    }
-    
-    ///
-    /// Detect when the user hits the return key.  If we hve a valid IP, GO!
-    ///
-    /// - Parameter notification: intercept the change notification and check
-    ///
-    func controlTextDidEndEditing(_ aNotification: Notification) {
-        if let textField = aNotification.object as? NSTextField {
-            if validateIPAddress(textField.stringValue) {
-                connectClicked(textField)
             }
         }
     }

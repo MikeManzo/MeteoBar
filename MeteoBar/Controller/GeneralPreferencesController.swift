@@ -18,6 +18,8 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
     
     // MARK: - Outlets
     @IBOutlet weak var sensorTree: NSOutlineView!
+    @IBOutlet weak var updateInterval: NSPopUpButton!
+    @IBOutlet weak var weatherAlerts: NSButton!
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -31,10 +33,11 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
             for (category, _) in (theDelegate?.theBridge?.sensors)! {   // Create a simple model for our OutlineView
                 categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
             }
-            categories.sort {   // Sort the model alphabetically
+            sensorTree.headerView = nil     // Default (no meteobridge) is a header that says "Meteobridge Not Yet Configured"
+            categories.sort {               // Sort the model alphabetically
                 $0.cat.rawValue < $1.cat.rawValue
             }
-            sensorTree.reloadData() // Reload the OutlineView
+            sensorTree.reloadData()         // Reload the OutlineView
             if !(theDelegate?.theDefaults?.menubarSensor.isEmpty)! {    // Select the current sensor that is reporting to the menubar
                 guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     return
@@ -47,11 +50,28 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
                 sensorTree.scrollRowToVisible(rowIndex)
             }
         }
+        
+        // Update view based on defaults
+        if theDelegate?.theBridge != nil {
+            updateInterval.isEnabled = true
+            updateInterval.setTitle((theDelegate?.theBridge?.updateInterval.description)!)
+        } else {
+            updateInterval.isEnabled = false
+        }
+        weatherAlerts.state = (theDelegate?.theDefaults?.weatherAlerts)! ? .on : .off
+        // Update view based on defaults
     }
     
     override func viewDidDisappear() {
         super.viewDidDisappear()
         categories.removeAll()
+        
+        if theDelegate?.theBridge != nil {
+            theDelegate?.theBridge?.updateInterval = Int(updateInterval.titleOfSelectedItem!)!
+        }
+        theDelegate?.theDefaults?.weatherAlerts = (weatherAlerts.state == .on) ? true : false
+        
+        theDelegate?.updateDefaults()
     }
     
     override func viewDidLoad() {

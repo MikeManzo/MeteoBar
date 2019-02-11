@@ -185,12 +185,13 @@
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T4i-9V-zMJ">
                                 <rect key="frame" x="312" y="341" width="104" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="XXX.YYY.ZZZ" drawsBackground="YES" id="LP6-cn-ARe">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="XXX.YYY.ZZZ" drawsBackground="YES" id="LP6-cn-ARe">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
+                                    <action selector="ipReturnSelected:" target="-2" id="ink-4m-Ert"/>
                                     <outlet property="delegate" destination="-2" id="o2f-Dz-zBW"/>
                                 </connections>
                             </textField>

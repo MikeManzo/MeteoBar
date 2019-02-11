@@ -96,7 +96,7 @@ class MainMenuController: NSViewController {
         
         DispatchQueue.main.async { // Kick off the first observation while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: ["Bridge": theBridge!])
-            log.info("Station[\(theBridge!.name)] will update its data every \(theBridge!.updateInterval) seconds.")
+            log.info("Station[\(theBridge!.name)] will poll every \(theBridge!.updateInterval) seconds.")
         }
     }
 
