@@ -11,6 +11,7 @@
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="IXN-NL-doK"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="L7R-r4-cCv"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="G1u-Hc-a1g"/>
+                <outlet property="sensorOn" destination="U0E-rt-ylL" id="Pes-uS-gXl"/>
                 <outlet property="sensorUnits" destination="zrL-Ly-lCx" id="IG5-dy-zb7"/>
             </connections>
         </customObject>
@@ -46,20 +47,22 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="full-battery" id="NLU-aR-ueZ"/>
                 </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ofO-Vz-Hj5">
-                    <rect key="frame" x="44" y="57" width="48" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Battery" id="IGg-mR-HcM" userLabel="Battery">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scH-rh-9Mu" userLabel="Sensor Image">
                     <rect key="frame" x="5" y="66" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="solar-energy" id="Sdr-0A-ebK"/>
                 </imageView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0E-rt-ylL">
+                    <rect key="frame" x="45" y="57" width="40" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="On" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Q4Y-Sx-2ov">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="observingStateChanged:" target="sdv-IT-EaE" id="qD2-lf-BBF"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="-133" y="-39"/>
         </customView>
@@ -68,6 +71,7 @@
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="XVd-xt-wot"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="TIa-3I-YQf"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="9O0-3R-0Y4"/>
+                <outlet property="sensorOn" destination="U0E-rt-ylL" id="US2-im-8g1"/>
                 <outlet property="sensorUnits" destination="zrL-Ly-lCx" id="MfL-fg-4SC"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="cKm-EI-93k"/>
             </connections>
