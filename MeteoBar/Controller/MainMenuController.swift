@@ -15,12 +15,14 @@ enum MeteobarError: Error, CustomStringConvertible {
     case observationError
     case bridgeError
     case missingBridge
+    case missingMenubarSensor
     
     var description: String {
         switch self {
         case .observationError: return "Error reading observation from Meteobridge"
         case .bridgeError: return "Error reading data from Meteobridg"
         case .missingBridge: return "No Meteobridge found in User Defaults"
+        case .missingMenubarSensor: return "No sensor selected for display in menubar"
         }
     }
 }
@@ -61,6 +63,9 @@ class MainMenuController: NSViewController {
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
         NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
         
+        if theDelegate?.theBridge != nil {
+            addBridgeToQueue(theBridge: theDelegate?.theBridge)
+        }
 //        addBridgeToQueue(theBridge: Defaults[.defaultBridges])
     }
 
@@ -99,6 +104,7 @@ class MainMenuController: NSViewController {
     /// We have kicked off a number of timers to get an observation; this is the callback to process the obseravtions across observing stations
     ///
     /// ## Important Notes ##
+    ///   The Station has returned with its observation; do something with it
     ///
     /// - parameters:
     ///   - theNotification: the notification that is returned with the data call; in our case, it's the station
@@ -111,31 +117,22 @@ class MainMenuController: NSViewController {
             log.error(MeteobarError.bridgeError)
             return
         }
-        bridge.getObservation(observationReturned)
-    }
-
-    ///
-    /// The Station has returned with its observation; do somethign with it
-    ///
-    /// ## Important Notes ##
-    ///
-    /// - parameters:
-    ///   - response: the object that is returned with the data call; in our case, it's the station
-    /// - throws: Nothing
-    /// - returns:  Nothing
-    ///
-    func observationReturned(_ response: AnyObject?, _ error: Error?) {
-        if error == nil {
-            guard let bridge: Meteobridge = response as? Meteobridge else {
-                log.warning(MeteobarError.bridgeError)
+//        bridge.getObservation(observationReturned)
+        bridge.getObservation { (_ response: AnyObject?, _ error: Error?) in
+            if error == nil {
+                guard let bridge: Meteobridge = response as? Meteobridge else {
+                    log.warning(MeteobarError.bridgeError)
+                    return
+                }
+                guard let sensor = bridge.findSensor(sensorName: (theDelegate?.theDefaults?.menubarSensor)!) else {
+                    log.warning(MeteobarError.missingMenubarSensor)
+                    return
+                }
+                self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
+            } else {
+                log.error(error.value)
                 return
             }
-            
-            log.info("Observations updated for \(bridge.name)")
-            
-        } else {
-            log.error(error.value)
-            return
         }
     }
     
