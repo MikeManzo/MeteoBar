@@ -160,7 +160,24 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
         } else if let sensor = item as? MeteobridgeSensor { // Show the sensors ... the brances of the roots
             view = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
             if let textField = view?.textField {
-                textField.stringValue = sensor.information
+                //textField.stringValue = sensor.information
+                let strokeTextAttributes: [NSAttributedString.Key: Any]?
+                if sensor.name == theDelegate?.theDefaults?.menubarSensor {
+                    strokeTextAttributes = [
+                        .strokeColor: NSColor.controlTextColor,
+                        .foregroundColor: NSColor.controlTextColor,
+                        .strokeWidth: -2.0,
+                        .font: NSFont.systemFont(ofSize: NSFont.Weight.regular.rawValue).setBoldandItalics()
+                    ]
+                } else {
+                    strokeTextAttributes = [
+                        .strokeColor: NSColor.controlTextColor,
+                        .foregroundColor: NSColor.controlTextColor,
+                        .strokeWidth: -2.0,
+                        .font: NSFont.systemFont(ofSize: NSFont.Weight.regular.rawValue)
+                    ]
+                }
+                textField.attributedStringValue = NSAttributedString(string: sensor.information, attributes: strokeTextAttributes)
                 textField.toolTip = sensor.information
             }
         } else {

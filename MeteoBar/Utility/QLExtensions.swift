@@ -88,6 +88,28 @@ extension Int64 {
     }
 }
 
+//[How to apply bold and italics](https://stackoverflow.com/questions/34499735/how-to-apply-bold-and-italics-to-an-nsmutableattributedstring-range))
+extension NSFont {
+    func withTraits(_ traits: NSFontDescriptor.SymbolicTraits) -> NSFont {
+        // create a new font descriptor with the given traits
+        let fontDesc = fontDescriptor.withSymbolicTraits(traits)
+            // return a new font with the created font descriptor
+        return NSFont(descriptor: fontDesc, size: pointSize)!
+    }
+    
+    func setItalics() -> NSFont {
+        return withTraits(.italic)
+    }
+    
+    func setBold() -> NSFont {
+        return withTraits(.bold)
+    }
+    
+    func setBoldandItalics() -> NSFont {
+        return withTraits([ .bold, .italic ])
+    }
+}
+
 extension NSImage {
     /// Apply snadard filters to an NSImage
     ///
