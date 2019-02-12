@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -15,6 +16,10 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MeteoBar" customModuleProvider="target"/>
         <viewController nibName="MainMenu" id="qZU-Zb-ECd" userLabel="Main Menu Controller" customClass="MainMenuController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
+                <outlet property="compassItem" destination="6Mb-90-mvK" id="iCR-uD-ola"/>
+                <outlet property="compassView" destination="eJe-6H-P1v" id="yPJ-Sp-qR9"/>
+                <outlet property="iconBarManuItem" destination="BXX-q4-mZ4" id="4Yo-Hn-Buk"/>
+                <outlet property="iconBarView" destination="ScJ-Un-QKA" id="CoF-E2-aYM"/>
                 <outlet property="menuMain" destination="xGN-gD-dKg" id="CkF-5p-72M"/>
             </connections>
         </viewController>
@@ -38,11 +43,87 @@
                         <action selector="quitMeteoBar:" target="qZU-Zb-ECd" id="ai5-Bg-9Kh"/>
                     </connections>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="1zT-at-0mX"/>
+                <menuItem title="Compass Item" id="6Mb-90-mvK" userLabel="Compass Item">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="8Zk-Dn-b3f"/>
+                <menuItem title="Icon Bar Item" id="BXX-q4-mZ4" userLabel="IconBar Item">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
             </items>
             <connections>
                 <outlet property="delegate" destination="qZU-Zb-ECd" id="vjq-oz-KvM"/>
             </connections>
-            <point key="canvasLocation" x="23" y="-185"/>
+            <point key="canvasLocation" x="12" y="-378"/>
         </menu>
+        <customView id="ScJ-Un-QKA" userLabel="Icon Bar View" customClass="IconBarView" customModule="MeteoBar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="398" height="32"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="86" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h8-8S-VZT">
+                    <rect key="frame" x="5" y="0.0" width="386" height="32"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ish-oG-24D" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="7Pw-gH-58V"/>
+                                <constraint firstAttribute="height" constant="32" id="yaK-3g-zT6"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSActionTemplate" id="GoK-St-Yrj"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pFj-8r-oIg" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="118" y="0.0" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="HyE-do-kZr"/>
+                                <constraint firstAttribute="height" constant="32" id="td4-ha-D3w"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="configurator" id="3BI-y8-wvc"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D9A-WZ-IpH" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="236" y="0.0" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="a2p-UB-TMD"/>
+                                <constraint firstAttribute="width" constant="32" id="yDj-fA-96d"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="compass-north" id="M5q-mY-6mb"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KcL-Iw-CrV" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="354" y="0.0" width="32" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="32" id="oVT-xH-OYy"/>
+                                <constraint firstAttribute="height" constant="32" id="xvv-5G-4TZ"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="logout" id="ct2-3X-2KA"/>
+                        </imageView>
+                    </subviews>
+                    <visibilityPriorities>
+                        <real value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <point key="canvasLocation" x="10" y="176"/>
+        </customView>
+        <customView id="eJe-6H-P1v" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <point key="canvasLocation" x="11" y="-79"/>
+        </customView>
     </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="compass-north" width="75" height="75"/>
+        <image name="configurator" width="180" height="180"/>
+        <image name="logout" width="384" height="384"/>
+    </resources>
 </document>

@@ -97,6 +97,13 @@ class AboutController: NSViewController {
          "copyHolder": "Freepick",
          "copyURL": "https://www.flaticon.com/free-icon/living-room-books-group_47536#term=library&page=1&position=23"
         ],
+        ["copyImage": "logout.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Logout Icon",
+         "copyHolder": "Freepick",
+         "copyURL": "https://www.freepik.com/"
+        ],
         ["copyImage": "play-button.png",
          "copyType": "Icon",
          "invertable": "yes",

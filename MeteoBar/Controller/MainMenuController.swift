@@ -27,10 +27,20 @@ enum MeteobarError: Error, CustomStringConvertible {
     }
 }
 
+///
+/// Main Menu
+///
+/// ## Special Notes ##
+/// [NSSTackView Example](https://stackoverflow.com/questions/44823449/how-to-stretch-all-buttons-inside-horizontal-stack-view-as-device-width#)
+///
 class MainMenuController: NSViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var menuMain: NSMenu!
+    @IBOutlet weak var iconBarView: IconBarView!
+    @IBOutlet weak var compassView: MeteoCompassView!
+    @IBOutlet weak var iconBarManuItem: NSMenuItem!
+    @IBOutlet weak var compassItem: NSMenuItem!
     
     // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
@@ -59,6 +69,9 @@ class MainMenuController: NSViewController {
         statusItems["MeteoBar"]         = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItems["MeteoBar"]?.title  = "--"
         statusItems["MeteoBar"]?.menu   = menuMain
+        
+        iconBarManuItem.view            = iconBarView
+        compassItem.view                = compassView
         
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
         NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)

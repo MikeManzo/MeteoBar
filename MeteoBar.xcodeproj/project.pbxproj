@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2744B782220E793600A61514 /* compass-north.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B781220E793600A61514 /* compass-north.png */; };
 		2744B784220E79FC00A61514 /* configurator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B783220E79FC00A61514 /* configurator.png */; };
+		27470AAB2212D8F100C7AEA9 /* IconBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AAA2212D8F100C7AEA9 /* IconBarView.swift */; };
+		27470AAD2212E1F100C7AEA9 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 27470AAC2212E1F100C7AEA9 /* logout.png */; };
 		2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2771085322011CA0009A3C86 /* CollectionItemDropView.swift */; };
 		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
 		277658DD21EA6063007BA05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277658DC21EA6063007BA05A /* Assets.xcassets */; };
@@ -85,6 +87,8 @@
 /* Begin PBXFileReference section */
 		2744B781220E793600A61514 /* compass-north.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compass-north.png"; sourceTree = "<group>"; };
 		2744B783220E79FC00A61514 /* configurator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = configurator.png; sourceTree = "<group>"; };
+		27470AAA2212D8F100C7AEA9 /* IconBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBarView.swift; sourceTree = "<group>"; };
+		27470AAC2212E1F100C7AEA9 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		2771085322011CA0009A3C86 /* CollectionItemDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemDropView.swift; sourceTree = "<group>"; };
 		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277658DA21EA6062007BA05A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -240,6 +244,7 @@
 			children = (
 				2771085322011CA0009A3C86 /* CollectionItemDropView.swift */,
 				27E6C5BB21ED58B200548CF0 /* Graphics */,
+				27470AAA2212D8F100C7AEA9 /* IconBarView.swift */,
 				277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */,
 				27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */,
 				277EF6B8220614A8005DA8B4 /* MeteoSensorNodePair.swift */,
@@ -330,6 +335,7 @@
 				27ACA79921FF4CCC00E226C2 /* empty-battery.png */,
 				27CF042A22073675007DFFDF /* empty-battery-color.png */,
 				27ACA78321FE4BFF00E226C2 /* humidity.png */,
+				27470AAC2212E1F100C7AEA9 /* logout.png */,
 				27ACA79D21FF4CDE00E226C2 /* no-battery.png */,
 				27CF04322207A519007DFFDF /* play-button.png */,
 				27ACA78521FE4CD500E226C2 /* pressure.png */,
@@ -488,6 +494,7 @@
 				27ACA78421FE4BFF00E226C2 /* humidity.png in Resources */,
 				27CF042D22073A18007DFFDF /* unknown-battery-color.png in Resources */,
 				277658DD21EA6063007BA05A /* Assets.xcassets in Resources */,
+				27470AAD2212E1F100C7AEA9 /* logout.png in Resources */,
 				27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */,
 				2744B782220E793600A61514 /* compass-north.png in Resources */,
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
@@ -608,6 +615,7 @@
 				277EF6B9220614A8005DA8B4 /* MeteoSensorNodePair.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
 				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,
+				27470AAB2212D8F100C7AEA9 /* IconBarView.swift in Sources */,
 				27ACA77A21FE018A00E226C2 /* MeteoPreferences.swift in Sources */,
 				27CA786621EBC06A000D517D /* AboutController.swift in Sources */,
 				27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */,
