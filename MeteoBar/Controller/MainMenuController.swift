@@ -149,6 +149,20 @@ class MainMenuController: NSViewController {
         }
     }
     
+    /// Show the preferences window with the Setup Tab selected
+    ///
+    /// - Parameter sender: The Caller who sent the message
+    @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
+        preferencesView.showWindow(tabIndex: 1)
+    }
+    
+    /// Show the preferences window the Configuration Tab selected
+    ///
+    /// - Parameter sender: The Caller who sent the message
+    @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
+        preferencesView.showWindow(tabIndex: 2)
+    }
+    
     /// Show the "About" Window
     ///
     /// - Parameter sender: The Caller who sent the message

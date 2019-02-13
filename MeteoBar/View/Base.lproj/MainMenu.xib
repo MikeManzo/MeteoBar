@@ -25,25 +25,6 @@
         </viewController>
         <menu id="xGN-gD-dKg" userLabel="Main Menu">
             <items>
-                <menuItem title="About MeteoBar" id="qOc-Mp-UNZ" userLabel="About MeteoBar">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="aboutMeteoBar:" target="qZU-Zb-ECd" id="cYg-Ws-WlV"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="thp-5b-lRb"/>
-                <menuItem title="Preferences ..." keyEquivalent="," id="tXm-Q1-qdu" userLabel="Preferences">
-                    <connections>
-                        <action selector="meteoBarPreferences:" target="qZU-Zb-ECd" id="AQg-lT-XTs"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="gpY-9L-MMv"/>
-                <menuItem title="Quit MeteoBar" keyEquivalent="q" id="vBD-2F-DM3" userLabel="Quit">
-                    <connections>
-                        <action selector="quitMeteoBar:" target="qZU-Zb-ECd" id="ai5-Bg-9Kh"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="1zT-at-0mX"/>
                 <menuItem title="Compass Item" id="6Mb-90-mvK" userLabel="Compass Item">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
@@ -55,51 +36,90 @@
             <connections>
                 <outlet property="delegate" destination="qZU-Zb-ECd" id="vjq-oz-KvM"/>
             </connections>
-            <point key="canvasLocation" x="12" y="-378"/>
+            <point key="canvasLocation" x="12" y="-355"/>
         </menu>
         <customView id="ScJ-Un-QKA" userLabel="Icon Bar View" customClass="IconBarView" customModule="MeteoBar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="398" height="32"/>
+            <rect key="frame" x="0.0" y="0.0" width="398" height="28"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="86" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h8-8S-VZT">
-                    <rect key="frame" x="5" y="0.0" width="386" height="32"/>
+                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="65" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h8-8S-VZT">
+                    <rect key="frame" x="5" y="-2" width="388" height="32"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ish-oG-24D" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
+                        <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-0D-aSD" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="32" id="7Pw-gH-58V"/>
-                                <constraint firstAttribute="height" constant="32" id="yaK-3g-zT6"/>
+                                <constraint firstAttribute="height" constant="32" id="Dxn-Ra-NgC"/>
+                                <constraint firstAttribute="width" constant="32" id="Q57-J8-Nr4"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSActionTemplate" id="GoK-St-Yrj"/>
-                        </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pFj-8r-oIg" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="118" y="0.0" width="32" height="32"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSInfo" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="xdl-rI-jma">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="aboutMeteoBar:" target="qZU-Zb-ECd" id="ER6-rH-FJG"/>
+                            </connections>
+                        </button>
+                        <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="8dE-dv-OZV" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="97" y="4" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="32" id="HyE-do-kZr"/>
-                                <constraint firstAttribute="height" constant="32" id="td4-ha-D3w"/>
+                                <constraint firstAttribute="height" constant="24" id="Ayd-6k-Dlc"/>
+                                <constraint firstAttribute="width" constant="24" id="Yij-GW-CaZ"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="configurator" id="3BI-y8-wvc"/>
-                        </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="D9A-WZ-IpH" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="236" y="0.0" width="32" height="32"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="pIq-Hi-cdE">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="meteoBarPreferences:" target="qZU-Zb-ECd" id="lzn-S3-sNG"/>
+                            </connections>
+                        </button>
+                        <button toolTip="Meteobridge Setup" translatesAutoresizingMaskIntoConstraints="NO" id="drl-d6-wft" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="186" y="4" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="32" id="a2p-UB-TMD"/>
-                                <constraint firstAttribute="width" constant="32" id="yDj-fA-96d"/>
+                                <constraint firstAttribute="width" constant="24" id="JvT-Ma-q8j"/>
+                                <constraint firstAttribute="height" constant="24" id="QHu-Tg-YNc"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="compass-north" id="M5q-mY-6mb"/>
-                        </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KcL-Iw-CrV" customClass="QJHighlightImageView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="354" y="0.0" width="32" height="32"/>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="configurator" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Nm1-6t-LJd">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="showBridgeSetupTab:" target="qZU-Zb-ECd" id="Iav-V1-JxM"/>
+                            </connections>
+                        </button>
+                        <button identifier="Meteobridge Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="cib-Jx-aX3" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="275" y="4" width="24" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="32" id="oVT-xH-OYy"/>
-                                <constraint firstAttribute="height" constant="32" id="xvv-5G-4TZ"/>
+                                <constraint firstAttribute="width" constant="24" id="oHy-9Z-27X"/>
+                                <constraint firstAttribute="height" constant="24" id="sx7-aQ-pV0"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="logout" id="ct2-3X-2KA"/>
-                        </imageView>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="compass-north" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GBj-BX-4hB">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="showBridgeConfiguration:" target="qZU-Zb-ECd" id="UVe-wa-a81"/>
+                            </connections>
+                        </button>
+                        <button toolTip="Exit" translatesAutoresizingMaskIntoConstraints="NO" id="cNi-fb-CHP" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="364" y="4" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="1Rx-wy-yhV"/>
+                                <constraint firstAttribute="width" constant="24" id="jSI-0l-3om"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="logout" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="g2a-pw-J3D">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="quitMeteoBar:" target="qZU-Zb-ECd" id="Km0-Ul-BrI"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <visibilityPriorities>
-                        <real value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
@@ -109,10 +129,11 @@
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
             </subviews>
-            <point key="canvasLocation" x="10" y="176"/>
+            <point key="canvasLocation" x="11" y="167"/>
         </customView>
         <customView id="eJe-6H-P1v" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
@@ -122,6 +143,7 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSInfo" width="32" height="32"/>
         <image name="compass-north" width="75" height="75"/>
         <image name="configurator" width="180" height="180"/>
         <image name="logout" width="384" height="384"/>
