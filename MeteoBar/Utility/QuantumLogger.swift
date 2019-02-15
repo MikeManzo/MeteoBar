@@ -29,7 +29,7 @@ open class QuantumLogger: SwiftyBeaver {
         super.error(message, file, function,  line: line,  context: context)
         
         let alert = NSAlert()
-        alert.messageText = "Solis has encountred an error"
+        alert.messageText = "Meteobar has encountred an error"
         alert.informativeText = message() as? String ?? "Something went wrong. No Message provided."
         alert.alertStyle = .critical
         alert.addButton(withTitle: "Resume")

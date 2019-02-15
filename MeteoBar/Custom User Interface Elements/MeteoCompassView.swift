@@ -110,8 +110,28 @@ class MeteoCompassView: SKView {
         fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
         
         self.presentScene(theKitScene)
+        
+        /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
+        NotificationCenter.default.addObserver(self, selector: #selector(observationRecieved(_:)), name: NSNotification.Name(rawValue: "NewObservationReceived"), object: nil)
     }
     
+    @objc private func observationRecieved(_ theNotification: Notification) {
+        upperLeft?.update()
+        upperRight?.update()
+        lowerLeft?.update()
+        lowerRight?.update()
+        
+        guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
+            log.warning("Sensor:[win0dir] cannot be found")
+            return
+        }
+        
+        guard let value = sensor.measurement.value else {
+            log.warning("Sensor:[win0dir] value is nil")
+            return
+        }
+        windDirection(direction: Double(value)!)
+    }
     // MARK: - Shapes
 
     /// Move the carat to face the direction the wind is blowing
@@ -365,6 +385,7 @@ class MeteoCompassView: SKView {
         ULMajor.addChild(ULBattery)
         
         upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery, sensorID: theDelegate?.theDefaults?.compassULSensor)
+        if theDelegate?.theBridge != nil { upperLeft?.update() }
         
         // Upper Right
         let URMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -396,7 +417,8 @@ class MeteoCompassView: SKView {
         URMajor.addChild(URBattery)
 
         upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery, sensorID: theDelegate?.theDefaults?.compassURSensor)
-        
+        if theDelegate?.theBridge != nil { upperRight?.update() }
+
         // Lower Left
         let LLMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
@@ -427,6 +449,7 @@ class MeteoCompassView: SKView {
         LLMajor.addChild(LLBattery)
         
         lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery, sensorID: theDelegate?.theDefaults?.compassLLSensor)
+        if theDelegate?.theBridge != nil { lowerLeft?.update() }
 
         // Lower Right
         let LRMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
@@ -458,5 +481,6 @@ class MeteoCompassView: SKView {
         LRMajor.addChild(LRBattery)
         
         lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery, sensorID: theDelegate?.theDefaults?.compassLRSensor)
+        if theDelegate?.theBridge != nil { upperRight?.update() }
     }
 }

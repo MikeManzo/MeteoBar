@@ -1,6 +1,6 @@
 //
 //  QuickResponseTableView.swift
-//  Solis
+//  Meteobar
 //
 //  Created by Mike Manzo on 7/23/17.
 //  Copyright © 2017 Straight On 'Till Dawn. All rights reserved.

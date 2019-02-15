@@ -32,8 +32,25 @@ enum CodingKeys: String, CodingKey {
 /// Class to store MeteoBar's User Defaults
 /// To clear the defaults, open terminal and type: defaults delete com.quantumjoker.meteobar
 ///
+///   These are our defults:
+///   compassCardinalMinorTickColor:    SKColor.white
+///   compassCardinalMajorTickColor:    SKColor.blue
+///   compassCrosshairColor:            SKColor.white
+///   compassSensorColor:               SKColor.white
+///   compassRingColor:                 SKColor.yellow
+///   compassFrameColor:                SKColor.black
+///   compassFaceColor:                 SKColor.black
+///   compassCaratColor:                SKColor.red
+///   compassShowSensorBox:             false
+///   menubarSensor:                    th0temp     // The menubar sensor defaults to the outside temperature
+///   compassULSensor:                  th0temp     // Upper Left: Outside Temperature
+///   compassURSensor:                  thb0press   // Upper Right: Outside Pressure
+///   compassLLSensor:                  th0hum      // Lower Left: Outside Humidity
+///   compassLRSensor:                  sol0rad     // Lower Right: Outside Solar Radiation
+///   weatherAlerts:                    true
+
 final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
-    // MARK: - Compass Preferences
+    // MARK: - Compass Defaults
     var compassCardinalMinorTickColor: SKColor = SKColor.white
     var compassCardinalMajorTickColor: SKColor = SKColor.blue
     var compassCrosshairColor: SKColor = SKColor.white
@@ -43,15 +60,14 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var compassFaceColor: SKColor = SKColor.black
     var compassCaratColor: SKColor = SKColor.red
     var compassShowSensorBox: Bool = false
-    var menubarSensor: String = "th0temp"   // Plain and simple - qhat's the temp outside?! :)
-    var compassULSensor: String = ""
-    var compassURSensor: String = ""
-    var compassLLSensor: String = ""
-    var compassLRSensor: String = ""
+    var menubarSensor: String = "th0temp"       // Temp outside
+    var compassULSensor: String = "th0temp"     // Upper Left:  Temp
+    var compassURSensor: String = "thb0press"   // Upper Right: Pressure
+    var compassLLSensor: String = "th0hum"      // Lower Left:  Humidity
+    var compassLRSensor: String = "sol0rad"     // Lower Right: Solar Radiation
     var weatherAlerts: Bool = true
 
     // MARK: - Codable Compliance
-    
     /// Required for an empty object (because we hve defaults above)
     required override init() {
         super.init()

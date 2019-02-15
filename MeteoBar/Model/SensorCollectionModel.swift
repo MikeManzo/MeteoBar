@@ -146,7 +146,7 @@ class SensorCollectionModel: NSObject {
     /// - parameters:
     ///   - indexPath: the path of the section/item of interest
     /// - throws: Nothing
-    /// - returns: The SolisSenorImage for the prescribed indexPath
+    /// - returns: The MeteoSenorImage for the prescribed indexPath
     ///
     func sensorImageForIndexPath(_ indexPath: IndexPath) -> MeteoSensorImage {
         return sections[indexPath.section]![indexPath.item]!

@@ -130,18 +130,19 @@ class MainMenuController: NSViewController {
             log.error(MeteobarError.bridgeError)
             return
         }
-//        bridge.getObservation(observationReturned)
         bridge.getObservation { (_ response: AnyObject?, _ error: Error?) in
             if error == nil {
                 guard let bridge: Meteobridge = response as? Meteobridge else {
                     log.warning(MeteobarError.bridgeError)
                     return
                 }
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewObservationReceived"),
+                                                object: nil, userInfo: ["Bridge": bridge])  // Broadcast to all listeners - we have a new measurement.  Update as needed.
                 guard let sensor = bridge.findSensor(sensorName: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     log.warning(MeteobarError.missingMenubarSensor)
                     return
                 }
-                self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
+                self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement           // Update the menubar
             } else {
                 log.error(error.value)
                 return

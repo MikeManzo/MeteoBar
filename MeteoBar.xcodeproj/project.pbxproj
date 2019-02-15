@@ -252,11 +252,11 @@
 				277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */,
 				27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */,
 				277EF6B8220614A8005DA8B4 /* MeteoSensorNodePair.swift */,
+				27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */,
+				27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */,
 				27CA786821EC19DE000D517D /* QJHyperTextField.swift */,
 				27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */,
 				27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */,
-				27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */,
-				27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */,
 			);
 			path = "Custom User Interface Elements";
 			sourceTree = "<group>";

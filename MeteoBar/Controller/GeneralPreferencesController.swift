@@ -71,7 +71,7 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         }
         theDelegate?.theDefaults?.weatherAlerts = (weatherAlerts.state == .on) ? true : false
         
-        theDelegate?.updateDefaults()
+        theDelegate?.updateMeteoBar()
     }
     
     override func viewDidLoad() {

@@ -52,6 +52,7 @@ enum WeatherPlatformError: Error, CustomStringConvertible {
 /// Singleton "Platform" to interact with the rest of the weather model(s)
 class WeatherPlatform: Weather {
     static let shared = WeatherPlatform()
+    static let fireTimeOut = TimeInterval(15)
     
     /// Private init for the singleton
     private init() { }
@@ -63,6 +64,9 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to recieve the results
     ///
     func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = WeatherPlatform.fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = WeatherPlatform.fireTimeOut
         var templateString = "Time:[hh];[mm];[ss],"
         
         for (category, sensors) in theBridge.sensors {
@@ -79,7 +83,7 @@ class WeatherPlatform: Weather {
             return
         }
         
-        Alamofire.request(bridgeEndpoint).responseData { bridgeResponse in
+        alamoManager.request(bridgeEndpoint).responseData { bridgeResponse in
             switch bridgeResponse.result {
             case .success (let stationData):
                 callback(stationData as AnyObject, nil)
@@ -96,6 +100,9 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to recieve the results
     ///
     func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = WeatherPlatform.fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = WeatherPlatform.fireTimeOut
         var templateString = "Time|[hh];[mm];[ss],"
         
         for (category, sensors) in theBridge.sensors {
@@ -112,7 +119,7 @@ class WeatherPlatform: Weather {
             return
         }
         
-        Alamofire.request(bridgeEndpoint).responseData { bridgeResponse in
+        alamoManager.request(bridgeEndpoint).responseData { bridgeResponse in
             switch bridgeResponse.result {
             case .success (let stationData):
                 callback(stationData as AnyObject, nil)
@@ -130,6 +137,9 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to recieve the results
     ///
     func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = WeatherPlatform.fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = WeatherPlatform.fireTimeOut
         var templateString = "Time:[hh];[mm];[ss],"
        
         guard let sensor = (theBridge.sensors[.system]?.filter {$0.name == param.rawValue}.first) else {
@@ -144,7 +154,7 @@ class WeatherPlatform: Weather {
             return
         }
         
-        Alamofire.request(bridgeEndpoint).responseData { bridgeResponse in
+        alamoManager.request(bridgeEndpoint).responseData { bridgeResponse in
             switch bridgeResponse.result {
             case .success (let stationData):
                 callback(stationData as AnyObject, nil)
@@ -197,13 +207,15 @@ class WeatherPlatform: Weather {
                             
                             theBridge = Meteobridge(bridgeIP: ipAddress, bridgeName: bridgeName)
                             
+                            /// System Sensors
                             for (sensor, data) in bridgeModel["system"]["instruments"] {    // Process System Sensors
                                 let theSensor = MeteobridgeSensor(sensorName: sensor, sensorCat: MeteoSensorCategory(rawValue: data[0]["type"].string!)!,
                                                                   isSensorOutdoor: false, batteryParam: data[0]["parameter"].string!,
                                                                   info: data[0]["description"].string!)
                                 theBridge?.addSensor(sensor: theSensor)
-                            }
+                            } /// System Sensors
                             
+                            /// Weather Sensors
                             for (category, sensors) in bridgeModel["sensors"]["0"] {        // <-- Process Weather Sensors, which are at ["0"]
                                 for sensor in sensors {                                     // <-- Categoruies (e.g., Temperature, wind, etc.)
                                     let theSensor = MeteobridgeSensor(sensorName: sensor.0, sensorCat: MeteoSensorCategory(rawValue: category)!,
@@ -217,7 +229,7 @@ class WeatherPlatform: Weather {
                                     }
                                     theBridge?.addSensor(sensor: theSensor)
                                 }
-                            }
+                            } /// Weather Sensors
                             callback (theBridge, nil)                                       // <-- We're finished; we should return the populated Meteobridge object
                         case .failure(let jsonError):   // JSON Read Failed
                             callback(nil, jsonError)
@@ -239,7 +251,11 @@ class WeatherPlatform: Weather {
     func findSensorInBridge(searchID: String) -> MeteobridgeSensor? {
         var foundSensor: MeteobridgeSensor?
         
-        for (_, sensors) in (theDelegate?.theBridge?.sensors)! {
+        guard let theBridge = theDelegate?.theBridge else {
+            return foundSensor
+        }
+        
+        for (_, sensors) in (theBridge.sensors) {
             foundSensor = sensors.filter {
                 $0.sensorID == searchID }.first
             if foundSensor != nil {
@@ -263,6 +279,10 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to return the image to
     ///
     func getPlatformImage(_ platform: String, handler: @escaping (NSImage?, Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = WeatherPlatform.fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = WeatherPlatform.fireTimeOut
+
         guard let ipAddress = theDelegate?.theBridge?.ipAddress else {
             handler(nil, WeatherPlatformError.platformImageError)
             return
@@ -270,7 +290,7 @@ class WeatherPlatform: Weather {
         
         let imgURL = "http://\(ipAddress)\(platformImages[platform]!)"
         
-        Alamofire.request(imgURL).responseImage { response in
+        alamoManager.request(imgURL).responseImage { response in
             guard let image = response.result.value else {
                 handler(nil, WeatherPlatformError.platformImageError)
                 return

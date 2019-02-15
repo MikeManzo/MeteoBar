@@ -14,82 +14,84 @@ class MeteoCompassSettingsView: MeteoCompassView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        var viewPoint = theKitScene!.convertPoint(toView: midPoint)
-        viewPoint.x += 8
-        viewPoint.y += 9
         
-        var dropView = CollectionItemDropView(identifier: "Upper Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        if (theDelegate?.theDefaults?.compassURSensor.isEmpty)! {
-           dropView.showDrop = true
-        } else {
-            upperRight?.update()
-            dropView.showDrop = false
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassURSensor)!)) else {
-                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassURSensor ?? "") for display")
-                return
+        if theDelegate?.theBridge != nil {
+            var viewPoint = theKitScene!.convertPoint(toView: midPoint)
+            viewPoint.x += 8
+            viewPoint.y += 9
+            
+            var dropView = CollectionItemDropView(identifier: "Upper Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+            dropView.wantsLayer = true
+            dropView.delegate = self
+            if (theDelegate?.theDefaults?.compassURSensor.isEmpty)! {
+                dropView.showDrop = true
+            } else {
+                if theDelegate?.theBridge != nil { upperRight?.update() }
+                dropView.showDrop = false
+                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassURSensor)!)) else {
+                    log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassURSensor ?? "") for display")
+                    return
+                }
+                dropView.toolTip = sensor.formattedSummary
             }
-            dropView.toolTip = sensor.formattedSummary
-        }
-        dropViews.append(dropView)
-        
-        viewPoint.x -= 97
-        dropView = CollectionItemDropView(identifier: "Upper Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        if (theDelegate?.theDefaults?.compassULSensor.isEmpty)! {
-            dropView.showDrop = true
-        } else {
-            upperLeft?.update()
-            dropView.showDrop = false
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassULSensor)!)) else {
-                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassULSensor ?? "") for display")
-                return
+            dropViews.append(dropView)
+            
+            viewPoint.x -= 97
+            dropView = CollectionItemDropView(identifier: "Upper Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+            dropView.wantsLayer = true
+            dropView.delegate = self
+            if (theDelegate?.theDefaults?.compassULSensor.isEmpty)! {
+                dropView.showDrop = true
+            } else {
+                if theDelegate?.theBridge != nil { upperLeft?.update() }
+                dropView.showDrop = false
+                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassULSensor)!)) else {
+                    log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassULSensor ?? "") for display")
+                    return
+                }
+                dropView.toolTip = sensor.formattedSummary
             }
-            dropView.toolTip = sensor.formattedSummary
-        }
-        dropViews.append(dropView)
-        
-        viewPoint.y -= 107
-        dropView = CollectionItemDropView(identifier: "Lower Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        if (theDelegate?.theDefaults?.compassLLSensor.isEmpty)! {
-            dropView.showDrop = true
-        } else {
-            lowerLeft?.update()
-            dropView.showDrop = false
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLLSensor)!)) else {
-                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLLSensor ?? "") for display")
-                return
+            dropViews.append(dropView)
+            
+            viewPoint.y -= 107
+            dropView = CollectionItemDropView(identifier: "Lower Left", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+            dropView.wantsLayer = true
+            dropView.delegate = self
+            if (theDelegate?.theDefaults?.compassLLSensor.isEmpty)! {
+                dropView.showDrop = true
+            } else {
+                if theDelegate?.theBridge != nil { lowerLeft?.update() }
+                dropView.showDrop = false
+                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLLSensor)!)) else {
+                    log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLLSensor ?? "") for display")
+                    return
+                }
+                dropView.toolTip = sensor.formattedSummary
             }
-            dropView.toolTip = sensor.formattedSummary
-        }
-        dropViews.append(dropView)
-        
-        viewPoint = theKitScene!.convertPoint(toView: midPoint)
-        viewPoint.x += 8
-        viewPoint.y -= 97
-        dropView = CollectionItemDropView(identifier: "Lower Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
-        dropView.wantsLayer = true
-        dropView.delegate = self
-        if (theDelegate?.theDefaults?.compassLRSensor.isEmpty)! {
-            dropView.showDrop = true
-        } else {
-            lowerRight?.update()
-            dropView.showDrop = false
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLRSensor)!)) else {
-                log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLRSensor ?? "") for display")
-                return
+            dropViews.append(dropView)
+            
+            viewPoint = theKitScene!.convertPoint(toView: midPoint)
+            viewPoint.x += 8
+            viewPoint.y -= 97
+            dropView = CollectionItemDropView(identifier: "Lower Right", frameRect: NSRect(origin: viewPoint, size: CGSize(width: 80, height: 90)))
+            dropView.wantsLayer = true
+            dropView.delegate = self
+            if (theDelegate?.theDefaults?.compassLRSensor.isEmpty)! {
+                dropView.showDrop = true
+            } else {
+                if theDelegate?.theBridge != nil { lowerRight?.update() }
+                dropView.showDrop = false
+                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLRSensor)!)) else {
+                    log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLRSensor ?? "") for display")
+                    return
+                }
+                dropView.toolTip = sensor.formattedSummary
             }
-            dropView.toolTip = sensor.formattedSummary
-        }
-        dropViews.append(dropView)
-        
-        for myView in dropViews {
-            addSubview(myView)
+            dropViews.append(dropView)
+            
+            for myView in dropViews {
+                addSubview(myView)
+            }
         }
     }
     

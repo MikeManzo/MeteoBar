@@ -40,6 +40,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var theDefaults = Defaults[.meteoBarDefaults]
     var theBridge   = Defaults[.bridgesDefaults]
+
+    override init() {
+        if theDefaults == nil {
+            theDefaults = MeteoPreferences()
+            Defaults[.meteoBarDefaults] = theDefaults
+        }
+    }
     
     /// Meteobar is up and we're ready to go
     ///
@@ -53,19 +60,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         log.addDestination(console)
         // SwiftyBeaver Config
         
-        if theDefaults == nil {
+/*        if theDefaults == nil {
             theDefaults = MeteoPreferences()
-        }
+            Defaults[.meteoBarDefaults] = theDefaults
+        } */
     }
 
     /// MeteoBar is about to close ... clean-up
     ///
     /// - Parameter aNotification: <#aNotification description#>
     func applicationWillTerminate(_ aNotification: Notification) {
-        updateDefaults()
+        updateMeteoBar()
     }
     
-    func updateDefaults() {
+    func updateBridge() {
+        Defaults[.bridgesDefaults]  = theBridge
+    }
+    
+    func updateConfiguration() {
+        Defaults[.meteoBarDefaults] = theDefaults
+    }
+    
+    func updateMeteoBar() {
         Defaults[.bridgesDefaults]  = theBridge
         Defaults[.meteoBarDefaults] = theDefaults
     }

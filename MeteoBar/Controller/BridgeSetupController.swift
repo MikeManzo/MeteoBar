@@ -12,10 +12,14 @@ import Cocoa
 
 enum BridgeSetupControllerError: Error, CustomStringConvertible {
     case noBridge
+    case noBridgeImage
+    case noBridgeParameters
     
     var description: String {
         switch self {
         case .noBridge: return "There is no bridge currently configured"
+        case .noBridgeImage: return "Cannot determine image for current platform"
+        case .noBridgeParameters: return "Cannot determine bridge parameters"
         }
     }
 }
@@ -41,6 +45,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
     @IBOutlet weak var altitudeLabel: NSTextField!
     @IBOutlet weak var macLabel: NSTextField!
     @IBOutlet weak var healthIcon: NSImageView!
+    @IBOutlet weak var progressIndicator: NSProgressIndicator!
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -72,10 +77,11 @@ class BridgeSetupController: NSViewController, Preferenceable {
         // Update the system paramaters with what the meteobridge is currently reporting
         theBridge.getAllSystemParameters { [unowned self] (bridge: Meteobridge?, error: Error?) in
             if bridge != nil {
-                theDelegate?.updateDefaults()   // Save the results
+                theDelegate?.updateMeteoBar()   // Save the results
                 self.updateMapView()            // Update the map based on the latest
             } else {
-                log.error(error.value)          // Something went wrong
+                log.warning(BridgeSetupControllerError.noBridgeParameters)          // Something went wrong
+                return
             }
             
             // Grab the image for the platform hosting the meteobridge
@@ -83,10 +89,11 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 if image != nil {
                     self.platformImage.image = image    // We have a platform; lets find the image
                 } else {
-                    log.error(error.value)              // Something went wrong
+                    log.warning(BridgeSetupControllerError.noBridgeImage)
                 }
             }
             
+            // We have what we need ... let's go
             DispatchQueue.main.async { [unowned self] in // Use DispatchQueue.main to ensure UI updates are done on the main thread
                 // Lat/lon
                 let dms = theBridge.coordinate.dms
@@ -154,17 +161,48 @@ class BridgeSetupController: NSViewController, Preferenceable {
     private func initializeBridge() {
         WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
-                theDelegate!.theBridge = response                           // Bridge is good
-                self.updateBridgeMetadata()                                 // Update the metatdata and prepare the view
-                theDelegate!.theBridge!.getObservation({ bridge, error in   // Get an observation so we can see what's going on
-                    if error == nil {
-                        log.info("\(bridge?.name ?? "")")                   // Just a debug note to tell us what is going on
-                    } else {
-                        log.error(error.value)                              // Something went wrong ... tellus about it
+                theDelegate!.theBridge = response                           // Bridge was loaded from the json description
+                theDelegate!.theBridge!.getObservation({ _, error in        // Get an observation so we can see what's going on
+                    if error != nil {
+                        log.error(error.value)                              // Something went wrong getting an initial observation... tell us about it
                     }
+                    
+                    guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
+                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")
+                        return
+                    }
+                    sensorUL.isObserving = true
+
+                    guard let sensorUR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassURSensor)!) else {
+                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassURSensor ?? "")]: to observe.")
+                        return
+                    }
+                    sensorUR.isObserving = true
+
+                    guard let sensorLL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLLSensor)!) else {
+                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLLSensor ?? "")]: to observe.")
+                        return
+                    }
+                    sensorLL.isObserving = true
+
+                    guard let sensorLR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLRSensor)!) else {
+                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLRSensor ?? "")]: to observe.")
+                        return
+                    }
+                    sensorLR.isObserving = true
+
+                    guard let sensorWind = theDelegate!.theBridge?.findSensor(sensorName: ("wind0dir")) else {
+                        log.warning("Cannot find Senor[wind0dir]: to observe.")
+                        return
+                    }
+                    sensorWind.isObserving = true
+                    theDelegate?.updateBridge()
+                    
+                    self.progressIndicator.stopAnimation(nil)               // Stop the spinning
                 })
-            } else {    // Something went wrong ... tell us about it
-                log.error(error.value)
+                self.updateBridgeMetadata()                                 // Update the metatdata and prepare the view
+            } else {                                                        // Something went wrong ... tell us about it
+                log.error(error.value)                                      // We should only get here IF we cannot load the json description
             }
         })
     }
@@ -182,15 +220,17 @@ class BridgeSetupController: NSViewController, Preferenceable {
             alert.beginSheetModal(for: self.view.window!) { [unowned self] (_ returnCode: NSApplication.ModalResponse) -> Void in
                 switch returnCode {
                 case .alertFirstButtonReturn:
-                    // Eat it .... do nothing
+                    // Eat it; the user selected cancel ... do nothing
                     break
                 case .alertSecondButtonReturn:
+                    self.progressIndicator.startAnimation(nil)
                     self.initializeBridge()
                 default:
                     break
                 }
             }
-        } else {    // We're good ... no bridge!
+        } else {    // We're good ... no previous bridge
+            progressIndicator.startAnimation(nil)
             initializeBridge()
         }
     }
