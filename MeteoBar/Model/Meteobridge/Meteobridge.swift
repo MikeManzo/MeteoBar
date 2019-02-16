@@ -310,6 +310,14 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 callback(nil, MeteobridgeError.observationError)
                 return
             }
+            
+            // Guard against poor data
+            if hourPair.count != 2 {
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            // Guard against poor data
+
             guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
                 callback(nil, MeteobridgeError.observationError)
                 return

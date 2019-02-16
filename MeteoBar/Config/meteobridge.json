@@ -252,9 +252,9 @@
                         "supported_units": {
                             "Percentage": {
                                 "unit": "%",
-                                "parameter": "[th0hum-act:--]",
-                                "dayMax": "[th0hum-dmax=.1:--]",
-                                "dayMin": "[th0hum-dmin=.1:--]",
+                                "parameter": "[th0hum-act=.0:--]",
+                                "dayMax": "[th0hum-dmax=.0:--]",
+                                "dayMin": "[th0hum-dmin=.0:--]",
                                 "default": true
                             }
                         }
@@ -269,9 +269,9 @@
                         "supported_units": {
                             "Percentage": {
                                 "unit": "%",
-                                "parameter": "[thb0hum-act:--]",
-                                "dayMax": "[thb0hum-dmax=.1:--]",
-                                "dayMin": "[thb0hum-dmin=.1:--]",
+                                "parameter": "[thb0hum-act=.0:--]",
+                                "dayMax": "[thb0hum-dmax=.0:--]",
+                                "dayMin": "[thb0hum-dmin=.0:--]",
                                 "default": true
                             }
                         }
@@ -546,7 +546,7 @@
                         "supported_units": {
                             "Ultraviolet": {
                                 "unit": "uv",
-                                "parameter": "[uv0index-act:--]",
+                                "parameter": "[uv0index-act=.0:--]",
                                 "dayMax": "[uv0index-dmax:--]",
                                 "dayMin": "[uv0index-dmin:--]",
                                 "default": true
@@ -563,7 +563,7 @@
                         "supported_units": {
                             "Watts per Square Meter": {
                                 "unit": "W/m^2",
-                                "parameter": "[sol0rad-act:--]",
+                                "parameter": "[sol0rad-act=.0:--]",
                                 "dayMax": "[sol0rad-dmax:--]",
                                 "dayMin": "[sol0rad-dmin:--]",
                                 "default": true
@@ -664,9 +664,9 @@
                         "supported_units": {
                             "N/A": {
                                 "unit": "",
-                                "parameter": "[lgt0total-act:--]",
-                                "dayMax": "[lgt0total-dmax:--]",
-                                "dayMin": "[lgt0total-dmin:--]",
+                                "parameter": "[lgt0total-act=.0:--]",
+                                "dayMax": "[lgt0total-dmax=.0:--]",
+                                "dayMin": "[lgt0total-dmin=.0:--]",
                                 "default": true
                             }
                         }

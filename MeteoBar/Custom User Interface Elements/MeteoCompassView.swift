@@ -131,6 +131,7 @@ class MeteoCompassView: SKView {
             return
         }
         windDirection(direction: Double(value)!)
+        print(Double(value)!)
     }
     // MARK: - Shapes
 
@@ -362,7 +363,7 @@ class MeteoCompassView: SKView {
         let ULMajorLabel: SKLabelNode = SKLabelNode(text: "") // UL Major
         ULMajorLabel.verticalAlignmentMode = .center
         ULMajorLabel.horizontalAlignmentMode = .center
-        ULMajorLabel.fontSize = 18
+        ULMajorLabel.fontSize = 16
         ULMajor.addChild(ULMajorLabel)
         ULMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         ULMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
@@ -394,7 +395,7 @@ class MeteoCompassView: SKView {
         let URMajorLabel: SKLabelNode = SKLabelNode(text: "") // UR Major
         URMajorLabel.verticalAlignmentMode = .center
         URMajorLabel.horizontalAlignmentMode = .center
-        URMajorLabel.fontSize = 18
+        URMajorLabel.fontSize = 16
         URMajor.addChild(URMajorLabel)
         URMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         URMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
@@ -426,7 +427,7 @@ class MeteoCompassView: SKView {
         let LLMajorLabel: SKLabelNode = SKLabelNode(text: "") // LL Major
         LLMajorLabel.verticalAlignmentMode = .center
         LLMajorLabel.horizontalAlignmentMode = .center
-        LLMajorLabel.fontSize = 18
+        LLMajorLabel.fontSize = 16
         LLMajor.addChild(LLMajorLabel)
         LLMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         LLMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
@@ -458,7 +459,7 @@ class MeteoCompassView: SKView {
         let LRtMajorLabel: SKLabelNode = SKLabelNode(text: "") // LR Major
         LRtMajorLabel.verticalAlignmentMode = .center
         LRtMajorLabel.horizontalAlignmentMode = .center
-        LRtMajorLabel.fontSize = 18
+        LRtMajorLabel.fontSize = 16
         LRMajor.addChild(LRtMajorLabel)
         LRMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         LRMajor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear

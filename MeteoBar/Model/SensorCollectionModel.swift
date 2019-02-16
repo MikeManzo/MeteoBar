@@ -126,6 +126,7 @@ class SensorCollectionModel: NSObject {
                 
                 sections[sectionNumber]?.append(meteoSensor)
             }
+            sections[sectionNumber]!.sort { $0!.label! < $1!.label! }
         }
         _modelLoaded = true
         return nil

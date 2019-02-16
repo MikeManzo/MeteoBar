@@ -201,6 +201,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     self.progressIndicator.stopAnimation(nil)               // Stop the spinning
                 })
                 self.updateBridgeMetadata()                                 // Update the metatdata and prepare the view
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
             } else {                                                        // Something went wrong ... tell us about it
                 log.error(error.value)                                      // We should only get here IF we cannot load the json description
             }

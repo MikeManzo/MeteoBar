@@ -75,13 +75,27 @@ class MainMenuController: NSViewController {
         
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
         NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
-        
-        if theDelegate?.theBridge != nil {
-            addBridgeToQueue(theBridge: theDelegate?.theBridge)
-        }
-//        addBridgeToQueue(theBridge: Defaults[.defaultBridges])
+
+        /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
+        NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(_:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
+       
+//        if theDelegate?.theBridge != nil {
+//            addBridgeToQueue(theBridge: theDelegate?.theBridge)
+//        }
+        newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
     }
 
+    @objc private func newBridgeInitialized(_ theNotification: Notification) {
+        guard let bridge = theDelegate?.theBridge else {
+            log.warning(MeteobarError.bridgeError)
+            return
+        }
+        
+        observerQueue.removeAll()
+        
+        addBridgeToQueue(theBridge: bridge)
+    }
+    
     ///
     /// Queue managament ... we want to be able to add stations to the queue at-will
     /// ## Steps ##
@@ -144,7 +158,7 @@ class MainMenuController: NSViewController {
                 }
                 self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement           // Update the menubar
             } else {
-                log.error(error.value)
+                log.warning(error.value)
                 return
             }
         }
