@@ -12,10 +12,12 @@ import Cocoa
 
 enum MeteoCompassViewError: Error, CustomStringConvertible {
     case unknownView
+    case windSensorError
     
     var description: String {
         switch self {
         case .unknownView: return "Unknown view detected"
+        case .windSensorError: return "Unable to find wind sensor"
         }
     }
 }
@@ -122,12 +124,12 @@ class MeteoCompassView: SKView {
         lowerRight?.update()
         
         guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
-            log.warning("Sensor:[win0dir] cannot be found")
+            log.warning(MeteoCompassViewError.windSensorError)
             return
         }
         
         guard let value = sensor.measurement.value else {
-            log.warning("Sensor:[win0dir] value is nil")
+            log.warning(MeteoCompassViewError.windSensorError)
             return
         }
         windDirection(direction: Double(value)!)
@@ -148,7 +150,7 @@ class MeteoCompassView: SKView {
         let myNewPath = CGMutablePath()
 
         if start-end == 0.0 {
-            return  // No need to do anything ... 
+            return  // No need to do anything ...
         }
 
 /*        if direction == 0 && prevDirection == 0 {
