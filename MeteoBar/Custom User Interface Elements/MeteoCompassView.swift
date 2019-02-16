@@ -23,7 +23,7 @@ enum MeteoCompassViewError: Error, CustomStringConvertible {
 class MeteoCompassView: SKView {
     // MARK: - Class properties
     var midPoint = CGPoint(x: 0.0, y: 0.0)
-    let k2PI: Double = 2 * Double.pi
+    let k2PI: Double = 2.0 * Double.pi
     let kSize: CGFloat = 14
     var radiusCompass: CGFloat = 0.0
     var intervalTwelve: Double =  0.0
@@ -40,10 +40,10 @@ class MeteoCompassView: SKView {
     var theKitScene: SKScene?
     
     // MARK: - Sensor Pairs
-    var upperLeft: MeteoSensorNodePair?     // Upper Left Sensor Grouping <major, minor>
     var upperRight: MeteoSensorNodePair?    // Upper Right Sensor Grouping <major, minor>
-    var lowerLeft: MeteoSensorNodePair?     // Lower Left Sensor Grouping <major, minor>
     var lowerRight: MeteoSensorNodePair?    // Lower Right Sensor Grouping <major, minor>
+    var lowerLeft: MeteoSensorNodePair?     // Lower Left Sensor Grouping <major, minor>
+    var upperLeft: MeteoSensorNodePair?     // Upper Left Sensor Grouping <major, minor>
 
     // MARK: - Overrides
     override convenience init(frame frameRect: NSRect) {
@@ -131,7 +131,6 @@ class MeteoCompassView: SKView {
             return
         }
         windDirection(direction: Double(value)!)
-//        print(Double(value)!)
     }
     // MARK: - Shapes
 
@@ -147,21 +146,28 @@ class MeteoCompassView: SKView {
         let end = CGFloat((90.0 - direction) * Double.pi/180.0)
         
         let myNewPath = CGMutablePath()
-        
-        if direction == 0 && prevDirection == 0 {
+
+        if start-end == 0.0 {
+            return  // No need to do anything ... 
+        }
+
+/*        if direction == 0 && prevDirection == 0 {
             compassNeedle!.xScale = 0
             myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
                              endAngle: end, clockwise: true, transform: myTranslation)
-        } else if direction - prevDirection  <= -36.0 { // Just reverse it if it's between +- 30° // compassNeedle.xScale = -1
+        } else */
+        if direction - prevDirection  <= -10.0 { // [36] Just reverse it if it's between +- 30° // compassNeedle.xScale = -1
             compassNeedle!.xScale = -1
             myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
                              endAngle: end, clockwise: false, transform: myTranslation)
+//            print("\(self)[Reverse] --> Current:\(direction); Previous:\(prevDirection) --> Delta:\(direction-prevDirection)")
         } else {
             compassNeedle!.xScale = 1
             myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
                              endAngle: end, clockwise: true, transform: myTranslation)
+//            print("\(self)[Forward] --> Current:\(direction); Previous:\(prevDirection) --> Delta:\(direction-prevDirection)")
         }
-        
+
         let pathNode = SKShapeNode(path: myNewPath)
         pathNode.strokeColor = SKColor.clear
         theKitScene!.addChild(pathNode)
