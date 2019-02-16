@@ -87,6 +87,7 @@ final class MeteoSensorNodePair {
                 return
             }
             majorText = sensor.formattedMeasurement
+            minorText = sensor.formattedMinMax
             
             battery?.isHidden = false
             switch sensor.batteryStatus {

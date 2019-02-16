@@ -547,8 +547,8 @@
                             "Ultraviolet": {
                                 "unit": "uv",
                                 "parameter": "[uv0index-act=.0:--]",
-                                "dayMax": "[uv0index-dmax:--]",
-                                "dayMin": "[uv0index-dmin:--]",
+                                "dayMax": "[uv0index-dma=.0x:--]",
+                                "dayMin": "[uv0index-dmin=.0:--]",
                                 "default": true
                             }
                         }
@@ -564,8 +564,8 @@
                             "Watts per Square Meter": {
                                 "unit": "W/m^2",
                                 "parameter": "[sol0rad-act=.0:--]",
-                                "dayMax": "[sol0rad-dmax:--]",
-                                "dayMin": "[sol0rad-dmin:--]",
+                                "dayMax": "[sol0rad-dmax=.0:--]",
+                                "dayMin": "[sol0rad-dmin=.0:--]",
                                 "default": true
                             }
                         }

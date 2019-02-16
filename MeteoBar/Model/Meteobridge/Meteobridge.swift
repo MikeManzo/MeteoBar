@@ -11,6 +11,7 @@ import MapKit
 import Cocoa
 
 enum MeteobridgeError: Error, CustomStringConvertible {
+    case observationDateError
     case observationError
     case unknownSensor
     case dataError
@@ -20,6 +21,7 @@ enum MeteobridgeError: Error, CustomStringConvertible {
         case .observationError: return "Error reading observation from Meteobridge"
         case .dataError: return "Error reading data from Meteobridg"
         case .unknownSensor: return "Unknown sensor detected"
+        case .observationDateError: return "Unbale to determine timestamp for observation - observation skipped"
         }
     }
 }
@@ -260,6 +262,14 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 return
             }
             
+            /// we're going to get something like this back for each sensor
+            /// th0temp:[th0temp-act=.1:--]|[thb0temp-dmax=F.1:--]|[thb0temp-dmin=F.1:--]|[th0lowbat-act.0:--]
+            /// Using the model below
+            /// subPair[0] = Sensor Name
+            /// subPair[1] = Measurement
+            /// subPair[2] = Max measurment
+            /// subPair[3] = Min Measurement
+            /// subPair[4] = Battery
             for pair in bridgeResponse {
                 let subPair = pair.components(separatedBy: "|")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
@@ -311,18 +321,25 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 return
             }
             
-            // Guard against poor data
+            // Guard against poor data data
             if hourPair.count != 2 {
-                callback(nil, MeteobridgeError.observationError)
+                callback(nil, MeteobridgeError.observationDateError)
                 return
             }
-            // Guard against poor data
+            // Guard against poor data data
 
             guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
                 callback(nil, MeteobridgeError.observationError)
                 return
             }
             
+            /// we're going to get something like this back for each sensor
+            /// th0temp:[th0temp-act=.1:--]|[thb0temp-dmax=F.1:--]|[thb0temp-dmin=F.1:--]|[th0lowbat-act.0:--]
+            /// Using the model below
+            /// battPair[0] = Measurement
+            /// battPair[1] = Max measurment
+            /// battPair[2] = Min Measurement
+            /// battPair[3] = Battery
             for pair in bridgeResponse {
                 let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
@@ -331,11 +348,12 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                     return
                 }
                     let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
-                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect))     // Record the observation
-                    filteredSensor.updateBatteryHealth(observation: battPair[1])                // Record the battery health
+                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
+                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
+                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+                    filteredSensor.updateBatteryHealth(observation: battPair[3])                // Record the battery health
                 }
             }
-            
             callback(self, nil)
         })
     }

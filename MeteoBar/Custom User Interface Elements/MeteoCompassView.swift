@@ -131,7 +131,7 @@ class MeteoCompassView: SKView {
             return
         }
         windDirection(direction: Double(value)!)
-        print(Double(value)!)
+//        print(Double(value)!)
     }
     // MARK: - Shapes
 
