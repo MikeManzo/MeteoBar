@@ -360,9 +360,10 @@ class MeteoCompassView: SKView {
         let ULMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
                                                         scene: theKitScene!)
-        let ULMajorLabel: SKLabelNode = SKLabelNode(text: "") // UL Major
-        ULMajorLabel.verticalAlignmentMode = .center
-        ULMajorLabel.horizontalAlignmentMode = .center
+//        let ULMajorLabel: SKLabelNode = SKLabelNode(text: "") // UL Major
+        let ULMajorLabel: QJSKMultiLineLabel = QJSKMultiLineLabel(text: "", labelWidth: Double(ULMajor.frame.width-5.0), pos: CGPoint(x: 0, y: 0))
+//        ULMajorLabel.verticalAlignmentMode = .center
+//        ULMajorLabel.horizontalAlignmentMode = .center
         ULMajorLabel.fontSize = 16
         ULMajor.addChild(ULMajorLabel)
         ULMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -392,9 +393,10 @@ class MeteoCompassView: SKView {
         let URMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),
                                                        scene: theKitScene!)
-        let URMajorLabel: SKLabelNode = SKLabelNode(text: "") // UR Major
-        URMajorLabel.verticalAlignmentMode = .center
-        URMajorLabel.horizontalAlignmentMode = .center
+//        let URMajorLabel: SKLabelNode = SKLabelNode(text: "") // UR Major
+        let URMajorLabel: QJSKMultiLineLabel = QJSKMultiLineLabel(text: "", labelWidth: Double(URMajor.frame.width-5.0), pos: CGPoint(x: 0, y: 0))
+//        URMajorLabel.verticalAlignmentMode = .center
+//        URMajorLabel.horizontalAlignmentMode = .center
         URMajorLabel.fontSize = 16
         URMajor.addChild(URMajorLabel)
         URMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -424,9 +426,10 @@ class MeteoCompassView: SKView {
         let LLMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                         point: CGPoint(x: midPoint.x - radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
                                                         scene: theKitScene!)
-        let LLMajorLabel: SKLabelNode = SKLabelNode(text: "") // LL Major
-        LLMajorLabel.verticalAlignmentMode = .center
-        LLMajorLabel.horizontalAlignmentMode = .center
+//        let LLMajorLabel: SKLabelNode = SKLabelNode(text: "") // LL Major
+        let LLMajorLabel: QJSKMultiLineLabel = QJSKMultiLineLabel(text: "", labelWidth: Double(LLMajor.frame.width-5.0), pos: CGPoint(x: 0, y: 0))
+//        LLMajorLabel.verticalAlignmentMode = .center
+//        LLMajorLabel.horizontalAlignmentMode = .center
         LLMajorLabel.fontSize = 16
         LLMajor.addChild(LLMajorLabel)
         LLMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -456,9 +459,11 @@ class MeteoCompassView: SKView {
         let LRMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y - radiusCompass * 0.265),
                                                        scene: theKitScene!)
-        let LRtMajorLabel: SKLabelNode = SKLabelNode(text: "") // LR Major
-        LRtMajorLabel.verticalAlignmentMode = .center
-        LRtMajorLabel.horizontalAlignmentMode = .center
+//        let LRtMajorLabel: SKLabelNode = SKLabelNode(text: "") // LR Major
+        let LRtMajorLabel: QJSKMultiLineLabel = QJSKMultiLineLabel(text: "", labelWidth: Double(LRMajor.frame.width-5.0), pos: CGPoint(x: 0, y: 0))
+
+//        LRtMajorLabel.verticalAlignmentMode = .center
+//        LRtMajorLabel.horizontalAlignmentMode = .center
         LRtMajorLabel.fontSize = 16
         LRMajor.addChild(LRtMajorLabel)
         LRMajor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black

@@ -23,6 +23,7 @@
 		277EF6BB220619EF005DA8B4 /* MeteoCompassSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */; };
 		2780456821EAB9290026E1F7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2780456721EAB9290026E1F7 /* README.md */; };
 		27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0545721EB8520001F4913 /* MainMenuController.swift */; };
+		27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */; };
 		27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */; };
 		27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */; };
 		27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */; };
@@ -110,6 +111,7 @@
 		277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoCompassSettingsView.swift; sourceTree = "<group>"; };
 		2780456721EAB9290026E1F7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		27A0545721EB8520001F4913 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
+		27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJSKMultiLineLabel.swift; sourceTree = "<group>"; };
 		27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesController.swift; sourceTree = "<group>"; };
 		27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferences.xib; sourceTree = "<group>"; };
 		27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgePreferencesController.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				27CA786821EC19DE000D517D /* QJHyperTextField.swift */,
 				27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */,
 				27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */,
+				27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */,
 			);
 			path = "Custom User Interface Elements";
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */,
 				27CF043022079C6C007DFFDF /* BridgeSetupController.swift in Sources */,
 				27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */,
+				27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */,
 				27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */,
 				27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */,
 				27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */,

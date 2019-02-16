@@ -54,7 +54,7 @@ final class MeteoSensorNodePair {
             return label.text
         }
         set {
-            guard let label = _majorNode?.children.first as? SKLabelNode else {
+            guard let label = _majorNode?.children.first as? QJSKMultiLineLabel else {
                 return
             }
             label.text = newValue

@@ -126,6 +126,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         return prettyMeasurement
     }
     
+    /// Formatted Min/Max Measurement
     var formattedMinMax: String? {
         var prettyMinMax: String?
         
