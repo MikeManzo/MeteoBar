@@ -29,7 +29,6 @@ enum WeatherPlatformError: Error, CustomStringConvertible {
     }
 }
 
-
 /// Protocol for future use
 protocol Weather: class {
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
