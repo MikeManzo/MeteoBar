@@ -39,7 +39,7 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
             }
             sensorTree.reloadData()         // Reload the OutlineView
             if !(theDelegate?.theDefaults?.menubarSensor.isEmpty)! {    // Select the current sensor that is reporting to the menubar
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: (theDelegate?.theDefaults?.menubarSensor)!) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     return
                 }
                 let sensorCat = categories.filter { // Get the category

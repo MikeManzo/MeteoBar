@@ -102,7 +102,7 @@ final class MeteoSensorNodePair {
     ///
     func update() {
         if _sensorID != nil {
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: _sensorID!) else {
+            guard let sensor = WeatherPlatform.findSensorInBridge(searchID: _sensorID!) else {
                 return
             }
             majorText = sensor.formattedMeasurement
@@ -137,7 +137,7 @@ final class MeteoSensorNodePair {
         _iconNode   = icon
         
         if _sensorID != nil {
-            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: _sensorID!) else {
+            guard let sensor = WeatherPlatform.findSensorInBridge(searchID: _sensorID!) else {
                 log.warning(MeteoSensorNodePairError.invalidSensorID)
                 return
             }

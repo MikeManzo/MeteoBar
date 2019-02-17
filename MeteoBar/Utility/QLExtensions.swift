@@ -2,6 +2,8 @@
 //  QLExtensions.swift
 //  MeteoBar
 //
+//  [How to type superscript in xcode](https://stackoverflow.com/questions/32091586/how-to-type-superscript-in-xcode)
+//
 //  Created by Mike Manzo on 1/14/19.
 //  Copyright © 2019 Quantum Joker. All rights reserved.
 //
@@ -134,7 +136,8 @@ extension NSImage {
 extension NSTextField {
     func bestheight(text: String, width: CGFloat) -> CGFloat {
         self.stringValue = text
-        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0), width: width, height: CGFloat(CGFloat.greatestFiniteMagnitude))).height
+        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0),
+                                                              width: width, height: CGFloat(CGFloat.greatestFiniteMagnitude))).height
         
         return getnumber
     }
@@ -142,7 +145,8 @@ extension NSTextField {
     func bestwidth(text: String, height: CGFloat) -> CGFloat {
 
         self.stringValue = text
-        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0), width: CGFloat(CGFloat.greatestFiniteMagnitude), height: height)).width
+        let getnumber = self.cell!.cellSize(forBounds: NSRect(x: CGFloat(0.0), y: CGFloat(0.0),
+                                                              width: CGFloat(CGFloat.greatestFiniteMagnitude), height: height)).width
         
         return getnumber
     }

@@ -31,7 +31,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
                 }
                 
                 // Populate the Popup with the available units & select the unit currently collecting
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: imageFile.sensorID!) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: imageFile.sensorID!) else {
                     log.warning("Unable to find a sensor with ID:\(imageFile.sensorID!)")
                     return
                 }
@@ -118,7 +118,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
     }
     
     @IBAction func observingStateChanged(_ sender: Any) {
-        guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: imageFile!.sensorID!) else {
+        guard let sensor = WeatherPlatform.findSensorInBridge(searchID: imageFile!.sensorID!) else {
             log.warning("Unable to find a sensor with ID:\(imageFile!.sensorID!)")
             return
         }
@@ -131,7 +131,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
     /// - Parameter sender: NSPopUpButton that has changed
     ///
     @IBAction func unitChanged(_ sender: NSPopUpButton) {
-        guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: imageFile!.sensorID!) else {
+        guard let sensor = WeatherPlatform.findSensorInBridge(searchID: imageFile!.sensorID!) else {
             log.warning("Unable to find a sensor with ID:\(imageFile!.sensorID!)")
             return
         }

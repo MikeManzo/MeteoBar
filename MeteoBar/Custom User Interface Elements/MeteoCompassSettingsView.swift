@@ -28,7 +28,7 @@ class MeteoCompassSettingsView: MeteoCompassView {
             } else {
                 if theDelegate?.theBridge != nil { upperRight?.update() }
                 dropView.showDrop = false
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassURSensor)!)) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassURSensor)!)) else {
                     log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassURSensor ?? "") for display")
                     return
                 }
@@ -45,7 +45,7 @@ class MeteoCompassSettingsView: MeteoCompassView {
             } else {
                 if theDelegate?.theBridge != nil { upperLeft?.update() }
                 dropView.showDrop = false
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassULSensor)!)) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassULSensor)!)) else {
                     log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassULSensor ?? "") for display")
                     return
                 }
@@ -62,7 +62,7 @@ class MeteoCompassSettingsView: MeteoCompassView {
             } else {
                 if theDelegate?.theBridge != nil { lowerLeft?.update() }
                 dropView.showDrop = false
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLLSensor)!)) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLLSensor)!)) else {
                     log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLLSensor ?? "") for display")
                     return
                 }
@@ -81,7 +81,7 @@ class MeteoCompassSettingsView: MeteoCompassView {
             } else {
                 if theDelegate?.theBridge != nil { lowerRight?.update() }
                 dropView.showDrop = false
-                guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLRSensor)!)) else {
+                guard let sensor = WeatherPlatform.findSensorInBridge(searchID: ((theDelegate?.theDefaults?.compassLRSensor)!)) else {
                     log.error("Unable to find sensor: \(theDelegate?.theDefaults?.compassLRSensor ?? "") for display")
                     return
                 }

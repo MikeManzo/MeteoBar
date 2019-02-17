@@ -184,7 +184,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///   - callback: return function
     ///
     func getSystemParameter(systemParam: MeteobridgeSystemParameter, callback: @escaping (_ theBridge: MeteobridgeSensor?, _ error: Error?) -> Void) {
-        WeatherPlatform.shared.getBridgeParameter(theBridge: self, param: systemParam, callback: { [unowned self] bridgeData, bridgeError in
+        WeatherPlatform.getBridgeParameter(theBridge: self, param: systemParam, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
                 callback(nil, bridgeError)
             }
@@ -234,7 +234,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///   - callback: return function
     ///
     func getAllSystemParameters(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
-        WeatherPlatform.shared.getAllSupportedSystemParameters(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
+        WeatherPlatform.getAllSupportedSystemParameters(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
                 callback(nil, bridgeError)
             }
@@ -297,7 +297,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     /// - Parameter callback: return function
     ///
     func getObservation(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
-        WeatherPlatform.shared.getConditions(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
+        WeatherPlatform.getConditions(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
                 callback(nil, bridgeError)
             }

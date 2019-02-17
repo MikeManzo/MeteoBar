@@ -85,7 +85,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
             }
             
             // Grab the image for the platform hosting the meteobridge
-            WeatherPlatform.shared.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
+            WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
                 if image != nil {
                     self.platformImage.image = image    // We have a platform; lets find the image
                 } else {
@@ -159,7 +159,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
     /// Initialize the bridge based on the name and IP
     ///
     private func initializeBridge() {
-        WeatherPlatform.shared.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
+        WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
                 theDelegate!.theBridge = response                           // Bridge was loaded from the json description
                 theDelegate!.theBridge!.getObservation({ _, error in        // Get an observation so we can see what's going on

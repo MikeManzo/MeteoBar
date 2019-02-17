@@ -562,7 +562,7 @@
                         "battery_parameter": "[sol0lowbat-act:---]",
                         "supported_units": {
                             "Watts per Square Meter": {
-                                "unit": "W/m^2",
+                                "unit": "W/m²",
                                 "parameter": "[sol0rad-act=.0:--]",
                                 "dayMax": "[sol0rad-dmax=.0:--]",
                                 "dayMin": "[sol0rad-dmin=.0:--]",
