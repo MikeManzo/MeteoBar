@@ -55,6 +55,13 @@ class AboutController: NSViewController {
          "copyHolder": "Icons8",
          "copyURL": "https://icons8.com/icon/set/config/color"
         ],
+        ["copyImage": "dashboard.png",
+         "copyType": "Icon",
+         "invertable": "no",
+         "copyName": "Dashboard Icon",
+         "copyHolder": "Freepick",
+         "copyURL": "https://www.freepik.com/"
+        ],
         ["copyImage": "unknown-battery-color.png",
          "copyType": "Icon",
          "invertable": "no",

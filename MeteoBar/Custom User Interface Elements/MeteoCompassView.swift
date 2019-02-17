@@ -118,21 +118,23 @@ class MeteoCompassView: SKView {
     }
     
     @objc private func observationRecieved(_ theNotification: Notification) {
-        upperLeft?.update()
-        upperRight?.update()
-        lowerLeft?.update()
-        lowerRight?.update()
-        
-        guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
-            log.warning(MeteoCompassViewError.windSensorError)
-            return
+        if !isHidden {  // Save the cycles if we're not visible
+            upperLeft?.update()
+            upperRight?.update()
+            lowerLeft?.update()
+            lowerRight?.update()
+            
+            guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            
+            guard let value = sensor.measurement.value else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            windDirection(direction: Double(value)!)
         }
-        
-        guard let value = sensor.measurement.value else {
-            log.warning(MeteoCompassViewError.windSensorError)
-            return
-        }
-        windDirection(direction: Double(value)!)
     }
     // MARK: - Shapes
 

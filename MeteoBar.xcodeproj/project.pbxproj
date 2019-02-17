@@ -24,6 +24,7 @@
 		2780456821EAB9290026E1F7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2780456721EAB9290026E1F7 /* README.md */; };
 		27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0545721EB8520001F4913 /* MainMenuController.swift */; };
 		27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */; };
+		27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038A2219D5F100E9A6BE /* dashboard.png */; };
 		27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */; };
 		27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */; };
 		27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */; };
@@ -112,6 +113,7 @@
 		2780456721EAB9290026E1F7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		27A0545721EB8520001F4913 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJSKMultiLineLabel.swift; sourceTree = "<group>"; };
+		27A8038A2219D5F100E9A6BE /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
 		27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesController.swift; sourceTree = "<group>"; };
 		27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferences.xib; sourceTree = "<group>"; };
 		27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgePreferencesController.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				27E6C5BC21ED58C800548CF0 /* books.png */,
 				2744B781220E793600A61514 /* compass-north.png */,
 				2744B783220E79FC00A61514 /* configurator.png */,
+				27A8038A2219D5F100E9A6BE /* dashboard.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
 				27CF0428220735D9007DFFDF /* full-battery-color.png */,
@@ -491,6 +494,7 @@
 				27ACA77E21FE4A1A00E226C2 /* wind-sock.png in Resources */,
 				27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */,
 				27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */,
+				27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */,
 				27CF042B22073675007DFFDF /* empty-battery-color.png in Resources */,
 				2780456821EAB9290026E1F7 /* README.md in Resources */,
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,

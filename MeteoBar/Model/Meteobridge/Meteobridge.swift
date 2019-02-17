@@ -323,6 +323,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             
             // Guard against poor data data
             if hourPair.count != 2 {
+                log.warning("Meteobridge Timestamp returned:\(hourPair)")
                 callback(nil, MeteobridgeError.observationDateError)
                 return
             }

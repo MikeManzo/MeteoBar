@@ -168,6 +168,7 @@ class MainMenuController: NSViewController {
     ///
     /// - Parameter sender: The Caller who sent the message
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
+        sender.superview?.window?.close()
         preferencesView.showWindow(tabIndex: 1)
     }
     
@@ -175,6 +176,7 @@ class MainMenuController: NSViewController {
     ///
     /// - Parameter sender: The Caller who sent the message
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
+        sender.superview?.window?.close()
         preferencesView.showWindow(tabIndex: 2)
     }
     
@@ -190,6 +192,10 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     @IBAction func meteoBarPreferences(_ sender: Any) {
         preferencesView.showWindow()
+        guard let myView = sender as? NSView else {
+            return
+        }
+        myView.superview?.window?.close()
     }
     
     /// Quit - we're done!
