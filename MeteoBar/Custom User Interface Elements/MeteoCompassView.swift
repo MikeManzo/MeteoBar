@@ -388,13 +388,23 @@ class MeteoCompassView: SKView {
         ULMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         ULMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
+        /// Bettery
         let ULBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
         ULBattery.size = CGSize(width: 18.0, height: 18.0)
         ULBattery.position = CGPoint(x: ULMajor.frame.width - 50.0, y: (ULMajor.frame.height / 2.0) - 8.0)
         ULBattery.isHidden = true
         ULMajor.addChild(ULBattery)
         
-        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery, sensorID: theDelegate?.theDefaults?.compassULSensor)
+        // Sensor Icon
+        let ULIcon: SKSpriteNode = SKSpriteNode()
+        ULIcon.size = CGSize(width: 16.0, height: 16.0)
+        ULIcon.isHidden = false // true
+        let ULNode = SKEffectNode()
+        ULNode.position = CGPoint(x: ULMajor.frame.width - 100, y: (ULMajor.frame.height / 2.0) - 8.0)
+        ULNode.addChild(ULIcon)
+        ULMajor.addChild(ULNode)
+
+        upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery, icon: ULNode, sensorID: theDelegate?.theDefaults?.compassULSensor)
         if theDelegate?.theBridge != nil { upperLeft?.update() }
         
         // Upper Right
@@ -421,13 +431,23 @@ class MeteoCompassView: SKView {
         URMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         URMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
+        /// Bettery
         let URBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
         URBattery.size = CGSize(width: 18.0, height: 18.0)
         URBattery.position = CGPoint(x: URMajor.frame.width - 50.0, y: (URMajor.frame.height / 2.0) - 8.0)
         URBattery.isHidden = true
         URMajor.addChild(URBattery)
 
-        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery, sensorID: theDelegate?.theDefaults?.compassURSensor)
+        // Sensor Icon
+        let URIcon: SKSpriteNode = SKSpriteNode()
+        URIcon.size = CGSize(width: 16.0, height: 16.0)
+        URIcon.isHidden = false // true
+        let URNode = SKEffectNode()
+        URNode.position = CGPoint(x: URMajor.frame.width - 100, y: (URMajor.frame.height / 2.0) - 8.0)
+        URNode.addChild(URIcon)
+        URMajor.addChild(URNode)
+        
+        upperRight = MeteoSensorNodePair(major: URMajor, minor: URMinor, battery: URBattery, icon: URNode, sensorID: theDelegate?.theDefaults?.compassURSensor)
         if theDelegate?.theBridge != nil { upperRight?.update() }
 
         // Lower Left
@@ -454,13 +474,23 @@ class MeteoCompassView: SKView {
         LLMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
         LLMinor.strokeColor = border ? (theDelegate?.theDefaults?.compassSensorColor)! : SKColor.clear
         
+        /// Battery Icon
         let LLBattery: SKSpriteNode = SKSpriteNode(imageNamed: "full-battery-color")
         LLBattery.size = CGSize(width: 18.0, height: 18.0)
         LLBattery.position = CGPoint(x: LLMajor.frame.width - 50.0, y: (LLMajor.frame.height / 2.0) - 8.0)
         LLBattery.isHidden = true
         LLMajor.addChild(LLBattery)
         
-        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery, sensorID: theDelegate?.theDefaults?.compassLLSensor)
+        // Sensor Icon
+        let LLIcon: SKSpriteNode = SKSpriteNode()
+        LLIcon.size = CGSize(width: 16.0, height: 16.0)
+        LLIcon.isHidden = false // true
+        let LLNode = SKEffectNode()
+        LLNode.position = CGPoint(x: LLMajor.frame.width - 100, y: (LLMajor.frame.height / 2.0) - 8.0)
+        LLNode.addChild(LLIcon)
+        LLMajor.addChild(LLNode)
+
+        lowerLeft = MeteoSensorNodePair(major: LLMajor, minor: LLMinor, battery: LLBattery, icon: LLNode, sensorID: theDelegate?.theDefaults?.compassLLSensor)
         if theDelegate?.theBridge != nil { lowerLeft?.update() }
 
         // Lower Right
@@ -494,7 +524,16 @@ class MeteoCompassView: SKView {
         LRBattery.isHidden = true
         LRMajor.addChild(LRBattery)
         
-        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery, sensorID: theDelegate?.theDefaults?.compassLRSensor)
+        // Sensor Icon
+        let LRIcon: SKSpriteNode = SKSpriteNode()
+        LRIcon.size = CGSize(width: 16.0, height: 16.0)
+        LRIcon.isHidden = false // true
+        let LRNode = SKEffectNode()
+        LRNode.position = CGPoint(x: LRMajor.frame.width - 100, y: (LRMajor.frame.height / 2.0) - 8.0)
+        LRNode.addChild(LRIcon)
+        LRMajor.addChild(LRNode)
+        
+        lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery, icon: LRNode, sensorID: theDelegate?.theDefaults?.compassLRSensor)
         if theDelegate?.theBridge != nil { upperRight?.update() }
     }
 }

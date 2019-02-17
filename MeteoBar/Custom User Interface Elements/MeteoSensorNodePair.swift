@@ -10,10 +10,23 @@ import Foundation
 import SpriteKit
 import SceneKit
 
+enum MeteoSensorNodePairError: Error, CustomStringConvertible {
+    case invalidSensorID
+    case invalidSprite
+    
+    var description: String {
+        switch self {
+        case .invalidSensorID: return "Invalid SensorID"
+        case .invalidSprite: return "Invalid Sprite"
+        }
+    }
+}
+
 /// Easy way to group the sensors for teh compas view (etiher quad or tri-view)
 final class MeteoSensorNodePair {
     private var _majorNode: SKShapeNode?
     private var _minorNode: SKShapeNode?
+    private var _iconNode: SKEffectNode?
     private var _battery: SKSpriteNode?
     private var _sensorID: String?
     
@@ -27,8 +40,14 @@ final class MeteoSensorNodePair {
         return _minorNode
     }
 
+    /// Battery
     var battery: SKSpriteNode? {
         return _battery
+    }
+    
+    /// Sensor Icon
+    var sensorIcon: SKEffectNode? {
+        return _iconNode
     }
     
     /// Sensor ID assigned to the pair
@@ -106,12 +125,50 @@ final class MeteoSensorNodePair {
     /// - Parameters:
     ///   - major: preformed SKShapeNode representing the major node
     ///   - minor: preformed SKShapeNode representing the major node
+    ///   - battery: preformed SKSpriteNode represneitngt the battery state
+    ///   - icon: preformed SKEffectNode representing the sensor icon
     ///   - sensorID: sensorID assigned to teh node
     ///
-    init(major: SKShapeNode, minor: SKShapeNode, battery: SKSpriteNode, sensorID: String? = nil) {
+    init(major: SKShapeNode, minor: SKShapeNode, battery: SKSpriteNode, icon: SKEffectNode, sensorID: String? = nil) {
         _sensorID   = sensorID
         _battery    = battery
         _majorNode  = major
         _minorNode  = minor
+        _iconNode   = icon
+        
+        if _sensorID != nil {
+            guard let sensor = WeatherPlatform.shared.findSensorInBridge(searchID: _sensorID!) else {
+                log.warning(MeteoSensorNodePairError.invalidSensorID)
+                return
+            }
+
+            guard let sprite = _iconNode?.children.first as? SKSpriteNode else {
+                log.warning(MeteoSensorNodePairError.invalidSprite)
+                return
+            }
+            
+            switch sensor.category {
+            case .energy:
+                sprite.texture = SKTexture(imageNamed: "energy.png")
+            case .humidity:
+                sprite.texture = SKTexture(imageNamed: "humidity.png")
+            case .pressure:
+                sprite.texture = SKTexture(imageNamed: "pressure.png")
+            case .rain:
+                sprite.texture = SKTexture(imageNamed: "drop.png")
+            case .solar:
+                sprite.texture = SKTexture(imageNamed: "solar-energy.png")
+            case .temperature:
+                sprite.texture = SKTexture(imageNamed: "thermometer.png")
+            case .wind:
+                sprite.texture = SKTexture(imageNamed: "wind-sock.png")
+            case .system, .unk:
+                break
+            }
+            
+            if (theDelegate?.isVibrantMode())! {
+                _iconNode!.filter = CIFilter(name: "CIColorInvert")
+            }
+        }
     }
 }

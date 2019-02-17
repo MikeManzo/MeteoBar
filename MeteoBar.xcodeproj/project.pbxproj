@@ -249,7 +249,6 @@
 			isa = PBXGroup;
 			children = (
 				2771085322011CA0009A3C86 /* CollectionItemDropView.swift */,
-				27E6C5BB21ED58B200548CF0 /* Graphics */,
 				27470AAA2212D8F100C7AEA9 /* IconBarView.swift */,
 				277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */,
 				27ACA77721FCB40B00E226C2 /* MeteoCompassView.swift */,
@@ -277,6 +276,7 @@
 		27A0545521EB82A0001F4913 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				27E6C5BB21ED58B200548CF0 /* Graphics */,
 				27CA786521EBC06A000D517D /* About.xib */,
 				27ACA77421FCA99400E226C2 /* BridgePreferences.xib */,
 				27CF042F22079C6C007DFFDF /* BridgeSetup.xib */,
