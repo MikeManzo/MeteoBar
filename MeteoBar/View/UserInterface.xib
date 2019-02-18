@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="UserInterfaceController" customModule="MeteoBar" customModuleProvider="target">
+            <connections>
+                <outlet property="compassView" destination="F5W-uw-E7Z" id="JeF-5Q-A3u"/>
+                <outlet property="elementTree" destination="GMa-dY-xqX" id="w7k-rJ-UQ5"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="704" height="440"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYK-MQ-l6Q">
+                    <rect key="frame" x="20" y="20" width="256" height="400"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" ambiguous="YES" id="Un4-ru-Uil">
+                        <rect key="frame" x="1" y="1" width="254" height="398"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="qq5-7n-MBU" id="GMa-dY-xqX" userLabel="Interface Elements">
+                                <rect key="frame" x="0.0" y="0.0" width="254" height="398"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn width="251" minWidth="40" maxWidth="1000" id="qq5-7n-MBU" userLabel="Element">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="rCH-Z4-fGt">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView identifier="CategoryView" id="xdg-iJ-miC" userLabel="Category View">
+                                                <rect key="frame" x="1" y="1" width="251" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vVL-m7-rru" userLabel="Category">
+                                                        <rect key="frame" x="0.0" y="-3" width="257" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Category" id="cba-SL-dmP" userLabel="Category">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <connections>
+                                                    <outlet property="textField" destination="vVL-m7-rru" id="b0p-4c-F9q"/>
+                                                </connections>
+                                            </tableCellView>
+                                            <tableCellView identifier="ElementView" id="IYY-iw-neb" userLabel="Element View" customClass="UITableCellView" customModule="MeteoBar" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="20" width="251" height="17"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LIc-b8-PNJ" userLabel="Element">
+                                                        <rect key="frame" x="0.0" y="-3" width="168" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="164" id="b2X-NF-Iae"/>
+                                                            <constraint firstAttribute="height" constant="20" id="gmp-u8-WlT"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="User Interface Element" id="cvL-BQ-kZE">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="2YU-Sv-VOA" customClass="InterfaceColorWell" customModule="MeteoBar" customModuleProvider="target">
+                                                        <rect key="frame" x="174" y="-3" width="74" height="23"/>
+                                                        <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <connections>
+                                                            <action selector="colorWellChanged:" target="IYY-iw-neb" id="v5a-nS-urk"/>
+                                                        </connections>
+                                                    </colorWell>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="2YU-Sv-VOA" firstAttribute="leading" secondItem="LIc-b8-PNJ" secondAttribute="trailing" constant="8" id="AKo-6y-5H8"/>
+                                                    <constraint firstItem="LIc-b8-PNJ" firstAttribute="top" secondItem="IYY-iw-neb" secondAttribute="top" id="JGT-Mm-auq"/>
+                                                    <constraint firstItem="LIc-b8-PNJ" firstAttribute="leading" secondItem="IYY-iw-neb" secondAttribute="leading" constant="2" id="QHo-Rt-vs9"/>
+                                                    <constraint firstItem="2YU-Sv-VOA" firstAttribute="centerY" secondItem="IYY-iw-neb" secondAttribute="centerY" id="W0x-fx-uYc"/>
+                                                    <constraint firstItem="LIc-b8-PNJ" firstAttribute="bottom" secondItem="2YU-Sv-VOA" secondAttribute="bottom" id="dvf-em-aTG"/>
+                                                    <constraint firstAttribute="trailing" secondItem="2YU-Sv-VOA" secondAttribute="trailing" constant="3" id="frh-kC-ycu"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="colorWell" destination="2YU-Sv-VOA" id="gJC-kS-RHo"/>
+                                                    <outlet property="textField" destination="LIc-b8-PNJ" id="DqT-wP-IFE"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <outlet property="dataSource" destination="-2" id="2ly-7N-SZ0"/>
+                                    <outlet property="delegate" destination="-2" id="F6x-IZ-YMV"/>
+                                </connections>
+                            </outlineView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="LtF-qS-zT5">
+                        <rect key="frame" x="1" y="383" width="253" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="R9g-dH-H3K">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F5W-uw-E7Z" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="284" y="20" width="400" height="400"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+            </subviews>
+            <point key="canvasLocation" x="95" y="-113"/>
+        </customView>
+    </objects>
+</document>

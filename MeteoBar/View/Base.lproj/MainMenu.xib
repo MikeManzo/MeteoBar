@@ -42,11 +42,11 @@
             <rect key="frame" x="0.0" y="0.0" width="398" height="28"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="65" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h8-8S-VZT">
-                    <rect key="frame" x="5" y="-2" width="388" height="32"/>
+                <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="47" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2h8-8S-VZT">
+                    <rect key="frame" x="5" y="-2" width="387" height="32"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-0D-aSD" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                        <button toolTip="About MeteBar" translatesAutoresizingMaskIntoConstraints="NO" id="IWF-0D-aSD" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="Dxn-Ra-NgC"/>
@@ -61,7 +61,7 @@
                             </connections>
                         </button>
                         <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="8dE-dv-OZV" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="97" y="4" width="24" height="24"/>
+                            <rect key="frame" x="79" y="4" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="Ayd-6k-Dlc"/>
                                 <constraint firstAttribute="width" constant="24" id="Yij-GW-CaZ"/>
@@ -75,7 +75,7 @@
                             </connections>
                         </button>
                         <button toolTip="Meteobridge Setup" translatesAutoresizingMaskIntoConstraints="NO" id="drl-d6-wft" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="186" y="4" width="24" height="24"/>
+                            <rect key="frame" x="150" y="4" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="JvT-Ma-q8j"/>
                                 <constraint firstAttribute="height" constant="24" id="QHu-Tg-YNc"/>
@@ -88,8 +88,8 @@
                                 <action selector="showBridgeSetupTab:" target="qZU-Zb-ECd" id="Iav-V1-JxM"/>
                             </connections>
                         </button>
-                        <button identifier="Meteobridge Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="cib-Jx-aX3" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="275" y="4" width="24" height="24"/>
+                        <button identifier="Meteobridge Configuration" toolTip="Sensor Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="cib-Jx-aX3" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="221" y="4" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="oHy-9Z-27X"/>
                                 <constraint firstAttribute="height" constant="24" id="sx7-aQ-pV0"/>
@@ -102,8 +102,22 @@
                                 <action selector="showBridgeConfiguration:" target="qZU-Zb-ECd" id="UVe-wa-a81"/>
                             </connections>
                         </button>
+                        <button toolTip="User Interface Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="DzM-fy-4mr" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                            <rect key="frame" x="292" y="4" width="24" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="24" id="s3f-M6-QSZ"/>
+                                <constraint firstAttribute="width" constant="24" id="seS-r4-sIm"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="dashboard" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="fZO-H5-vfs">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="showUIConfiguration:" target="qZU-Zb-ECd" id="WO0-Fh-aZA"/>
+                            </connections>
+                        </button>
                         <button toolTip="Exit" translatesAutoresizingMaskIntoConstraints="NO" id="cNi-fb-CHP" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
-                            <rect key="frame" x="364" y="4" width="24" height="24"/>
+                            <rect key="frame" x="363" y="4" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="24" id="1Rx-wy-yhV"/>
                                 <constraint firstAttribute="width" constant="24" id="jSI-0l-3om"/>
@@ -123,8 +137,10 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -146,6 +162,7 @@
         <image name="NSInfo" width="32" height="32"/>
         <image name="compass-north" width="75" height="75"/>
         <image name="configurator" width="180" height="180"/>
+        <image name="dashboard" width="409.60000610351562" height="409.60000610351562"/>
         <image name="logout" width="384" height="384"/>
     </resources>
 </document>

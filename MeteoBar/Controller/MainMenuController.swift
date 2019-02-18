@@ -56,7 +56,8 @@ class MainMenuController: NSViewController {
     lazy var preferencesView: PreferencesWindowController = {
         return PreferencesWindowController(viewControllers: [ GeneralPreferencesController(),
                                                               BridgeSetupController(),
-                                                              BridgePreferencesController()
+                                                              BridgePreferencesController(),
+                                                              UserInterfaceController()
                                                             ])
     }()
     
@@ -170,6 +171,9 @@ class MainMenuController: NSViewController {
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
         sender.superview?.window?.close()
         preferencesView.showWindow(tabIndex: 1)
+        DispatchQueue.main.async { [unowned self] in
+            self.preferencesView.becomeFirstResponder()
+        }
     }
     
     /// Show the preferences window the Configuration Tab selected
@@ -178,6 +182,9 @@ class MainMenuController: NSViewController {
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
         sender.superview?.window?.close()
         preferencesView.showWindow(tabIndex: 2)
+        DispatchQueue.main.async { [unowned self] in
+            self.preferencesView.becomeFirstResponder()
+        }
     }
     
     /// Show the "About" Window
@@ -198,6 +205,18 @@ class MainMenuController: NSViewController {
         myView.superview?.window?.close()
     }
     
+    /// Show the preferences window
+    ///
+    /// - Parameter sender: The Caller who sent the message
+    @IBAction func showUIConfiguration(_ sender: QJHighlightButtonView) {
+        sender.superview?.window?.close()
+        preferencesView.showWindow(tabIndex: 3)
+        DispatchQueue.main.async { [unowned self] in
+            self.preferencesView.window!.makeFirstResponder(nil)
+            self.preferencesView.window!.makeKey()
+        }
+    }
+
     /// Quit - we're done!
     ///
     /// - Parameter sender: The Caller who sent the message

@@ -86,7 +86,7 @@ class QJSKMultiLineLabel: SKNode {
     }
 
     // MARK: - Implementation
-    init(text: String, labelWidth: Double, pos: CGPoint, fontSize: CGFloat = 16, fontColor: SKColor=SKColor.white,
+    init(text: String, labelWidth: Double, pos: CGPoint, fontSize: CGFloat, fontColor: SKColor=SKColor.white,
          leading: Double = 10.0, alignment: SKLabelHorizontalAlignmentMode = .center, shouldShowBorder: Bool = false) {
         self.fontName           = ".AppleSystemUIFont"
         self.shouldShowBorder   = shouldShowBorder
@@ -143,7 +143,7 @@ class QJSKMultiLineLabel: SKNode {
                 label.name = "line\(lineCount)"
                 label.horizontalAlignmentMode = alignment
                 label.fontSize = fontSize
-                label.fontColor = SKColor.white
+                label.fontColor = fontColor
                 
                 while lineLength < CGFloat(labelWidth) {
                     wordCount += 1

@@ -15,7 +15,10 @@ enum CodingKeys: String, CodingKey {
     case compassCardinalMajorTickColor
     case compassCrosshairColor
     case compassShowSensorBox
-    case compassSensorColor
+    case compassSensorMajorColor
+    case compassSensorMinorColor
+    case compassCardinalMajorColor
+    case compassCardinalMinorColor
     case compassFrameColor
     case compassRingColor
     case compassFaceColor
@@ -48,13 +51,16 @@ enum CodingKeys: String, CodingKey {
 ///   compassLLSensor:                  th0hum      // Lower Left: Outside Humidity
 ///   compassLRSensor:                  sol0rad     // Lower Right: Outside Solar Radiation
 ///   weatherAlerts:                    true
-
+///
 final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     // MARK: - Compass Defaults
     var compassCardinalMinorTickColor: SKColor = SKColor.white
     var compassCardinalMajorTickColor: SKColor = SKColor.blue
     var compassCrosshairColor: SKColor = SKColor.white
-    var compassSensorColor: SKColor = SKColor.white
+    var compassSensorMajorColor: SKColor = SKColor.white
+    var compassSensorMinorColor: SKColor = SKColor.white
+    var compassCardinalMinorColor: SKColor = SKColor.white
+    var compassCardinalMajorColor: SKColor = SKColor.white
     var compassRingColor: SKColor = SKColor.yellow
     var compassFrameColor: SKColor = SKColor.black
     var compassFaceColor: SKColor = SKColor.black
@@ -90,9 +96,18 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         colorData = try container.decode(Data.self, forKey: .compassCardinalMajorTickColor)
         compassCardinalMajorTickColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
         
-        colorData = try container.decode(Data.self, forKey: .compassSensorColor)
-        compassSensorColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
+        colorData = try container.decode(Data.self, forKey: .compassSensorMajorColor)
+        compassSensorMajorColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
 
+        colorData = try container.decode(Data.self, forKey: .compassSensorMinorColor)
+        compassSensorMinorColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
+        
+        colorData = try container.decode(Data.self, forKey: .compassCardinalMajorColor)
+        compassCardinalMajorColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
+        
+        colorData = try container.decode(Data.self, forKey: .compassCardinalMinorColor)
+        compassCardinalMinorColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
+        
         colorData = try container.decode(Data.self, forKey: .compassRingColor)
         compassRingColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? SKColor ?? SKColor.black
 
@@ -139,8 +154,17 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMajorTickColor)
         try container.encode(colorData, forKey: .compassCardinalMajorTickColor)
 
-        colorData = NSKeyedArchiver.archivedData(withRootObject: compassSensorColor)
-        try container.encode(colorData, forKey: .compassSensorColor)
+        colorData = NSKeyedArchiver.archivedData(withRootObject: compassSensorMajorColor)
+        try container.encode(colorData, forKey: .compassSensorMajorColor)
+        
+        colorData = NSKeyedArchiver.archivedData(withRootObject: compassSensorMinorColor)
+        try container.encode(colorData, forKey: .compassSensorMinorColor)
+        
+        colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMajorColor)
+        try container.encode(colorData, forKey: .compassCardinalMajorColor)
+        
+        colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMinorColor)
+        try container.encode(colorData, forKey: .compassCardinalMinorColor)
         
         colorData = NSKeyedArchiver.archivedData(withRootObject: compassRingColor)
         try container.encode(colorData, forKey: .compassRingColor)
@@ -171,5 +195,119 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         
         strSensor = NSKeyedArchiver.archivedData(withRootObject: menubarSensor)
         try container.encode(strSensor, forKey: .menubarSensor)
+    }
+}
+
+/// Defaults - in case we want to individually reset a parameter
+extension MeteoPreferences {
+    func resetDefautls() {
+        compassCardinalMinorTickColor   = SKColor.white
+        compassCardinalMajorTickColor   = SKColor.blue
+        compassCrosshairColor           = SKColor.white
+        compassSensorMajorColor         = SKColor.white
+        compassSensorMinorColor         = SKColor.white
+        compassCardinalMajorColor       = SKColor.white
+        compassCardinalMinorColor       = SKColor.white
+        compassRingColor                = SKColor.yellow
+        compassFrameColor               = SKColor.black
+        compassFaceColor                = SKColor.black
+        compassCaratColor               = SKColor.red
+        menubarSensor                   = "th0temp"         // Temp outside
+        compassULSensor                 = "th0temp"         // Upper Left:  Temp
+        compassURSensor                 = "thb0press"       // Upper Right: Pressure
+        compassLLSensor                 = "th0hum"          // Lower Left:  Humidity
+        compassLRSensor                 = "sol0rad"         // Lower Right: Solar Radiation
+        compassShowSensorBox            = false
+        weatherAlerts                   = true
+    }
+    
+    func resetCompassCardinalMinorTickColor() -> SKColor {
+        compassCardinalMinorTickColor = SKColor.white
+        return compassCardinalMinorTickColor
+    }
+    
+    func resetCompassCardinalMajorTickColor() -> SKColor {
+        compassCardinalMajorTickColor = SKColor.blue
+        return compassCardinalMajorTickColor
+    }
+    
+    func resetCompassCrosshairColor() -> SKColor {
+        compassCrosshairColor = SKColor.white
+        return compassCrosshairColor
+    }
+    
+    func resetCompassSensorMajorColor() -> SKColor {
+        compassSensorMajorColor = SKColor.white
+        return compassSensorMajorColor
+    }
+    
+    func resetCompassSensorMinorColor() -> SKColor {
+        compassSensorMinorColor = SKColor.white
+        return compassSensorMinorColor
+    }
+    
+    func resetCompassCardinalMajorColor() -> SKColor {
+        compassCardinalMajorColor = SKColor.white
+        return compassCardinalMajorColor
+    }
+    
+    func resetCompassCardinalMinorColor() -> SKColor {
+        compassCardinalMinorColor = SKColor.white
+        return compassCardinalMinorColor
+    }
+    
+    func resetCompassRingColor() -> SKColor {
+        compassRingColor = SKColor.yellow
+        return compassRingColor
+    }
+    
+    func resetCompassFrameColor() -> SKColor {
+        compassFrameColor = SKColor.black
+        return compassFrameColor
+    }
+    
+    func resetCompassFaceColor() -> SKColor {
+        compassFaceColor = SKColor.black
+        return compassFaceColor
+    }
+    
+    func resetCompassCaratColor() -> SKColor {
+        compassCaratColor = SKColor.red
+        return compassCaratColor
+    }
+    
+    func resetCompassShowSensorBox() -> Bool {
+        compassShowSensorBox = false
+        return compassShowSensorBox
+    }
+    
+    func resetMenubarSensor() -> String {
+        menubarSensor = "th0temp"
+        return menubarSensor
+    }
+    
+    func resetCompassULSensor() -> String {
+        compassULSensor = "th0temp"
+        return compassULSensor
+    }
+    
+    func resetCompassURSensor() -> String {
+        compassURSensor = "thb0press"
+        return compassURSensor
+    }
+    
+    func resetCompassLLSensor() -> String {
+        compassLLSensor = "th0hum"
+        return compassLLSensor
+    }
+    
+    func resetCompassLRSensor() -> String {
+        compassLRSensor = "sol0rad"
+        return compassLRSensor
+    }
+    
+    func resetWeatherAlerts() -> Bool {
+        weatherAlerts = true
+        return weatherAlerts
     }
 }
