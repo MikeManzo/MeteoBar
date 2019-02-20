@@ -49,7 +49,7 @@ class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable
             elements.append(InterfaceElement(name: "Major Sensor Text", color: (theDelegate?.theDefaults!.compassSensorMajorColor)!))
             elements.append(InterfaceElement(name: "Minor Sensor Text", color: (theDelegate?.theDefaults!.compassSensorMinorColor)!))
             elements.append(InterfaceElement(name: "Cardinal 'Major' Text", color: (theDelegate?.theDefaults!.compassCardinalMajorColor)!))
-            elements.append(InterfaceElement(name: "Cardinal 'Minor' Cardinal", color: (theDelegate?.theDefaults!.compassCardinalMinorColor)!))
+            elements.append(InterfaceElement(name: "Cardinal 'Minor' Text", color: (theDelegate?.theDefaults!.compassCardinalMinorColor)!))
             elements.append(InterfaceElement(name: "Compass Ring", color: (theDelegate?.theDefaults!.compassRingColor)!))
             elements.append(InterfaceElement(name: "Compass Face", color: (theDelegate?.theDefaults!.compassFaceColor)!))
 
@@ -159,18 +159,6 @@ extension UserInterfaceController: NSOutlineViewDelegate {
         
         return view
     }
-/*
-    func outlineViewSelectionDidChange(_ notification: Notification) {
-        guard let outlineView = notification.object as? NSOutlineView else {
-            return
-        }
-        
-        let selectedIndex = outlineView.selectedRow
-        guard let element = outlineView.item(atRow: selectedIndex) as? InterfaceElement else {
-            return
-        }
-    }
-*/
 }
 
 /// Quick model for the NSOutlineView
@@ -225,7 +213,7 @@ class InterfaceColorWell: NSColorWell {
     
     ///
     /// Easy ... did we just click once?
-    /// No: Do not pbroceed
+    /// No: Do not proceed
     ///
     @objc func doubleAction() {
         // Eat it ...
