@@ -56,6 +56,7 @@
 		27CA786721EBC06A000D517D /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CA786521EBC06A000D517D /* About.xib */; };
 		27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786821EC19DE000D517D /* QJHyperTextField.swift */; };
 		27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */; };
+		27CAA732221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CAA731221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift */; };
 		27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */; };
 		27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */; };
 		27CF0429220735D9007DFFDF /* full-battery-color.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF0428220735D9007DFFDF /* full-battery-color.png */; };
@@ -147,6 +148,7 @@
 		27CA786521EBC06A000D517D /* About.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		27CA786821EC19DE000D517D /* QJHyperTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QJHyperTextField.swift; sourceTree = "<group>"; };
 		27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QJQuickResponseTableView.swift; sourceTree = "<group>"; };
+		27CAA731221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLDoubleClickGestureRecognizer.swift; sourceTree = "<group>"; };
 		27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteobridgeSensor.swift; sourceTree = "<group>"; };
 		27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorUnit.swift; sourceTree = "<group>"; };
 		27CF0428220735D9007DFFDF /* full-battery-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "full-battery-color.png"; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */,
+				27CAA731221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift */,
 				27E6C5BE21ED595500548CF0 /* QLExtensions.swift */,
 				27CA785D21EBA22B000D517D /* QuantumLogger.swift */,
 			);
@@ -636,6 +639,7 @@
 				27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */,
 				27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */,
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
+				27CAA732221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift in Sources */,
 				277EF6B9220614A8005DA8B4 /* MeteoSensorNodePair.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
 				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,

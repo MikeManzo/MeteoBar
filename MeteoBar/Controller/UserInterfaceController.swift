@@ -159,7 +159,7 @@ extension UserInterfaceController: NSOutlineViewDelegate {
         
         return view
     }
-    
+/*
     func outlineViewSelectionDidChange(_ notification: Notification) {
         guard let outlineView = notification.object as? NSOutlineView else {
             return
@@ -169,9 +169,8 @@ extension UserInterfaceController: NSOutlineViewDelegate {
         guard let element = outlineView.item(atRow: selectedIndex) as? InterfaceElement else {
             return
         }
-        
-        print(element)
     }
+*/
 }
 
 /// Quick model for the NSOutlineView
@@ -207,6 +206,29 @@ class InterfaceColorWell: NSColorWell {
         set {
             _element = newValue
         }
+    }
+    
+    override func awakeFromNib() {
+        let gesture = QLDoubleClickGestureRecognizer(target: self,
+                                                     action: #selector(singleAction),
+                                                     doubleAction: #selector(doubleAction))
+        self.addGestureRecognizer(gesture)
+    }
+    
+    ///
+    /// Easy ... did we just click once?
+    /// Yes: Proceed
+    ///
+    @objc func singleAction() {
+        activate(true)
+    }
+    
+    ///
+    /// Easy ... did we just click once?
+    /// No: Do not pbroceed
+    ///
+    @objc func doubleAction() {
+        // Eat it ...
     }
 }
 
