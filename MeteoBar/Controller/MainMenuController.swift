@@ -80,9 +80,6 @@ class MainMenuController: NSViewController {
         /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
         NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(_:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
        
-//        if theDelegate?.theBridge != nil {
-//            addBridgeToQueue(theBridge: theDelegate?.theBridge)
-//        }
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
     }
 

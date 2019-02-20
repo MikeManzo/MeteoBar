@@ -30,8 +30,6 @@ class BridgePreferencesController: NSViewController, Preferenceable {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        compassView.windDirection(direction: 90.0)
         
         view.wantsLayer                     = true
         let flowLayout                      = NSCollectionViewFlowLayout()
@@ -64,6 +62,7 @@ class BridgePreferencesController: NSViewController, Preferenceable {
                 log.error(error.localizedDescription)
             } else {
                 collectionView.reloadData()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
             }
         }
     }

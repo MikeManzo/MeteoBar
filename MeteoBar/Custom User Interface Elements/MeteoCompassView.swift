@@ -47,6 +47,11 @@ class MeteoCompassView: SKView {
     var lowerLeft: MeteoSensorNodePair?     // Lower Left Sensor Grouping <major, minor>
     var upperLeft: MeteoSensorNodePair?     // Upper Left Sensor Grouping <major, minor>
 
+    // MARK: - Sensor Pairs
+    lazy var updateCompassFace: (Notification) -> Void = { [weak self] _ in
+        self!.updateCompassScene()
+    }
+
     // MARK: - Overrides
     override convenience init(frame frameRect: NSRect) {
         self.init(frame: frameRect)
@@ -104,10 +109,20 @@ class MeteoCompassView: SKView {
         
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
         NotificationCenter.default.addObserver(self, selector: #selector(observationRecieved(_:)), name: NSNotification.Name(rawValue: "NewObservationReceived"), object: nil)
+        
+        _ = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "UpdateCompassFace"),
+                                                   object: nil,
+                                                   queue: .main,
+                                                   using: updateCompassFace)
     }
     
+    ///
     /// Update all the UI elements that are customizable
-    func update() {
+    ///
+    /// ## Notes #
+    /// [Enumerate ALL nodes in a Sprite Kit scene?](https://stackoverflow.com/questions/25749576/how-to-enumerate-all-nodes-in-a-sprite-kit-scene)
+    ///
+    func updateCompassScene() {
         guard let defaults = theDelegate?.theDefaults else {
             return
         }
@@ -132,31 +147,45 @@ class MeteoCompassView: SKView {
             node.strokeColor = defaults.compassCrosshairColor
         }
  
-        ///  We can search through all descendants by putting a '//' before the name
-        theKitScene?.enumerateChildNodes(withName: "//MajorSensor") { node, _ in
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*MajorSensor") { node, _ in
             if let labelNode = node as? QJSKMultiLineLabel {
                 labelNode.fontColor = defaults.compassSensorMajorColor
             }
         }
         
-        ///  We can search through all descendants by putting a '//' before the name
-        theKitScene?.enumerateChildNodes(withName: "//MinorSensor") { node, _ in
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*MinorSensor") { node, _ in
             if let labelNode = node as? SKLabelNode {
                 labelNode.fontColor = defaults.compassSensorMinorColor
             }
         }
         
-        ///  We can search through all descendants by putting a '//' before the name
-        theKitScene?.enumerateChildNodes(withName: "//CardinalMajorText") { node, _ in
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*CardinalMajorText") { node, _ in
             if let labelNode = node as? SKLabelNode {
                 labelNode.fontColor = defaults.compassCardinalMajorColor
             }
         }
 
-        ///  We can search through all descendants by putting a '//' before the name
-        theKitScene?.enumerateChildNodes(withName: "//CardinalMinorText") { node, _ in
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*CardinalMinorText") { node, _ in
             if let labelNode = node as? SKLabelNode {
                 labelNode.fontColor = defaults.compassCardinalMinorColor
+            }
+        }
+        
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*MajorTicks") { node, _ in
+            if let labelNode = node as? SKShapeNode {
+                labelNode.strokeColor = defaults.compassCardinalMajorTickColor
+            }
+        }
+        
+        ///  We can search through all descendants by putting a '//*' before the name
+        theKitScene?.enumerateChildNodes(withName: "//*MinorTicks") { node, _ in
+            if let labelNode = node as? SKShapeNode {
+                labelNode.strokeColor = defaults.compassCardinalMinorTickColor
             }
         }
     }

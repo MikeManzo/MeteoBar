@@ -41,27 +41,38 @@ class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable
         if theDelegate?.theBridge != nil {  // Yes ... setup the model
             var elements = [InterfaceElement]()
             
-            elements.append(InterfaceElement(name: "Cardinal Minor Tick", color: (theDelegate?.theDefaults!.compassCardinalMinorTickColor)!))
-            elements.append(InterfaceElement(name: "Cardinal Major Tick", color: (theDelegate?.theDefaults!.compassCardinalMajorTickColor)!))
+            elements.append(InterfaceElement(name: "Cardinal 'Minor' Tick", color: (theDelegate?.theDefaults!.compassCardinalMinorTickColor)!))
+            elements.append(InterfaceElement(name: "Cardinal 'Major' Tick", color: (theDelegate?.theDefaults!.compassCardinalMajorTickColor)!))
             elements.append(InterfaceElement(name: "Crosshairs", color: (theDelegate?.theDefaults!.compassCrosshairColor)!))
             elements.append(InterfaceElement(name: "Compass Frame", color: (theDelegate?.theDefaults!.compassFrameColor)!))
             elements.append(InterfaceElement(name: "Compass Carat", color: (theDelegate?.theDefaults!.compassCaratColor)!))
             elements.append(InterfaceElement(name: "Major Sensor Text", color: (theDelegate?.theDefaults!.compassSensorMajorColor)!))
             elements.append(InterfaceElement(name: "Minor Sensor Text", color: (theDelegate?.theDefaults!.compassSensorMinorColor)!))
-            elements.append(InterfaceElement(name: "Major Cardinal Text", color: (theDelegate?.theDefaults!.compassCardinalMajorColor)!))
-            elements.append(InterfaceElement(name: "Minor Cardinal Text", color: (theDelegate?.theDefaults!.compassCardinalMinorColor)!))
+            elements.append(InterfaceElement(name: "Cardinal 'Major' Text", color: (theDelegate?.theDefaults!.compassCardinalMajorColor)!))
+            elements.append(InterfaceElement(name: "Cardinal 'Minor' Cardinal", color: (theDelegate?.theDefaults!.compassCardinalMinorColor)!))
             elements.append(InterfaceElement(name: "Compass Ring", color: (theDelegate?.theDefaults!.compassRingColor)!))
             elements.append(InterfaceElement(name: "Compass Face", color: (theDelegate?.theDefaults!.compassFaceColor)!))
-            
-            categories.append(InterfaceCategory(category: "Compass Configuration", elements: elements))
-            categories.sort {               // Sort the model alphabetically
+
+            elements.sort {               // Sort the model alphabetically by 'name'
                 $0.name < $1.name
             }
+
+            categories.append(InterfaceCategory(category: "Compass Configuration", elements: elements))
+            
             elementTree.reloadData()         // Reload the OutlineView
             elementTree.expandItem(nil, expandChildren: true)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
         }
     }
     
+    /// Try to close the colorwell (NSColorPanel)
+    override func viewWillDisappear() {
+        NSColorPanel.shared.orderOut(nil)
+    }
+    
+    ///
+    /// Houusekeeping
+    ///
     override func viewDidDisappear() {
         super.viewDidDisappear()
         categories.removeAll()
@@ -72,7 +83,7 @@ class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable
     }
     
     func updateCompass(caller: UITableCellView) {
-        compassView.update()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
     }
 }
 
@@ -141,7 +152,6 @@ extension UserInterfaceController: NSOutlineViewDelegate {
                 textField.stringValue = element.name
                 (view as? UITableCellView)!.colorWell.color     = element.color
                 (view as? UITableCellView)!.colorWell.element   = element
-                (view as? UITableCellView)!.compassDelegate     = self
             }
         } else {
             log.error("SensorTree: Unknown type[\(item)]")
@@ -203,13 +213,11 @@ class InterfaceColorWell: NSColorWell {
 class UITableCellView: NSTableCellView {
     @IBOutlet weak var colorWell: InterfaceColorWell!
     
-    weak var compassDelegate: CompassDelegate?
-    
     @IBAction func colorWellChanged(_ sender: InterfaceColorWell) {
         switch sender.element?.name {
-        case "Cardinal Minor Tick":
+        case "Cardinal 'Minor' Tick":
             theDelegate?.theDefaults!.compassCardinalMinorTickColor = sender.color
-        case "Cardinal Major Tick":
+        case "Cardinal 'Major' Tick":
             theDelegate?.theDefaults!.compassCardinalMajorTickColor = sender.color
         case "Crosshairs":
             theDelegate?.theDefaults!.compassCrosshairColor = sender.color
@@ -221,9 +229,9 @@ class UITableCellView: NSTableCellView {
             theDelegate?.theDefaults!.compassSensorMajorColor = sender.color
         case "Minor Sensor Text":
             theDelegate?.theDefaults!.compassSensorMinorColor = sender.color
-        case "Major Cardinal Text":
+        case "Cardinal 'Major' Text":
             theDelegate?.theDefaults!.compassCardinalMajorColor = sender.color
-        case "Minor Cardinal Text":
+        case "Cardinal 'Minor' Text":
             theDelegate?.theDefaults!.compassCardinalMinorColor = sender.color
         case "Compass Ring":
             theDelegate?.theDefaults!.compassRingColor = sender.color
@@ -233,9 +241,7 @@ class UITableCellView: NSTableCellView {
             break
         }
         theDelegate?.updateConfiguration()
-        if compassDelegate != nil {
-            compassDelegate?.updateCompass(caller: self)
-        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
     }
 }
 // Quick Subclass to get acces to the colorwell in our NSTableCellView
