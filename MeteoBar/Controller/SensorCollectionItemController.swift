@@ -14,8 +14,8 @@ class SensorCollectionItemController: NSCollectionViewItem {
     @IBOutlet weak var sensorDescription: NSTextField!
     @IBOutlet weak var sensorUnits: NSPopUpButton!
     @IBOutlet weak var sensorBattery: NSImageView!
-    @IBOutlet weak var sensorOn: NSButton!
-    
+    @IBOutlet weak var sensorToggle: OGSwitch!
+
     /// Pretty much the mac-Daddy of a variable.  Once set ... it sets up the whole Item for display
     weak var imageFile: MeteoSensorImage? = nil {
         didSet {
@@ -64,7 +64,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
                 // Update the description tooltips
                 
                 // Update the status of the sensor (e.g., is it observing or not?)
-                sensorOn.state = sensor.isObserving ? .on : .off
+                sensorToggle.setOn(isOn: sensor.isObserving ? true : false, animated: true)
                 // Update the status of the sensor (e.g., is it observing or not?)
             } else {
                 sensorDescription.stringValue = ""
@@ -80,7 +80,6 @@ class SensorCollectionItemController: NSCollectionViewItem {
         super.viewDidLoad()
 
         view.wantsLayer                 = true
-
         view.layer?.backgroundColor     = NSColor.controlBackgroundColor.cgColor
         view.layer?.borderColor         = NSColor.systemBlue.cgColor
         view.layer?.borderWidth         = 0.0
@@ -116,16 +115,20 @@ class SensorCollectionItemController: NSCollectionViewItem {
             view.layer?.borderWidth = isSelected ? 2.0 : 0.0
         }
     }
-    
-    @IBAction func observingStateChanged(_ sender: Any) {
+
+    @IBAction func observingStateToggle(_ sender: Any) {
+        guard imageFile != nil else {
+            log.error("An error has occured trying to turn this sensor on.")
+            return
+        }
+        
         guard let sensor = WeatherPlatform.findSensorInBridge(searchID: imageFile!.sensorID!) else {
             log.warning("Unable to find a sensor with ID:\(imageFile!.sensorID!)")
             return
         }
         
-        sensor.isObserving = (sensorOn.state == .on) ? true : false
+        sensor.isObserving = sensorToggle.isOn ? true : false
     }
-    
     /// Update the sensor with the selected unit
     ///
     /// - Parameter sender: NSPopUpButton that has changed

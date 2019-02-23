@@ -13,6 +13,7 @@
 		27470AAD2212E1F100C7AEA9 /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = 27470AAC2212E1F100C7AEA9 /* logout.png */; };
 		27470AAF221437D800C7AEA9 /* QJHighlightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */; };
 		27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */; };
+		275934D32221D42000910F8C /* controls.png in Resources */ = {isa = PBXBuildFile; fileRef = 275934D22221D42000910F8C /* controls.png */; };
 		2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2771085322011CA0009A3C86 /* CollectionItemDropView.swift */; };
 		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
 		277658DD21EA6063007BA05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277658DC21EA6063007BA05A /* Assets.xcassets */; };
@@ -22,12 +23,12 @@
 		277EF6B9220614A8005DA8B4 /* MeteoSensorNodePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277EF6B8220614A8005DA8B4 /* MeteoSensorNodePair.swift */; };
 		277EF6BB220619EF005DA8B4 /* MeteoCompassSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */; };
 		2780456821EAB9290026E1F7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2780456721EAB9290026E1F7 /* README.md */; };
+		27937BF22221C12F00E0E5F3 /* OGSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27937BF12221C12F00E0E5F3 /* OGSwitch.swift */; };
 		27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0545721EB8520001F4913 /* MainMenuController.swift */; };
 		27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */; };
 		27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038A2219D5F100E9A6BE /* dashboard.png */; };
 		27A8038E2219DCD900E9A6BE /* UserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */; };
 		27A8038F2219DCD900E9A6BE /* UserInterface.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038D2219DCD900E9A6BE /* UserInterface.xib */; };
-		27AA712422219D6E00AFDD78 /* MacToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA712322219D6E00AFDD78 /* MacToggle.swift */; };
 		27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */; };
 		27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */; };
 		27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */; };
@@ -99,6 +100,7 @@
 		27470AAC2212E1F100C7AEA9 /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
 		27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightImageView.swift; sourceTree = "<group>"; };
 		27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightButtonView.swift; sourceTree = "<group>"; };
+		275934D22221D42000910F8C /* controls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls.png; sourceTree = "<group>"; };
 		2771085322011CA0009A3C86 /* CollectionItemDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemDropView.swift; sourceTree = "<group>"; };
 		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277658DA21EA6062007BA05A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,12 +117,12 @@
 		277EF6B8220614A8005DA8B4 /* MeteoSensorNodePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorNodePair.swift; sourceTree = "<group>"; };
 		277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoCompassSettingsView.swift; sourceTree = "<group>"; };
 		2780456721EAB9290026E1F7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
+		27937BF12221C12F00E0E5F3 /* OGSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OGSwitch.swift; sourceTree = "<group>"; };
 		27A0545721EB8520001F4913 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJSKMultiLineLabel.swift; sourceTree = "<group>"; };
 		27A8038A2219D5F100E9A6BE /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
 		27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceController.swift; sourceTree = "<group>"; };
 		27A8038D2219DCD900E9A6BE /* UserInterface.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInterface.xib; sourceTree = "<group>"; };
-		27AA712322219D6E00AFDD78 /* MacToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacToggle.swift; sourceTree = "<group>"; };
 		27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesController.swift; sourceTree = "<group>"; };
 		27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferences.xib; sourceTree = "<group>"; };
 		27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgePreferencesController.swift; sourceTree = "<group>"; };
@@ -225,14 +227,14 @@
 			isa = PBXGroup;
 			children = (
 				277658DA21EA6062007BA05A /* AppDelegate.swift */,
-				27A0545321EB80CC001F4913 /* Custom User Interface Elements */,
-				27A0545421EB829A001F4913 /* Model */,
-				27A0545521EB82A0001F4913 /* View */,
-				27A0545621EB82AB001F4913 /* Controller */,
 				277658DC21EA6063007BA05A /* Assets.xcassets */,
+				27A0545621EB82AB001F4913 /* Controller */,
+				27A0545321EB80CC001F4913 /* Custom User Interface Elements */,
 				277658E121EA6063007BA05A /* Info.plist */,
 				277658E221EA6063007BA05A /* MeteoBar.entitlements */,
+				27A0545421EB829A001F4913 /* Model */,
 				27CA785C21EBA1F0000D517D /* Utility */,
+				27A0545521EB82A0001F4913 /* View */,
 			);
 			path = MeteoBar;
 			sourceTree = "<group>";
@@ -317,7 +319,7 @@
 		27AA71222221986100AFDD78 /* Third Party Elements */ = {
 			isa = PBXGroup;
 			children = (
-				27AA712322219D6E00AFDD78 /* MacToggle.swift */,
+				27937BF12221C12F00E0E5F3 /* OGSwitch.swift */,
 			);
 			path = "Third Party Elements";
 			sourceTree = "<group>";
@@ -359,6 +361,7 @@
 				27E6C5BC21ED58C800548CF0 /* books.png */,
 				2744B781220E793600A61514 /* compass-north.png */,
 				2744B783220E79FC00A61514 /* configurator.png */,
+				275934D22221D42000910F8C /* controls.png */,
 				27A8038A2219D5F100E9A6BE /* dashboard.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
@@ -532,6 +535,7 @@
 				27ACA78821FE4D4800E226C2 /* solar-energy.png in Resources */,
 				2744B782220E793600A61514 /* compass-north.png in Resources */,
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
+				275934D32221D42000910F8C /* controls.png in Resources */,
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
 				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
 				27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */,
@@ -634,7 +638,6 @@
 				27ACA77821FCB40B00E226C2 /* MeteoCompassView.swift in Sources */,
 				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
-				27AA712422219D6E00AFDD78 /* MacToggle.swift in Sources */,
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
@@ -646,6 +649,7 @@
 				27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */,
 				27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */,
 				27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */,
+				27937BF22221C12F00E0E5F3 /* OGSwitch.swift in Sources */,
 				27CC8FED21F1875D00CDDF66 /* MeteoSensorUnit.swift in Sources */,
 				27F8901D21F2A25D00F8605E /* WeatherPlatform.swift in Sources */,
 				27CA786921EC19DE000D517D /* QJHyperTextField.swift in Sources */,

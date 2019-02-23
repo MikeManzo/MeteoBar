@@ -11,7 +11,7 @@
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="IXN-NL-doK"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="L7R-r4-cCv"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="G1u-Hc-a1g"/>
-                <outlet property="sensorOn" destination="U0E-rt-ylL" id="Pes-uS-gXl"/>
+                <outlet property="sensorToggle" destination="vuI-Rt-wMR" id="IQX-0G-j8p"/>
                 <outlet property="sensorUnits" destination="zrL-Ly-lCx" id="IG5-dy-zb7"/>
             </connections>
         </customObject>
@@ -52,17 +52,19 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="solar-energy" id="Sdr-0A-ebK"/>
                 </imageView>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0E-rt-ylL">
-                    <rect key="frame" x="45" y="57" width="40" height="18"/>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuI-Rt-wMR" customClass="OGSwitch" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="45" y="56" width="30" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="radio" title="On" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Q4Y-Sx-2ov">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                            <color key="value" name="systemPinkColor" catalog="System" colorSpace="catalog"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="Checkmark"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
-                        <action selector="observingStateChanged:" target="sdv-IT-EaE" id="qD2-lf-BBF"/>
+                        <action selector="observingStateToggle:" target="sdv-IT-EaE" id="3Co-ah-qKa"/>
                     </connections>
-                </button>
+                </customView>
             </subviews>
             <point key="canvasLocation" x="-133" y="-39"/>
         </customView>
@@ -71,13 +73,14 @@
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="XVd-xt-wot"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="TIa-3I-YQf"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="9O0-3R-0Y4"/>
-                <outlet property="sensorOn" destination="U0E-rt-ylL" id="US2-im-8g1"/>
+                <outlet property="sensorToggle" destination="vuI-Rt-wMR" id="egJ-g8-6tK"/>
                 <outlet property="sensorUnits" destination="zrL-Ly-lCx" id="MfL-fg-4SC"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="cKm-EI-93k"/>
             </connections>
         </viewController>
     </objects>
     <resources>
+        <image name="Checkmark" width="35" height="34"/>
         <image name="full-battery" width="409.60000610351562" height="409.60000610351562"/>
         <image name="solar-energy" width="384" height="384"/>
     </resources>

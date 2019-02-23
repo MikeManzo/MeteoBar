@@ -55,6 +55,13 @@ class AboutController: NSViewController {
          "copyHolder": "Icons8",
          "copyURL": "https://icons8.com/icon/set/config/color"
         ],
+        ["copyImage": "controls.png",
+         "copyType": "Control",
+         "invertable": "yes",
+         "copyName": "Controls Icon",
+         "copyHolder": "Smashicons",
+         "copyURL": "https://www.flaticon.com/authors/smashicons"
+        ],
         ["copyImage": "dashboard.png",
          "copyType": "Icon",
          "invertable": "no",
