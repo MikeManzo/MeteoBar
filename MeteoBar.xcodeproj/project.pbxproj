@@ -27,6 +27,7 @@
 		27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038A2219D5F100E9A6BE /* dashboard.png */; };
 		27A8038E2219DCD900E9A6BE /* UserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */; };
 		27A8038F2219DCD900E9A6BE /* UserInterface.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038D2219DCD900E9A6BE /* UserInterface.xib */; };
+		27AA712422219D6E00AFDD78 /* MacToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA712322219D6E00AFDD78 /* MacToggle.swift */; };
 		27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */; };
 		27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */; };
 		27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */; };
@@ -119,6 +120,7 @@
 		27A8038A2219D5F100E9A6BE /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
 		27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceController.swift; sourceTree = "<group>"; };
 		27A8038D2219DCD900E9A6BE /* UserInterface.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserInterface.xib; sourceTree = "<group>"; };
+		27AA712322219D6E00AFDD78 /* MacToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacToggle.swift; sourceTree = "<group>"; };
 		27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPreferencesController.swift; sourceTree = "<group>"; };
 		27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPreferences.xib; sourceTree = "<group>"; };
 		27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgePreferencesController.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		27A0545321EB80CC001F4913 /* Custom User Interface Elements */ = {
 			isa = PBXGroup;
 			children = (
+				27AA71222221986100AFDD78 /* Third Party Elements */,
 				2771085322011CA0009A3C86 /* CollectionItemDropView.swift */,
 				27470AAA2212D8F100C7AEA9 /* IconBarView.swift */,
 				277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */,
@@ -309,6 +312,14 @@
 				27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		27AA71222221986100AFDD78 /* Third Party Elements */ = {
+			isa = PBXGroup;
+			children = (
+				27AA712322219D6E00AFDD78 /* MacToggle.swift */,
+			);
+			path = "Third Party Elements";
 			sourceTree = "<group>";
 		};
 		27CA785C21EBA1F0000D517D /* Utility */ = {
@@ -623,6 +634,7 @@
 				27ACA77821FCB40B00E226C2 /* MeteoCompassView.swift in Sources */,
 				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
+				27AA712422219D6E00AFDD78 /* MacToggle.swift in Sources */,
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
@@ -824,6 +836,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.meteobar;
@@ -848,6 +861,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.quantumjoker.meteobar;
