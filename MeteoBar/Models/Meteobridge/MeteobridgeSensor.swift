@@ -167,12 +167,10 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         var strResult = ""
         
         if category == .system {
-            //strResult = "\(name):\(batteryParamater)"
             strResult = "\(name)|\(batteryParamater)"
         } else {
             let activeUnit = supportedUnits.filter { $0.isCurrent == true }
             if !activeUnit.isEmpty {
-//                strResult = "\(name):\(activeUnit.first!.parameter)|\(batteryParamater)"
                 strResult = "\(name):\(activeUnit.first!.parameter)|\(activeUnit.first!.parameterMax)|\(activeUnit.first!.parameterMin)|\(batteryParamater)"
             }
         }
@@ -183,6 +181,17 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     /// Return the Name as our Unique SensorID (by definition the sensors are unique)
     var sensorID: String {
         return name
+    }
+    
+    /// Return the availability of the sensor.  Any value other than "--" results in true (see meteobridge.json file for model)
+    var isAvailable: Bool {
+        var bAvailable = true
+        
+        if measurement.value == "--" {
+            bAvailable = false
+        }
+        
+        return bAvailable
     }
     
     /// Initialize the sensor

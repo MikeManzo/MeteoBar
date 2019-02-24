@@ -34,7 +34,8 @@ protocol Weather: class {
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
     static func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
-    static func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func getConditions(theBridge: Meteobridge, allParamaters: Bool, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func getPlatformImage(_ platform: String, handler: @escaping (NSImage?, Error?) -> Void)
     static func findSensorInBridge(searchID: String) -> MeteobridgeSensor?
 }
@@ -46,22 +47,62 @@ class WeatherPlatform: Weather {
     /// Get current readings from the meteobridge
     ///
     /// - Parameters:
-    ///   - theBridge: the Meteobridge we wish to interrogate
-    ///   - callback: callback to recieve the results
+    ///   - theBridge:      the Meteobridge we wish to interrogate
+    ///   - allParamaters:  do we want to ignore the isObserving flag and just get them all?
+    ///   - callback:       callback to recieve the results
     ///
-    static func getConditions(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+    static func getConditions(theBridge: Meteobridge, allParamaters: Bool = false, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
         let alamoManager = Alamofire.SessionManager.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time:[hh];[mm];[ss],"
         
-        for (category, sensors) in theBridge.sensors {
-            for sensor in sensors where category != .system  && sensor.isObserving {
-                templateString.append("\(sensor.bridgeTemplate),")
+        if !allParamaters {
+            for (category, sensors) in theBridge.sensors {
+                for sensor in sensors where category != .system  && sensor.isObserving {
+                    templateString.append("\(sensor.bridgeTemplate),")
+                }
+            }
+        } else {
+            for (category, sensors) in theBridge.sensors {
+                for sensor in sensors where category != .system {
+                    templateString.append("\(sensor.bridgeTemplate),")
+                }
             }
         }
         
         templateString = String(templateString[..<templateString.index(before: templateString.endIndex)])   // Remove the trailing ","
+        templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
+        
+        guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {
+            callback(nil, WeatherPlatformError.urlError)
+            return
+        }
+        
+        alamoManager.request(bridgeEndpoint).responseData { bridgeResponse in
+            switch bridgeResponse.result {
+            case .success (let stationData):
+                callback(stationData as AnyObject, nil)
+            case .failure(let stationError):
+                callback(nil, PlatformError.passthroughSystem(systemError: stationError))
+            }
+        }
+    }
+    
+    /// Get current readings for the given sensor on teh given bridge
+    ///
+    /// - Parameters:
+    ///   - theBridge:  the Meteobridge we wish to interrogate
+    ///   - sensor:     the sensor to get data for
+    ///   - callback:   callback to recieve the results
+    ///
+    static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
+        var templateString = "Time:[hh];[mm];[ss],"
+        
+        templateString.append("\(sensor.bridgeTemplate)")
         templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
         
         guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {

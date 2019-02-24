@@ -294,10 +294,12 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///
     /// We want to separate the keys and values so we can apply them to the appropriate sensors
     ///
-    /// - Parameter callback: return function
+    /// - Parameters:
+    ///     - allParams:    do we want to grab everything and ignore the 'isObserving' flag?
+    ///     - callback:     return function
     ///
-    func getObservation(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
-        WeatherPlatform.getConditions(theBridge: self, callback: { [unowned self] bridgeData, bridgeError in
+    func getObservation(allParams: Bool = false, _ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.getConditions(theBridge: self, allParamaters: allParams, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
                 callback(nil, bridgeError)
             }
@@ -348,6 +350,83 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                     callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
                     return
                 }
+                    let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
+                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
+                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
+                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+                    filteredSensor.updateBatteryHealth(observation: battPair[3])                // Record the battery health
+                }
+            }
+            callback(self, nil)
+        })
+    }
+
+    /// Interrogate the bridge for an observation of the given sensors
+    ///
+    /// ## Important Notes ##
+    /// The data comes to us in a response array like
+    /// 1. [0] == Time:12;00;00 <-- Always
+    /// 2. [1] == THB0TEMP:29.9 <-- Optional
+    /// 3. [2] == ... etc.
+    ///
+    /// We want to separate the keys and values so we can apply them to the appropriate sensors
+    ///
+    /// - Parameters:
+    ///     - sensor:   sensor to get measurement for
+    ///     - callback: return function
+    ///
+    func getObservation(sensor: MeteobridgeSensor, _ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.getConditionsForSensor(theBridge: self, sensor: sensor, callback: { [unowned self] bridgeData, bridgeError in
+            if bridgeError != nil {
+                callback(nil, bridgeError)
+            }
+            
+            guard let validData = bridgeData as? Data else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
+                callback(nil, MeteobridgeError.dataError)
+                return
+            }
+            
+            guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            
+            // Guard against poor data data
+            if hourPair.count != 2 {
+                log.warning("Meteobridge Timestamp returned:\(hourPair)")
+                callback(nil, MeteobridgeError.observationDateError)
+                return
+            }
+            // Guard against poor data data
+            
+            guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
+                callback(nil, MeteobridgeError.observationError)
+                return
+            }
+            
+            /// we're going to get something like this back for each sensor
+            /// th0temp:[th0temp-act=.1:--]|[thb0temp-dmax=F.1:--]|[thb0temp-dmin=F.1:--]|[th0lowbat-act.0:--]
+            /// Using the model below
+            /// battPair[0] = Measurement
+            /// battPair[1] = Max measurment
+            /// battPair[2] = Min Measurement
+            /// battPair[3] = Battery
+            for pair in bridgeResponse {
+                let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
+                if subPair[0] != "Time" {
+                    guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {       // Find the sensor with this tag
+                        callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                        return
+                    }
                     let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
                     filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
                                                      maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),

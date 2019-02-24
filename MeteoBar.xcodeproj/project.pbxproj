@@ -226,15 +226,15 @@
 		277658D921EA6062007BA05A /* MeteoBar */ = {
 			isa = PBXGroup;
 			children = (
-				277658DA21EA6062007BA05A /* AppDelegate.swift */,
-				277658DC21EA6063007BA05A /* Assets.xcassets */,
-				27A0545621EB82AB001F4913 /* Controller */,
-				27A0545321EB80CC001F4913 /* Custom User Interface Elements */,
 				277658E121EA6063007BA05A /* Info.plist */,
 				277658E221EA6063007BA05A /* MeteoBar.entitlements */,
-				27A0545421EB829A001F4913 /* Model */,
-				27CA785C21EBA1F0000D517D /* Utility */,
-				27A0545521EB82A0001F4913 /* View */,
+				277658DA21EA6062007BA05A /* AppDelegate.swift */,
+				277658DC21EA6063007BA05A /* Assets.xcassets */,
+				27A0545621EB82AB001F4913 /* Controllers */,
+				27A0545321EB80CC001F4913 /* Custom User Interface Elements */,
+				27A0545421EB829A001F4913 /* Models */,
+				27CA785C21EBA1F0000D517D /* Utilities */,
+				27A0545521EB82A0001F4913 /* Views */,
 			);
 			path = MeteoBar;
 			sourceTree = "<group>";
@@ -257,6 +257,15 @@
 			path = MeteoBarUITests;
 			sourceTree = "<group>";
 		};
+		278348C82222E6AC00D15C68 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */,
+				27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		27A0545321EB80CC001F4913 /* Custom User Interface Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -276,17 +285,16 @@
 			path = "Custom User Interface Elements";
 			sourceTree = "<group>";
 		};
-		27A0545421EB829A001F4913 /* Model */ = {
+		27A0545421EB829A001F4913 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				278348C82222E6AC00D15C68 /* Controls */,
 				27CC8FE921F1816700CDDF66 /* Meteobridge */,
-				27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */,
-				27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */,
 			);
-			path = Model;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		27A0545521EB82A0001F4913 /* View */ = {
+		27A0545521EB82A0001F4913 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				27E6C5BB21ED58B200548CF0 /* Graphics */,
@@ -299,10 +307,10 @@
 				27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */,
 				27A8038D2219DCD900E9A6BE /* UserInterface.xib */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		27A0545621EB82AB001F4913 /* Controller */ = {
+		27A0545621EB82AB001F4913 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				27CA786421EBC06A000D517D /* AboutController.swift */,
@@ -313,7 +321,7 @@
 				27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */,
 				27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */,
 			);
-			path = Controller;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		27AA71222221986100AFDD78 /* Third Party Elements */ = {
@@ -324,7 +332,7 @@
 			path = "Third Party Elements";
 			sourceTree = "<group>";
 		};
-		27CA785C21EBA1F0000D517D /* Utility */ = {
+		27CA785C21EBA1F0000D517D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */,
@@ -332,7 +340,7 @@
 				27E6C5BE21ED595500548CF0 /* QLExtensions.swift */,
 				27CA785D21EBA22B000D517D /* QuantumLogger.swift */,
 			);
-			path = Utility;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		27CA786321EBA906000D517D /* External Config */ = {

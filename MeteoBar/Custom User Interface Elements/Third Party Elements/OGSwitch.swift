@@ -5,7 +5,7 @@
 //  Created by Oskar Groth on 2017-02-22.
 //  Copyright © 2017 Oskar Groth. All rights reserved.
 //
-// Modified by Mike Manzo
+// Modified and convereted to swift 4.2 by Mike Manzo, Quantum Joker
 //
 
 import Cocoa
@@ -120,7 +120,8 @@ import QuartzCore
             return
         }
         let size = icon.size
-        iconLayer.frame = NSRect(x: (bounds.width-size.width)/2, y: (bounds.height-size.height)/2, width: size.width, height: size.height)
+        iconLayer.frame = NSRect(x: (bounds.width-size.width)/2,
+                                 y: (bounds.height-size.height)/2, width: size.width, height: size.height)
         iconLayer.contents = icon
     }
     

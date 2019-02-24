@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SensorCollectionItemController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
+                <outlet property="sensorAvailability" destination="0bc-zm-feW" id="fcQ-h1-e5I"/>
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="IXN-NL-doK"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="L7R-r4-cCv"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="G1u-Hc-a1g"/>
@@ -21,20 +22,13 @@
             <rect key="frame" x="0.0" y="0.0" width="146" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zrL-Ly-lCx">
-                    <rect key="frame" x="43" y="79" width="101" height="25"/>
+                <imageView toolTip="Sensor Availability" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0bc-zm-feW">
+                    <rect key="frame" x="125" y="81" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Y4U-Zx-fft">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="menu"/>
-                        <menu key="menu" id="ArQ-ei-4WA"/>
-                    </popUpButtonCell>
-                    <connections>
-                        <action selector="unitChanged:" target="sdv-IT-EaE" id="vdO-tB-jkm"/>
-                    </connections>
-                </popUpButton>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSStatusNone" id="hIL-27-jWi"/>
+                </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YTx-qH-gbB">
-                    <rect key="frame" x="3" y="6" width="140" height="48"/>
+                    <rect key="frame" x="3" y="5" width="140" height="38"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
                     <textFieldCell key="cell" allowsUndo="NO" title="Description" id="5Jw-h0-6sL">
                         <font key="font" metaFont="system"/>
@@ -42,18 +36,18 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1GA-Xb-TbG" userLabel="Sensor Battery">
-                    <rect key="frame" x="106" y="55" width="35" height="21"/>
+                <imageView toolTip="Battery State" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1GA-Xb-TbG" userLabel="Sensor Battery">
+                    <rect key="frame" x="37" y="79" width="35" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="full-battery" id="NLU-aR-ueZ"/>
                 </imageView>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scH-rh-9Mu" userLabel="Sensor Image">
-                    <rect key="frame" x="5" y="66" width="32" height="32"/>
+                <imageView toolTip="Sensor" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="scH-rh-9Mu" userLabel="Sensor Image">
+                    <rect key="frame" x="5" y="79" width="24" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="solar-energy" id="Sdr-0A-ebK"/>
                 </imageView>
-                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuI-Rt-wMR" customClass="OGSwitch" customModule="MeteoBar" customModuleProvider="target">
-                    <rect key="frame" x="45" y="56" width="30" height="18"/>
+                <customView toolTip="Toggle Collection" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vuI-Rt-wMR" customClass="OGSwitch" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="80" y="81" width="30" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
@@ -65,11 +59,24 @@
                         <action selector="observingStateToggle:" target="sdv-IT-EaE" id="3Co-ah-qKa"/>
                     </connections>
                 </customView>
+                <popUpButton toolTip="Available Units" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zrL-Ly-lCx">
+                    <rect key="frame" x="3" y="48" width="141" height="25"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="Y4U-Zx-fft">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="ArQ-ei-4WA"/>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="unitChanged:" target="sdv-IT-EaE" id="vdO-tB-jkm"/>
+                    </connections>
+                </popUpButton>
             </subviews>
             <point key="canvasLocation" x="-133" y="-39"/>
         </customView>
         <viewController id="sdv-IT-EaE" userLabel="Sensor Collection View Item Controller" customClass="SensorCollectionItemController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
+                <outlet property="sensorAvailability" destination="0bc-zm-feW" id="UW3-gl-hOo"/>
                 <outlet property="sensorBattery" destination="1GA-Xb-TbG" id="XVd-xt-wot"/>
                 <outlet property="sensorDescription" destination="YTx-qH-gbB" id="TIa-3I-YQf"/>
                 <outlet property="sensorImage" destination="scH-rh-9Mu" id="9O0-3R-0Y4"/>
@@ -81,6 +88,7 @@
     </objects>
     <resources>
         <image name="Checkmark" width="35" height="34"/>
+        <image name="NSStatusNone" width="16" height="16"/>
         <image name="full-battery" width="409.60000610351562" height="409.60000610351562"/>
         <image name="solar-energy" width="384" height="384"/>
     </resources>

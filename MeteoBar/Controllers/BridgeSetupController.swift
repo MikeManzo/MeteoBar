@@ -161,10 +161,10 @@ class BridgeSetupController: NSViewController, Preferenceable {
     private func initializeBridge() {
         WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
-                theDelegate!.theBridge = response                           // Bridge was loaded from the json description
-                theDelegate!.theBridge!.getObservation({ _, error in        // Get an observation so we can see what's going on
-                    if error != nil {
-                        log.error(error.value)                              // Something went wrong getting an initial observation... tell us about it
+                theDelegate!.theBridge = response                                       // Bridge was loaded from the json description
+                theDelegate!.theBridge!.getObservation(allParams: true, { _, error in   // Get a "FULL" observation so we can see what's going on
+                    if error != nil {                                                   // Any errors?
+                        log.error(error.value)                                          // Something went wrong getting an initial observation... tell us about it
                     }
                     
                     guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {

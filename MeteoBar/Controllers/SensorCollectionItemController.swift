@@ -8,9 +8,22 @@
 
 import Cocoa
 
+enum SensorCollectionItemControllerInfo: String, CustomStringConvertible {
+    case sensorIsAvailable
+    case sensorIsNotAvailable
+    
+    var description: String {
+        switch self {
+        case .sensorIsAvailable: return "Sensor is reporting to the meteobridge"
+        case .sensorIsNotAvailable: return "Sensor is not reporting to the meteobridge"
+        }
+    }
+}
+
 class SensorCollectionItemController: NSCollectionViewItem {
 
     @IBOutlet weak var sensorImage: NSImageView!
+    @IBOutlet weak var sensorAvailability: NSImageView!
     @IBOutlet weak var sensorDescription: NSTextField!
     @IBOutlet weak var sensorUnits: NSPopUpButton!
     @IBOutlet weak var sensorBattery: NSImageView!
@@ -66,6 +79,10 @@ class SensorCollectionItemController: NSCollectionViewItem {
                 // Update the status of the sensor (e.g., is it observing or not?)
                 sensorToggle.setOn(isOn: sensor.isObserving ? true : false, animated: true)
                 // Update the status of the sensor (e.g., is it observing or not?)
+                
+                // Update the sensor availability
+                updateSensorAvailability(sensor: sensor)
+                // Update the sensor availability
             } else {
                 sensorDescription.stringValue = ""
                 sensorUnits.removeAllItems()
@@ -73,6 +90,20 @@ class SensorCollectionItemController: NSCollectionViewItem {
                 sensorImage.toolTip = ""
             }
         }
+    }
+    
+    /// Helper function to set availability
+    ///
+    /// - Parameter sensor: sensor to check
+    ///
+    private func updateSensorAvailability(sensor: MeteobridgeSensor?) {
+        guard sensor != nil else {
+            return
+        }
+        
+        sensorAvailability.image = sensor!.isAvailable ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusUnavailableName)
+        sensorAvailability.toolTip = sensor!.isAvailable ? SensorCollectionItemControllerInfo.sensorIsAvailable.description:
+                                                           SensorCollectionItemControllerInfo.sensorIsNotAvailable.description
     }
     
     /// Just some perfunctary setup for a better viewing experience
@@ -89,9 +120,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
     /// Set the highlight box when selected
     ///
     /// ## Important Notes ##
-    /// 1.
-    /// 2.
-    /// 3.
+    /// 1. None
     ///
     /// - parameters:
     ///   - selected: boolean for whether the item has been selected
@@ -106,15 +135,19 @@ class SensorCollectionItemController: NSCollectionViewItem {
     /// Set the highlight box when selected
     ///
     /// ## Important Notes ##
-    /// 1.
-    /// 2.
-    /// 3.
+    /// 1. None
     ///
     override var isSelected: Bool {
         didSet {
             view.layer?.borderWidth = isSelected ? 2.0 : 0.0
         }
     }
+
+    /// Toggle the observing state for teh sensor
+    /// The platform will try to get a valied measurement before it turns on
+    /// If no valid data, it stays off
+    ///
+    /// - Parameter sender: OGwitch that sent the state change
 
     @IBAction func observingStateToggle(_ sender: Any) {
         guard imageFile != nil else {
@@ -127,8 +160,60 @@ class SensorCollectionItemController: NSCollectionViewItem {
             return
         }
         
-        sensor.isObserving = sensorToggle.isOn ? true : false
+//        updateSensorAvailability(sensor: sensor)
+        
+        // Quick check ... is the sensor available and simply off (or on?)
+        if sensor.isAvailable {
+            sensor.isObserving = sensorToggle.isOn ? true : false
+        } else {    // The sensor is reporting as not available ... let's see if things have changed - try again.
+            if sensorToggle.isOn { // Okay; thse toggle was off, the user tried to switch it on AND the sensor was reporting as not available ... try to get some data
+                let alert = NSAlert()
+                alert.messageText = "This sensor is not available or not reporting."
+                alert.informativeText = "Do you want to see if it is available and reporting?"
+                alert.alertStyle = .warning
+                alert.icon = NSImage(named: NSImage.cautionName)
+                alert.addButton(withTitle: "Cancel")
+                alert.addButton(withTitle: "Continue")
+                alert.beginSheetModal(for: self.view.window!) { [unowned self] (_ returnCode: NSApplication.ModalResponse) -> Void in
+                    switch returnCode {
+                    case .alertFirstButtonReturn:
+                        // Eat it; the user selected cancel ... do nothing
+                        break
+                    case .alertSecondButtonReturn:
+                        theDelegate?.theBridge?.getObservation(sensor: sensor, { [unowned self] _, error in // Call the bridge and see if anything has changed
+                            if error != nil {
+                                return
+                            }
+                            guard let updatedSensor = WeatherPlatform.findSensorInBridge(searchID: sensor.sensorID) else {
+                                return
+                            }
+                            
+                            if !updatedSensor.isAvailable { // Okay, we have a new sensor ... let's check
+                                let subAlert = NSAlert()
+                                subAlert.messageText = "Sensor: \(sensor.sensorID) is still not responding."
+                                subAlert.informativeText = "Please check that your Meteobridge is configured correctly."
+                                subAlert.alertStyle = .critical
+                                subAlert.addButton(withTitle: "Ok")
+                                subAlert.beginSheetModal(for: self.view.window!) { [unowned self] (_ subReturnCode: NSApplication.ModalResponse) -> Void in
+                                    switch subReturnCode {
+                                    case .alertFirstButtonReturn:
+                                        self.sensorToggle.setOn(isOn: false, animated: true)
+                                    default:
+                                        break
+                                    }
+                                }
+                            } else {    // It's reporting as availble now ... proceed
+                                self.updateSensorAvailability(sensor: updatedSensor)
+                            }
+                        })
+                    default:
+                        break
+                    }
+                }
+            }
+        }
     }
+    
     /// Update the sensor with the selected unit
     ///
     /// - Parameter sender: NSPopUpButton that has changed
