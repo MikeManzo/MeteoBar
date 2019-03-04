@@ -301,12 +301,12 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             }
             
             CLGeocoder.getCountryCode(lat: self.latitude, lon: self.longitude, { [unowned self] countryCode, error in
-                if error != nil {
+                if error == nil {
                     self._cCode = countryCode!
                 }
                 callback(self, error)
-          })
-//            callback(self, nil)
+            })
+            //            callback(self, nil)
         })
     }
 
@@ -484,6 +484,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                                             self._weatherModel = MeteoUSWeather(city: city!, forecastURL: forecast!, forecastHourlyURL: forecastHourly!, grid: point!,
                                                                                 forecastID: forecastZone!, countyID: countyZone!, radarID: radar!,
                                                                                 boundingPoly: forecastPoly, countyPoly: countyPoly)
+                                            callback(self, nil)
                                         } else {
                                             callback(self, error)
                                         }

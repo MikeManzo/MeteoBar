@@ -74,77 +74,68 @@ class BridgeSetupController: NSViewController, Preferenceable {
             return
         }
         
-        // Update the system paramaters with what the meteobridge is currently reporting
-        theBridge.getAllSystemParameters { [unowned self] (bridge: Meteobridge?, error: Error?) in
-            if bridge != nil {
-                theDelegate?.updateMeteoBar()   // Save the results
-                self.updateMapView()            // Update the map based on the latest
+        // Grab the image <from the meteobridge> for the platform hosting meteobridge
+        WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
+            if error == nil {
+                // Let's update the user interface
+                DispatchQueue.main.async { [unowned self] in    // Use DispatchQueue.main to ensure UI updates are done on the main thread
+                    self.platformImage.image = image            // We have a platform; lets display the image
+                    self.setVisibleMapArea(polyline: theBridge.forecastPolyLine ?? MKPolyline(),
+                                           edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
+                    self.updateMapView()                        // Update the map based on the latest
+                    
+                    // Lat/lon
+                    let dms = theBridge.coordinate.dms
+                    self.longitudeLabel.stringValue = dms.longitude
+                    self.latitudeLabel.stringValue = dms.latitude
+                    
+                    // The rest ...
+                    self.stationNumberLabel.stringValue = theBridge.findSensor(sensorName: "stationnum")!.formattedMeasurement!
+                    self.versionLabel.stringValue       = theBridge.findSensor(sensorName: "swversion")!.formattedMeasurement!
+                    self.buildLabel.stringValue         = theBridge.findSensor(sensorName: "buildnum")!.formattedMeasurement!
+                    self.altitudeLabel.stringValue      = theBridge.findSensor(sensorName: "altitude")!.formattedMeasurement!
+                    self.platformLabel.stringValue      = theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!
+                    self.stationLabel.stringValue       = theBridge.findSensor(sensorName: "station")!.formattedMeasurement!
+                    self.macLabel.stringValue           = theBridge.findSensor(sensorName: "mac")!.formattedMeasurement!
+                    self.bridgeIP.stringValue           = theBridge.ipAddress
+                    self.bridgeName.stringValue         = theBridge.name
+                    
+                    // Status Icon
+                    guard let seconds = Int(theBridge.findSensor(sensorName: "lastgooddata")!.formattedMeasurement!) else {
+                        self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
+                        return
+                    }
+                    if seconds > 0 && seconds < 60 {
+                        self.healthIcon.image = NSImage(named: NSImage.statusAvailableName)
+                        self.healthIcon.toolTip = "Valid sensor data recieved withn the last minute"
+                    } else if seconds > 61 && seconds < 120 {
+                        self.healthIcon.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+                        self.healthIcon.toolTip = "Valid sensor data recieved less than 2 minutes ago"
+                    } else {
+                        self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
+                        self.healthIcon.toolTip = "Valid sensor data not recieved in over 2 minutes"
+                    }
+                    // Status Icon
+                }
             } else {
-                log.warning(BridgeSetupControllerError.noBridgeParameters)          // Something went wrong
-                return
+                log.warning(BridgeSetupControllerError.noBridgeImage)
             }
-            
-            // Grab the image for the platform hosting the meteobridge
-            WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
-                if image != nil {
-                    self.platformImage.image = image    // We have a platform; lets find the image
-                } else {
-                    log.warning(BridgeSetupControllerError.noBridgeImage)
-                }
-            }
-            
-            // We have what we need ... let's go
-            DispatchQueue.main.async { [unowned self] in // Use DispatchQueue.main to ensure UI updates are done on the main thread
-                // Lat/lon
-                let dms = theBridge.coordinate.dms
-                self.longitudeLabel.stringValue = dms.longitude
-                self.latitudeLabel.stringValue = dms.latitude
-                
-                // The rest ...
-                self.stationNumberLabel.stringValue = theBridge.findSensor(sensorName: "stationnum")!.formattedMeasurement!
-                self.altitudeLabel.stringValue = theBridge.findSensor(sensorName: "altitude")!.formattedMeasurement!
-                self.platformLabel.stringValue = theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!
-                self.versionLabel.stringValue = theBridge.findSensor(sensorName: "swversion")!.formattedMeasurement!
-                self.stationLabel.stringValue = theBridge.findSensor(sensorName: "station")!.formattedMeasurement!
-                self.buildLabel.stringValue = theBridge.findSensor(sensorName: "buildnum")!.formattedMeasurement!
-                self.macLabel.stringValue = theBridge.findSensor(sensorName: "mac")!.formattedMeasurement!
-                self.bridgeIP.stringValue = theBridge.ipAddress
-                self.bridgeName.stringValue = theBridge.name
-                
-                // Status Icon
-                guard let seconds = Int(theBridge.findSensor(sensorName: "lastgooddata")!.formattedMeasurement!) else {
-                    self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
-                    return
-                }
-                
-                if seconds > 0 && seconds < 60 {
-                    self.healthIcon.image = NSImage(named: NSImage.statusAvailableName)
-                    self.healthIcon.toolTip = "Valid sensor data recieved withn the last minute"
-                } else if seconds > 61 && seconds < 120 {
-                    self.healthIcon.image = NSImage(named: NSImage.statusPartiallyAvailableName)
-                    self.healthIcon.toolTip = "Valid sensor data recieved less than 2 minutes ago"
-                } else {
-                    self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
-                    self.healthIcon.toolTip = "Valid sensor data not recieved in over 2 minutes"
-                }
-                // Status Icon
-            }
-            // Update the Weather Model
-            theBridge.updateWeatherModel { (_ , error: Error?) in
-                if error != nil {
-                    log.warning(error.value)
-                } else {
-                    self.setVisibleMapArea(polyline: theBridge.forecastPolyLine ?? MKPolyline(), edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
-                }
-            }
-            // Update the Weather Model
         }
     }
     
+    /// Private helper to display the overlays on the Map
+    ///
+    /// - Parameters:
+    ///   - polyline: MKPolyline for the outline
+    ///   - edgeInsets: how much buffer to keep on all four sides of the shape
+    ///   - animated: animate the map as we make the adjustments
+    ///
     private func setVisibleMapArea(polyline: MKPolyline, edgeInsets: NSEdgeInsets, animated: Bool) {
         DispatchQueue.main.async { [unowned self] in
-            self.mapView.addOverlay(polyline)
-            self.mapView.addOverlay(MKPolygon(coordinates: polyline.coordinates, count: polyline.pointCount))
+            if self.mapView.overlays.isEmpty {
+                self.mapView.addOverlay(polyline)
+                self.mapView.addOverlay(MKPolygon(coordinates: polyline.coordinates, count: polyline.pointCount))
+            }
             self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: edgeInsets, animated: animated)
         }
     }
@@ -181,49 +172,64 @@ class BridgeSetupController: NSViewController, Preferenceable {
     private func initializeBridge() {
         WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
-                theDelegate!.theBridge = response                                           // Bridge was loaded from the json description
-                self.updateBridgeMetadata()                                                 // Update the metatdata and prepare the view
-                theDelegate!.theBridge!.getObservation(allParams: true, { _, error in       // Get a "FULL" observation so we can see what's going on
-                    if error != nil {                                                       // Any errors?
-                        log.error(error.value)                                              // Something went wrong getting an initial observation... tell us about it
+                theDelegate!.theBridge = response                                           // Bridge was successfully initialized from the json description
+                guard let theBridge = theDelegate!.theBridge else {                         // Cheksum that we're good to go
+                    log.warning(BridgeSetupControllerError.noBridge)                        // Warn the user - something is not right
+                    return                                                                  // Bail gracefully
+                }
+                theBridge.getAllSystemParameters { [unowned self] (_ , error: Error?) in    // Get All the System Paramaters that this Meteobridge Supports
+                    if error == nil {                                                       // Any errors?
+                        theBridge.updateWeatherModel { (_ , error: Error?) in               // Ret to populate the weather model for forecasts/alerts/warnings
+                            if error != nil {
+                                log.warning(error.value)                                    // Warn the user that we're unable to update the model
+                            }                                                               // We still want to continue though ...
+                            theBridge.getObservation(allParams: true, { _, error in         // Get a "FULL" observation so we can see what's going on
+                                if error == nil {
+                                    guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
+                                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")
+                                        return
+                                    }
+                                    sensorUL.isObserving = true
+                                    
+                                    guard let sensorUR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassURSensor)!) else {
+                                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassURSensor ?? "")]: to observe.")
+                                        return
+                                    }
+                                    sensorUR.isObserving = true
+                                    
+                                    guard let sensorLL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLLSensor)!) else {
+                                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLLSensor ?? "")]: to observe.")
+                                        return
+                                    }
+                                    sensorLL.isObserving = true
+                                    
+                                    guard let sensorLR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLRSensor)!) else {
+                                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLRSensor ?? "")]: to observe.")
+                                        return
+                                    }
+                                    sensorLR.isObserving = true
+                                    
+                                    guard let sensorWind = theDelegate!.theBridge?.findSensor(sensorName: ("wind0dir")) else {
+                                        log.warning("Cannot find Senor[wind0dir]: to observe.")
+                                        return
+                                    }
+                                    sensorWind.isObserving = true
+                                    
+                                    theDelegate?.updateBridge()                 // Save our new bridge for the rest of the system to use
+                                    self.updateBridgeMetadata()                 // We have everything we need; update the display
+                                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
+                                    self.progressIndicator.stopAnimation(nil)   // Stop the progress spinner
+                                } else {
+                                    log.error(error.value)  // Error with getObservation
+                                }
+                            })
+                        }
+                    } else {
+                        log.error(error.value)  // Error with allSystemParamaters
                     }
-                    
-                    guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
-                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")
-                        return
-                    }
-                    sensorUL.isObserving = true
-
-                    guard let sensorUR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassURSensor)!) else {
-                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassURSensor ?? "")]: to observe.")
-                        return
-                    }
-                    sensorUR.isObserving = true
-
-                    guard let sensorLL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLLSensor)!) else {
-                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLLSensor ?? "")]: to observe.")
-                        return
-                    }
-                    sensorLL.isObserving = true
-
-                    guard let sensorLR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLRSensor)!) else {
-                        log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLRSensor ?? "")]: to observe.")
-                        return
-                    }
-                    sensorLR.isObserving = true
-
-                    guard let sensorWind = theDelegate!.theBridge?.findSensor(sensorName: ("wind0dir")) else {
-                        log.warning("Cannot find Senor[wind0dir]: to observe.")
-                        return
-                    }
-                    sensorWind.isObserving = true
-                    theDelegate?.updateBridge()
-                    
-                    self.progressIndicator.stopAnimation(nil)               // Stop the spinning
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
-                })
-            } else {                                                        // Something went wrong ... tell us about it
-                log.error(error.value)                                      // We should only get here IF we cannot load the json description
+                }
+            } else {
+                log.error(error.value)  // Error with initializeBridgeSpecification
             }
         })
     }
