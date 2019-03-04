@@ -129,7 +129,6 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 }
                 // Status Icon
             }
-            
             // Update the Weather Model
             theBridge.updateWeatherModel { (_ , error: Error?) in
                 if error != nil {
@@ -182,10 +181,11 @@ class BridgeSetupController: NSViewController, Preferenceable {
     private func initializeBridge() {
         WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
-                theDelegate!.theBridge = response                                       // Bridge was loaded from the json description
-                theDelegate!.theBridge!.getObservation(allParams: true, { _, error in   // Get a "FULL" observation so we can see what's going on
-                    if error != nil {                                                   // Any errors?
-                        log.error(error.value)                                          // Something went wrong getting an initial observation... tell us about it
+                theDelegate!.theBridge = response                                           // Bridge was loaded from the json description
+                self.updateBridgeMetadata()                                                 // Update the metatdata and prepare the view
+                theDelegate!.theBridge!.getObservation(allParams: true, { _, error in       // Get a "FULL" observation so we can see what's going on
+                    if error != nil {                                                       // Any errors?
+                        log.error(error.value)                                              // Something went wrong getting an initial observation... tell us about it
                     }
                     
                     guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
@@ -220,9 +220,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     theDelegate?.updateBridge()
                     
                     self.progressIndicator.stopAnimation(nil)               // Stop the spinning
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
                 })
-                self.updateBridgeMetadata()                                 // Update the metatdata and prepare the view
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
             } else {                                                        // Something went wrong ... tell us about it
                 log.error(error.value)                                      // We should only get here IF we cannot load the json description
             }

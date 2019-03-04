@@ -77,7 +77,17 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         self.closestCity = city
     }
     
-    /// We have to roll our own Codable class due to MKPolyline
+    /// We have to roll our own Codable support due to MKPolyline
+    ///
+    /// # How to decode an array #
+    ///
+    ///     let myBoundingShape = try container.decode(Data.self, forKey: .boundingShape)
+    ///     let interimData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(myBoundingShape) as? NSArray
+    ///     var interimShape = [MKPolyline]()
+    ///     for data in interimData! {
+    ///         interimShape.append(MKPolyline.fromArchive(polylineArchive: (data as? Data ?? nil)!)!)
+    ///     }
+    ///     boundingShape = interimShape
     ///
     /// - Parameter decoder: decoder to act on
     /// - Throws: error
@@ -85,15 +95,6 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeteoWeatherCodingKeys.self)
 
-/*
-        let myBoundingShape = try container.decode(Data.self, forKey: .boundingShape)
-        let interimData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(myBoundingShape) as? NSArray
-        var interimShape = [MKPolyline]()
-        for data in interimData! {
-            interimShape.append(MKPolyline.fromArchive(polylineArchive: (data as? Data ?? nil)!)!)
-        }
-        boundingShape = interimShape
-*/
         let myBoundingShape = try container.decode(Data.self, forKey: .boundingShape)
         boundingShape = MKPolyline.fromArchive(polylineArchive: myBoundingShape)
         
@@ -102,7 +103,18 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         closestCity = try container.decode(String.self, forKey: .closestCity)
     }
     
-    /// We have to roll our own Codable class due to MKPolyline
+    /// We have to roll our own Codable support due to MKPolyline
+    ///
+    /// # How to encode an array #
+    ///
+    ///     if boundingShape != nil {
+    ///        var dataArray = [Data]()
+    ///        for point in boundingShape! {
+    ///           dataArray.append(MKPolyline.toArchive(polyline: point))
+    ///        }
+    ///        let myBoundingShape = NSKeyedArchiver.archivedData(withRootObject: dataArray)
+    ///        try container.encode(myBoundingShape, forKey: .boundingShape)
+    ///     }
     ///
     /// - Parameter encoder: encoder to act on
     /// - Throws: error
@@ -110,16 +122,6 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: MeteoWeatherCodingKeys.self)
 
-/*
-        if boundingShape != nil {
-            var dataArray = [Data]()
-            for point in boundingShape! {
-                dataArray.append(MKPolyline.toArchive(polyline: point))
-            }
-            let myBoundingShape = NSKeyedArchiver.archivedData(withRootObject: dataArray)
-            try container.encode(myBoundingShape, forKey: .boundingShape)
-        }
-*/
         if boundingShape != nil {
             let myBoundingShape = MKPolyline.toArchive(polyline: boundingShape!)
             try container.encode(myBoundingShape, forKey: .boundingShape)

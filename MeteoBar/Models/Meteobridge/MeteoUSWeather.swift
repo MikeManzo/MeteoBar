@@ -86,15 +86,6 @@ class MeteoUSWeather: MeteoWeather, NWS {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeteoUSWeatherCodingKeys.self)
 
- /*
-        let myCountyShape = try container.decode(Data.self, forKey: .countyShape)
-        let interimData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(myCountyShape) as? NSArray
-        var interimShape = [MKPolyline]()
-        for data in interimData! {
-            interimShape.append(MKPolyline.fromArchive(polylineArchive: (data as? Data ?? nil)!)!)
-        }
-        countyShape = interimShape
-*/
         let myCountryShape = try container.decode(Data.self, forKey: .countyShape)
         countyShape = MKPolyline.fromArchive(polylineArchive: myCountryShape)
         
@@ -114,15 +105,6 @@ class MeteoUSWeather: MeteoWeather, NWS {
     override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: MeteoUSWeatherCodingKeys.self)
         
-/*        if countyShape != nil {
-            var dataArray = [Data]()
-            for point in countyShape! {
-                dataArray.append(MKPolyline.toArchive(polyline: point))
-            }
-            let myCountryShape = NSKeyedArchiver.archivedData(withRootObject: dataArray)
-            try container.encode(myCountryShape, forKey: .countyShape)
-        }
-*/
         if countyShape != nil {
             let myCountryShape = MKPolyline.toArchive(polyline: countyShape!)
             try container.encode(myCountryShape, forKey: .countyShape)

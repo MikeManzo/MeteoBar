@@ -70,6 +70,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
     private var _weatherModel: MeteoWeather?
+    private var _cCode: String
     var updateInterval: Int
     var ipAddress: String
     var uuid: String
@@ -78,9 +79,17 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     var weatherModel: MeteoWeather? {
         return _weatherModel
     }
-
+   
     var forecastPolyLine: MKPolyline? {
         return _weatherModel?.forecastPolygon
+    }
+    
+    var countryCode: String {
+        return _cCode
+    }
+    
+    var isUnitedStates: Bool {
+        return _cCode == "US" ? true : false
     }
     
     var totalSensors: Int {
@@ -126,10 +135,10 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///   - bridgeName: the name we are giving the meteobridge
     ///   - bridgeSensors: the collection of sensors that this meteobridge has
     required init? (bridgeIP: String, bridgeName: String, bridgeSensors: [MeteoSensorCategory: [MeteobridgeSensor]]? = nil, uniqueID: String? = nil) {
-        self.ipAddress = bridgeIP
-        self.name = bridgeName
-
+        self.name           = bridgeName
+        self.ipAddress      = bridgeIP
         self.updateInterval = 3
+        self._cCode         = ""
         
         if bridgeSensors != nil {
             guard case self.sensors = bridgeSensors else {
@@ -290,7 +299,14 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                     filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
                 }
             }
-            callback(self, nil)
+            
+            CLGeocoder.getCountryCode(lat: self.latitude, lon: self.longitude, { [unowned self] countryCode, error in
+                if error != nil {
+                    self._cCode = countryCode!
+                }
+                callback(self, error)
+          })
+//            callback(self, nil)
         })
     }
 
@@ -453,9 +469,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     /// - Parameter callback: calling function
     ///
     func updateWeatherModel(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
-        let geoCoder = CLGeocoder()
-        
-        geoCoder.getCountryCode(lat: latitude, lon: longitude, { [unowned self] countryCode, error in
+        CLGeocoder.getCountryCode(lat: latitude, lon: longitude, { [unowned self] countryCode, error in
             if error != nil {
                 callback(self, MeteobridgeError.weatherModelError)
             } else {
@@ -488,7 +502,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             }
         })
     }
-    
+        
     // MARK: - MKAnnotation Conformance
     public var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

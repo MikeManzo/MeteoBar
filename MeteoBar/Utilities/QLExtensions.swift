@@ -51,8 +51,8 @@ extension FloatingPoint {
 }
 
 extension CLGeocoder {
-    func getCountryCode(lat: Double, lon: Double, _ callback: @escaping (_ country: String?, _ error: Error?) -> Void) {
-        reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { (placemarks, err) in
+    static func getCountryCode(lat: Double, lon: Double, _ callback: @escaping (_ country: String?, _ error: Error?) -> Void) {
+        CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { (placemarks, err) in
             if err == nil {
                 if let placemark = placemarks?[0] {
                     callback(placemark.isoCountryCode, nil)
@@ -93,6 +93,9 @@ public extension MKMultiPoint {
     }
 }
 
+///
+/// [To-From Archive Reference](https://stackoverflow.com/questions/36761841/how-to-store-an-mkpolyline-attribute-as-transformable-in-ios-coredata-with-swift#)
+///
 extension MKPolyline {
     /// SwifterSwift: Create a new MKPolyline from a provided Array of coordinates.
     ///
