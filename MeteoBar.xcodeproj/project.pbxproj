@@ -69,6 +69,8 @@
 		27CF04332207A519007DFFDF /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF04322207A519007DFFDF /* play-button.png */; };
 		27E6C5BD21ED58C800548CF0 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C5BC21ED58C800548CF0 /* books.png */; };
 		27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C5BE21ED595500548CF0 /* QLExtensions.swift */; };
+		27E9669E222ACE960084C4B6 /* MeteoWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9669D222ACE960084C4B6 /* MeteoWeather.swift */; };
+		27E966A0222AD4470084C4B6 /* MeteoUSWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9669F222AD4470084C4B6 /* MeteoUSWeather.swift */; };
 		27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F8901A21F252BA00F8605E /* Meteobridge.swift */; };
 		27F8901D21F2A25D00F8605E /* WeatherPlatform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */; };
 		27F8902121F2D24B00F8605E /* Config in Resources */ = {isa = PBXBuildFile; fileRef = 27F8902021F2D24B00F8605E /* Config */; };
@@ -163,6 +165,8 @@
 		27CF04322207A519007DFFDF /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
 		27E6C5BC21ED58C800548CF0 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		27E6C5BE21ED595500548CF0 /* QLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLExtensions.swift; sourceTree = "<group>"; };
+		27E9669D222ACE960084C4B6 /* MeteoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoWeather.swift; sourceTree = "<group>"; };
+		27E9669F222AD4470084C4B6 /* MeteoUSWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoUSWeather.swift; sourceTree = "<group>"; };
 		27F8901A21F252BA00F8605E /* Meteobridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Meteobridge.swift; sourceTree = "<group>"; };
 		27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPlatform.swift; sourceTree = "<group>"; };
 		27F8902021F2D24B00F8605E /* Config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Config; path = MeteoBar/Config; sourceTree = "<group>"; };
@@ -358,6 +362,8 @@
 				27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */,
 				27FCB6FC21F4199700A90715 /* MeteoObservation.swift */,
 				27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */,
+				27E9669F222AD4470084C4B6 /* MeteoUSWeather.swift */,
+				27E9669D222ACE960084C4B6 /* MeteoWeather.swift */,
 				27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */,
 			);
 			path = Meteobridge;
@@ -649,6 +655,7 @@
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
+				27E966A0222AD4470084C4B6 /* MeteoUSWeather.swift in Sources */,
 				27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */,
 				27A8038E2219DCD900E9A6BE /* UserInterfaceController.swift in Sources */,
 				277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */,
@@ -664,6 +671,7 @@
 				27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */,
 				27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */,
 				27CAA732221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift in Sources */,
+				27E9669E222ACE960084C4B6 /* MeteoWeather.swift in Sources */,
 				277EF6B9220614A8005DA8B4 /* MeteoSensorNodePair.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
 				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,

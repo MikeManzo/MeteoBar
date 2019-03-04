@@ -129,6 +129,24 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 }
                 // Status Icon
             }
+            
+            // Update the Weather Model
+            theBridge.updateWeatherModel { (_ , error: Error?) in
+                if error != nil {
+                    log.warning(error.value)
+                } else {
+                    self.setVisibleMapArea(polyline: theBridge.forecastPolyLine ?? MKPolyline(), edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
+                }
+            }
+            // Update the Weather Model
+        }
+    }
+    
+    private func setVisibleMapArea(polyline: MKPolyline, edgeInsets: NSEdgeInsets, animated: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.mapView.addOverlay(polyline)
+            self.mapView.addOverlay(MKPolygon(coordinates: polyline.coordinates, count: polyline.pointCount))
+            self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: edgeInsets, animated: animated)
         }
     }
     
@@ -139,6 +157,9 @@ class BridgeSetupController: NSViewController, Preferenceable {
         if theDelegate?.theBridge != nil {
             mapView.addAnnotation((theDelegate?.theBridge)!)
             mapView.centerCoordinate = (theDelegate?.theBridge!.coordinate)!
+            if theDelegate?.theBridge!.forecastPolyLine != nil {
+                setVisibleMapArea(polyline: theDelegate?.theBridge!.forecastPolyLine ?? MKPolyline(), edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
+            }
             mapView.setRegion(MKCoordinateRegion(center: mapView.centerCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)), animated: true)
             
             // Setup MapKitView
@@ -281,6 +302,23 @@ extension BridgeSetupController: MKMapViewDelegate {
         }
 
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        switch overlay {
+        case is MKPolyline:
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = NSColor.blue
+            renderer.fillColor = NSColor.blue
+            renderer.lineWidth = 3.0
+            return renderer
+        case is MKPolygon:
+            let renderer = MKPolygonRenderer(overlay: overlay)
+            renderer.fillColor = NSColor.blue.withAlphaComponent(0.25)
+            return renderer
+        default:
+            return MKOverlayRenderer()
+        }
     }
 }
 

@@ -50,6 +50,20 @@ extension FloatingPoint {
     }
 }
 
+extension CLGeocoder {
+    func getCountryCode(lat: Double, lon: Double, _ callback: @escaping (_ country: String?, _ error: Error?) -> Void) {
+        reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { (placemarks, err) in
+            if err == nil {
+                if let placemark = placemarks?[0] {
+                    callback(placemark.isoCountryCode, nil)
+                }
+            } else {
+                callback(nil, err)
+            }
+        }
+    }
+}
+
 extension CLLocationCoordinate2D {
     ///
     /// [Reference](https://www.latlong.net/lat-long-dms.html)
@@ -65,6 +79,69 @@ extension CLLocationCoordinate2D {
                        Int(abs(longitude.minutes)),
                        abs(longitude.seconds),
                        longitude >= 0 ? "E" : "W"))
+    }
+}
+
+public extension MKMultiPoint {
+    var coordinates: [CLLocationCoordinate2D] {
+        var coords = [CLLocationCoordinate2D](repeating: kCLLocationCoordinate2DInvalid,
+                                              count: pointCount)
+        
+        getCoordinates(&coords, range: NSRange(location: 0, length: pointCount))
+        
+        return coords
+    }
+}
+
+extension MKPolyline {
+    /// SwifterSwift: Create a new MKPolyline from a provided Array of coordinates.
+    ///
+    /// - Parameter coordinates: Array of CLLocationCoordinate2D(s).
+    public convenience init(coordinates: [CLLocationCoordinate2D]) {
+        var refCoordinates = coordinates
+        self.init(coordinates: &refCoordinates, count: refCoordinates.count)
+    }
+    
+    /// Make MKPolyLine decodable
+    ///
+    /// - Parameter polylineArchive: Data description of MKPolyLine
+    /// - Returns: MKPolyLine
+    //
+    static func fromArchive(polylineArchive: Data) -> MKPolyline? {
+        guard let data = NSKeyedUnarchiver.unarchiveObject(with: polylineArchive as Data),
+            let polyline = data as? [[String: AnyObject]] else {
+                return nil
+        }
+        var locations: [CLLocation] = []
+        for item in polyline {
+            if let latitude = item["latitude"]?.doubleValue,
+                let longitude = item["longitude"]?.doubleValue {
+                let location = CLLocation(latitude: latitude, longitude: longitude)
+                locations.append(location)
+            }
+        }
+        var coordinates = locations.map({(location: CLLocation) -> CLLocationCoordinate2D in return location.coordinate})
+        let result = MKPolyline(coordinates: &coordinates, count: locations.count)
+        return result
+    }
+    
+    /// Make MKPolyLine encodable
+    ///
+    /// - Parameter polylineArchive: MKPolyLine
+    /// - Returns: Data to safely encode
+    //
+    static func toArchive(polyline: MKPolyline) -> Data {
+        let coordsPointer = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: polyline.pointCount)
+        polyline.getCoordinates(coordsPointer, range: NSRange(location: 0, length: polyline.pointCount))
+        var coords: [[String: AnyObject]] = []
+        for index in 0..<polyline.pointCount {
+            let latitude = NSNumber(value: coordsPointer[index].latitude)
+            let longitude = NSNumber(value: coordsPointer[index].longitude)
+            let coord = ["latitude": latitude, "longitude": longitude]
+            coords.append(coord)
+        }
+        let polylineData = NSKeyedArchiver.archivedData(withRootObject: coords)
+        return polylineData as Data
     }
 }
 

@@ -15,6 +15,8 @@ enum MeteobridgeError: Error, CustomStringConvertible {
     case observationError
     case unknownSensor
     case dataError
+    case weatherModelError
+    case unknownModel
     
     var description: String {
         switch self {
@@ -22,6 +24,8 @@ enum MeteobridgeError: Error, CustomStringConvertible {
         case .dataError: return "Error reading data from Meteobridg"
         case .unknownSensor: return "Unknown sensor detected"
         case .observationDateError: return "Unbale to determine timestamp for observation - observation skipped"
+        case .weatherModelError: return "Unable to update weather model"
+        case .unknownModel: return "Unknown Weather Model"
         }
     }
 }
@@ -65,11 +69,20 @@ let platformImages = [
 final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAnnotation {
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
+    private var _weatherModel: MeteoWeather?
     var updateInterval: Int
     var ipAddress: String
     var uuid: String
     var name: String
 
+    var weatherModel: MeteoWeather? {
+        return _weatherModel
+    }
+
+    var forecastPolyLine: MKPolyline? {
+        return _weatherModel?.forecastPolygon
+    }
+    
     var totalSensors: Int {
         var numSensor = 0
         
@@ -138,14 +151,11 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     /// - Returns: fully constructed Meteobridge object
     func copy() -> Self {
         guard let copy = type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid) else {
+            _weatherModel = self._weatherModel
             return self
         }
         
-//        copy._latitude   = _latitude
-//        copy._longitude  = _longitude
-
         return copy
-//        return type(of: self).init(bridgeIP: self.ipAddress, bridgeName: self.name, bridgeSensors: self.sensors, uniqueID: self.uuid)!
     }
     
     /// Add a sensor to the bridge
@@ -435,6 +445,47 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 }
             }
             callback(self, nil)
+        })
+    }
+    
+    /// Based on the weather model, update the object accodringly
+    ///
+    /// - Parameter callback: calling function
+    ///
+    func updateWeatherModel(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        let geoCoder = CLGeocoder()
+        
+        geoCoder.getCountryCode(lat: latitude, lon: longitude, { [unowned self] countryCode, error in
+            if error != nil {
+                callback(self, MeteobridgeError.weatherModelError)
+            } else {
+                switch countryCode {
+                case "US":
+                    WeatherPlatform.getNWSForecastEndpoints(lat: self.latitude, lon: self.longitude, responseHandler: { [unowned self] city, forecast, forecastHourly, error in
+                        if error == nil {
+                            WeatherPlatform.getNWSZones(lat: self.latitude, lon: self.longitude, responseHandler: { [unowned self] forecastZone, countyZone, radar, point, error in
+                                if error == nil {
+                                    WeatherPlatform.getNWSPolygon(forecastZone: forecastZone!, countyZone: countyZone!, responseHandler: { forecastPoly, countyPoly, error in
+                                        if error == nil {
+                                            self._weatherModel = MeteoUSWeather(city: city!, forecastURL: forecast!, forecastHourlyURL: forecastHourly!, grid: point!,
+                                                                                forecastID: forecastZone!, countyID: countyZone!, radarID: radar!,
+                                                                                boundingPoly: forecastPoly, countyPoly: countyPoly)
+                                        } else {
+                                            callback(self, error)
+                                        }
+                                    })
+                                } else {    // Polygon
+                                    callback(self, error)
+                                }
+                            })
+                        } else {    // NWS Zones
+                            callback(self, error)
+                        }
+                    })  // NWS Endpoints
+                default:
+                    callback(self, MeteobridgeError.unknownModel)
+                }
+            }
         })
     }
     

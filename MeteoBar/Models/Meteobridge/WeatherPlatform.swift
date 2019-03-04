@@ -6,43 +6,56 @@
 //  Copyright © 2019 Quantum Joker. All rights reserved.
 //
 
-import Cocoa
-import Alamofire
 import AlamofireImage
 import SwiftyJSON
+import Alamofire
+import Cocoa
+import MapKit
 
 enum WeatherPlatformError: Error, CustomStringConvertible {
-    case jsonModelError
-    case urlError
+    case NWSPolygonForecastZoneError
+    case NWSPolygonCountyZoneError
     case platformImageError
-    case noLatitudeSet
+    case NWSEndpointError
+    case jsonModelError
     case noLongitudeSet
+    case noLatitudeSet
+    case NWSZoneError
+    case urlError
     
     var description: String {
         switch self {
-        case .jsonModelError: return "Error reading Meteobridge configuration file"
+        case .NWSEndpointError: return "Cannot retrieve forecast endpoints from the U.S. NAtional Weather Service"
+        case .NWSPolygonForecastZoneError: return "Cannot determine polygon enclosing your forecast zone."
+        case .NWSZoneError: return "Cannot retrieve alert zone from the U.S. NAtional Weather Service"
+        case .NWSPolygonCountyZoneError: return "Cannot determine polygon enclosing your county zone."
         case .urlError: return "Failed to form proper URL to retrieve Meteobridge parameters"
-        case .platformImageError: return "Failed to retrieve platform image"
-        case .noLatitudeSet: return "No value for Latitude found in Meteobridge"
+        case .jsonModelError: return "Error reading Meteobridge configuration file"
         case .noLongitudeSet: return "No value for Longitude found in Meteobridge"
+        case .noLatitudeSet: return "No value for Latitude found in Meteobridge"
+        case .platformImageError: return "Failed to retrieve platform image"
         }
     }
 }
 
 /// Protocol for future use
 protocol Weather: class {
+    static func getNWSZones(lat: Double, lon: Double, responseHandler: @escaping (_ forecastZone: String?, _ countyZone: String?, _ radar: String?, _ point: NSPoint?, _ error: Error?) -> Void)
+    static func getNWSPolygon(forecastZone: String, countyZone: String, responseHandler: @escaping (_ forecastZone: MKPolyline?, _ countyZone: MKPolyline?,_ error: Error?) -> Void)
+    static func getNWSForecastEndpoints(lat: Double, lon: Double, responseHandler: @escaping (_ city: String?, _ forecast: String?, _ forecastHourly: String?, _ error: Error?) -> Void)
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
-    static func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
-    static func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
     static func getConditions(theBridge: Meteobridge, allParamaters: Bool, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func getPlatformImage(_ platform: String, handler: @escaping (NSImage?, Error?) -> Void)
     static func findSensorInBridge(searchID: String) -> MeteobridgeSensor?
 }
 
 /// Static "Platform" to interact with the rest of the weather model(s)
 class WeatherPlatform: Weather {
-    static var fireTimeOut: TimeInterval {get {return TimeInterval(15)}}
+    static var nwsEndPoint: String {get {return "https://api.weather.gov"}} // Static endpoint for the NWS service
+    static var fireTimeOut: TimeInterval {get {return TimeInterval(15)}}    // Use 15 seconds as the default for all network timeouts
 
     /// Get current readings from the meteobridge
     ///
@@ -323,6 +336,168 @@ class WeatherPlatform: Weather {
                 return
             }
             handler(image, nil)
+        }
+    }
+    
+    ///
+    /// Parse the NWS weather end point for the Zones
+    /// We'll use this for alerts and forecasts
+    ///
+    /// ## Important Notes ##
+    /// 1. Example: [VAZ505](https://api.weather.gov/points/lat,lon)
+    ///
+    /// - Parameters:
+    ///   - Parameter lat: Latitude of the station
+    ///   - Parameter lon: Longitude of the station
+    ///   - Parameter responseHandler: The Callback
+    ///
+    /// - throws: Nothing
+    /// - returns:
+    ///   - forecastZone: NWS forecast Zone
+    ///   - countyZone: NWS county Zone
+    ///   - radar: NWS Radar Station
+    ///   - point: Grid Point for zone(s)
+    ///   - error: error message (nil if succesful)
+    ///
+    static func getNWSZones(lat: Double, lon: Double, responseHandler: @escaping (_ forecastZone: String?, _ countyZone: String?, _ radar: String?, _ point: NSPoint?, _ error: Error?) -> Void) {
+        let stationEndpoint = URL(string: "\(nwsEndPoint)/points/\(lat),\(lon)")
+        var grid = NSPoint(x: 0, y: 0)
+        var forecastZone: String?
+        var countyZone: String?
+        var radar: String?
+        
+        Alamofire.request(stationEndpoint!).responseJSON { response in
+            switch response.result {
+            case .success(let retJSON):
+                var data: JSON = JSON(retJSON)
+                forecastZone = data["properties"]["forecastZone"].stringValue
+                countyZone = data["properties"]["forecastZone"].stringValue
+                radar = data["properties"]["radarStation"].stringValue
+                grid.x = CGFloat(Int(data["properties"]["gridX"].stringValue)!)
+                grid.y = CGFloat(Int(data["properties"]["gridY"].stringValue)!)
+
+                // the forecast zone is formatted like this: "https://api.weather.gov/zones/forecast/VAZ505"
+                // we need to trim the string to just get the zone
+                if let theForecastRange = forecastZone?.range(of: "/", options: .backwards) {
+                    forecastZone = String(forecastZone![theForecastRange.upperBound...])
+                } else {
+                    forecastZone = "*****"
+                }
+
+                // the county zone is formatted like this: "https://api.weather.gov/zones/forecast/VAC107"
+                // we need to trim the string to just get the zone
+               if let theCountyRange = countyZone?.range(of: "/", options: .backwards) {
+                    countyZone = String(countyZone![theCountyRange.upperBound...])
+                } else {
+                    countyZone = "*****"
+                }
+                
+                responseHandler(forecastZone, countyZone, radar, grid, nil)
+            case .failure:
+                responseHandler("*****", "*****", "***", grid, WeatherPlatformError.NWSZoneError)
+            }
+        }
+    }
+    
+    ///
+    /// Parse the NWS weather end point for endpoints
+    /// We'll use this for alerts and forecasts
+    ///
+    /// ## Important Notes ##
+    /// 1. Example: [VAZ505](https://api.weather.gov/points/lat,lon)
+    ///
+    /// - Parameters:
+    ///   - Parameter lat: Latitude of the station
+    ///   - Parameter lon: Longitude of the station
+    ///   - Parameter responseHandler: The Callback
+    ///
+    /// - throws: Nothing
+    /// - returns:
+    ///   - city: closest city to lat/lon provided
+    ///   - forecast: URL For Forecast
+    ///   - forecastHourly: URL For Hourly Forrecast
+    ///   - error: error message (nil if succesful)
+    ///
+    static func getNWSForecastEndpoints(lat: Double, lon: Double, responseHandler: @escaping (_ city: String?, _ forecast: String?, _ forecastHourly: String?, _ error: Error?) -> Void) {
+        let stationEndpoint = URL(string: "\(nwsEndPoint)/points/\(lat),\(lon)")
+        var forecastHourly: String?
+        var forecast: String?
+        var city: String?
+        
+        Alamofire.request(stationEndpoint!).responseJSON { response in
+            switch response.result {
+            case .success(let retJSON):
+                var data: JSON = JSON(retJSON)
+                forecast        = data["properties"]["forecast"].stringValue
+                forecastHourly  = data["properties"]["forecastHourly"].stringValue
+                city            = data["properties"]["relativeLocation"]["properties"]["city"].stringValue
+                
+                responseHandler(city, forecast, forecastHourly, nil)
+            case .failure:
+                responseHandler("** UNKNOWN **", "*****", "*****", WeatherPlatformError.NWSEndpointError)
+            }
+        }
+    }
+    
+    ///
+    /// Parse the NWS weather end point for endpoints
+    /// We'll use this for alerts and forecasts
+    ///
+    /// ## Important Notes ##
+    /// 1. Example: [VAZ505](https://api.weather.gov/zones/forecast/VAZ505)
+    ///
+    /// - Parameters:
+    ///   - Parameter forecastEndpoint: NWS endpoint for forecast zone polygon
+    ///   - Parameter lon: Longitude of the station
+    ///   - Parameter responseHandler: The Callback
+    ///
+    /// - throws: Nothing
+    /// - returns:
+    ///   - forecastZone: MKPolyline array representing the forecast zone
+    ///   - countyZone: MKPolyline array repreenting the county zone
+    ///   - error: error message (nil if succesful)
+    ///
+    static func getNWSPolygon(forecastZone: String, countyZone: String,
+                              responseHandler: @escaping (_ forecastZone: MKPolyline?, _ countyZone: MKPolyline?,_ error: Error?) -> Void) {
+        let forecastEndpoint    = URL(string: "\(nwsEndPoint)/zones/forecast/\(forecastZone)")
+        let zoneEndpoint        = URL(string: "\(nwsEndPoint)/zones/county/\(countyZone)")
+        var forecastZonePoly: MKPolyline?
+        var countyZonePoly: MKPolyline?
+
+        Alamofire.request(forecastEndpoint!).responseJSON { response in
+            switch response.result {
+            case .success(let retJSON):
+                var retData: JSON = JSON(retJSON)
+                var forecastPoints = [CLLocationCoordinate2D]()
+                
+                if let coordinates: Array = retData["geometry"]["coordinates"][0][0].array {
+                    for coordinate in coordinates {
+                        forecastPoints.append(CLLocationCoordinate2D(latitude: coordinate[1].double!, longitude: coordinate[0].double!))
+                    }
+                }
+                forecastZonePoly = MKPolyline(coordinates: forecastPoints)
+                
+                Alamofire.request(zoneEndpoint!).responseJSON { response in
+                    switch response.result {
+                    case .success(let retJSON):
+                        var retData: JSON = JSON(retJSON)
+                        var countyPoints = [CLLocationCoordinate2D]()
+
+                        if let coordinates: Array = retData["geometry"]["coordinates"][0][0].array {
+                            for coordinate in coordinates {
+                                countyPoints.append(CLLocationCoordinate2D(latitude: coordinate[1].double!, longitude: coordinate[0].double!))
+                            }
+                        }
+                        countyZonePoly = MKPolyline(coordinates: forecastPoints)
+
+                        responseHandler(forecastZonePoly, countyZonePoly, nil)
+                    case .failure: // Zone Failure
+                        responseHandler(forecastZonePoly, countyZonePoly, WeatherPlatformError.NWSPolygonCountyZoneError)
+                    }
+                }
+            case .failure:  // Forecast Failure
+                responseHandler(forecastZonePoly, countyZonePoly, WeatherPlatformError.NWSPolygonForecastZoneError)
+            }
         }
     }
 }
