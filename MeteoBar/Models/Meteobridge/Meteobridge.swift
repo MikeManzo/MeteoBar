@@ -61,6 +61,17 @@ let platformImages = [
 
                     ]
 */
+
+enum MeteobridgeCodingKeys: String, CodingKey {
+    case updateInterval
+    case weatherModel
+    case ipAddress
+    case sensors
+    case cCode
+    case name
+    case uuid
+}
+
 ///
 /// As an homage to smartbedded, we will default the lat/lon to their headquarters.
 /// Assuming the
@@ -82,6 +93,25 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
    
     var forecastPolyLine: MKPolyline? {
         return _weatherModel?.forecastPolygon
+    }
+    
+    var polygonOverlays: [String: MKPolyline] {
+        var overlays = [String: MKPolyline]()
+        
+        switch countryCode {
+        case "US":
+            guard let model = weatherModel as? MeteoUSWeather else {
+                break
+            }
+            // 1. Add the Forecast Polygon
+            overlays["Forecast"] = model.forecastPolygon
+            // 2. Add the County Polygon
+            overlays["County"] = model.countyPolygon
+            // 3. ToDo: Add the Alert Polygons
+        default:
+            overlays["Forecast"] = forecastPolyLine
+        }
+        return overlays
     }
     
     var countryCode: String {
@@ -503,7 +533,49 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             }
         })
     }
+
+    /// We have to roll our own Codable class due to MKPolyline
+    ///
+    /// - Parameter decoder: decoder to act on
+    /// - Throws: error
+    ///
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: MeteobridgeCodingKeys.self)
         
+        updateInterval = try container.decode(Int.self, forKey: .updateInterval)
+        ipAddress = try container.decode(String.self, forKey: .ipAddress)
+        _cCode = try container.decode(String.self, forKey: .cCode)
+        name = try container.decode(String.self, forKey: .name)
+        uuid = try container.decode(String.self, forKey: .uuid)
+
+        switch _cCode {
+        case "US":
+            _weatherModel = try container.decode(MeteoUSWeather.self, forKey: .weatherModel)
+        default:
+            _weatherModel = try container.decode(MeteoWeather.self, forKey: .weatherModel)
+        }
+        
+        sensors = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
+    }
+    
+    /// We have to roll our own Codable class
+    ///
+    /// - Parameter encoder: encoder to act on
+    /// - Throws: error
+    ///
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: MeteobridgeCodingKeys.self)
+        
+        try container.encode(updateInterval, forKey: .updateInterval)
+        try container.encode(ipAddress, forKey: .ipAddress)
+        try container.encode(_cCode, forKey: .cCode)
+        try container.encode(name, forKey: .name)
+        try container.encode(uuid, forKey: .uuid)
+        
+        try container.encode(_weatherModel, forKey: .weatherModel)
+        try container.encode(sensors, forKey: .sensors)
+    }
+
     // MARK: - MKAnnotation Conformance
     public var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

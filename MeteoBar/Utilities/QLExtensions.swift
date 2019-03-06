@@ -94,6 +94,62 @@ public extension MKMultiPoint {
 }
 
 ///
+/// [Zooms out a MKMapView to enclose all its annotations](https://gist.github.com/andrewgleave/915374)
+///
+extension MKMapView {
+    /// Zooms out a MKMapView to enclose all its annotations (inc. current location)
+    ///
+    /// - Parameter animated: animate the map when we wish to change extent
+    /// - Parameter shouldIncludeUserAccuracyRange: show accuracy range circle
+    /// - Parameter padding: Edge constraints to apply to map
+    ///
+    func fitToAnnotaions(animated: Bool = true,
+                         shouldIncludeUserAccuracyRange: Bool = true,
+                         edgePadding: NSEdgeInsets = NSEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)) {
+        var mapOverlays = overlays
+        
+        if shouldIncludeUserAccuracyRange, let userLocation = userLocation.location {
+            let userAccuracyRangeCircle = MKCircle(center: userLocation.coordinate, radius: userLocation.horizontalAccuracy)
+            mapOverlays.append(MKOverlayRenderer(overlay: userAccuracyRangeCircle).overlay)
+        }
+        
+        let zoomRect = MKMapRect.boundingForOverlays(forOverlays: mapOverlays)
+        setVisibleMapRect(zoomRect, edgePadding: edgePadding, animated: animated)
+    }
+}
+
+///
+/// [Zooms out a MKMapView to enclose all its annotations](https://gist.github.com/andrewgleave/915374)
+///
+extension MKMapRect {
+    /// Get the bounding box for the given arrat of overlays
+    ///
+    /// - Parameter overlays: the overlays to check
+    /// - Returns: THE rect that represents the minimum rect that encompasses the overlays
+    ///
+    static func boundingForOverlays(forOverlays overlays: [MKOverlay]) -> MKMapRect {
+        var resultRect: MKMapRect = .null
+        
+        overlays.forEach { overlay in
+            let rect: MKMapRect = overlay.boundingMapRect
+            resultRect = resultRect.union(rect)
+        }
+        
+        return resultRect
+    }
+}
+
+extension MKPolygon {
+    func doesContain(coordinate: CLLocationCoordinate2D) -> Bool {
+        let polygonRenderer = MKPolygonRenderer(polygon: self)
+        let currentMapPoint: MKMapPoint = MKMapPoint(coordinate)
+        let polygonViewPoint: CGPoint = polygonRenderer.point(for: currentMapPoint)
+
+        return polygonRenderer.path.contains(polygonViewPoint)
+    }
+}
+
+///
 /// [To-From Archive Reference](https://stackoverflow.com/questions/36761841/how-to-store-an-mkpolyline-attribute-as-transformable-in-ios-coredata-with-swift#)
 ///
 extension MKPolyline {

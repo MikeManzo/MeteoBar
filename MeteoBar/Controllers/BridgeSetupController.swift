@@ -80,16 +80,22 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 // Let's update the user interface
                 DispatchQueue.main.async { [unowned self] in    // Use DispatchQueue.main to ensure UI updates are done on the main thread
                     self.platformImage.image = image            // We have a platform; lets display the image
-                    self.setVisibleMapArea(polyline: theBridge.forecastPolyLine ?? MKPolyline(),
-                                           edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
+                    if self.mapView.overlays.isEmpty {          // If no overlays ... add them; if there are ... skip and don't re-add
+                        for (type, polyline) in theBridge.polygonOverlays {
+                            let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                            polygon.name = type
+                            self.mapView.addOverlay(polyline)
+                            self.mapView.addOverlay(polygon)
+                        }
+                    }
                     self.updateMapView()                        // Update the map based on the latest
                     
-                    // Lat/lon
+                    // Update the Latitude & Longitude in human readable form
                     let dms = theBridge.coordinate.dms
                     self.longitudeLabel.stringValue = dms.longitude
                     self.latitudeLabel.stringValue = dms.latitude
                     
-                    // The rest ...
+                    // Update the the rest of the metadata
                     self.stationNumberLabel.stringValue = theBridge.findSensor(sensorName: "stationnum")!.formattedMeasurement!
                     self.versionLabel.stringValue       = theBridge.findSensor(sensorName: "swversion")!.formattedMeasurement!
                     self.buildLabel.stringValue         = theBridge.findSensor(sensorName: "buildnum")!.formattedMeasurement!
@@ -100,7 +106,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     self.bridgeIP.stringValue           = theBridge.ipAddress
                     self.bridgeName.stringValue         = theBridge.name
                     
-                    // Status Icon
+                    // Update the status Icon
                     guard let seconds = Int(theBridge.findSensor(sensorName: "lastgooddata")!.formattedMeasurement!) else {
                         self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
                         return
@@ -113,30 +119,13 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         self.healthIcon.toolTip = "Valid sensor data recieved less than 2 minutes ago"
                     } else {
                         self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
-                        self.healthIcon.toolTip = "Valid sensor data not recieved in over 2 minutes"
+                        self.healthIcon.toolTip = "No valid data recieved in over 2 minutes"
                     }
                     // Status Icon
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
             }
-        }
-    }
-    
-    /// Private helper to display the overlays on the Map
-    ///
-    /// - Parameters:
-    ///   - polyline: MKPolyline for the outline
-    ///   - edgeInsets: how much buffer to keep on all four sides of the shape
-    ///   - animated: animate the map as we make the adjustments
-    ///
-    private func setVisibleMapArea(polyline: MKPolyline, edgeInsets: NSEdgeInsets, animated: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            if self.mapView.overlays.isEmpty {
-                self.mapView.addOverlay(polyline)
-                self.mapView.addOverlay(MKPolygon(coordinates: polyline.coordinates, count: polyline.pointCount))
-            }
-            self.mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: edgeInsets, animated: animated)
         }
     }
     
@@ -147,10 +136,6 @@ class BridgeSetupController: NSViewController, Preferenceable {
         if theDelegate?.theBridge != nil {
             mapView.addAnnotation((theDelegate?.theBridge)!)
             mapView.centerCoordinate = (theDelegate?.theBridge!.coordinate)!
-            if theDelegate?.theBridge!.forecastPolyLine != nil {
-                setVisibleMapArea(polyline: theDelegate?.theBridge!.forecastPolyLine ?? MKPolyline(), edgeInsets: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0), animated: true)
-            }
-            mapView.setRegion(MKCoordinateRegion(center: mapView.centerCoordinate, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)), animated: true)
             
             // Setup MapKitView
             let mapCamera = MKMapCamera()
@@ -161,6 +146,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
             
             mapView.mapType = MKMapType.satellite
             mapView.camera = mapCamera
+            mapView.fitToAnnotaions(animated: true, shouldIncludeUserAccuracyRange: true,
+                                    edgePadding: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0))
         } else {
             log.error(BridgeSetupControllerError.noBridge)
         }
@@ -314,12 +301,23 @@ extension BridgeSetupController: MKMapViewDelegate {
         case is MKPolyline:
             let renderer = MKPolylineRenderer(overlay: overlay)
             renderer.strokeColor = NSColor.blue
-            renderer.fillColor = NSColor.blue
             renderer.lineWidth = 3.0
             return renderer
-        case is MKPolygon:
+        case is MKMeteoPolygon:
             let renderer = MKPolygonRenderer(overlay: overlay)
-            renderer.fillColor = NSColor.blue.withAlphaComponent(0.25)
+            switch (overlay as? MKMeteoPolygon)!.name {
+            case "Forecast":
+                renderer.fillColor = NSColor.blue.withAlphaComponent(0.25)
+                print("Forecast Poly")
+            case "County":
+                renderer.fillColor = NSColor.green.withAlphaComponent(0.25)
+                print("County Poly")
+            case "Alert":
+                renderer.fillColor = NSColor.red.withAlphaComponent(0.25)
+                print("Alert Poly")
+            default:
+                break
+            }
             return renderer
         default:
             return MKOverlayRenderer()
@@ -358,4 +356,8 @@ extension BridgeSetupController: NSControlTextEditingDelegate {
             }
         }
     }
+}
+
+class MKMeteoPolygon: MKPolygon {
+    var name: String = ""
 }
