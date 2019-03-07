@@ -125,6 +125,13 @@ class AboutController: NSViewController {
          "copyHolder": "Appzgear",
          "copyURL": "https://www.flaticon.com/authors/appzgear"
         ],
+        ["copyImage": "NWSLogo.png",
+         "copyType": "Icon",
+         "invertable": "no",
+         "copyName": "National Weather Service: Forecasts, Alerts",
+         "copyHolder": "National Weather Service",
+         "copyURL": "https://www.weather.gov"
+        ],
         ["copyImage": "books.png",
          "copyType": "Library",
          "invertable": "yes",
