@@ -118,6 +118,13 @@ class AboutController: NSViewController {
          "copyHolder": "Freepick",
          "copyURL": "https://www.freepik.com/"
         ],
+        ["copyImage": "map-zoom.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "Map Zoom Icon",
+         "copyHolder": "Freepik",
+         "copyURL": "https://www.freepik.com/"
+        ],
         ["copyImage": "play-button.png",
          "copyType": "Icon",
          "invertable": "yes",

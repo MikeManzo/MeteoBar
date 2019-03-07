@@ -31,7 +31,12 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         /// Do we have a valid meteobridge?
         if theDelegate?.theBridge != nil {  // Yes ... setup the model
             for (category, _) in (theDelegate?.theBridge?.sensors)! {   // Create a simple model for our OutlineView
-                categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
+//                categories.append(SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!))
+                let sensorCat = SensorCat(sensorCat: category, sensors: (theDelegate?.theBridge?.sensors[category])!)
+                sensorCat.sensors.sort {
+                    $0.information < $1.information
+                }
+                categories.append(sensorCat)
             }
             sensorTree.headerView = nil     // Default (no meteobridge) is a header that says "Meteobridge Not Yet Configured"
             categories.sort {               // Sort the model alphabetically

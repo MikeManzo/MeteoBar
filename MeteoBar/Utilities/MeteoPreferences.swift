@@ -19,7 +19,10 @@ enum CodingKeys: String, CodingKey {
     case compassSensorMinorColor
     case compassCardinalMajorColor
     case compassCardinalMinorColor
+    case showForecastPolygon
     case compassFrameColor
+    case showCountyPolygon
+    case showAlertPolygon
     case compassRingColor
     case compassFaceColor
     case compassCaratColor
@@ -51,6 +54,9 @@ enum CodingKeys: String, CodingKey {
 ///   compassLLSensor:                  th0hum      // Lower Left: Outside Humidity
 ///   compassLRSensor:                  sol0rad     // Lower Right: Outside Solar Radiation
 ///   weatherAlerts:                    true
+///   showForecastPolygon               true
+///   showCountyPolygon                 true
+///   showAlertPolygon                  true
 ///
 final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     // MARK: - Compass Defaults
@@ -72,6 +78,9 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var compassLLSensor: String = "th0hum"      // Lower Left:  Humidity
     var compassLRSensor: String = "sol0rad"     // Lower Right: Solar Radiation
     var weatherAlerts: Bool = true
+    var showForecastPolygon: Bool = true
+    var showCountyPolygon: Bool = true
+    var showAlertPolygon: Bool = true
 
     // MARK: - Codable Compliance
     /// Required for an empty object (because we hve defaults above)
@@ -88,6 +97,9 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         compassShowSensorBox = try container.decode(Bool.self, forKey: .compassShowSensorBox)
+        showForecastPolygon = try container.decode(Bool.self, forKey: .showForecastPolygon)
+        showCountyPolygon = try container.decode(Bool.self, forKey: .showCountyPolygon)
+        showAlertPolygon = try container.decode(Bool.self, forKey: .showAlertPolygon)
         weatherAlerts = try container.decode(Bool.self, forKey: .weatherAlerts)
         
         var colorData = try container.decode(Data.self, forKey: .compassCardinalMinorTickColor)
@@ -146,6 +158,9 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(compassShowSensorBox, forKey: .compassShowSensorBox)
+        try container.encode(showForecastPolygon, forKey: .showForecastPolygon)
+        try container.encode(showCountyPolygon, forKey: .showCountyPolygon)
+        try container.encode(showAlertPolygon, forKey: .showAlertPolygon)
         try container.encode(weatherAlerts, forKey: .weatherAlerts)
 
         var colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMinorTickColor)
@@ -219,6 +234,9 @@ extension MeteoPreferences {
         compassLRSensor                 = "sol0rad"         // Lower Right: Solar Radiation
         compassShowSensorBox            = false
         weatherAlerts                   = true
+        showForecastPolygon             = true
+        showCountyPolygon               = true
+        showAlertPolygon                = true
     }
     
     func resetCompassCardinalMinorTickColor() -> SKColor {
@@ -309,5 +327,17 @@ extension MeteoPreferences {
     func resetWeatherAlerts() -> Bool {
         weatherAlerts = true
         return weatherAlerts
+    }
+    func resetShowForecastPolygon() -> Bool {
+        showForecastPolygon = true
+        return showForecastPolygon
+    }
+    func resetShowCountyPolygon() -> Bool {
+        showCountyPolygon = true
+        return showCountyPolygon
+    }
+    func resetShowAlertPolygon() -> Bool {
+        showAlertPolygon = true
+        return showAlertPolygon
     }
 }

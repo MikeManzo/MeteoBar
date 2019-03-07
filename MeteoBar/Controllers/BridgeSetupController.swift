@@ -35,6 +35,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
     @IBOutlet weak var bridgeName: NSTextField!
     @IBOutlet weak var bridgeIP: NSTextField!
     @IBOutlet weak var connectButton: NSButton!
+    @IBOutlet weak var mapZoomButton: NSButton!
     @IBOutlet weak var latitudeLabel: NSTextField!
     @IBOutlet weak var longitudeLabel: NSTextField!
     @IBOutlet weak var stationLabel: NSTextField!
@@ -46,6 +47,9 @@ class BridgeSetupController: NSViewController, Preferenceable {
     @IBOutlet weak var macLabel: NSTextField!
     @IBOutlet weak var healthIcon: NSImageView!
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet weak var forecastSwitch: OGSwitch!
+    @IBOutlet weak var countySwitch: OGSwitch!
+    @IBOutlet weak var alertSwitch: OGSwitch!
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -60,9 +64,24 @@ class BridgeSetupController: NSViewController, Preferenceable {
         }
         super.viewWillAppear()
     }
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        
+        // Update the polygon switches
+        theDelegate?.theDefaults?.showForecastPolygon   = forecastSwitch.isOn
+        theDelegate?.theDefaults?.showCountyPolygon     = countySwitch.isOn
+        theDelegate?.theDefaults?.showAlertPolygon      = alertSwitch.isOn
+        // Update the polygon switches
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+  
+        // Take care of our black/white icons
+        connectButton.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "play-button.png")!.filter(filter: "CIColorInvert") : NSImage(named: "play-button.png")
+        mapZoomButton.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "map-zoom.png")!.filter(filter: "CIColorInvert") : NSImage(named: "map-zoom.png")
+        // Take care of our black/white icons
     }
     
     ///
@@ -105,7 +124,14 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     self.macLabel.stringValue           = theBridge.findSensor(sensorName: "mac")!.formattedMeasurement!
                     self.bridgeIP.stringValue           = theBridge.ipAddress
                     self.bridgeName.stringValue         = theBridge.name
-                    
+                    // Update the the rest of the metadata
+
+                    // Update the polygon switches
+                    self.forecastSwitch.setOn(isOn: (theDelegate?.theDefaults?.showForecastPolygon)!, animated: true)
+                    self.countySwitch.setOn(isOn: (theDelegate?.theDefaults?.showCountyPolygon)!, animated: true)
+                    self.alertSwitch.setOn(isOn: (theDelegate?.theDefaults?.showAlertPolygon)!, animated: true)
+                    // Update the polygon switches
+
                     // Update the status Icon
                     guard let seconds = Int(theBridge.findSensor(sensorName: "lastgooddata")!.formattedMeasurement!) else {
                         self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
@@ -121,7 +147,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
                         self.healthIcon.toolTip = "No valid data recieved in over 2 minutes"
                     }
-                    // Status Icon
+                    // Update the status Icon
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
@@ -222,6 +248,19 @@ class BridgeSetupController: NSViewController, Preferenceable {
     }
     
     /// MARK - Actions
+    @IBAction func mapZoomClicked(_ sender: Any) {
+    
+    }
+    @IBAction func forecastSwitchClicked(_ sender: Any) {
+        
+    }
+    
+    @IBAction func countySwitchClicked(_ sender: Any) {
+    }
+    
+    @IBAction func alertSwicthClicked(_ sender: Any) {
+    }
+    
     @IBAction func connectClicked(_ sender: Any) {
         if theDelegate?.theBridge != nil {
             let alert = NSAlert()

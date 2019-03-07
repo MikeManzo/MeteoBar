@@ -53,6 +53,7 @@
 		27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79B21FF4CD300E226C2 /* full-battery.png */; };
 		27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79D21FF4CDE00E226C2 /* no-battery.png */; };
 		27BBA4252231273A00DC3B5B /* NWSLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BBA4242231273A00DC3B5B /* NWSLogo.png */; };
+		27BBA42722312DF700DC3B5B /* map-zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 27BBA42622312DF700DC3B5B /* map-zoom.png */; };
 		27CA785E21EBA22B000D517D /* QuantumLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA785D21EBA22B000D517D /* QuantumLogger.swift */; };
 		27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 27CA786021EBA7CD000D517D /* .swiftlint.yml */; };
 		27CA786621EBC06A000D517D /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CA786421EBC06A000D517D /* AboutController.swift */; };
@@ -150,6 +151,7 @@
 		27ACA79B21FF4CD300E226C2 /* full-battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "full-battery.png"; sourceTree = "<group>"; };
 		27ACA79D21FF4CDE00E226C2 /* no-battery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-battery.png"; sourceTree = "<group>"; };
 		27BBA4242231273A00DC3B5B /* NWSLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NWSLogo.png; sourceTree = "<group>"; };
+		27BBA42622312DF700DC3B5B /* map-zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "map-zoom.png"; sourceTree = "<group>"; };
 		27CA785D21EBA22B000D517D /* QuantumLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantumLogger.swift; sourceTree = "<group>"; };
 		27CA786021EBA7CD000D517D /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; };
 		27CA786421EBC06A000D517D /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
@@ -380,13 +382,14 @@
 				275934D22221D42000910F8C /* controls.png */,
 				27A8038A2219D5F100E9A6BE /* dashboard.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
+				27CF042A22073675007DFFDF /* empty-battery-color.png */,
+				27ACA79921FF4CCC00E226C2 /* empty-battery.png */,
 				27ACA78121FE4B5C00E226C2 /* energy.png */,
 				27CF0428220735D9007DFFDF /* full-battery-color.png */,
 				27ACA79B21FF4CD300E226C2 /* full-battery.png */,
-				27ACA79921FF4CCC00E226C2 /* empty-battery.png */,
-				27CF042A22073675007DFFDF /* empty-battery-color.png */,
 				27ACA78321FE4BFF00E226C2 /* humidity.png */,
 				27470AAC2212E1F100C7AEA9 /* logout.png */,
+				27BBA42622312DF700DC3B5B /* map-zoom.png */,
 				27ACA79D21FF4CDE00E226C2 /* no-battery.png */,
 				27BBA4242231273A00DC3B5B /* NWSLogo.png */,
 				27CF04322207A519007DFFDF /* play-button.png */,
@@ -536,6 +539,7 @@
 				27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */,
 				27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */,
 				27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */,
+				27BBA42722312DF700DC3B5B /* map-zoom.png in Resources */,
 				27CF042B22073675007DFFDF /* empty-battery-color.png in Resources */,
 				2780456821EAB9290026E1F7 /* README.md in Resources */,
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,

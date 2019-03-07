@@ -60,6 +60,13 @@ import QuartzCore
     @IBInspectable public var ignoreRatio: Bool = true {
         didSet { reloadLayer() }
     }
+    @IBInspectable public var defaultEnabled: Bool = true {
+        didSet {
+            isOn = defaultEnabled
+            reloadLayer()
+        }
+    }
+
     override public var isEnabled: Bool {
         didSet { reloadLayerAnimated(animated: true) }
     }

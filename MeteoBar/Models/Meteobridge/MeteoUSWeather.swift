@@ -95,6 +95,7 @@ class MeteoUSWeather: MeteoWeather, NWS {
         radarID = try container.decode(String.self, forKey: .radarID)
 
         try super.init(from: decoder)
+        print ("MeteoUSWeather decoded: \(countyShape?.pointCount ?? -1) points")
     }
     
     /// We have to roll our own Codable class due to MKPolyline
@@ -116,5 +117,6 @@ class MeteoUSWeather: MeteoWeather, NWS {
         try container.encode(radarID, forKey: .radarID)
         
         try super.encode(to: encoder)
+        print ("MeteoUSWeather encoded: \(countyShape?.pointCount ?? -1) points")
     }
 }

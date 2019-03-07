@@ -35,7 +35,7 @@ class MeteoSensorImage: NSObject {
         return _sensorLabel
     }
     
-    weak var thumb: NSImage? {
+    /*weak*/ var thumb: NSImage? {
         return _thumbnail
     }
     
