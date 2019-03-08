@@ -152,10 +152,11 @@ extension MKPolygon {
 ///
 /// [To-From Archive Reference](https://stackoverflow.com/questions/36761841/how-to-store-an-mkpolyline-attribute-as-transformable-in-ios-coredata-with-swift#)
 ///
-extension MKPolyline {
-    /// SwifterSwift: Create a new MKPolyline from a provided Array of coordinates.
+extension MKMeteoPolyline {
+    /// SwifterSwift: Create a new MKMeteoPolyline from a provided Array of coordinates.
     ///
-    /// - Parameter coordinates: Array of CLLocationCoordinate2D(s).
+    /// - Parameter coordinates: Array of CLLocationCoordinate2D(s)
+    ///
     public convenience init(coordinates: [CLLocationCoordinate2D]) {
         var refCoordinates = coordinates
         self.init(coordinates: &refCoordinates, count: refCoordinates.count)
@@ -166,22 +167,27 @@ extension MKPolyline {
     /// - Parameter polylineArchive: Data description of MKPolyLine
     /// - Returns: MKPolyLine
     //
-    static func fromArchive(polylineArchive: Data) -> MKPolyline? {
+    static func fromArchive(polylineArchive: Data) -> (MKMeteoPolyline?, String?) {
         guard let data = NSKeyedUnarchiver.unarchiveObject(with: polylineArchive as Data),
-            let polyline = data as? [[String: AnyObject]] else {
-                return nil
+        let myData = data as? [String: [[String: AnyObject]]] else {
+                return (nil, nil)
         }
         var locations: [CLLocation] = []
-        for item in polyline {
-            if let latitude = item["latitude"]?.doubleValue,
-                let longitude = item["longitude"]?.doubleValue {
-                let location = CLLocation(latitude: latitude, longitude: longitude)
-                locations.append(location)
+        var lineName: String?
+        for (name, polyline) in myData {
+            print ("Name-->\(name)")
+            lineName = name
+            for item in polyline {
+                if let latitude = item["latitude"]?.doubleValue,
+                    let longitude = item["longitude"]?.doubleValue {
+                    let location = CLLocation(latitude: latitude, longitude: longitude)
+                    locations.append(location)
+                }
             }
         }
         var coordinates = locations.map({(location: CLLocation) -> CLLocationCoordinate2D in return location.coordinate})
-        let result = MKPolyline(coordinates: &coordinates, count: locations.count)
-        return result
+        let result = MKMeteoPolyline(coordinates: &coordinates, count: locations.count)
+        return (result, lineName)
     }
     
     /// Make MKPolyLine encodable
@@ -189,7 +195,7 @@ extension MKPolyline {
     /// - Parameter polylineArchive: MKPolyLine
     /// - Returns: Data to safely encode
     //
-    static func toArchive(polyline: MKPolyline) -> Data {
+    static func toArchive(polyline: MKMeteoPolyline, lineName: String) -> Data {
         let coordsPointer = UnsafeMutablePointer<CLLocationCoordinate2D>.allocate(capacity: polyline.pointCount)
         polyline.getCoordinates(coordsPointer, range: NSRange(location: 0, length: polyline.pointCount))
         var coords: [[String: AnyObject]] = []
@@ -199,7 +205,7 @@ extension MKPolyline {
             let coord = ["latitude": latitude, "longitude": longitude]
             coords.append(coord)
         }
-        let polylineData = NSKeyedArchiver.archivedData(withRootObject: coords)
+        let polylineData = NSKeyedArchiver.archivedData(withRootObject: [lineName: coords])
         return polylineData as Data
     }
 }

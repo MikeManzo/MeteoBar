@@ -24,7 +24,7 @@ enum MeteoUSWeatherCodingKeys: String, CodingKey {
 /// [Documentation | National Weather Service](https://forecast-v3.weather.gov/documentation)
 ///
 class MeteoUSWeather: MeteoWeather, NWS {
-    internal var countyShape: MKPolyline?
+    internal var countyShape: MKMeteoPolyline?
     internal var gridCoordinate: NSPoint
     internal var forecastZoneID: String
     internal var countyZoneID: String
@@ -51,7 +51,7 @@ class MeteoUSWeather: MeteoWeather, NWS {
     }
     
     /// Return the bounding polygon for the forecast area
-    var countyPolygon: MKPolyline? {
+    var countyPolygon: MKMeteoPolyline? {
         return boundingShape
     }
     
@@ -67,7 +67,7 @@ class MeteoUSWeather: MeteoWeather, NWS {
     ///   - radarID: the ID for the radar station servicing the given zone (e.g., KLWX)
     ///
     required init(city: String, forecastURL: String, forecastHourlyURL: String, grid: NSPoint,
-                  forecastID: String, countyID: String, radarID: String, boundingPoly: MKPolyline?, countyPoly: MKPolyline?) {
+                  forecastID: String, countyID: String, radarID: String, boundingPoly: MKMeteoPolyline?, countyPoly: MKMeteoPolyline?) {
 
         self.forecastZoneID = forecastID
         self.countyShape = countyPoly
@@ -78,16 +78,18 @@ class MeteoUSWeather: MeteoWeather, NWS {
         super.init(city: city, forecastURL: forecastURL, forecastHourlyURL: forecastHourlyURL, bounding: boundingPoly)
     }
     
-    /// We have to roll our own Codable class due to MKPolyline
+    /// We have to roll our own Codable class due to MKMeteoPolyline
     ///
     /// - Parameter decoder: decoder to act on
     /// - Throws: error
     ///
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeteoUSWeatherCodingKeys.self)
+        var name: String?
 
         let myCountryShape = try container.decode(Data.self, forKey: .countyShape)
-        countyShape = MKPolyline.fromArchive(polylineArchive: myCountryShape)
+        (countyShape, name) = MKMeteoPolyline.fromArchive(polylineArchive: myCountryShape)
+        countyShape?.lineName = name!
         
         gridCoordinate = try container.decode(NSPoint.self, forKey: .gridCoordinate)
         forecastZoneID = try container.decode(String.self, forKey: .forecastZoneID)
@@ -98,7 +100,7 @@ class MeteoUSWeather: MeteoWeather, NWS {
         print ("MeteoUSWeather decoded: \(countyShape?.pointCount ?? -1) points")
     }
     
-    /// We have to roll our own Codable class due to MKPolyline
+    /// We have to roll our own Codable class due to MKMeteoPolyline
     ///
     /// - Parameter encoder: encoder to act on
     /// - Throws: error
@@ -107,7 +109,7 @@ class MeteoUSWeather: MeteoWeather, NWS {
         var container = encoder.container(keyedBy: MeteoUSWeatherCodingKeys.self)
         
         if countyShape != nil {
-            let myCountryShape = MKPolyline.toArchive(polyline: countyShape!)
+            let myCountryShape = MKMeteoPolyline.toArchive(polyline: countyShape!, lineName: (countyShape?.lineName)!)
             try container.encode(myCountryShape, forKey: .countyShape)
         }
         

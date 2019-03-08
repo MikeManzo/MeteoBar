@@ -13,7 +13,7 @@ protocol MeteoBaseWeather {
     var closestCity: String { get }
     var forecastEndpoint: String { get }
     var forecastHourlyEndpoint: String { get }
-    var boundingShape: MKPolyline? {get set}
+    var boundingShape: MKMeteoPolyline? {get set}
 }
 
 protocol NWS: MeteoBaseWeather {
@@ -24,7 +24,7 @@ protocol NWS: MeteoBaseWeather {
 
     init(city: String, forecastURL: String, forecastHourlyURL: String,
          grid: NSPoint, forecastID: String, countyID: String, radarID: String,
-         boundingPoly: MKPolyline?, countyPoly: MKPolyline?)
+         boundingPoly: MKMeteoPolyline?, countyPoly: MKMeteoPolyline?)
 }
 
 enum MeteoWeatherCodingKeys: String, CodingKey {
@@ -34,12 +34,16 @@ enum MeteoWeatherCodingKeys: String, CodingKey {
     case closestCity
 }
 
+class MKMeteoPolyline: MKPolyline {
+    var lineName: String = ""
+}
+
 ///
 /// Base class for wether models ... right now, the only one supported is the NWS
 ///
 class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     internal var forecastHourlyEndpoint: String
-    internal var boundingShape: MKPolyline?
+    internal var boundingShape: MKMeteoPolyline?
     internal var forecastEndpoint: String
     internal var closestCity: String
 
@@ -59,7 +63,7 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     }
     
     /// Return the bounding polygon for the forecast area
-    var forecastPolygon: MKPolyline? {
+    var forecastPolygon: MKMeteoPolyline? {
         return boundingShape
     }
     
@@ -70,22 +74,22 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     ///   - forecastURL: the URL that we can call for the standard forecast
     ///   - forecastHourlyURL: the URL that we can call for the hourly forecast
     ///
-    init(city: String, forecastURL: String, forecastHourlyURL: String, bounding: MKPolyline? = nil) {
+    init(city: String, forecastURL: String, forecastHourlyURL: String, bounding: MKMeteoPolyline? = nil) {
         self.forecastHourlyEndpoint = forecastHourlyURL
         self.forecastEndpoint = forecastURL
         self.boundingShape = bounding
         self.closestCity = city
     }
     
-    /// We have to roll our own Codable support due to MKPolyline
+    /// We have to roll our own Codable support due to MKMeteoPolyline
     ///
     /// # How to decode an array #
     ///
     ///     let myBoundingShape = try container.decode(Data.self, forKey: .boundingShape)
     ///     let interimData = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(myBoundingShape) as? NSArray
-    ///     var interimShape = [MKPolyline]()
+    ///     var interimShape = [MKMeteoPolyline]()
     ///     for data in interimData! {
-    ///         interimShape.append(MKPolyline.fromArchive(polylineArchive: (data as? Data ?? nil)!)!)
+    ///         interimShape.append(MKMeteoPolyline.fromArchive(polylineArchive: (data as? Data ?? nil)!)!)
     ///     }
     ///     boundingShape = interimShape
     ///
@@ -94,9 +98,11 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
     ///
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeteoWeatherCodingKeys.self)
-
+        var name: String?
+        
         let myBoundingShape = try container.decode(Data.self, forKey: .boundingShape)
-        boundingShape = MKPolyline.fromArchive(polylineArchive: myBoundingShape)
+        (boundingShape, name) = MKMeteoPolyline.fromArchive(polylineArchive: myBoundingShape)
+        boundingShape?.lineName = name!
         
         forecastHourlyEndpoint = try container.decode(String.self, forKey: .forecastHourlyEndpoint)
         forecastEndpoint = try container.decode(String.self, forKey: .forecastEndpoint)
@@ -105,14 +111,14 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         print ("MeteoWeather decoded: \(boundingShape?.pointCount ?? -1) points")
     }
     
-    /// We have to roll our own Codable support due to MKPolyline
+    /// We have to roll our own Codable support due to MKMeteoPolyline
     ///
     /// # How to encode an array #
     ///
     ///     if boundingShape != nil {
     ///        var dataArray = [Data]()
     ///        for point in boundingShape! {
-    ///           dataArray.append(MKPolyline.toArchive(polyline: point))
+    ///           dataArray.append(MKMeteoPolyline.toArchive(polyline: point))
     ///        }
     ///        let myBoundingShape = NSKeyedArchiver.archivedData(withRootObject: dataArray)
     ///        try container.encode(myBoundingShape, forKey: .boundingShape)
@@ -125,7 +131,7 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         var container = encoder.container(keyedBy: MeteoWeatherCodingKeys.self)
 
         if boundingShape != nil {
-            let myBoundingShape = MKPolyline.toArchive(polyline: boundingShape!)
+            let myBoundingShape = MKMeteoPolyline.toArchive(polyline: boundingShape!, lineName: (boundingShape?.lineName)!)
             try container.encode(myBoundingShape, forKey: .boundingShape)
         }
 

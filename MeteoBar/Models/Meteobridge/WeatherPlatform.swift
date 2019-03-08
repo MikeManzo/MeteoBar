@@ -41,7 +41,7 @@ enum WeatherPlatformError: Error, CustomStringConvertible {
 /// Protocol for future use
 protocol Weather: class {
     static func getNWSZones(lat: Double, lon: Double, responseHandler: @escaping (_ forecastZone: String?, _ countyZone: String?, _ radar: String?, _ point: NSPoint?, _ error: Error?) -> Void)
-    static func getNWSPolygon(forecastZone: String, countyZone: String, responseHandler: @escaping (_ forecastZone: MKPolyline?, _ countyZone: MKPolyline?,_ error: Error?) -> Void)
+    static func getNWSPolygon(forecastZone: String, countyZone: String, responseHandler: @escaping (_ forecastZone: MKMeteoPolyline?, _ countyZone: MKMeteoPolyline?,_ error: Error?) -> Void)
     static func getNWSForecastEndpoints(lat: Double, lon: Double, responseHandler: @escaping (_ city: String?, _ forecast: String?, _ forecastHourly: String?, _ error: Error?) -> Void)
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
@@ -453,16 +453,16 @@ class WeatherPlatform: Weather {
     ///
     /// - throws: Nothing
     /// - returns:
-    ///   - forecastZone: MKPolyline array representing the forecast zone
-    ///   - countyZone: MKPolyline array repreenting the county zone
+    ///   - forecastZone: MKMeteoPolyline array representing the forecast zone
+    ///   - countyZone: MKMeteoPolyline array repreenting the county zone
     ///   - error: error message (nil if succesful)
     ///
     static func getNWSPolygon(forecastZone: String, countyZone: String,
-                              responseHandler: @escaping (_ forecastZone: MKPolyline?, _ countyZone: MKPolyline?,_ error: Error?) -> Void) {
+                              responseHandler: @escaping (_ forecastZone: MKMeteoPolyline?, _ countyZone: MKMeteoPolyline?,_ error: Error?) -> Void) {
         let forecastEndpoint    = URL(string: "\(nwsEndPoint)/zones/forecast/\(forecastZone)")
         let zoneEndpoint        = URL(string: "\(nwsEndPoint)/zones/county/\(countyZone)")
-        var forecastZonePoly: MKPolyline?
-        var countyZonePoly: MKPolyline?
+        var forecastZonePoly: MKMeteoPolyline?
+        var countyZonePoly: MKMeteoPolyline?
 
         Alamofire.request(forecastEndpoint!).responseJSON { response in
             switch response.result {
@@ -475,7 +475,7 @@ class WeatherPlatform: Weather {
                         forecastPoints.append(CLLocationCoordinate2D(latitude: coordinate[1].double!, longitude: coordinate[0].double!))
                     }
                 }
-                forecastZonePoly = MKPolyline(coordinates: forecastPoints)
+                forecastZonePoly = MKMeteoPolyline(coordinates: forecastPoints)
                 
                 Alamofire.request(zoneEndpoint!).responseJSON { response in
                     switch response.result {
@@ -488,7 +488,7 @@ class WeatherPlatform: Weather {
                                 countyPoints.append(CLLocationCoordinate2D(latitude: coordinate[1].double!, longitude: coordinate[0].double!))
                             }
                         }
-                        countyZonePoly = MKPolyline(coordinates: forecastPoints)
+                        countyZonePoly = MKMeteoPolyline(coordinates: forecastPoints)
 
                         responseHandler(forecastZonePoly, countyZonePoly, nil)
                     case .failure: // Zone Failure

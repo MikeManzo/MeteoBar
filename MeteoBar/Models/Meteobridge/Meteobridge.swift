@@ -91,12 +91,12 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
         return _weatherModel
     }
    
-    var forecastPolyLine: MKPolyline? {
+    var forecastPolyLine: MKMeteoPolyline? {
         return _weatherModel?.forecastPolygon
     }
     
-    var polygonOverlays: [String: MKPolyline] {
-        var overlays = [String: MKPolyline]()
+    var polygonOverlays: [String: MKMeteoPolyline] {
+        var overlays = [String: MKMeteoPolyline]()
         
         switch countryCode {
         case "US":
@@ -534,7 +534,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
         })
     }
 
-    /// We have to roll our own Codable class due to MKPolyline
+    /// We have to roll our own Codable class due to MKMeteoPolyline
     ///
     /// - Parameter decoder: decoder to act on
     /// - Throws: error

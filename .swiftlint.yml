@@ -30,6 +30,7 @@ file_length:
     error: 1500
     ignore_comment_only_lines: true
 cyclomatic_complexity:
+    ignores_case_statements: true
     warning: 15
     error: 25
 reporter: "xcode"

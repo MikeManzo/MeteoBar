@@ -102,7 +102,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     if self.mapView.overlays.isEmpty {          // If no overlays ... add them; if there are ... skip and don't re-add
                         for (type, polyline) in theBridge.polygonOverlays {
                             let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
-                            polygon.name = type
+                            polygon.polyName = type
+                            polyline.lineName = type
                             self.mapView.addOverlay(polyline)
                             self.mapView.addOverlay(polygon)
                         }
@@ -251,14 +252,127 @@ class BridgeSetupController: NSViewController, Preferenceable {
     @IBAction func mapZoomClicked(_ sender: Any) {
     
     }
+    
+    /// Toggle the forecast Polygon
+    ///
+    /// - Parameter sender: OGSwitch that sent the action
+    ///
     @IBAction func forecastSwitchClicked(_ sender: Any) {
-        
+        guard let theBridge = theDelegate?.theBridge! else {
+            log.error(BridgeSetupControllerError.noBridge)
+            return
+        }
+
+        switch forecastSwitch.isOn {
+        case false: // We want to turn-off the forecast overlays
+            for mapOverlay in mapView.overlays {
+                switch mapOverlay {
+                case is MKMeteoPolyline:    // Turn off the polyline
+                    if (mapOverlay as? MKMeteoPolyline)?.lineName == "Forecast" {
+                        mapView.removeOverlay(mapOverlay)
+                        for (type, polyline) in theBridge.polygonOverlays {
+                            switch type {
+                            case "County":  // But we want to ensure the remaining polygon has an outline
+                                polyline.lineName = type
+                                self.mapView.addOverlay(polyline)
+                            default:
+                                break
+                            }
+                        }
+                    }
+                case is MKMeteoPolygon:     // Turn off the polygon
+                    if (mapOverlay as? MKMeteoPolygon)?.polyName == "Forecast" {
+                        mapView.removeOverlay(mapOverlay)
+                        print("Removing Forecast Polygon")
+                    }
+                default:
+                    break
+                }
+            }
+        case true:
+            guard let theBridge = theDelegate?.theBridge! else {
+                log.error(BridgeSetupControllerError.noBridge)
+                break
+            }
+            for (type, polyline) in theBridge.polygonOverlays {
+                switch type {
+                case "Forecast":
+                    let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                    polygon.polyName = type
+                    polyline.lineName = type
+                    self.mapView.addOverlay(polyline)
+                    self.mapView.addOverlay(polygon)
+                    print ("Adding forecast overlays")
+                default:
+                    break
+                }
+            }
+        }
     }
     
+    /// Toggle the county Polygon
+    ///
+    /// - Parameter sender: OGSwitch that sent the action
+    ///
     @IBAction func countySwitchClicked(_ sender: Any) {
+        guard let theBridge = theDelegate?.theBridge! else {
+            log.error(BridgeSetupControllerError.noBridge)
+            return
+        }
+        
+        switch countySwitch.isOn {
+        case false: // We want to turn-off the forecast overlays
+            for mapOverlay in mapView.overlays {
+                switch mapOverlay {
+                case is MKMeteoPolyline: // Turn off the polyline
+                    if (mapOverlay as? MKMeteoPolyline)?.lineName == "County" {
+                        mapView.removeOverlay(mapOverlay)
+                        for (type, polyline) in theBridge.polygonOverlays {
+                            switch type {
+                            case "Forecast":    // But we want to ensure the remaining polygon has an outline
+                                polyline.lineName = type
+                                self.mapView.addOverlay(polyline)
+                            default:
+                                break
+                            }
+                        }
+                    }
+                case is MKMeteoPolygon:     // Turn off the polygon
+                    if (mapOverlay as? MKMeteoPolygon)?.polyName == "County" {
+                        mapView.removeOverlay(mapOverlay)
+                        print("Removing Forecast Polygon")
+                    }
+                default:
+                    break
+                }
+            }
+        case true:
+            guard let theBridge = theDelegate?.theBridge! else {
+                log.error(BridgeSetupControllerError.noBridge)
+                break
+            }
+            for (type, polyline) in theBridge.polygonOverlays {
+                switch type {
+                case "County":
+                    let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                    polygon.polyName = type
+                    polyline.lineName = type
+                    self.mapView.addOverlay(polyline)
+                    self.mapView.addOverlay(polygon)
+                    print ("Adding county overlays")
+                default:
+                    break
+                }
+            }
+        }
     }
     
+    /// Toggle the alert Polygon
+    ///
+    /// - Parameter sender: OGSwitch that sent the action
+    ///
     @IBAction func alertSwicthClicked(_ sender: Any) {
+    
     }
     
     @IBAction func connectClicked(_ sender: Any) {
@@ -337,23 +451,37 @@ extension BridgeSetupController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         switch overlay {
-        case is MKPolyline:
+        case is MKMeteoPolyline:
             let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = NSColor.blue
+
             renderer.lineWidth = 3.0
+            switch (overlay as? MKMeteoPolyline)!.lineName {
+            case "Forecast":
+                renderer.strokeColor = NSColor.blue
+                print("Forecast Polyline")
+            case "County":
+                renderer.strokeColor = NSColor.green
+                print("County Polyline")
+            case "Alert":
+                renderer.strokeColor = NSColor.red
+                print("Alert Polyline")
+            default:
+                break
+            }
             return renderer
         case is MKMeteoPolygon:
             let renderer = MKPolygonRenderer(overlay: overlay)
-            switch (overlay as? MKMeteoPolygon)!.name {
+            
+            switch (overlay as? MKMeteoPolygon)!.polyName {
             case "Forecast":
                 renderer.fillColor = NSColor.blue.withAlphaComponent(0.25)
-                print("Forecast Poly")
+                print("Forecast Polygon")
             case "County":
                 renderer.fillColor = NSColor.green.withAlphaComponent(0.25)
-                print("County Poly")
+                print("County Polygon")
             case "Alert":
                 renderer.fillColor = NSColor.red.withAlphaComponent(0.25)
-                print("Alert Poly")
+                print("Alert Polygon")
             default:
                 break
             }
@@ -398,5 +526,5 @@ extension BridgeSetupController: NSControlTextEditingDelegate {
 }
 
 class MKMeteoPolygon: MKPolygon {
-    var name: String = ""
+    var polyName: String = ""
 }
