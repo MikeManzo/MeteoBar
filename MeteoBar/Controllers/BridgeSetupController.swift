@@ -13,6 +13,7 @@ import Cocoa
 enum BridgeSetupControllerError: Error, CustomStringConvertible {
     case noBridge
     case noBridgeImage
+    case unknownOverlay
     case noBridgeParameters
     
     var description: String {
@@ -20,6 +21,7 @@ enum BridgeSetupControllerError: Error, CustomStringConvertible {
         case .noBridge: return "There is no bridge currently configured"
         case .noBridgeImage: return "Cannot determine image for current platform"
         case .noBridgeParameters: return "Cannot determine bridge parameters"
+        case .unknownOverlay: return "Unknwon Overlay detected - skipping"
         }
     }
 }
@@ -101,11 +103,34 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     self.platformImage.image = image            // We have a platform; lets display the image
                     if self.mapView.overlays.isEmpty {          // If no overlays ... add them; if there are ... skip and don't re-add
                         for (type, polyline) in theBridge.polygonOverlays {
-                            let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
-                            polygon.polyName = type
-                            polyline.lineName = type
-                            self.mapView.addOverlay(polyline)
-                            self.mapView.addOverlay(polygon)
+                            switch type {
+                            case "Forecast":
+                                if theDelegate?.theDefaults?.showForecastPolygon == true {
+                                    let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                                    polygon.polyName = type
+                                    polyline.lineName = type
+                                    self.mapView.addOverlay(polyline)
+                                    self.mapView.addOverlay(polygon)
+                                }
+                            case "County":
+                                if theDelegate?.theDefaults?.showCountyPolygon  == true {
+                                    let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                                    polygon.polyName = type
+                                    polyline.lineName = type
+                                    self.mapView.addOverlay(polyline)
+                                    self.mapView.addOverlay(polygon)
+                                }
+                            case "Alert":
+                                if theDelegate?.theDefaults?.showForecastPolygon  == true {
+                                    let polygon = MKMeteoPolygon(coordinates: polyline.coordinates, count: polyline.pointCount)
+                                    polygon.polyName = type
+                                    polyline.lineName = type
+                                    self.mapView.addOverlay(polyline)
+                                    self.mapView.addOverlay(polygon)
+                                }
+                            default:
+                                log.warning(BridgeSetupControllerError.unknownOverlay)
+                            }
                         }
                     }
                     self.updateMapView()                        // Update the map based on the latest
