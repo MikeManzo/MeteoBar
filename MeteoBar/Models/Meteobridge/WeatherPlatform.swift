@@ -370,11 +370,11 @@ class WeatherPlatform: Weather {
             switch response.result {
             case .success(let retJSON):
                 var data: JSON = JSON(retJSON)
-                forecastZone = data["properties"]["forecastZone"].stringValue
-                countyZone = data["properties"]["forecastZone"].stringValue
-                radar = data["properties"]["radarStation"].stringValue
-                grid.x = CGFloat(Int(data["properties"]["gridX"].stringValue)!)
-                grid.y = CGFloat(Int(data["properties"]["gridY"].stringValue)!)
+                grid.x          = CGFloat(Int(data["properties"]["gridX"].stringValue)!)
+                grid.y          = CGFloat(Int(data["properties"]["gridY"].stringValue)!)
+                forecastZone    = data["properties"]["forecastZone"].stringValue
+                radar           = data["properties"]["radarStation"].stringValue
+                countyZone      = data["properties"]["county"].stringValue
 
                 // the forecast zone is formatted like this: "https://api.weather.gov/zones/forecast/VAZ505"
                 // we need to trim the string to just get the zone
@@ -488,7 +488,7 @@ class WeatherPlatform: Weather {
                                 countyPoints.append(CLLocationCoordinate2D(latitude: coordinate[1].double!, longitude: coordinate[0].double!))
                             }
                         }
-                        countyZonePoly = MKMeteoPolyline(coordinates: forecastPoints)
+                        countyZonePoly = MKMeteoPolyline(coordinates: countyPoints)
 
                         responseHandler(forecastZonePoly, countyZonePoly, nil)
                     case .failure: // Zone Failure

@@ -294,7 +294,7 @@ extension NSTextField {
 }
 
 extension NSView {
-    var backgroundColor: NSColor? {
+    var viewBackgroundColor: NSColor? {
         get {
             guard let layer = layer, let backgroundColor = layer.backgroundColor else { return nil }
             return NSColor(cgColor: backgroundColor)

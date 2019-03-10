@@ -33,7 +33,7 @@ class MeteoCompassView: SKView {
     var intervalSixty = 0.0
     var angle: Double = 0.0
     var tickOffset = 0.0
-    var prevDirection = 0.0
+    var prevDirection = 359.0
 
     // MARK: - Compass
     var compassNeedle: SKShapeNode?
@@ -114,6 +114,11 @@ class MeteoCompassView: SKView {
                                                    object: nil,
                                                    queue: .main,
                                                    using: updateCompassFace)
+        
+        // Give the user a little eye-candy and move the carat completely around the compass face
+        if theDelegate?.theBridge == nil {
+            windDirection(direction: 0.0)
+        }
     }
     
     ///

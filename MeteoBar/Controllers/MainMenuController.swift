@@ -165,6 +165,7 @@ class MainMenuController: NSViewController {
     /// Show the preferences window with the Setup Tab selected
     ///
     /// - Parameter sender: The Caller who sent the message
+    ///
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
         DispatchQueue.main.async { [unowned self] in
             sender.superview?.window?.orderOut(self)

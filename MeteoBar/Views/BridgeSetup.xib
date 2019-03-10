@@ -23,9 +23,9 @@
                 <outlet property="macLabel" destination="mP9-pg-Jci" id="GlF-h1-Wci"/>
                 <outlet property="mapView" destination="Lop-ce-IoZ" id="iO7-oK-gSY"/>
                 <outlet property="mapZoomButton" destination="yb9-zt-fLn" id="dsl-ox-IQG"/>
+                <outlet property="meteoInformation" destination="1Ol-U4-RPn" id="Vsp-cS-3aN"/>
                 <outlet property="platformImage" destination="q6F-GY-bQJ" id="b3h-J4-eiY"/>
                 <outlet property="platformLabel" destination="B6C-OB-589" id="f9k-oy-AGb"/>
-                <outlet property="progressIndicator" destination="WHV-vV-a7E" id="nFQ-fi-EPC"/>
                 <outlet property="stationLabel" destination="TnG-mk-SZt" id="3iO-qV-Zym"/>
                 <outlet property="stationNumberLabel" destination="hgP-MN-zFd" id="5eh-r3-W4C"/>
                 <outlet property="versionLabel" destination="eyK-aw-uHL" id="b8Z-2t-rDR"/>
@@ -289,10 +289,6 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="WHV-vV-a7E">
-                                <rect key="frame" x="420" y="8" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </progressIndicator>
                         </subviews>
                     </view>
                 </box>

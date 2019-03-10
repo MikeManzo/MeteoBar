@@ -26,6 +26,26 @@ enum BridgeSetupControllerError: Error, CustomStringConvertible {
     }
 }
 
+enum BridgeSetupControllerHUD: String, CustomStringConvertible {
+    case startingContinuousMonitoring
+    case pollingForSystemParameters
+    case settingUpDisplayElements
+    case readingConfigurationFile
+    case settingUpWeatherModels
+    case gettingObservation
+    
+    var description: String {
+        switch self {
+        case .pollingForSystemParameters: return "Polling Meteobridge for System Paramaters ..."
+        case .startingContinuousMonitoring: return "Starting continuous weather readings ..."
+        case .readingConfigurationFile: return "Reading Meteobridge configuration file ..."
+        case .settingUpWeatherModels: return "Setting up Meteobridge Weather Models ..."
+        case .gettingObservation: return "Getting weather observation from sensors ..."
+        case .settingUpDisplayElements: return "Setting up display elements ..."
+        }
+    }
+}
+
 class BridgeSetupController: NSViewController, Preferenceable {
     // MARK: - Protocol Variables
     let toolbarItemTitle = "Bridge Setup"
@@ -48,10 +68,10 @@ class BridgeSetupController: NSViewController, Preferenceable {
     @IBOutlet weak var altitudeLabel: NSTextField!
     @IBOutlet weak var macLabel: NSTextField!
     @IBOutlet weak var healthIcon: NSImageView!
-    @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var forecastSwitch: OGSwitch!
     @IBOutlet weak var countySwitch: OGSwitch!
     @IBOutlet weak var alertSwitch: OGSwitch!
+    @IBOutlet weak var meteoInformation: NSBox!
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -126,6 +146,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
         }
         
         // Grab the image <from the meteobridge> for the platform hosting meteobridge
+        ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpDisplayElements.description)
         WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
             if error == nil {
                 // Let's update the user interface
@@ -164,6 +185,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         }
                     }
                     self.updateMapView()                        // Update the map based on the latest
+                    ProgressHUD.show(withStatus: BridgeSetupControllerHUD.startingContinuousMonitoring.description)
                     
                     // Update the Latitude & Longitude in human readable form
                     let dms = theBridge.coordinate.dms
@@ -205,9 +227,17 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     }
                     // Update the status Icon
                     
+                    // Enable the connect button
                     if self.validateIPAddress(self.bridgeIP.stringValue) {
                         self.connectButton.isEnabled = true
                     }
+                    // Enable the connect button
+
+                    // Dismiss our HUD if it's showing
+                    if ProgressHUD.isVisible() {
+                      ProgressHUD.dismiss(delay: 1.0)
+                    }
+                    // Dismiss our HUD if it's showing
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
@@ -243,6 +273,15 @@ class BridgeSetupController: NSViewController, Preferenceable {
     /// Initialize the bridge based on the name and IP
     ///
     private func initializeBridge() {
+        ProgressHUD.setFont(NSFont.systemFont(ofSize: 16))
+        ProgressHUD.setContainerView(meteoInformation)
+        ProgressHUD.setDefaultPosition(.center)
+        ProgressHUD.setDefaultStyle(.light)
+        ProgressHUD.setDismissable(false)
+        ProgressHUD.setSpinnerSize(32.0)
+        ProgressHUD.setOpacity(0.75)
+
+        ProgressHUD.show(withStatus: BridgeSetupControllerHUD.readingConfigurationFile.description)
         WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
                 theDelegate!.theBridge = response                                           // Bridge was successfully initialized from the json description
@@ -250,13 +289,16 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     log.warning(BridgeSetupControllerError.noBridge)                        // Warn the user - something is not right
                     return                                                                  // Bail gracefully
                 }
+                ProgressHUD.show(withStatus: BridgeSetupControllerHUD.pollingForSystemParameters.description)
                 theBridge.getAllSystemParameters { [unowned self] (_ , error: Error?) in    // Get All the System Paramaters that this Meteobridge Supports
                     if error == nil {                                                       // Any errors?
+                        ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpWeatherModels.description)
                         theBridge.updateWeatherModel { (_ , error: Error?) in               // Ret to populate the weather model for forecasts/alerts/warnings
                             if error != nil {
                                 log.warning(error.value)                                    // Warn the user that we're unable to update the model
                             }                                                               // We still want to continue though ...
-                            theBridge.getObservation(allParams: true, { _, error in         // Get a "FULL" observation so we can see what's going on
+                            ProgressHUD.show(withStatus: BridgeSetupControllerHUD.gettingObservation.description)
+                            theBridge.getObservation(allParams: true, { _, error in         // Get a "FULL" observation so we can see what's going on outside
                                 if error == nil {
                                     guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")
@@ -291,7 +333,6 @@ class BridgeSetupController: NSViewController, Preferenceable {
                                     theDelegate?.updateBridge()                 // Save our new bridge for the rest of the system to use
                                     self.updateBridgeMetadata()                 // We have everything we need; update the display
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
-                                    self.progressIndicator.stopAnimation(nil)   // Stop the progress spinner
                                 } else {
                                     log.error(error.value)  // Error with getObservation
                                 }
@@ -449,14 +490,12 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     // Eat it; the user selected cancel ... do nothing
                     break
                 case .alertSecondButtonReturn:
-                    self.progressIndicator.startAnimation(nil)
                     self.initializeBridge()
                 default:
                     break
                 }
             }
         } else {    // We're good ... no previous bridge
-            progressIndicator.startAnimation(nil)
             initializeBridge()
         }
     }

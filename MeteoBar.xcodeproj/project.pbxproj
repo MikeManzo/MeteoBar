@@ -14,6 +14,7 @@
 		27470AAF221437D800C7AEA9 /* QJHighlightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */; };
 		27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */; };
 		275934D32221D42000910F8C /* controls.png in Resources */ = {isa = PBXBuildFile; fileRef = 275934D22221D42000910F8C /* controls.png */; };
+		2763D2C722355C110032E6A5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2763D2C622355C110032E6A5 /* ProgressHUD.swift */; };
 		2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2771085322011CA0009A3C86 /* CollectionItemDropView.swift */; };
 		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
 		277658DD21EA6063007BA05A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 277658DC21EA6063007BA05A /* Assets.xcassets */; };
@@ -105,6 +106,7 @@
 		27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightImageView.swift; sourceTree = "<group>"; };
 		27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightButtonView.swift; sourceTree = "<group>"; };
 		275934D22221D42000910F8C /* controls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls.png; sourceTree = "<group>"; };
+		2763D2C622355C110032E6A5 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		2771085322011CA0009A3C86 /* CollectionItemDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemDropView.swift; sourceTree = "<group>"; };
 		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		277658DA21EA6062007BA05A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 		27AA71222221986100AFDD78 /* Third Party Elements */ = {
 			isa = PBXGroup;
 			children = (
+				2763D2C622355C110032E6A5 /* ProgressHUD.swift */,
 				27937BF12221C12F00E0E5F3 /* OGSwitch.swift */,
 			);
 			path = "Third Party Elements";
@@ -661,6 +664,7 @@
 				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
+				2763D2C722355C110032E6A5 /* ProgressHUD.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
 				27E966A0222AD4470084C4B6 /* MeteoUSWeather.swift in Sources */,
