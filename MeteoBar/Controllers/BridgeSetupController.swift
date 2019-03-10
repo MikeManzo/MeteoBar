@@ -67,6 +67,36 @@ class BridgeSetupController: NSViewController, Preferenceable {
         super.viewWillAppear()
     }
 
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+        print("Mouse Down:\(event.locationInWindow) in Window: \(String(describing: event.window))")
+    }
+   
+    override func viewDidAppear() {
+        click()
+     }
+    
+    ///// REMOVE /////
+    private func click() {
+        DispatchQueue.main.async { [unowned self] in
+            if !self.view.isHidden {
+                let point = CGPoint(x: 391, y: 421) //CGPoint(x: self.view.frame.height/2, y: self.view.frame.width/2)
+                let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)
+                let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
+                
+                let theDownEvent = NSEvent(cgEvent: mouseDown!)
+                let theUpEvent = NSEvent(cgEvent: mouseUp!)
+                
+                self.view.superview!.window?.sendEvent(theDownEvent!)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                    self.view.window?.sendEvent(theUpEvent!)
+                    print("Click:\(point) in Window:\(String(describing: self.view.superview!.window))")
+                })
+            }
+        }
+    }
+    ///// REMOVE /////
+
     override func viewWillDisappear() {
         super.viewWillDisappear()
         
@@ -174,6 +204,10 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         self.healthIcon.toolTip = "No valid data recieved in over 2 minutes"
                     }
                     // Update the status Icon
+                    
+                    if self.validateIPAddress(self.bridgeIP.stringValue) {
+                        self.connectButton.isEnabled = true
+                    }
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
@@ -308,7 +342,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 case is MKMeteoPolygon:     // Turn off the polygon
                     if (mapOverlay as? MKMeteoPolygon)?.polyName == "Forecast" {
                         mapView.removeOverlay(mapOverlay)
-                        print("Removing Forecast Polygon")
+//                        print("Removing Forecast Polygon")
                     }
                 default:
                     break
@@ -327,7 +361,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     polyline.lineName = type
                     self.mapView.addOverlay(polyline)
                     self.mapView.addOverlay(polygon)
-                    print ("Adding forecast overlays")
+//                    print ("Adding forecast overlays")
                 default:
                     break
                 }
@@ -365,7 +399,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 case is MKMeteoPolygon:     // Turn off the polygon
                     if (mapOverlay as? MKMeteoPolygon)?.polyName == "County" {
                         mapView.removeOverlay(mapOverlay)
-                        print("Removing Forecast Polygon")
+//                        print("Removing Forecast Polygon")
                     }
                 default:
                     break
@@ -384,7 +418,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     polyline.lineName = type
                     self.mapView.addOverlay(polyline)
                     self.mapView.addOverlay(polygon)
-                    print ("Adding county overlays")
+//                    print ("Adding county overlays")
                 default:
                     break
                 }
@@ -483,13 +517,13 @@ extension BridgeSetupController: MKMapViewDelegate {
             switch (overlay as? MKMeteoPolyline)!.lineName {
             case "Forecast":
                 renderer.strokeColor = NSColor.blue
-                print("Forecast Polyline")
+//                print("Forecast Polyline")
             case "County":
                 renderer.strokeColor = NSColor.green
-                print("County Polyline")
+ //               print("County Polyline")
             case "Alert":
                 renderer.strokeColor = NSColor.red
-                print("Alert Polyline")
+//                print("Alert Polyline")
             default:
                 break
             }
@@ -500,13 +534,13 @@ extension BridgeSetupController: MKMapViewDelegate {
             switch (overlay as? MKMeteoPolygon)!.polyName {
             case "Forecast":
                 renderer.fillColor = NSColor.blue.withAlphaComponent(0.25)
-                print("Forecast Polygon")
+//                print("Forecast Polygon")
             case "County":
                 renderer.fillColor = NSColor.green.withAlphaComponent(0.25)
-                print("County Polygon")
+//                print("County Polygon")
             case "Alert":
                 renderer.fillColor = NSColor.red.withAlphaComponent(0.25)
-                print("Alert Polygon")
+//                print("Alert Polygon")
             default:
                 break
             }

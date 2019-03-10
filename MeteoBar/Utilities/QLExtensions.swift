@@ -175,7 +175,6 @@ extension MKMeteoPolyline {
         var locations: [CLLocation] = []
         var lineName: String?
         for (name, polyline) in myData {
-            print ("Name-->\(name)")
             lineName = name
             for item in polyline {
                 if let latitude = item["latitude"]?.doubleValue,

@@ -108,7 +108,7 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         forecastEndpoint = try container.decode(String.self, forKey: .forecastEndpoint)
         closestCity = try container.decode(String.self, forKey: .closestCity)
         
-        print ("MeteoWeather decoded: \(boundingShape?.pointCount ?? -1) points")
+//        print ("MeteoWeather decoded: \(boundingShape?.pointCount ?? -1) points")
     }
     
     /// We have to roll our own Codable support due to MKMeteoPolyline
@@ -138,6 +138,6 @@ class MeteoWeather: NSObject, Codable, MeteoBaseWeather {
         try container.encode(forecastHourlyEndpoint, forKey: .forecastHourlyEndpoint)
         try container.encode(forecastEndpoint, forKey: .forecastEndpoint)
         try container.encode(closestCity, forKey: .closestCity)
-        print ("MeteoWeather encoded: \(boundingShape?.pointCount ?? -1) points")
+//        print ("MeteoWeather encoded: \(boundingShape?.pointCount ?? -1) points")
     }
 }

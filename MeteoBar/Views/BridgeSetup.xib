@@ -198,6 +198,7 @@
                                 <connections>
                                     <action selector="ipReturnSelected:" target="-2" id="ink-4m-Ert"/>
                                     <outlet property="delegate" destination="-2" id="o2f-Dz-zBW"/>
+                                    <outlet property="nextKeyView" destination="pAs-4c-Dfs" id="0Oo-nO-FZ2"/>
                                 </connections>
                             </textField>
                             <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PM5-k1-Jha">
@@ -208,6 +209,9 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="T4i-9V-zMJ" id="vHe-G6-I9F"/>
+                                </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B6C-OB-589">
                                 <rect key="frame" x="310" y="266" width="143" height="17"/>
@@ -236,6 +240,7 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="connectClicked:" target="-2" id="OYA-8K-Zw4"/>
+                                    <outlet property="nextKeyView" destination="B3i-wb-mTh" id="6tm-3O-Ep8"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsT-Zg-E9G">
@@ -303,6 +308,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="forecastSwitchClicked:" target="-2" id="RGr-8N-RuM"/>
+                        <outlet property="nextKeyView" destination="mod-bX-cQk" id="eB5-Ne-fEG"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzV-5C-ko7">
@@ -326,6 +332,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="countySwitchClicked:" target="-2" id="HAu-4c-lKR"/>
+                        <outlet property="nextKeyView" destination="Uf0-4D-66N" id="E41-CQ-RBQ"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CQ7-Q4-6oh">
@@ -349,6 +356,7 @@
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="alertSwicthClicked:" target="-2" id="adX-Ii-4dU"/>
+                        <outlet property="nextKeyView" destination="yb9-zt-fLn" id="EXd-oq-JQD"/>
                     </connections>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7B9-8j-CAn">
@@ -369,6 +377,7 @@
                     </buttonCell>
                     <connections>
                         <action selector="mapZoomClicked:" target="-2" id="gT9-LF-699"/>
+                        <outlet property="nextKeyView" destination="PM5-k1-Jha" id="SMn-0s-wy2"/>
                     </connections>
                 </button>
             </subviews>

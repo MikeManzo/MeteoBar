@@ -44,8 +44,7 @@ public final class PreferencesWindowController: NSWindowController {
             tabViewController.tabView.selectTabViewItem(at: tabIndex)
         }
         
-		showWindow(self)
-		NSApp.activate(ignoringOtherApps: true)
+		showWindow(nil)
 	}
 
 	public func hideWindow() {
@@ -56,5 +55,13 @@ public final class PreferencesWindowController: NSWindowController {
         if tabIndex >= 0 && tabIndex < tabViewController.tabView.numberOfTabViewItems {
             tabViewController.tabView.selectTabViewItem(at: tabIndex)
         }
+    }
+    
+    public override func windowDidLoad() {
+        super.windowDidLoad()
+        
+        self.window?.center()
+        self.window?.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
 }

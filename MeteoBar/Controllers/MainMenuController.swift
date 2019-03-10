@@ -166,34 +166,27 @@ class MainMenuController: NSViewController {
     ///
     /// - Parameter sender: The Caller who sent the message
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
-        sender.superview?.window?.close()
-        preferencesView.showWindow(tabIndex: 1)
         DispatchQueue.main.async { [unowned self] in
-            self.preferencesView.becomeFirstResponder()
+            sender.superview?.window?.orderOut(self)
+            self.preferencesView.showWindow(tabIndex: 1)
         }
     }
     
-    /// Show the preferences window the Configuration Tab selected
+    /// Show the preferences Tab
     ///
     /// - Parameter sender: The Caller who sent the message
+    ///
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
-        sender.superview?.window?.close()
-        preferencesView.showWindow(tabIndex: 2)
         DispatchQueue.main.async { [unowned self] in
-            self.preferencesView.becomeFirstResponder()
+            sender.superview?.window?.orderOut(self)
+            self.preferencesView.showWindow(tabIndex: 2)
         }
     }
     
-    /// Show the "About" Window
+    /// Show the preferences tab
     ///
     /// - Parameter sender: The Caller who sent the message
-    @IBAction func aboutMeteoBar(_ sender: Any) {
-        presentAsModalWindow(aboutView)
-    }
-    
-    /// Show the preferences window
     ///
-    /// - Parameter sender: The Caller who sent the message
     @IBAction func meteoBarPreferences(_ sender: Any) {
         preferencesView.showWindow()
         guard let myView = sender as? NSView else {
@@ -202,22 +195,31 @@ class MainMenuController: NSViewController {
         myView.superview?.window?.close()
     }
     
-    /// Show the preferences window
+    /// Show the User Interface configuration tab
     ///
     /// - Parameter sender: The Caller who sent the message
+    ///
     @IBAction func showUIConfiguration(_ sender: QJHighlightButtonView) {
-        sender.superview?.window?.close()
-        preferencesView.showWindow(tabIndex: 3)
         DispatchQueue.main.async { [unowned self] in
-            self.preferencesView.window!.makeFirstResponder(nil)
-            self.preferencesView.window!.makeKey()
+            sender.superview?.window?.orderOut(self)
+            self.preferencesView.showWindow(tabIndex: 3)
         }
+    }
+
+    /// Show the "About" Window
+    ///
+    /// - Parameter sender: The Caller who sent the message
+    ///
+    @IBAction func aboutMeteoBar(_ sender: Any) {
+        (sender as AnyObject).superview?.window?.orderOut(self)
+        presentAsModalWindow(aboutView)
     }
 
     /// Quit - we're done!
     ///
     /// - Parameter sender: The Caller who sent the message
+    ///
     @IBAction func quitMeteoBar(_ sender: Any) {
         NSApplication.shared.terminate(self)
-    }
+    }    
 }

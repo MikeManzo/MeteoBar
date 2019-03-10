@@ -22,8 +22,15 @@ class QJHighlightButtonView: NSButton {
         }
     }
     
-    override func mouseEntered(with theEvent: NSEvent) { isHighlighted = true }
-    override func mouseExited(with theEvent: NSEvent) { isHighlighted = false }
+    override func mouseEntered(with theEvent: NSEvent) {
+        super.mouseEntered(with: theEvent)
+        isHighlighted = true
+    }
+    
+    override func mouseExited(with theEvent: NSEvent) {
+        super.mouseExited(with: theEvent)
+        isHighlighted = false
+    }
     
     override func awakeFromNib() {
         trackingArea = NSTrackingArea(rect: NSRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height),
