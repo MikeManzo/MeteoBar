@@ -93,14 +93,13 @@ class BridgeSetupController: NSViewController, Preferenceable {
     }
    
     override func viewDidAppear() {
-        click()
-     }
+    }
     
     ///// REMOVE /////
     private func click() {
         DispatchQueue.main.async { [unowned self] in
             if !self.view.isHidden {
-                let point = CGPoint(x: 391, y: 421) //CGPoint(x: self.view.frame.height/2, y: self.view.frame.width/2)
+                let point = CGPoint(x: self.view.frame.height/2, y: self.view.frame.width/2)
                 let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)
                 let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
                 
@@ -145,8 +144,10 @@ class BridgeSetupController: NSViewController, Preferenceable {
             return
         }
         
+        if ProgressHUD.isVisible() {
+            ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpDisplayElements.description)
+        }
         // Grab the image <from the meteobridge> for the platform hosting meteobridge
-        ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpDisplayElements.description)
         WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
             if error == nil {
                 // Let's update the user interface
@@ -185,7 +186,9 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         }
                     }
                     self.updateMapView()                        // Update the map based on the latest
-                    ProgressHUD.show(withStatus: BridgeSetupControllerHUD.startingContinuousMonitoring.description)
+                    if ProgressHUD.isVisible() {
+                        ProgressHUD.show(withStatus: BridgeSetupControllerHUD.startingContinuousMonitoring.description)
+                    }
                     
                     // Update the Latitude & Longitude in human readable form
                     let dms = theBridge.coordinate.dms
@@ -235,7 +238,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
 
                     // Dismiss our HUD if it's showing
                     if ProgressHUD.isVisible() {
-                      ProgressHUD.dismiss(delay: 1.0)
+                        ProgressHUD.dismiss(delay: 1.0)
                     }
                     // Dismiss our HUD if it's showing
                 }
