@@ -36,6 +36,7 @@ class MeteoCompassView: SKView {
     var prevDirection = 359.0
 
     // MARK: - Compass
+    var caratPathNode: SKShapeNode?
     var compassNeedle: SKShapeNode?
     var compassFace: SKShapeNode?
     var centerNode: SKShapeNode?
@@ -196,23 +197,21 @@ class MeteoCompassView: SKView {
     }
     
     @objc private func observationRecieved(_ theNotification: Notification) {
-        if !isHidden {  // Save the cycles if we're not visible
-            upperLeft?.update()
-            upperRight?.update()
-            lowerLeft?.update()
-            lowerRight?.update()
-            
-            guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
-                log.warning(MeteoCompassViewError.windSensorError)
-                return
-            }
-            
-            guard let value = sensor.measurement.value else {
-                log.warning(MeteoCompassViewError.windSensorError)
-                return
-            }
-            windDirection(direction: Double(value)!)
+        upperLeft?.update()
+        upperRight?.update()
+        lowerLeft?.update()
+        lowerRight?.update()
+        
+        guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
+            log.warning(MeteoCompassViewError.windSensorError)
+            return
         }
+        
+        guard let value = sensor.measurement.value else {
+            log.warning(MeteoCompassViewError.windSensorError)
+            return
+        }
+        windDirection(direction: Double(value)!)
     }
     // MARK: - Shapes
 
@@ -221,7 +220,7 @@ class MeteoCompassView: SKView {
     /// - Parameters:
     ///   - startDegrees: Degrees to start
     ///   - endDegrees: Degrees to end
-    func windDirection(direction: Double) {
+/*    func windDirection(direction: Double) {
         let offset = (frame.width / 2.0)
         let myTranslation = CGAffineTransform(translationX: offset, y: offset)
         let start = CGFloat((90.0 - prevDirection) * Double.pi/180.0)
@@ -249,6 +248,42 @@ class MeteoCompassView: SKView {
         prevDirection = direction
         
         let myAction = SKAction.follow(pathNode.path!, asOffset: false, orientToPath: true, duration: 3)
+        compassNeedle!.run(myAction)
+    }
+*/
+    func windDirection(direction: Double) {
+        let offset = (frame.width / 2.0)
+        let myTranslation = CGAffineTransform(translationX: offset, y: offset)
+        let start = CGFloat((90.0 - prevDirection) * Double.pi/180.0)
+        let end = CGFloat((90.0 - direction) * Double.pi/180.0)
+
+        let myNewPath = CGMutablePath()
+        
+        if start - end == 0.0 {
+            return  // No change in direction; no need to do anything ...
+        }
+        
+        if caratPathNode != nil {
+            theKitScene!.removeChildren(in: [caratPathNode!])
+        }
+        
+        if direction - prevDirection  <= -36.0 { // Just reverse it if it's between +- 36°
+            compassNeedle!.xScale = -1
+            myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
+                             endAngle: end, clockwise: false, transform: myTranslation)
+            
+        } else {
+            compassNeedle!.xScale = 1
+            myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
+                             endAngle: end, clockwise: true, transform: myTranslation)
+        }
+        
+        caratPathNode = SKShapeNode(path: myNewPath)
+        caratPathNode!.strokeColor = SKColor.clear
+        theKitScene!.addChild(caratPathNode!)
+        prevDirection = direction
+        
+        let myAction = SKAction.follow(caratPathNode!.path!, asOffset: false, orientToPath: true, duration: 3)
         compassNeedle!.run(myAction)
     }
     
