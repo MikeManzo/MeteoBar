@@ -217,40 +217,13 @@ class MeteoCompassView: SKView {
 
     /// Move the carat to face the direction the wind is blowing
     ///
+    /// ## Notes ##
+    /// [Forward/Reverse](https://stackoverflow.com/questions/26089943/animate-skspritenode-in-circle-pause-and-reverse#)
+    ///
     /// - Parameters:
     ///   - startDegrees: Degrees to start
     ///   - endDegrees: Degrees to end
-/*    func windDirection(direction: Double) {
-        let offset = (frame.width / 2.0)
-        let myTranslation = CGAffineTransform(translationX: offset, y: offset)
-        let start = CGFloat((90.0 - prevDirection) * Double.pi/180.0)
-        let end = CGFloat((90.0 - direction) * Double.pi/180.0)
-        
-        let myNewPath = CGMutablePath()
-
-        if start-end == 0.0 {
-            return  // No need to do anything ...
-        }
-
-        if direction - prevDirection  <= -10.0 { // [36] Just reverse it if it's between +- 30° // compassNeedle.xScale = -1
-            compassNeedle!.xScale = -1
-            myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
-                             endAngle: end, clockwise: false, transform: myTranslation)
-        } else {
-            compassNeedle!.xScale = 1
-            myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
-                             endAngle: end, clockwise: true, transform: myTranslation)
-        }
-
-        let pathNode = SKShapeNode(path: myNewPath)
-        pathNode.strokeColor = SKColor.clear
-        theKitScene!.addChild(pathNode)
-        prevDirection = direction
-        
-        let myAction = SKAction.follow(pathNode.path!, asOffset: false, orientToPath: true, duration: 3)
-        compassNeedle!.run(myAction)
-    }
-*/
+    ///
     func windDirection(direction: Double) {
         let offset = (frame.width / 2.0)
         let myTranslation = CGAffineTransform(translationX: offset, y: offset)
