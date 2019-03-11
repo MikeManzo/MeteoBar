@@ -30,6 +30,7 @@ enum CodingKeys: String, CodingKey {
     case compassURSensor
     case compassLLSensor
     case compassLRSensor
+    case logFileEnabled
     case menubarSensor
     case weatherAlerts
 }
@@ -81,6 +82,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var showForecastPolygon: Bool = true
     var showCountyPolygon: Bool = true
     var showAlertPolygon: Bool = true
+    var logFileEnabled: Bool = true
 
     // MARK: - Codable Compliance
     /// Required for an empty object (because we hve defaults above)
@@ -100,6 +102,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         showForecastPolygon = try container.decode(Bool.self, forKey: .showForecastPolygon)
         showCountyPolygon = try container.decode(Bool.self, forKey: .showCountyPolygon)
         showAlertPolygon = try container.decode(Bool.self, forKey: .showAlertPolygon)
+        logFileEnabled = try container.decode(Bool.self, forKey: .logFileEnabled)
         weatherAlerts = try container.decode(Bool.self, forKey: .weatherAlerts)
         
         var colorData = try container.decode(Data.self, forKey: .compassCardinalMinorTickColor)
@@ -161,6 +164,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         try container.encode(showForecastPolygon, forKey: .showForecastPolygon)
         try container.encode(showCountyPolygon, forKey: .showCountyPolygon)
         try container.encode(showAlertPolygon, forKey: .showAlertPolygon)
+        try container.encode(logFileEnabled, forKey: .logFileEnabled)
         try container.encode(weatherAlerts, forKey: .weatherAlerts)
 
         var colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMinorTickColor)
@@ -237,6 +241,7 @@ extension MeteoPreferences {
         showForecastPolygon             = true
         showCountyPolygon               = true
         showAlertPolygon                = true
+        logFileEnabled                  = true
     }
     
     func resetCompassCardinalMinorTickColor() -> SKColor {
@@ -328,16 +333,24 @@ extension MeteoPreferences {
         weatherAlerts = true
         return weatherAlerts
     }
+
     func resetShowForecastPolygon() -> Bool {
         showForecastPolygon = true
         return showForecastPolygon
     }
+
     func resetShowCountyPolygon() -> Bool {
         showCountyPolygon = true
         return showCountyPolygon
     }
+
     func resetShowAlertPolygon() -> Bool {
         showAlertPolygon = true
         return showAlertPolygon
+    }
+
+    func resetLogFileEnabled() -> Bool {
+        logFileEnabled = true
+        return logFileEnabled
     }
 }

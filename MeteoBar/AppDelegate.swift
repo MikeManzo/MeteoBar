@@ -50,20 +50,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// Meteobar is up and we're ready to go
     ///
+    /// Library⁩ ▸ ⁨Containers⁩ ▸ ⁨com.quantumjoker.meteobar⁩ ▸ ⁨Data⁩
+    /// ~/Library/Containers/com.quantumjoker.meteobar/Data/meteobar_console.log
+    ///
     /// - Parameter aNotification: <#aNotification description#>
+    ///
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-
         // SwiftyBeaver Config
         let console         = ConsoleDestination()
         console.format      = "$DHH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M"
         console.useNSLog    = true
         log.addDestination(console)
-        // SwiftyBeaver Config
         
-/*        if theDefaults == nil {
-            theDefaults = MeteoPreferences()
-            Defaults[.meteoBarDefaults] = theDefaults
-        } */
+        if (theDefaults?.logFileEnabled)! {
+            enableFileLogging(enable: true)
+        }
+        // SwiftyBeaver Config
     }
 
     /// MeteoBar is about to close ... clean-up
@@ -71,18 +73,63 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// - Parameter aNotification: <#aNotification description#>
     func applicationWillTerminate(_ aNotification: Notification) {
         updateMeteoBar()
+        log.info("Meteobar exiting gracefully")
     }
     
+    /// Start using the file logger
+    ///
+    func enableFileLogging(enable: Bool) {
+        switch enable {
+        case true:
+            for aDestination in log.destinations {
+                switch aDestination {
+                case FileDestination():
+                    log.warning("File Logging Already Enabled ... taking no action")
+                    return
+                default:
+                    break
+                }
+            }
+            
+            let file            = FileDestination()
+            file.logFileURL     = URL(fileURLWithPath: "meteobar_console.log")
+            file.format         = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
+            file.minLevel       = .info
+            
+            log.addDestination(file)
+            log.info("File Logging Enabled")
+        case false:
+            for aDestination in log.destinations {
+                switch aDestination {
+                case FileDestination():
+                    log.info("File Logging Disabled")
+                    log.removeDestination(aDestination)
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    /// Save the current bridge to user defaults
+    ///
     func updateBridge() {
         Defaults[.bridgesDefaults]  = theBridge
+        log.info("Bridge configuration updated")
     }
     
+    /// Save the current UI configuration to the user defaults
+    ///
     func updateConfiguration() {
         Defaults[.meteoBarDefaults] = theDefaults
+        log.info("User interface configuration updated")
     }
     
+    /// Save the entire app's configuration to user defaults
+    ///
     func updateMeteoBar() {
         Defaults[.bridgesDefaults]  = theBridge
         Defaults[.meteoBarDefaults] = theDefaults
+        log.info("Meteobar configuration updated")
     }
 }

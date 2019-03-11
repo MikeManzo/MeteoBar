@@ -474,7 +474,7 @@ class MeteoCompassView: SKView {
         let ULMinorLabel: SKLabelNode = SKLabelNode(text: "") // UL Minor
         ULMinorLabel.verticalAlignmentMode = .center
         ULMinorLabel.horizontalAlignmentMode = .center
-        ULMinorLabel.fontSize = 12
+        ULMinorLabel.fontSize = 11
         ULMinorLabel.name = "MinorSensor"
         ULMinor.addChild(ULMinorLabel)
         ULMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -516,7 +516,7 @@ class MeteoCompassView: SKView {
         let URMinorLabel: SKLabelNode = SKLabelNode(text: "") // UR Minor
         URMinorLabel.verticalAlignmentMode = .center
         URMinorLabel.horizontalAlignmentMode = .center
-        URMinorLabel.fontSize = 12
+        URMinorLabel.fontSize = 11
         URMinorLabel.name = "MinorSensor"
         URMinor.addChild(URMinorLabel)
         URMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -558,7 +558,7 @@ class MeteoCompassView: SKView {
         let LLMinorLabel: SKLabelNode = SKLabelNode(text: "") // LL Minor
         LLMinorLabel.verticalAlignmentMode = .center
         LLMinorLabel.horizontalAlignmentMode = .center
-        LLMinorLabel.fontSize = 12
+        LLMinorLabel.fontSize = 11
         LLMinorLabel.name = "MinorSensor"
         LLMinor.addChild(LLMinorLabel)
         LLMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
@@ -600,7 +600,7 @@ class MeteoCompassView: SKView {
         let LRMinorLabel: SKLabelNode = SKLabelNode(text: "") // LR Minor
         LRMinorLabel.verticalAlignmentMode = .center
         LRMinorLabel.horizontalAlignmentMode = .center
-        LRMinorLabel.fontSize = 12
+        LRMinorLabel.fontSize = 11
         LRMinorLabel.name = "MinorSensor"
         LRMinor.addChild(LRMinorLabel)
         LRMinor.fillColor = (theDelegate?.theDefaults?.compassFaceColor)! // SKColor.black
