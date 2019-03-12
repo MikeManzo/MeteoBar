@@ -236,11 +236,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     }
                     // Enable the connect button
 
-                    // Dismiss our HUD if it's showing
-                    if ProgressHUD.isVisible() {
-                        ProgressHUD.dismiss(delay: 1.0)
-                    }
-                    // Dismiss our HUD if it's showing
+                    self.dismissHUD()
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
@@ -338,17 +334,30 @@ class BridgeSetupController: NSViewController, Preferenceable {
                                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil, userInfo: nil)
                                 } else {
                                     log.error(error.value)  // Error with getObservation
+                                    self.dismissHUD()
                                 }
                             })
                         }
                     } else {
                         log.error(error.value)  // Error with allSystemParamaters
+                        self.dismissHUD()
                     }
                 }
             } else {
                 log.error(error.value)  // Error with initializeBridgeSpecification
+                self.dismissHUD()
             }
         })
+    }
+    
+    /// Quick helper to dismiss the HUD if it's visible
+    ///
+    fileprivate func dismissHUD() {
+        // Dismiss our HUD if it's showing
+        if ProgressHUD.isVisible() {
+            ProgressHUD.dismiss(delay: 1.0)
+        }
+        // Dismiss our HUD if it's showing
     }
     
     /// MARK - Actions

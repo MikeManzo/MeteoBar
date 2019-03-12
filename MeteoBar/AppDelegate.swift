@@ -94,7 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let file            = FileDestination()
             file.logFileURL     = URL(fileURLWithPath: "meteobar_console.log")
             file.format         = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
-            file.minLevel       = .info
+            file.minLevel       = .error
             
             log.addDestination(file)
             log.info("File Logging Enabled")
