@@ -235,8 +235,14 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         self.connectButton.isEnabled = true
                     }
                     // Enable the connect button
+                    
+                    // Enable the zoom button
+                    self.mapZoomButton.isEnabled = true
+                    // Enable the zoom button
 
+                    // We made it; dismiss the HUD
                     self.dismissHUD()
+                    // We made it; dismiss the HUD
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
@@ -253,14 +259,15 @@ class BridgeSetupController: NSViewController, Preferenceable {
             mapView.centerCoordinate = (theDelegate?.theBridge!.coordinate)!
             
             // Setup MapKitView
-            let mapCamera = MKMapCamera()
-            mapCamera.centerCoordinate = mapView.centerCoordinate
-            mapCamera.altitude  = 250.0
-            mapCamera.pitch     = 30.0
-            mapCamera.heading   = 30.0
+            let mapCamera               = MKMapCamera()
+            mapCamera.centerCoordinate  = mapView.centerCoordinate
+            mapCamera.altitude          = 250.0
+            mapCamera.pitch             = 30.0
+            mapCamera.heading           = 30.0
+            mapView.mapType             = MKMapType.satellite
+            mapView.camera              = mapCamera
+            // Setup MapKitView
             
-            mapView.mapType = MKMapType.satellite
-            mapView.camera = mapCamera
             mapView.fitToAnnotaions(animated: true, shouldIncludeUserAccuracyRange: true,
                                     edgePadding: NSEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0))
         } else {
@@ -362,7 +369,11 @@ class BridgeSetupController: NSViewController, Preferenceable {
     
     /// MARK - Actions
     @IBAction func mapZoomClicked(_ sender: Any) {
-    
+        guard let theBridge = theDelegate?.theBridge! else {
+            log.error(BridgeSetupControllerError.noBridge)
+            return
+        }
+        mapView.zoomToPoint(toCenterCoordinate: theBridge.coordinate, zoomLevel: 90)
     }
     
     /// Toggle the forecast Polygon
@@ -635,6 +646,7 @@ extension BridgeSetupController: NSControlTextEditingDelegate {
     }
 }
 
+/// Helper class to add a name property to identfy different polygons
 class MKMeteoPolygon: MKPolygon {
     var polyName: String = ""
 }

@@ -231,7 +231,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pAs-4c-Dfs">
+                            <button toolTip="Try to connect to Meteobridge" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pAs-4c-Dfs">
                                 <rect key="frame" x="424" y="341" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <buttonCell key="cell" type="bevel" title="Go" bezelStyle="regularSquare" image="play-button" imagePosition="above" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="0Fs-u9-0EU">
@@ -292,7 +292,7 @@
                         </subviews>
                     </view>
                 </box>
-                <customView toolTip="Toggle Collection" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B3i-wb-mTh" customClass="OGSwitch" customModule="MeteoBar" customModuleProvider="target">
+                <customView toolTip="Toggle Forecast Overlay" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B3i-wb-mTh" customClass="OGSwitch" customModule="MeteoBar" customModuleProvider="target">
                     <rect key="frame" x="564" y="387" width="30" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <userDefinedRuntimeAttributes>
@@ -364,10 +364,10 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yb9-zt-fLn">
+                <button toolTip="Zoom Map To Center on Meteobridge" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yb9-zt-fLn">
                     <rect key="frame" x="886" y="384" width="24" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" title="Go" bezelStyle="regularSquare" image="map-zoom" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="wwd-DE-XOR">
+                    <buttonCell key="cell" type="bevel" title="Go" bezelStyle="regularSquare" image="map-zoom" imagePosition="above" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="wwd-DE-XOR">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>

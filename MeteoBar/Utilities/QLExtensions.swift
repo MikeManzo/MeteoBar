@@ -94,10 +94,23 @@ public extension MKMultiPoint {
 }
 
 ///
-/// [Zooms out a MKMapView to enclose all its annotations](https://gist.github.com/andrewgleave/915374)
+///
 ///
 extension MKMapView {
+    /// This Mercator is valid for 21 zoom levels
+    private var mercatorOffset: Double {
+        return 268435456.0
+    }
+    
+    /// This Mercator is valid for 21 zoom levels
+    private var mercatorRadius: Double {
+        return 85445659.44705395
+    }
+
     /// Zooms out a MKMapView to enclose all its annotations (inc. current location)
+    ///
+    ///  ## Notes ##
+    ///    [Zooms out to enclose all annotations](https://gist.github.com/andrewgleave/915374)
     ///
     /// - Parameter animated: animate the map when we wish to change extent
     /// - Parameter shouldIncludeUserAccuracyRange: show accuracy range circle
@@ -115,6 +128,91 @@ extension MKMapView {
         
         let zoomRect = MKMapRect.boundingForOverlays(forOverlays: mapOverlays)
         setVisibleMapRect(zoomRect, edgePadding: edgePadding, animated: animated)
+    }
+    
+    /// Zoom map to desired zoom level
+    ///
+    /// - Parameters:
+    ///   - centerCoordinate: point to zoom on
+    ///   - zoomLevel: How far to zoom
+    ///   - shouldAnimate: should we animate the map while zooming
+    ///
+    func zoomToPoint(toCenterCoordinate centerCoordinate: CLLocationCoordinate2D, zoomLevel: UInt, shouldAnimate: Bool = true) {
+        let zoomLevel = min(zoomLevel, 20)
+        let span = self.coordinateSpan(centerCoordinate: centerCoordinate, zoomLevel: zoomLevel)
+        let region = MKCoordinateRegion(center: centerCoordinate, span: span)
+        self.setRegion(region, animated: shouldAnimate)
+    }
+    
+    /// Get Pixel on Map for Given Longitude
+    ///
+    /// - Parameter longitude: longitude
+    /// - Returns: pixel value
+    ///
+    private func longitudeToPixelSpaceX(longitude: Double) -> Double {
+        return round(mercatorOffset + mercatorRadius * longitude * Double.pi / 180.0)
+    }
+    
+    /// Get Pixel on Map for Given Latitude
+    ///
+    /// - Parameter latitude: latitude
+    /// - Returns: pixel value for given latitude
+    ///
+    private func latitudeToPixelSpaceY(latitude: Double) -> Double {
+        return round(mercatorOffset - mercatorRadius * simd.log((1 + sin(latitude * Double.pi / 180.0)) / (1 - sin(latitude * Double.pi / 180.0))) / 2.0)
+    }
+    
+    /// Get Longitude for given Pixel
+    ///
+    /// - Parameter pixelX: pixel
+    /// - Returns: longitude for given pixel
+    ///
+    private  func pixelSpaceXToLongitude(pixelX: Double) -> Double {
+        return ((round(pixelX) - mercatorOffset) / mercatorRadius) * 180.0 / Double.pi
+    }
+    
+    /// Get Latitude for given Pixel
+    ///
+    /// - Parameter pixelX: pixel
+    /// - Returns: latitude for given pixel
+    ///
+    private func pixelSpaceYToLatitude(pixelY: Double) -> Double {
+        return (Double.pi / 2.0 - 2.0 * atan(exp((round(pixelY) - mercatorOffset) / mercatorRadius))) * 180.0 / Double.pi
+    }
+    
+    /// Determines the map span of the given Lat/Lon
+    ///
+    /// - Parameters:
+    ///   - mapView: given MapView
+    ///   - centerCoordinate: Lat/Lon
+    ///   - zoomLevel: desird zoom level
+    /// - Returns: Map Span
+    ///
+    private func coordinateSpan(centerCoordinate: CLLocationCoordinate2D, zoomLevel: UInt) -> MKCoordinateSpan {
+        let centerPixelX = longitudeToPixelSpaceX(longitude: centerCoordinate.longitude)
+        let centerPixelY = latitudeToPixelSpaceY(latitude: centerCoordinate.latitude)
+        
+        let zoomExponent = Double(20 - zoomLevel)
+        let zoomScale = pow(2.0, zoomExponent)
+        
+        let mapSizeInPixels = self.bounds.size
+        let scaledMapWidth =  Double(mapSizeInPixels.width) * zoomScale
+        let scaledMapHeight = Double(mapSizeInPixels.height) * zoomScale
+        
+        let topLeftPixelX = centerPixelX - (scaledMapWidth / 2)
+        let topLeftPixelY = centerPixelY - (scaledMapHeight / 2)
+        
+        // find delta between left and right longitudes
+        let minLng = pixelSpaceXToLongitude(pixelX: topLeftPixelX)
+        let maxLng = pixelSpaceXToLongitude(pixelX: topLeftPixelX + scaledMapWidth)
+        let longitudeDelta = maxLng - minLng
+        
+        let minLat = pixelSpaceYToLatitude(pixelY: topLeftPixelY)
+        let maxLat = pixelSpaceYToLatitude(pixelY: topLeftPixelY + scaledMapHeight)
+        let latitudeDelta = -1 * (maxLat - minLat)
+        
+        let span = MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
+        return span
     }
 }
 
