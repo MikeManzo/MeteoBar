@@ -78,6 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// Start using the file logger
     ///
+    /// ## Notes ##
+    ///   [Log to File - SwiftyBeaver Docs](https://docs.swiftybeaver.com/article/10-log-to-file)
+    ///
     func enableFileLogging(enable: Bool) {
         switch enable {
         case true:
@@ -94,7 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let file            = FileDestination()
             file.logFileURL     = URL(fileURLWithPath: "meteobar_console.log")
             file.format         = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
-            file.minLevel       = .error
+            file.minLevel       = .verbose
             
             log.addDestination(file)
             log.info("File Logging Enabled")
