@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27365DE6223802C500CD27A8 /* warning-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 27365DE5223802C500CD27A8 /* warning-red.png */; };
+		27365DE8223802D100CD27A8 /* warning-yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27365DE7223802D100CD27A8 /* warning-yellow.png */; };
+		27365DEB22381BD900CD27A8 /* MeteoWeatherAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27365DEA22381BD900CD27A8 /* MeteoWeatherAlert.swift */; };
 		2744B782220E793600A61514 /* compass-north.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B781220E793600A61514 /* compass-north.png */; };
 		2744B784220E79FC00A61514 /* configurator.png in Resources */ = {isa = PBXBuildFile; fileRef = 2744B783220E79FC00A61514 /* configurator.png */; };
 		27470AAB2212D8F100C7AEA9 /* IconBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AAA2212D8F100C7AEA9 /* IconBarView.swift */; };
@@ -99,6 +102,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27365DE5223802C500CD27A8 /* warning-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning-red.png"; sourceTree = "<group>"; };
+		27365DE7223802D100CD27A8 /* warning-yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning-yellow.png"; sourceTree = "<group>"; };
+		27365DEA22381BD900CD27A8 /* MeteoWeatherAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoWeatherAlert.swift; sourceTree = "<group>"; };
 		2744B781220E793600A61514 /* compass-north.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "compass-north.png"; sourceTree = "<group>"; };
 		2744B783220E79FC00A61514 /* configurator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = configurator.png; sourceTree = "<group>"; };
 		27470AAA2212D8F100C7AEA9 /* IconBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBarView.swift; sourceTree = "<group>"; };
@@ -208,6 +214,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27365DE922381BA000CD27A8 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				27E9669F222AD4470084C4B6 /* MeteoUSWeather.swift */,
+				27E9669D222ACE960084C4B6 /* MeteoWeather.swift */,
+				27365DEA22381BD900CD27A8 /* MeteoWeatherAlert.swift */,
+			);
+			path = Weather;
+			sourceTree = "<group>";
+		};
 		277658CE21EA6062007BA05A = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +314,7 @@
 		27A0545421EB829A001F4913 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				27365DE922381BA000CD27A8 /* Weather */,
 				278348C82222E6AC00D15C68 /* Controls */,
 				27CC8FE921F1816700CDDF66 /* Meteobridge */,
 			);
@@ -369,8 +386,6 @@
 				27CC8FEA21F181D500CDDF66 /* MeteobridgeSensor.swift */,
 				27FCB6FC21F4199700A90715 /* MeteoObservation.swift */,
 				27CC8FEC21F1875D00CDDF66 /* MeteoSensorUnit.swift */,
-				27E9669F222AD4470084C4B6 /* MeteoUSWeather.swift */,
-				27E9669D222ACE960084C4B6 /* MeteoWeather.swift */,
 				27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */,
 			);
 			path = Meteobridge;
@@ -401,6 +416,8 @@
 				27ACA78921FE4DEE00E226C2 /* system.png */,
 				27ACA77B21FE492100E226C2 /* thermometer.png */,
 				27CF042C22073A18007DFFDF /* unknown-battery-color.png */,
+				27365DE7223802D100CD27A8 /* warning-yellow.png */,
+				27365DE5223802C500CD27A8 /* warning-red.png */,
 				27ACA77D21FE4A1A00E226C2 /* wind-sock.png */,
 			);
 			path = Graphics;
@@ -551,6 +568,8 @@
 				27CA786721EBC06A000D517D /* About.xib in Resources */,
 				27BBA4252231273A00DC3B5B /* NWSLogo.png in Resources */,
 				27ACA78621FE4CD500E226C2 /* pressure.png in Resources */,
+				27365DE8223802D100CD27A8 /* warning-yellow.png in Resources */,
+				27365DE6223802C500CD27A8 /* warning-red.png in Resources */,
 				27CF04332207A519007DFFDF /* play-button.png in Resources */,
 				27ACA78A21FE4DEE00E226C2 /* system.png in Resources */,
 				27ACA78421FE4BFF00E226C2 /* humidity.png in Resources */,
@@ -674,6 +693,7 @@
 				27CF043022079C6C007DFFDF /* BridgeSetupController.swift in Sources */,
 				27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */,
 				27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */,
+				27365DEB22381BD900CD27A8 /* MeteoWeatherAlert.swift in Sources */,
 				27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */,
 				27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */,
 				27937BF22221C12F00E0E5F3 /* OGSwitch.swift in Sources */,

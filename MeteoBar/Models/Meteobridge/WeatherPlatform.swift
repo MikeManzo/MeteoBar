@@ -15,10 +15,12 @@ import MapKit
 enum WeatherPlatformError: Error, CustomStringConvertible {
     case NWSPolygonForecastZoneError
     case NWSPolygonCountyZoneError
+    case NWSMalformedDataError
     case platformImageError
     case NWSEndpointError
     case jsonModelError
     case noLongitudeSet
+    case NWSAlertsError
     case noLatitudeSet
     case NWSZoneError
     case urlError
@@ -26,9 +28,11 @@ enum WeatherPlatformError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .NWSEndpointError: return "Cannot retrieve forecast endpoints from the U.S. NAtional Weather Service"
-        case .NWSPolygonForecastZoneError: return "Cannot determine polygon enclosing your forecast zone."
+        case .NWSMalformedDataError: return "Unable to read the alert data from the U.S. National Weather Service"
+        case .NWSPolygonForecastZoneError: return "Cannot determine polygon enclosing your forecast zone"
+        case .NWSAlertsError: return "Unable to determine alerts from the U.S. National Weather Service"
         case .NWSZoneError: return "Cannot retrieve alert zone from the U.S. NAtional Weather Service"
-        case .NWSPolygonCountyZoneError: return "Cannot determine polygon enclosing your county zone."
+        case .NWSPolygonCountyZoneError: return "Cannot determine polygon enclosing your county zone"
         case .urlError: return "Failed to form proper URL to retrieve Meteobridge parameters"
         case .jsonModelError: return "Error reading Meteobridge configuration file"
         case .noLongitudeSet: return "No value for Longitude found in Meteobridge"
@@ -497,6 +501,87 @@ class WeatherPlatform: Weather {
                 }
             case .failure:  // Forecast Failure
                 responseHandler(forecastZonePoly, countyZonePoly, WeatherPlatformError.NWSPolygonForecastZoneError)
+            }
+        }
+    }
+    
+    ///
+    /// Parse the NWS weather end point for the "Daily Forecast"
+    ///
+    /// ## Important Notes ##
+    /// - [Exammple](https://api.weather.gov/alerts/active/zone/VAZ505)
+    /// - [All Alerts](https://api.weather.gov/alerts/active)
+    ///
+    /// ## Notes ##
+    /// The Feature Array will be the key to the creation of any alerts
+    ///
+    /// - Parameters:
+    ///   - Parameter station: the Meteobridge of interest
+    ///
+    /// - throws: Nothing
+    /// - returns:  An array of weather alerts
+    ///
+    static func getNWSAlerts(theBridge: Meteobridge, responseHandler: @escaping (_ response: [MeteoWeatherAlert]?, _ error: Error?) -> Void) {
+        guard let usModel = theBridge.weatherModel as? MeteoUSWeather else {
+            responseHandler(nil, WeatherPlatformError.NWSAlertsError)
+            return
+        }
+//        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/\(usModel.forecastZoneID)")
+        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/SDC121")   /// TODO: TESTING!!!!!!
+
+        Alamofire.request(stationEndpoint!).responseJSON { response in
+            switch response.result {
+            case .success(let retJSON):
+                let data: JSON = JSON(retJSON)
+                var alerts = [MeteoWeatherAlert]()
+                
+                for property in data["features"] {
+                    guard let myEffectiveDate = property.1["properties"]["effective"].stringValue as String?,
+                        let myDescription = property.1["properties"]["description"].stringValue as String?,
+                        let myInstruction = property.1["properties"]["instruction"].stringValue as String?,
+                        let myMessageType = property.1["properties"]["messageType"].stringValue as String?,
+                        let myCertainty = property.1["properties"]["certainty"].stringValue as String?,
+                        let myExpireDate = property.1["properties"]["expires"].stringValue as String?,
+                        let myCategory = property.1["properties"]["category"].stringValue as String?,
+                        let mySeverity = property.1["properties"]["severity"].stringValue as String?,
+                        let myHeadline = property.1["properties"]["headline"].stringValue as String?,
+                        let myStartDate = property.1["properties"]["onset"].stringValue as String?,
+                        let myUrgency = property.1["properties"]["urgency"].stringValue as String?,
+                        let myDesc = property.1["properties"]["areaDesc"].stringValue as String?,
+                        let mySendDate = property.1["properties"]["sent"].stringValue as String?,
+                        let myStatus = property.1["properties"]["status"].stringValue as String?,
+                        let mySender = property.1["properties"]["sender"].stringValue as String?,
+                        let myEndDate = property.1["properties"]["ends"].stringValue as String?,
+                        let myEvent = property.1["properties"]["event"].stringValue as String?,
+                        let myType = property.1["properties"]["@type"].stringValue as String?,
+                        let myID = property.1["properties"]["id"].stringValue as String?
+                        
+                        else {
+                            responseHandler(nil, WeatherPlatformError.NWSMalformedDataError)
+                            return
+                        }
+                    
+                    var referenceIDs = [String]()
+                    for reference in property.1["properties"]["references"] {
+                        referenceIDs.append(reference.1["identifier"].stringValue)
+                    }
+                    
+                    let newAlert = MeteoWeatherAlert(anID: myID, aType: myType, aDesc: myDesc, sentAt: mySendDate.toISODate(),
+                                                     effectiveTill: myEffectiveDate.toISODate(), willStart: myStartDate.toISODate(),
+                                                     willEnd: (!myEndDate.isEmpty) ? myEndDate.toISODate() : myExpireDate.toISODate(),
+                                                     willExpire: myExpireDate.toISODate(), aStatus: myStatus,
+                                                     aMessageType: MeteoAlertMessageType(rawValue: myMessageType)!,
+                                                     aSeverity: MeteoAlertSeverity(rawValue: mySeverity)!,
+                                                     aCategory: myCategory, aCertainty: MeteoAlertCertainty(rawValue: myCertainty)!,
+                                                     anUrgency: MeteoAlertUrgency(rawValue: myUrgency)!,
+                                                     anEvent: myEvent, aHeadline: myHeadline, aSender: mySender,
+                                                     aDetail: myDescription, anInstruction: myInstruction, references: referenceIDs)
+                    
+                    alerts.append(newAlert)
+                }
+                responseHandler(alerts, nil)
+            case .failure(let error):
+                responseHandler(nil, error)
             }
         }
     }

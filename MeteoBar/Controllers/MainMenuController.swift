@@ -16,6 +16,7 @@ enum MeteobarError: Error, CustomStringConvertible {
     case bridgeError
     case missingBridge
     case missingMenubarSensor
+    case weatherAlertWarning
     
     var description: String {
         switch self {
@@ -23,6 +24,7 @@ enum MeteobarError: Error, CustomStringConvertible {
         case .bridgeError: return "Error reading data from Meteobridg"
         case .missingBridge: return "No Meteobridge found in User Defaults"
         case .missingMenubarSensor: return "No sensor selected for display in menubar"
+        case .weatherAlertWarning: return "Unable to find the weather alert"
         }
     }
 }
@@ -45,6 +47,7 @@ class MainMenuController: NSViewController {
     // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
     var observerQueue   = [String: Repeater]()
+    var alertQueue      = [String: Repeater]()
     
     // MARK: - Views
     /// About View
@@ -62,10 +65,6 @@ class MainMenuController: NSViewController {
     }()
     
     // MARK: - Overrides
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func awakeFromNib() {
         statusItems["MeteoBar"]         = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItems["MeteoBar"]?.title  = "--"
@@ -74,12 +73,18 @@ class MainMenuController: NSViewController {
         iconBarManuItem.view            = iconBarView
         compassItem.view                = compassView
         
-        /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
-        NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
+        /// Register as a delegate for the notification center
+        NSUserNotificationCenter.default.delegate = self
 
         /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
         NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(_:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
-       
+
+        /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
+        NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
+
+        /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
+        NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(_:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
+
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
     }
 
@@ -92,13 +97,14 @@ class MainMenuController: NSViewController {
         observerQueue.removeAll()
         
         addBridgeToQueue(theBridge: bridge)
+        addBridgeToAlertQueue(theBridge: bridge)
     }
     
     ///
     /// Queue managament ... we want to be able to add stations to the queue at-will
+    ///
     /// ## Steps ##
-    /// - ToDo: Update the meunebar
-    /// - Add station to the queue
+    /// - Add bridge to the queue
     /// - Fire off a request for an observtion
     ///
     /// - Parameter theBrodge: The Meteobridge to add to the queue
@@ -121,7 +127,37 @@ class MainMenuController: NSViewController {
         
         DispatchQueue.main.async { // Kick off the first observation while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: ["Bridge": theBridge!])
-            log.info("Station[\(theBridge!.name)] will poll every \(theBridge!.updateInterval) seconds.")
+            log.info("Meteobridge[\(theBridge!.name)] will poll every \(theBridge!.updateInterval) seconds.")
+        }
+    }
+
+    ///
+    /// Manage the Alert Queue
+    ///
+    /// ## Steps ##
+    /// - Add bridge to the queue
+    /// - Fire off a request for an alert
+    ///
+    /// - Parameter station: The station to update in the queue
+    /// - throws:       Nothing
+    /// - returns:      Nothing
+    ///
+    private func addBridgeToAlertQueue(theBridge: Meteobridge?) {
+        if theBridge == nil {
+            log.warning(MeteobarError.missingBridge)
+            return
+        }
+        
+        let queue = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { _ in
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: ["Bridge": theBridge!])
+        }
+            
+        alertQueue[theBridge!.uuid] = queue
+        queue.start()
+            
+        DispatchQueue.main.async { // Kick off the first alert while we wait for the timers to count down
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: ["Bridge": theBridge!])
+            log.info("Meteobridge[\(theBridge!.name)] will poll for alerts every \(theBridge!.alertUpdateInterval) seconds.")
         }
     }
 
@@ -154,12 +190,112 @@ class MainMenuController: NSViewController {
                     log.warning(MeteobarError.missingMenubarSensor)
                     return
                 }
-                self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement           // Update the menubar
+                DispatchQueue.main.async { [unowned self] in
+                    self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
+                }
             } else {
                 log.warning(error.value)
                 return
             }
         }
+    }
+
+    ///
+    /// We have kicked off a number of timers to get an observation; this is the callback to process the forecasts
+    ///
+    /// ## Important Notes ##
+    ///
+    /// - parameters:
+    ///   - theNotification: the notification that is returned with the data call; in our case, it's the station
+    ///
+    /// - throws: Nothing
+    /// - returns:  Nothing
+    ///
+    @objc private func getAlerts(_ theNotification: Notification) {
+        guard let theBridge = theNotification.userInfo!["Bridge"] as? Meteobridge else {
+            log.error(MeteobarError.bridgeError)
+            return
+        }
+        
+        theBridge.getWeatherAlerts { [unowned self] (_ response: Meteobridge?, _ error: Error?) in
+            if error != nil {
+                log.warning(error.value)
+            }
+            guard let sensor = theBridge.findSensor(sensorName: (theDelegate?.theDefaults?.menubarSensor)!) else {
+                log.warning(MeteobarError.missingMenubarSensor)
+                return
+            }
+
+            for alert in theBridge.weatherAlerts {
+                if !alert.isAcknoledged() {
+                    switch alert.severity {
+                    case .extreme, .severe:
+                        DispatchQueue.main.async { [unowned self] in
+                            self.statusItems["MeteoBar"]?.button?.image = NSImage(named: "warning-red.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
+                            self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
+                        }
+                    case .minor, .moderate:
+                        DispatchQueue.main.async { [unowned self] in
+                            self.statusItems["MeteoBar"]?.button?.image = NSImage(named: "warning-yellow.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
+                            self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
+                        }
+                    case .unknown:
+                        break
+                    }
+                    self.postNotifcationForStation(theBridge: theBridge, theAlertID: alert.identfier)
+                }
+            }
+            if theBridge.weatherAlerts.isEmpty {
+                self.statusItems["MeteoBar"]?.button?.image = nil
+            }
+        }
+    }
+    
+    ///
+    /// Post a notification to the Notification Center about a weather alert.
+    /// Try to make it as unobtrusive as possible.  Give the user a chance to
+    /// acknowledge or dismiss teh alert.  If no activity after 10 seconds, the
+    /// dismissed on behalf of the user
+    ///
+    /// ## Important Notes ##
+    ///
+    /// None
+    ///
+    /// ## Extras ##
+    ///
+    /// None
+    ///
+    /// - parameter theStation: The station that generated the alert
+    /// - parameter theAlertID: The unique alert ID
+    /// - throws:       Nothing
+    /// - returns:      Nothing
+    ///
+    private func postNotifcationForStation(theBridge: Meteobridge, theAlertID: String) {
+        guard let alert = theBridge.weatherAlerts.filter ({$0.identfier == theAlertID}).first else {
+            log.warning(MeteobarError.weatherAlertWarning)
+            return
+        }
+        
+        let notification = NSUserNotification()
+        let delayBeforeDelivering: TimeInterval = 0.25  // A quarter-second delay
+        let delayBeforeDismissing: TimeInterval = 10    // Don't clutter ... give the user 10 seconds to view or dismiss; then do it for them.
+        let notificationcenter = NSUserNotificationCenter.default
+        
+        notification.soundName          = NSUserNotificationDefaultSoundName
+        notification.actionButtonTitle  = "Open"
+        notification.otherButtonTitle   = "Dismiss"
+        notification.hasActionButton    = true
+        notification.identifier         = theAlertID
+        notification.title              = alert.event
+        notification.subtitle           = "\(theBridge.name)"
+        notification.informativeText    = "Ends: \(alert.endsOn.toShortDateTimeString())"
+        notification.userInfo           = ["Alert": "\(theAlertID):\(theBridge.uuid)"]
+        notification.contentImage       = NSImage(named: NSImage.Name("NWSLogo.png"))
+        notification.deliveryDate       = Date(timeIntervalSinceNow: delayBeforeDelivering)
+        
+        notificationcenter.scheduleNotification(notification)
+//        notificationcenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
+//                                   with: notification, afterDelay: (delayBeforeDelivering + delayBeforeDismissing))
     }
     
     /// Show the preferences window with the Setup Tab selected
@@ -221,6 +357,73 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func quitMeteoBar(_ sender: Any) {
+        for key in observerQueue.keys {
+            observerQueue[key]?.pause()
+            observerQueue.removeValue(forKey: key)
+        }
+        
+        for key in alertQueue.keys {
+            alertQueue[key]?.pause()
+            alertQueue.removeValue(forKey: key)
+        }
+        
+        observerQueue.removeAll()
+        alertQueue.removeAll()
         NSApplication.shared.terminate(self)
     }    
+}
+
+// MARK: NSUserNotificationCenterDelegate Extension
+///
+/// Extend NSUserNotifcationCenter to handle the callbacks for any alerts that get fed to the Notifcation Center
+///
+/// ## Important Notes ##
+///
+/// userInfo format: ["Alert": "\(theAlertID):\(theStation.uniqueID!)"]
+/// userPair[0] == AlertID
+/// userPair[1] == BridgeUUID
+///
+/// - parameters: None
+/// - throws: Nothing
+/// - returns:  Nothing
+///
+extension MainMenuController: NSUserNotificationCenterDelegate {
+    func userNotificationCenter (_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
+        center.delegate = self
+        
+        guard let userInfo = notification.userInfo!["Alert"] as? String else {
+            log.warning("Warning: Unknown alert data; skipping further action.")
+            return
+        }
+        
+        guard let userPair = userInfo.components(separatedBy: ":") as [String]? else {
+            log.warning("Warning: Unable to determine user pair for alert; skipping further action.")
+            return
+        }
+        
+        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter ({$0.identfier == userPair[0]}).first else {
+            log.warning("Warning: Unable to determine AlertID for alert; skipping further action.")
+            return
+        }
+        
+        switch notification.activationType {
+        case .actionButtonClicked: // "Alert" Button
+            log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has issued an alert[\(theAlert.identfier)]-->\(theAlert.headline).")
+            theAlert.acknowledge()
+            statusItems["MeteoBar"]?.button?.performClick(nil)
+        case .additionalActionClicked:
+            log.info("Additional Action")
+        case .contentsClicked:
+            log.info("Contents")
+        case .none:
+            log.info("None")
+        case .replied:
+            log.info("Replied")
+        }
+    }
+    
+    func userNotificationCenter(_ center: NSUserNotificationCenter,
+                                shouldPresent notification: NSUserNotification) -> Bool {
+        return true
+    }
 }

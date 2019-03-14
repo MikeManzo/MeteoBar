@@ -195,6 +195,20 @@ class AboutController: NSViewController {
          "copyHolder": "Epic Coders",
          "copyURL": "https://www.flaticon.com/authors/epiccoders"
         ],
+       ["copyImage": "warning-red.png",
+        "copyType": "Icon",
+        "invertable": "no",
+        "copyName": "Red Warning Icon",
+        "copyHolder": "Heydon",
+        "copyURL": "https://www.flaticon.com/authors/heydon"
+        ],
+       ["copyImage": "warning-yellow.png",
+        "copyType": "Icon",
+        "invertable": "no",
+        "copyName": "Yellow Warning Icon",
+        "copyHolder": "Heydon",
+        "copyURL": "https://www.flaticon.com/authors/heydon"
+        ],
         ["copyImage": "wind-sock.png",
          "copyType": "Icon",
          "invertable": "yes",

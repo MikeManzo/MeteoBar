@@ -38,6 +38,99 @@ extension Bundle {
     }    
 }
 
+extension Date {
+    func dayOfWeek() -> String? {
+        
+        var stringDay: String?
+        
+        let cal: Calendar = Calendar.current
+        let comp: DateComponents = (cal as NSCalendar).components(.weekday, from: self)
+        
+        switch comp.weekday {
+        case 1?:
+            stringDay = "Sunday"
+        case 2?:
+            stringDay = "Monday"
+        case 3?:
+            stringDay = "Tuesday"
+        case 4?:
+            stringDay = "Wednesday"
+        case 5?:
+            stringDay = "Thursday"
+        case 6?:
+            stringDay = "Friday"
+        case 7?:
+            stringDay = "Saturday"
+        default:
+            break
+        }
+        
+        return stringDay
+    }
+    
+    func hour() -> Int {
+        //Get Hour
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.hour, from: self)
+        let hour = components.hour
+        
+        //Return Hour
+        return hour!
+    }
+    
+    func minute() -> Int {
+        //Get Minute
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components(.minute, from: self)
+        let minute = components.minute
+        
+        //Return Minute
+        return minute!
+    }
+    
+    func toShortTimeString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
+    
+    func toLongTimeString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.timeStyle = .long
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
+    
+    func toLongDateTimeString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.timeStyle = .long
+        formatter.dateStyle = .long
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
+    
+    func toShortDateTimeString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = .short
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
+}
+
 extension FloatingPoint {
     var minutes: Self {
         return (self*3600)
@@ -370,6 +463,31 @@ extension NSImage {
             } else {return nil}
         } else {return nil}
     }
+    
+    /// Resize existing image to new size
+    ///
+    /// - Parameter newSize: desired width and height
+    /// - Returns: new image (or nil on error)
+    ///
+    func resized(to newSize: NSSize) -> NSImage? {
+        if let bitmapRep = NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: Int(newSize.width), pixelsHigh: Int(newSize.height),
+            bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+            colorSpaceName: .calibratedRGB, bytesPerRow: 0, bitsPerPixel: 0
+            ) {
+            bitmapRep.size = newSize
+            NSGraphicsContext.saveGraphicsState()
+            NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: bitmapRep)
+            draw(in: NSRect(x: 0, y: 0, width: newSize.width, height: newSize.height), from: .zero, operation: .copy, fraction: 1.0)
+            NSGraphicsContext.restoreGraphicsState()
+            
+            let resizedImage = NSImage(size: newSize)
+            resizedImage.addRepresentation(bitmapRep)
+            return resizedImage
+        }
+        
+        return nil
+    }
 }
 
 extension NSTextField {
@@ -418,6 +536,12 @@ extension Optional {
 extension String {
     func toDouble() -> Double? {
         return NumberFormatter().number(from: self)?.doubleValue
+    }
+
+    func toISODate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
+        return (dateFormatter.date(from: self)!)
     }
 }
 

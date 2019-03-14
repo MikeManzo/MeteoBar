@@ -12,19 +12,21 @@ import Cocoa
 
 enum MeteobridgeError: Error, CustomStringConvertible {
     case observationDateError
+    case weatherModelError
+    case weatherAlertError
     case observationError
     case unknownSensor
-    case dataError
-    case weatherModelError
     case unknownModel
-    
+    case dataError
+
     var description: String {
         switch self {
+        case .observationDateError: return "Unbale to determine timestamp for observation - observation skipped"
+        case .weatherAlertError: return "Unable to determine westher alert for Meteobridge location"
         case .observationError: return "Error reading observation from Meteobridge"
+        case .weatherModelError: return "Unable to update weather model"
         case .dataError: return "Error reading data from Meteobridg"
         case .unknownSensor: return "Unknown sensor detected"
-        case .observationDateError: return "Unbale to determine timestamp for observation - observation skipped"
-        case .weatherModelError: return "Unable to update weather model"
         case .unknownModel: return "Unknown Weather Model"
         }
     }
@@ -63,6 +65,7 @@ let platformImages = [
 */
 
 enum MeteobridgeCodingKeys: String, CodingKey {
+    case alertUpdateInterval
     case updateInterval
     case weatherModel
     case ipAddress
@@ -80,7 +83,9 @@ enum MeteobridgeCodingKeys: String, CodingKey {
 final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAnnotation {
     /// Properties
     var sensors = [MeteoSensorCategory: [MeteobridgeSensor]]()
+    var weatherAlerts = [MeteoWeatherAlert]()
     private var _weatherModel: MeteoWeather?
+    var alertUpdateInterval: Int
     private var _cCode: String
     var updateInterval: Int
     var ipAddress: String
@@ -165,10 +170,11 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///   - bridgeName: the name we are giving the meteobridge
     ///   - bridgeSensors: the collection of sensors that this meteobridge has
     required init? (bridgeIP: String, bridgeName: String, bridgeSensors: [MeteoSensorCategory: [MeteobridgeSensor]]? = nil, uniqueID: String? = nil) {
-        self.name           = bridgeName
-        self.ipAddress      = bridgeIP
-        self.updateInterval = 3
-        self._cCode         = ""
+        self.name                   = bridgeName
+        self.ipAddress              = bridgeIP
+        self.updateInterval         = 3     // 3 Seconds
+        self.alertUpdateInterval    = 60    // 60 Seconds
+        self._cCode                 = ""
         
         if bridgeSensors != nil {
             guard case self.sensors = bridgeSensors else {
@@ -494,6 +500,45 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
         })
     }
     
+    ///
+    /// Get current alerts (if any)
+    ///
+    /// ## Important Notes ##
+    ///  - The data comes to us as an array of weather alerts --> Can be empty; not nil
+    ///
+    /// - parameters:
+    ///   - callback: The Callback
+    ///
+    /// - throws:   Nothing
+    /// - returns:  Self ... with a fresh set of alerts (if any exist)
+    ///
+    func getWeatherAlerts(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+        WeatherPlatform.getNWSAlerts(theBridge: self, responseHandler: { [unowned self] alerts, error in
+            if error != nil {
+                log.warning(error.value)
+                callback(self, MeteobridgeError.weatherAlertError)
+            }
+            
+            for alert in alerts! {
+                guard let filteredAlert = (self.weatherAlerts.filter {$0.identfier == alert.identfier}.first) else {    // Is this alert ID in the list?
+                    self.weatherAlerts.append(alert)                                                                    // No; add it to the list
+                    continue                                                                                            // Continue to the next alert
+                }
+                if filteredAlert != alert {                                                                             // We found a match; is it the same alert?
+                    let index = self.weatherAlerts.firstIndex(of: alert)                                                // Find the index of the 'old' alert
+                    self.weatherAlerts.remove(at: index!)                                                               // remove the 'old' alert to the collection
+                    self.weatherAlerts.append(filteredAlert)                                                            // Add 'refreshed' alert to the collection
+                }
+            }
+            
+            if (alerts?.isEmpty)! {                                                                                     // If the alerting agency comes back with no
+                self.weatherAlerts.removeAll()                                                                          // alerts, remove anything we had been tracking
+            }                                                                                                           // This will help the UI deal with expiration
+            
+            callback(self, nil)
+        })
+    }
+    
     /// Based on the weather model, update the object accodringly
     ///
     /// - Parameter callback: calling function
@@ -542,6 +587,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: MeteobridgeCodingKeys.self)
         
+        alertUpdateInterval = try container.decode(Int.self, forKey: .alertUpdateInterval)
         updateInterval = try container.decode(Int.self, forKey: .updateInterval)
         ipAddress = try container.decode(String.self, forKey: .ipAddress)
         _cCode = try container.decode(String.self, forKey: .cCode)
@@ -566,6 +612,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: MeteobridgeCodingKeys.self)
         
+        try container.encode(alertUpdateInterval, forKey: .alertUpdateInterval)
         try container.encode(updateInterval, forKey: .updateInterval)
         try container.encode(ipAddress, forKey: .ipAddress)
         try container.encode(_cCode, forKey: .cCode)
