@@ -16,6 +16,8 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MeteoBar" customModuleProvider="target"/>
         <viewController nibName="MainMenu" id="qZU-Zb-ECd" userLabel="Main Menu Controller" customClass="MainMenuController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
+                <outlet property="alertItem" destination="TDm-GY-57F" id="T3H-Of-b13"/>
+                <outlet property="alertView" destination="13e-2k-uit" id="hmE-Li-LFA"/>
                 <outlet property="compassItem" destination="6Mb-90-mvK" id="iCR-uD-ola"/>
                 <outlet property="compassView" destination="eJe-6H-P1v" id="yPJ-Sp-qR9"/>
                 <outlet property="iconBarManuItem" destination="BXX-q4-mZ4" id="4Yo-Hn-Buk"/>
@@ -25,6 +27,9 @@
         </viewController>
         <menu id="xGN-gD-dKg" userLabel="Main Menu">
             <items>
+                <menuItem title="Alert Item" id="TDm-GY-57F" userLabel="Alert Item">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
                 <menuItem title="Compass Item" id="6Mb-90-mvK" userLabel="Compass Item">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
@@ -36,7 +41,7 @@
             <connections>
                 <outlet property="delegate" destination="qZU-Zb-ECd" id="vjq-oz-KvM"/>
             </connections>
-            <point key="canvasLocation" x="12" y="-355"/>
+            <point key="canvasLocation" x="-335" y="-189"/>
         </menu>
         <customView id="ScJ-Un-QKA" userLabel="Icon Bar View" customClass="IconBarView" customModule="MeteoBar" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="398" height="28"/>
@@ -149,12 +154,98 @@
                     </customSpacing>
                 </stackView>
             </subviews>
-            <point key="canvasLocation" x="11" y="167"/>
+            <point key="canvasLocation" x="12" y="228"/>
         </customView>
         <customView id="eJe-6H-P1v" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <point key="canvasLocation" x="11" y="-79"/>
+            <point key="canvasLocation" x="13" y="-16"/>
+        </customView>
+        <customView id="13e-2k-uit" customClass="AlertView" customModule="MeteoBar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="48"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="50" horizontalPageScroll="10" verticalLineScroll="50" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WA-3Y-aL8">
+                    <rect key="frame" x="0.0" y="-16" width="400" height="64"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <clipView key="contentView" ambiguous="YES" id="BsO-14-wqg">
+                        <rect key="frame" x="1" y="1" width="398" height="62"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="48" viewBased="YES" id="gHp-x8-57q">
+                                <rect key="frame" x="0.0" y="0.0" width="398" height="62"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn identifier="DefaultRow" width="395" minWidth="40" maxWidth="1000" id="NvS-iF-oL1">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="GWA-AM-WFe">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <prototypeCellViews>
+                                            <tableCellView id="Iif-5e-9iN" customClass="AlertTableCellView" customModule="MeteoBar" customModuleProvider="target">
+                                                <rect key="frame" x="1" y="1" width="395" height="50"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <subviews>
+                                                    <imageView identifier="Warning" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9RF-EV-oop">
+                                                        <rect key="frame" x="3" y="13" width="32" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="warning-red" id="xSC-ay-YD3"/>
+                                                    </imageView>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tEK-uU-ZE7">
+                                                        <rect key="frame" x="36" y="33" width="359" height="17"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Headline" id="rJo-sO-SeT">
+                                                            <font key="font" metaFont="systemSemibold" size="12"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Ou-sO-s99">
+                                                        <rect key="frame" x="36" y="3" width="359" height="29"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Description" id="4MA-Ix-mvK">
+                                                            <font key="font" metaFont="system" size="10"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                                <connections>
+                                                    <outlet property="alertDescription" destination="1Ou-sO-s99" id="4fm-aF-C7P"/>
+                                                    <outlet property="alertHeadline" destination="tEK-uU-ZE7" id="dda-7N-4TW"/>
+                                                    <outlet property="imgAlert" destination="9RF-EV-oop" id="Njd-22-jAh"/>
+                                                </connections>
+                                            </tableCellView>
+                                        </prototypeCellViews>
+                                    </tableColumn>
+                                </tableColumns>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="AoA-4V-dEQ">
+                        <rect key="frame" x="1" y="47" width="398" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="j10-Sv-Ktb">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <connections>
+                <outlet property="alertsTable" destination="gHp-x8-57q" id="6vP-co-No8"/>
+            </connections>
+            <point key="canvasLocation" x="13" y="-272"/>
         </customView>
     </objects>
     <resources>
@@ -164,5 +255,6 @@
         <image name="configurator" width="180" height="180"/>
         <image name="dashboard" width="409.60000610351562" height="409.60000610351562"/>
         <image name="logout" width="384" height="384"/>
+        <image name="warning-red" width="384" height="384"/>
     </resources>
 </document>

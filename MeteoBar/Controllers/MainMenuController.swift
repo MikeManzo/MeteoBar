@@ -39,10 +39,12 @@ class MainMenuController: NSViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var menuMain: NSMenu!
+    @IBOutlet weak var alertView: AlertView!
     @IBOutlet weak var iconBarView: IconBarView!
     @IBOutlet weak var compassView: MeteoCompassView!
     @IBOutlet weak var iconBarManuItem: NSMenuItem!
     @IBOutlet weak var compassItem: NSMenuItem!
+    @IBOutlet weak var alertItem: NSMenuItem!
     
     // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
@@ -72,7 +74,8 @@ class MainMenuController: NSViewController {
         
         iconBarManuItem.view            = iconBarView
         compassItem.view                = compassView
-        
+        alertItem.view                  = alertView
+
         /// Register as a delegate for the notification center
         NSUserNotificationCenter.default.delegate = self
 
@@ -240,7 +243,7 @@ class MainMenuController: NSViewController {
                             self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
                         }
                     case .unknown:
-                        break
+                        log.warning("Unkown alert discovered")
                     }
                     self.postNotifcationForStation(theBridge: theBridge, theAlertID: alert.identfier)
                 }
@@ -278,7 +281,7 @@ class MainMenuController: NSViewController {
         
         let notification = NSUserNotification()
         let delayBeforeDelivering: TimeInterval = 0.25  // A quarter-second delay
-        let delayBeforeDismissing: TimeInterval = 10    // Don't clutter ... give the user 10 seconds to view or dismiss; then do it for them.
+//        let delayBeforeDismissing: TimeInterval = 10    // Don't clutter ... give the user 10 seconds to view or dismiss; then do it for them.
         let notificationcenter = NSUserNotificationCenter.default
         
         notification.soundName          = NSUserNotificationDefaultSoundName
@@ -410,7 +413,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
         case .actionButtonClicked: // "Alert" Button
             log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has issued an alert[\(theAlert.identfier)]-->\(theAlert.headline).")
             theAlert.acknowledge()
-            statusItems["MeteoBar"]?.button?.performClick(nil)
+            statusItems["MeteoBar"]?.button?.performClick(self)
         case .additionalActionClicked:
             log.info("Additional Action")
         case .contentsClicked:
@@ -425,5 +428,23 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: NSUserNotificationCenter,
                                 shouldPresent notification: NSUserNotification) -> Bool {
         return true
+    }
+}
+
+extension MainMenuController: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        for item in menu.items {
+            switch item.view {
+            case is AlertView:
+                guard let alertView = item.view as? AlertView else {
+                    break
+                }
+                if theDelegate?.theBridge != nil {
+                    alertView.refresh(alerts: (theDelegate?.theBridge?.weatherAlerts)!)
+                }
+            default:
+                break
+            }
+        }
     }
 }
