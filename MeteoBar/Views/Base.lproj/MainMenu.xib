@@ -162,18 +162,18 @@
             <point key="canvasLocation" x="13" y="-16"/>
         </customView>
         <customView id="13e-2k-uit" customClass="AlertView" customModule="MeteoBar" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="400" height="48"/>
+            <rect key="frame" x="0.0" y="0.0" width="400" height="96"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="50" horizontalPageScroll="10" verticalLineScroll="50" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WA-3Y-aL8">
-                    <rect key="frame" x="0.0" y="-16" width="400" height="64"/>
+                    <rect key="frame" x="0.0" y="0.0" width="400" height="96"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" id="BsO-14-wqg">
-                        <rect key="frame" x="1" y="1" width="398" height="62"/>
+                        <rect key="frame" x="1" y="1" width="398" height="94"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="48" viewBased="YES" id="gHp-x8-57q">
-                                <rect key="frame" x="0.0" y="0.0" width="398" height="62"/>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="48" viewBased="YES" id="gHp-x8-57q">
+                                <rect key="frame" x="0.0" y="0.0" width="398" height="94"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -193,16 +193,16 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="Iif-5e-9iN" customClass="AlertTableCellView" customModule="MeteoBar" customModuleProvider="target">
-                                                <rect key="frame" x="1" y="1" width="395" height="50"/>
+                                                <rect key="frame" x="1" y="1" width="395" height="48"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <imageView identifier="Warning" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9RF-EV-oop">
-                                                        <rect key="frame" x="3" y="13" width="32" height="32"/>
+                                                        <rect key="frame" x="3" y="11" width="32" height="32"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="warning-red" id="xSC-ay-YD3"/>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tEK-uU-ZE7">
-                                                        <rect key="frame" x="36" y="33" width="359" height="17"/>
+                                                        <rect key="frame" x="36" y="31" width="359" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Headline" id="rJo-sO-SeT">
                                                             <font key="font" metaFont="systemSemibold" size="12"/>
@@ -210,10 +210,10 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Ou-sO-s99">
-                                                        <rect key="frame" x="36" y="3" width="359" height="29"/>
+                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ou-sO-s99">
+                                                        <rect key="frame" x="36" y="1" width="359" height="29"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Description" id="4MA-Ix-mvK">
+                                                        <textFieldCell key="cell" lineBreakMode="charWrapping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Description" id="4MA-Ix-mvK">
                                                             <font key="font" metaFont="system" size="10"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -12,20 +12,68 @@ class AlertView: NSView {
     @IBOutlet weak var alertsTable: NSTableView!
 
     var alerts: [MeteoWeatherAlert]?
+
+    lazy var alertPopOver: NSPopover = {
+        var popOver = NSPopover()
+        popOver.contentViewController = AlertDetailsController.newController()
+        return popOver
+    }()
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
     }
     
-    override func awakeFromNib() {
-        alertsTable.dataSource  = self
-        alertsTable.delegate    = self
+    /// Called when a view is tranistioned to a MenuItem
+    ///
+    override func viewDidMoveToWindow() {
+        if self.window == nil {
+
+        } else {
+
+        }
     }
     
-    open func refresh(alerts: [MeteoWeatherAlert]) {
-        self.alerts = alerts
+    override func awakeFromNib() {
+        alertsTable.doubleAction    = #selector(doubleClickOnAlertRow)
+        alertsTable.dataSource      = self
+        alertsTable.delegate        = self
+        alertsTable.target          = self
+    }
+        
+    /// Helper to referesh the UI
+    ///
+    /// - Parameter alerts: the alerts to fill the table with
+    open func refreshAlerts(alerts: [MeteoWeatherAlert]) {
         DispatchQueue.main.async { [unowned self] in
+            self.alerts = alerts
             self.alertsTable.reloadData()
+        }
+    }
+
+    ///
+    /// The user double clicked on the table ... do something
+    ///
+    @objc func singleClickOnAlertRow(sender: AnyObject) {
+        if alertsTable.selectedRow > -1 {
+
+        } else {
+            // Eat it
+        }
+    }
+
+    ///
+    /// The user double clicked on the table ... do something
+    ///
+    @objc func doubleClickOnAlertRow(sender: AnyObject) {
+        if alertsTable.selectedRow > -1 {
+            if alertPopOver.isShown {
+                closeAlertPopover(sender: alertsTable.selectedRow)
+                showAlertPopover(sender: alertsTable.selectedRow)
+            } else {
+                showAlertPopover(sender: alertsTable.selectedRow)
+            }
+        } else {
+            // Eat it
         }
     }
 }
@@ -61,27 +109,71 @@ extension AlertView: NSTableViewDataSource, NSTableViewDelegate {
             return result
         } else {
             if !alerts!.isEmpty {
-                
                 let myAlert = alerts![row]
-                result.alertHeadline.stringValue    = myAlert.headline
-                print(myAlert.detail)
-                result.alertDescription.stringValue = myAlert.detail
-                switch myAlert.severity {
-                case .extreme, .severe:
-                    DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    result.alertHeadline.stringValue    = myAlert.headline
+                    result.alertDescription.stringValue = myAlert.detail
+                    switch myAlert.severity {
+                    case .extreme, .severe:
                         result.imageView?.image = NSImage(named: "warning-red.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
-                    }
-                case .minor, .moderate:
-                    DispatchQueue.main.async {
+                    case .minor, .moderate:
                         result.imageView?.image = NSImage(named: "warning-yellow.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
+                    case .unknown:
+                        log.warning("Unkown alert passed")
                     }
-                case .unknown:
-                    log.warning("Unkown alert passed")
                 }
+            } else {
+                result.alertHeadline.stringValue    = ""
+                result.alertDescription.stringValue = ""
+                result.imgAlert = nil
             }
+        }        
+        return result
+    }
+    
+    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+        return true
+    }
+}
+
+// MARK: MainMenuController Extension
+///
+/// Extend the MainMenuController to hanfle the Popovers
+///
+/// - parameters: None
+/// - throws: Nothing
+/// - returns:  Nothing
+///
+extension AlertView {
+    @objc func toggleAlertPopover(_ sender: Any?) {
+        if alertPopOver.isShown {
+            closeAlertPopover(sender: sender)
+        } else {
+            showAlertPopover(sender: sender)
+        }
+    }
+    
+    func showAlertPopover(sender: Any?) {
+        guard let myRow = sender as? Int else {
+            print("Row Error")
+            return
         }
         
-        return result
+        guard let myView = alertsTable.view(atColumn: 0, row: myRow, makeIfNecessary: true) as? AlertTableCellView else {
+            print ("ViewError")
+            return
+        }
+
+        let myAlert = alerts![myRow]
+
+         DispatchQueue.main.async { [unowned self] in
+            (self.alertPopOver.contentViewController as? AlertDetailsController)?.update(alert: myAlert)
+            self.alertPopOver.show(relativeTo: myView.imgAlert.bounds, of: myView.imgAlert, preferredEdge: NSRectEdge.minX)
+        }
+    }
+    
+    func closeAlertPopover(sender: Any?) {
+        alertPopOver.performClose(sender)
     }
 }
 

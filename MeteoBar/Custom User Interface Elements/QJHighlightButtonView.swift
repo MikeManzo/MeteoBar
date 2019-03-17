@@ -11,8 +11,12 @@ import Cocoa
 ///
 /// [Custom Highlight](https://stackoverflow.com/questions/43265671/osx-nsmenuitem-with-custom-nsview-does-not-highlight-swift#)
 ///
-class QJHighlightButtonView: NSButton {
+@IBDesignable class QJHighlightButtonView: NSButton {
     var trackingArea: NSTrackingArea?
+    
+    @IBInspectable public var invert: Bool = false {
+        didSet { needsDisplay = true }
+    }
     
     override var isHighlighted: Bool {
         didSet {
@@ -37,7 +41,12 @@ class QJHighlightButtonView: NSButton {
                                       options: [NSTrackingArea.Options.activeAlways ,NSTrackingArea.Options.mouseEnteredAndExited],
                                       owner: self, userInfo: nil)
         addTrackingArea(trackingArea!)
-        self.wantsLayer = true
+        wantsLayer = true
+        canDrawSubviewsIntoLayer = true
+
+        if invert {
+            image = image!.filter(filter: "CIColorInvert")
+        }
     }
     
     override func draw(_ dirtyRect: NSRect) {

@@ -271,6 +271,7 @@ import QuartzCore
     }
     
     override public func mouseDown(with theEvent: NSEvent) {
+        super.mouseDown(with: theEvent)
         if !isEnabled || lockInteraction {
             return
         }
@@ -279,6 +280,8 @@ import QuartzCore
     }
     
     override public func mouseDragged(with theEvent: NSEvent) {
+        super.mouseDragged(with: theEvent)
+        
         dragEvents += 1
         guard dragEvents > 3 else {
             return
@@ -295,6 +298,8 @@ import QuartzCore
     }
     
     override public func mouseUp(with theEvent: NSEvent) {
+        super.mouseUp(with: theEvent)
+        
         dragEvents = 0
         if !isEnabled || lockInteraction {
             return

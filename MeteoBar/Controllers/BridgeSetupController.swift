@@ -95,27 +95,6 @@ class BridgeSetupController: NSViewController, Preferenceable {
     override func viewDidAppear() {
     }
     
-    ///// REMOVE /////
-    private func click() {
-        DispatchQueue.main.async { [unowned self] in
-            if !self.view.isHidden {
-                let point = CGPoint(x: self.view.frame.height/2, y: self.view.frame.width/2)
-                let mouseDown = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: point, mouseButton: .left)
-                let mouseUp = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: point, mouseButton: .left)
-                
-                let theDownEvent = NSEvent(cgEvent: mouseDown!)
-                let theUpEvent = NSEvent(cgEvent: mouseUp!)
-                
-                self.view.superview!.window?.sendEvent(theDownEvent!)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                    self.view.window?.sendEvent(theUpEvent!)
-                    print("Click:\(point) in Window:\(String(describing: self.view.superview!.window))")
-                })
-            }
-        }
-    }
-    ///// REMOVE /////
-
     override func viewWillDisappear() {
         super.viewWillDisappear()
         

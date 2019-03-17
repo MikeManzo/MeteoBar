@@ -50,11 +50,18 @@ class MainMenuController: NSViewController {
     var statusItems     = [String: NSStatusItem]()
     var observerQueue   = [String: Repeater]()
     var alertQueue      = [String: Repeater]()
-    
+    var eventMonitor: MeteoEventMonitor?
+
     // MARK: - Views
     /// About View
-    lazy var aboutView: NSViewController = {
+    lazy var aboutView: AboutController = {
         return AboutController(nibName: NSNib.Name("About"), bundle: nil)
+    }()
+
+    // MARK: - Views
+    /// About View
+    lazy var meteoPanelView: MeteoPanelController = {
+        return MeteoPanelController(nibName: NSNib.Name("MeteoPanel"), bundle: nil)
     }()
     
     /// Preferences
@@ -70,8 +77,12 @@ class MainMenuController: NSViewController {
     override func awakeFromNib() {
         statusItems["MeteoBar"]         = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItems["MeteoBar"]?.title  = "--"
-        statusItems["MeteoBar"]?.menu   = menuMain
-        
+//        statusItems["MeteoBar"]?.menu   = menuMain
+
+        statusItems["MeteoBar"]?.button!.target = self
+        statusItems["MeteoBar"]?.button!.target = self
+        statusItems["MeteoBar"]?.button!.action = #selector(showWeatherPanel(sender:))
+
         iconBarManuItem.view            = iconBarView
         compassItem.view                = compassView
         alertItem.view                  = alertView
@@ -89,8 +100,40 @@ class MainMenuController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(_:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
 
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
+        
+        /// Setup mouse event monitoring for so we can close our window
+        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+            if self!.meteoPanelView.isViewLoaded && (self!.meteoPanelView.view.window != nil) {
+                print("viewController is visible")
+                self?.meteoPanelView.view.window?.close()
+            }
+        }
+        eventMonitor?.start()
     }
 
+    /// EXPIRIMENTAL
+    ///
+    /// ## SPECIAL NOTE ##
+    /// uncomment the following line to return to using this class
+    /// statusItems["MeteoBar"]?.menu   = menuMain
+    ///
+    /// - Parameter sender: <#sender description#>
+    ///
+    @objc func showWeatherPanel(sender: AnyObject) {
+        if meteoPanelView.isViewLoaded && (meteoPanelView.view.window != nil) {
+            meteoPanelView.view.window?.close()
+            return
+        } else {
+            let frameOrigin = statusItems["MeteoBar"]?.button?.window?.frame.origin
+            meteoPanelView.originPoint = CGPoint(x: (frameOrigin?.x)!, y: (frameOrigin?.y)! - 22)
+            presentAsModalWindow(meteoPanelView)
+        }
+    }
+    
+    /// We have creasted and configured a new meteobridge ... start the machine
+    ///
+    /// - Parameter theNotification: the notifcation letting us knoe
+    ///
     @objc private func newBridgeInitialized(_ theNotification: Notification) {
         guard let bridge = theDelegate?.theBridge else {
             log.warning(MeteobarError.bridgeError)
@@ -281,7 +324,6 @@ class MainMenuController: NSViewController {
         
         let notification = NSUserNotification()
         let delayBeforeDelivering: TimeInterval = 0.25  // A quarter-second delay
-//        let delayBeforeDismissing: TimeInterval = 10    // Don't clutter ... give the user 10 seconds to view or dismiss; then do it for them.
         let notificationcenter = NSUserNotificationCenter.default
         
         notification.soundName          = NSUserNotificationDefaultSoundName
@@ -297,11 +339,12 @@ class MainMenuController: NSViewController {
         notification.deliveryDate       = Date(timeIntervalSinceNow: delayBeforeDelivering)
         
         notificationcenter.scheduleNotification(notification)
-//        notificationcenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
-//                                   with: notification, afterDelay: (delayBeforeDelivering + delayBeforeDismissing))
     }
     
     /// Show the preferences window with the Setup Tab selected
+    ///
+    /// *** DEPRECATED ***
+    /// *** Look in MeteoPanelController for updated logic
     ///
     /// - Parameter sender: The Caller who sent the message
     ///
@@ -314,6 +357,9 @@ class MainMenuController: NSViewController {
     
     /// Show the preferences Tab
     ///
+    /// *** DEPRECATED ***
+    /// *** Look in MeteoPanelController for updated logic
+    ///
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
@@ -324,6 +370,9 @@ class MainMenuController: NSViewController {
     }
     
     /// Show the preferences tab
+    ///
+    /// *** DEPRECATED ***
+    /// *** Look in MeteoPanelController for updated logic
     ///
     /// - Parameter sender: The Caller who sent the message
     ///
@@ -336,6 +385,9 @@ class MainMenuController: NSViewController {
     }
     
     /// Show the User Interface configuration tab
+    ///
+    /// *** DEPRECATED ***
+    /// *** Look in MeteoPanelController for updated logic
     ///
     /// - Parameter sender: The Caller who sent the message
     ///
@@ -356,6 +408,9 @@ class MainMenuController: NSViewController {
     }
 
     /// Quit - we're done!
+    ///
+    /// *** DEPRECATED ***
+    /// *** Look in MeteoPanelController for updated logic
     ///
     /// - Parameter sender: The Caller who sent the message
     ///
@@ -391,6 +446,75 @@ class MainMenuController: NSViewController {
 /// - returns:  Nothing
 ///
 extension MainMenuController: NSUserNotificationCenterDelegate {
+    /// A special ovveride to detect the "Dismiss" or "Close" button on a delivered notification
+    ///
+    /// ## Notes ##
+    ///   PS: Please also notice that it is the way to detect the dismiss event, which can be triggered in several cases.
+    ///   1. Click the otherButton to dismiss
+    ///   2. Click the Clear All button in Notification Center
+    ///   3. There are multiple notifications in deliveredNotifications array, while only one is displayed. The dismissal shall trigger multiple callbacks.
+    ///   4. Clicking actionButton will also trigger the dismissal callback
+    ///
+    /// ## Reference ##
+    ///  [Notifcations](https://stackoverflow.com/questions/21110714/mac-os-x-nsusernotificationcenter-notification-get-dismiss-event-callback)
+    /// - Parameters:
+    ///   - center: <#center description#>
+    ///   - notification: <#notification description#>
+    ///
+    func userNotificationCenter(_ center: NSUserNotificationCenter, didDeliver notification: NSUserNotification) {
+        DispatchQueue.global(qos: .background).async {
+            var notificationStillPresent: Bool
+            repeat {
+                notificationStillPresent = false
+                for nox in NSUserNotificationCenter.default.deliveredNotifications where nox.identifier == notification.identifier {
+                    notificationStillPresent = true
+                    break
+                }
+                
+                if notificationStillPresent {
+                    _ = Thread.sleep(forTimeInterval: 0.20)
+                }
+            } while notificationStillPresent
+            
+            DispatchQueue.main.async {
+                self.dismissClicked(notification: notification)
+            }
+        }
+    }
+    
+    /// Helper to acknowledge the user hitting the "Dismiss" button
+    /// What a pain in the ass to go through this when there is a perfectly
+    /// acceptable enumeration in notification.activationType that could
+    /// have handled it w/o all of this
+    ///
+    /// - Parameter notification: the notifcation that we want to dismiss
+    ///
+    private func dismissClicked(notification: NSUserNotification) {
+        guard let userInfo = notification.userInfo!["Alert"] as? String else {
+            log.warning("Warning: Unknown alert data; skipping further action.")
+            return
+        }
+        
+        guard let userPair = userInfo.components(separatedBy: ":") as [String]? else {
+            log.warning("Warning: Unable to determine user pair for alert; skipping further action.")
+            return
+        }
+        
+        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter ({$0.identfier == userPair[0]}).first else {
+            log.warning("Warning: Unable to determine AlertID for alert; skipping further action.")
+            return
+        }
+        
+        theAlert.acknowledge()
+        log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has acknodleged alert[\(theAlert.identfier)]-->\(theAlert.headline).")
+    }
+    
+    /// Handle the user clicking the action button
+    ///
+    /// - Parameters:
+    ///   - center: the notification center to use
+    ///   - notification: the notification we want to handle
+    ///
     func userNotificationCenter (_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
         center.delegate = self
         
@@ -425,12 +549,15 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
         }
     }
     
-    func userNotificationCenter(_ center: NSUserNotificationCenter,
-                                shouldPresent notification: NSUserNotification) -> Bool {
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
     }
 }
 
+// MARK: - Custom extension to handle UI updates for the AlertView
+/// *** DEPRECATED ***
+/// *** Look in MeteoPanelController for updated logic
+///
 extension MainMenuController: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         for item in menu.items {
@@ -440,11 +567,15 @@ extension MainMenuController: NSMenuDelegate {
                     break
                 }
                 if theDelegate?.theBridge != nil {
-                    alertView.refresh(alerts: (theDelegate?.theBridge?.weatherAlerts)!)
+                    alertView.refreshAlerts(alerts: (theDelegate?.theBridge?.weatherAlerts)!)
                 }
             default:
                 break
             }
         }
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+
     }
 }

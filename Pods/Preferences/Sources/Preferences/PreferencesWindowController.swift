@@ -19,6 +19,8 @@ public final class PreferencesWindowController: NSWindowController {
 
 		window.title = String(System.localizedString(forKey: "Preferences…").dropLast())
 		window.contentView = tabViewController.view
+        window.center()
+        window.makeKeyAndOrderFront(self)
 
 		tabViewController.tabViewItems = viewControllers.map { viewController in
 			let item = NSTabViewItem(identifier: viewController.toolbarItemTitle)
@@ -60,8 +62,8 @@ public final class PreferencesWindowController: NSWindowController {
     public override func windowDidLoad() {
         super.windowDidLoad()
         
-        self.window?.center()
-        self.window?.makeKeyAndOrderFront(nil)
+//        self.window?.center()
+//        self.window?.makeKeyAndOrderFront(self)
         NSApp.activate(ignoringOtherApps: true)
     }
 }

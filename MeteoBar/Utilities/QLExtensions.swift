@@ -490,6 +490,21 @@ extension NSImage {
     }
 }
 
+extension NSTableView {
+    func reloadDataKeepingSelection(extendSelection: Bool = false) {
+        let selectedRowIndexes = self.selectedRowIndexes
+        self.reloadData()
+        self.selectRowIndexes(selectedRowIndexes, byExtendingSelection: extendSelection)
+    }
+    
+    func selectRow(at index: Int) {
+        selectRowIndexes(.init(integer: index), byExtendingSelection: false)
+        if let action = action {
+            perform(action)
+        }
+    }
+}
+
 extension NSTextField {
     func bestheight(text: String, width: CGFloat) -> CGFloat {
         self.stringValue = text

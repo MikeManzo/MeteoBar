@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="MeteoPanelController" customModule="MeteoBar" customModuleProvider="target">
+            <connections>
+                <outlet property="alertView" destination="bYM-6G-BEM" id="0nc-UT-Flz"/>
+                <outlet property="compassView" destination="z9d-If-O6K" id="sCF-64-Mxe"/>
+                <outlet property="iconBarView" destination="CjE-37-4fe" id="AGQ-Rd-BlB"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="526"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CjE-37-4fe" userLabel="Icon Bar View" customClass="IconBarView" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="-5" y="0.0" width="405" height="28"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="47" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="250" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jvs-2Y-HdH">
+                            <rect key="frame" x="10" y="-2" width="387" height="32"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button toolTip="About MeteBar" translatesAutoresizingMaskIntoConstraints="NO" id="ana-2U-PKD" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="32" id="Kwk-tx-aJf"/>
+                                        <constraint firstAttribute="width" constant="32" id="MXw-kO-uLR"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSInfo" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ahB-1b-cIa">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="aboutMeteoBar:" target="Jbm-OC-mfA" id="qyv-UX-2el"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="LHw-cZ-6O7" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="79" y="4" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="2nv-GS-5UQ"/>
+                                        <constraint firstAttribute="width" constant="24" id="tZO-Fh-mN7"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="YzM-ub-cdT">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="meteoBarPreferences:" target="Jbm-OC-mfA" id="N0K-kO-vIP"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="Meteobridge Setup" translatesAutoresizingMaskIntoConstraints="NO" id="5Hh-Ha-E8a" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="150" y="4" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="02k-2A-JxN"/>
+                                        <constraint firstAttribute="height" constant="24" id="c2T-ZT-BhJ"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="configurator" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="cyo-SY-zWc">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="showBridgeSetupTab:" target="Jbm-OC-mfA" id="fhd-Jz-SAi"/>
+                                    </connections>
+                                </button>
+                                <button identifier="Meteobridge Configuration" toolTip="Sensor Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="EKN-4w-bFb" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="221" y="4" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="1qt-v5-h4D"/>
+                                        <constraint firstAttribute="width" constant="24" id="q2m-FC-UWi"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="compass-north" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ApD-Yu-yf1">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="showBridgeConfiguration:" target="Jbm-OC-mfA" id="Sef-Sj-tCe"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="User Interface Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="UpO-EY-7aQ" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="292" y="4" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="SDI-YJ-Bbt"/>
+                                        <constraint firstAttribute="height" constant="24" id="irG-Wd-d7t"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="dashboard" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GI7-Yc-G2n">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="showUIConfiguration:" target="Jbm-OC-mfA" id="zsD-3i-s9x"/>
+                                    </connections>
+                                </button>
+                                <button toolTip="Exit" translatesAutoresizingMaskIntoConstraints="NO" id="28p-u9-5Vs" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
+                                    <rect key="frame" x="363" y="4" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="0cj-qi-FkA"/>
+                                        <constraint firstAttribute="height" constant="24" id="mqK-rx-jzU"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="logout" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="lJ7-ym-Apy">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="invert" value="YES"/>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="quitMeteoBar:" target="Jbm-OC-mfA" id="aY8-cz-2IW"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <visibilityPriorities>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                                <integer value="1000"/>
+                            </visibilityPriorities>
+                            <customSpacing>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                                <real value="3.4028234663852886e+38"/>
+                            </customSpacing>
+                        </stackView>
+                    </subviews>
+                </customView>
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="HI8-Yd-cSI">
+                    <rect key="frame" x="0.0" y="429" width="400" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </box>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bYM-6G-BEM" customClass="AlertView" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="434" width="400" height="96"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="50" horizontalPageScroll="10" verticalLineScroll="50" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZA-C2-cgR">
+                            <rect key="frame" x="0.0" y="-4" width="400" height="96"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <clipView key="contentView" ambiguous="YES" id="JRT-tD-bfF">
+                                <rect key="frame" x="1" y="1" width="398" height="94"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="48" viewBased="YES" id="Dh1-zv-veT">
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="94"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <size key="intercellSpacing" width="3" height="2"/>
+                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                        <tableColumns>
+                                            <tableColumn identifier="DefaultRow" width="395" minWidth="40" maxWidth="1000" id="l98-5p-Deu">
+                                                <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                    <font key="font" metaFont="smallSystem"/>
+                                                    <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                                </tableHeaderCell>
+                                                <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="1vn-xE-ciV">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                <prototypeCellViews>
+                                                    <tableCellView id="Jfy-VP-x2u" customClass="AlertTableCellView" customModule="MeteoBar" customModuleProvider="target">
+                                                        <rect key="frame" x="1" y="1" width="395" height="48"/>
+                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <subviews>
+                                                            <imageView identifier="Warning" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bZH-gg-6IK">
+                                                                <rect key="frame" x="3" y="11" width="32" height="32"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="warning-red" id="6m2-zt-NVa"/>
+                                                            </imageView>
+                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OOj-n0-Zj7">
+                                                                <rect key="frame" x="36" y="31" width="359" height="17"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Headline" id="hGs-xE-BG7">
+                                                                    <font key="font" metaFont="systemSemibold" size="12"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pVZ-bg-fdq">
+                                                                <rect key="frame" x="36" y="1" width="359" height="29"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                <textFieldCell key="cell" lineBreakMode="charWrapping" allowsUndo="NO" sendsActionOnEndEditing="YES" title="Description" id="adJ-3Y-zZl">
+                                                                    <font key="font" metaFont="system" size="10"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                        <connections>
+                                                            <outlet property="alertDescription" destination="pVZ-bg-fdq" id="eJY-lO-GmW"/>
+                                                            <outlet property="alertHeadline" destination="OOj-n0-Zj7" id="pkg-z2-TvO"/>
+                                                            <outlet property="imgAlert" destination="bZH-gg-6IK" id="X6R-nP-MXc"/>
+                                                        </connections>
+                                                    </tableCellView>
+                                                </prototypeCellViews>
+                                            </tableColumn>
+                                        </tableColumns>
+                                    </tableView>
+                                </subviews>
+                            </clipView>
+                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="QPJ-GN-cwy">
+                                <rect key="frame" x="1" y="47" width="398" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="N0W-eX-kBY">
+                                <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                    <connections>
+                        <outlet property="alertsTable" destination="Dh1-zv-veT" id="AsG-KB-cYu"/>
+                    </connections>
+                </customView>
+                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dMn-qv-HW9">
+                    <rect key="frame" x="0.0" y="28" width="400" height="5"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </box>
+                <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z9d-If-O6K" customClass="MeteoCompassView" customModule="MeteoBar" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="32" width="400" height="400"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </customView>
+            </subviews>
+            <point key="canvasLocation" x="70" y="46"/>
+        </customView>
+        <viewController id="Jbm-OC-mfA" customClass="MeteoPanelController" customModule="MeteoBar" customModuleProvider="target">
+            <connections>
+                <outlet property="alertView" destination="bYM-6G-BEM" id="xDM-eR-IQm"/>
+                <outlet property="compassView" destination="z9d-If-O6K" id="VuD-Vs-kTz"/>
+                <outlet property="iconBarView" destination="CjE-37-4fe" id="qAQ-1O-qJr"/>
+            </connections>
+        </viewController>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSInfo" width="32" height="32"/>
+        <image name="compass-north" width="75" height="75"/>
+        <image name="configurator" width="180" height="180"/>
+        <image name="dashboard" width="409.60000610351562" height="409.60000610351562"/>
+        <image name="logout" width="384" height="384"/>
+        <image name="warning-red" width="384" height="384"/>
+    </resources>
+</document>

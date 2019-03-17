@@ -29,6 +29,8 @@
 		2780456821EAB9290026E1F7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2780456721EAB9290026E1F7 /* README.md */; };
 		2788E2EF223AEED500635BE6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788E2EE223AEED500635BE6 /* AlertView.swift */; };
 		27937BF22221C12F00E0E5F3 /* OGSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27937BF12221C12F00E0E5F3 /* OGSwitch.swift */; };
+		2793E3F8223DCFAF0061BDBA /* MeteoPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */; };
+		2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */; };
 		27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0545721EB8520001F4913 /* MainMenuController.swift */; };
 		27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */; };
 		27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038A2219D5F100E9A6BE /* dashboard.png */; };
@@ -74,6 +76,9 @@
 		27CF043022079C6C007DFFDF /* BridgeSetupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CF042E22079C6C007DFFDF /* BridgeSetupController.swift */; };
 		27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27CF042F22079C6C007DFFDF /* BridgeSetup.xib */; };
 		27CF04332207A519007DFFDF /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CF04322207A519007DFFDF /* play-button.png */; };
+		27D20C9C223C4FC000F0D2FA /* AlertDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D20C9A223C4FC000F0D2FA /* AlertDetailsController.swift */; };
+		27D20C9D223C4FC000F0D2FA /* AlertDetails.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27D20C9B223C4FC000F0D2FA /* AlertDetails.xib */; };
+		27D20C9F223C705000F0D2FA /* MeteoEventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D20C9E223C705000F0D2FA /* MeteoEventMonitor.swift */; };
 		27E6C5BD21ED58C800548CF0 /* books.png in Resources */ = {isa = PBXBuildFile; fileRef = 27E6C5BC21ED58C800548CF0 /* books.png */; };
 		27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E6C5BE21ED595500548CF0 /* QLExtensions.swift */; };
 		27E9669E222ACE960084C4B6 /* MeteoWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27E9669D222ACE960084C4B6 /* MeteoWeather.swift */; };
@@ -132,6 +137,8 @@
 		2780456721EAB9290026E1F7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		2788E2EE223AEED500635BE6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		27937BF12221C12F00E0E5F3 /* OGSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OGSwitch.swift; sourceTree = "<group>"; };
+		2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoPanelController.swift; sourceTree = "<group>"; };
+		2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeteoPanel.xib; sourceTree = "<group>"; };
 		27A0545721EB8520001F4913 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJSKMultiLineLabel.swift; sourceTree = "<group>"; };
 		27A8038A2219D5F100E9A6BE /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
@@ -177,6 +184,9 @@
 		27CF042E22079C6C007DFFDF /* BridgeSetupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeSetupController.swift; sourceTree = "<group>"; };
 		27CF042F22079C6C007DFFDF /* BridgeSetup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BridgeSetup.xib; sourceTree = "<group>"; };
 		27CF04322207A519007DFFDF /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
+		27D20C9A223C4FC000F0D2FA /* AlertDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertDetailsController.swift; sourceTree = "<group>"; };
+		27D20C9B223C4FC000F0D2FA /* AlertDetails.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlertDetails.xib; sourceTree = "<group>"; };
+		27D20C9E223C705000F0D2FA /* MeteoEventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoEventMonitor.swift; sourceTree = "<group>"; };
 		27E6C5BC21ED58C800548CF0 /* books.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = books.png; sourceTree = "<group>"; };
 		27E6C5BE21ED595500548CF0 /* QLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QLExtensions.swift; sourceTree = "<group>"; };
 		27E9669D222ACE960084C4B6 /* MeteoWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoWeather.swift; sourceTree = "<group>"; };
@@ -329,6 +339,7 @@
 			children = (
 				27E6C5BB21ED58B200548CF0 /* Graphics */,
 				27CA786521EBC06A000D517D /* About.xib */,
+				27D20C9B223C4FC000F0D2FA /* AlertDetails.xib */,
 				27ACA77421FCA99400E226C2 /* BridgePreferences.xib */,
 				27CF042F22079C6C007DFFDF /* BridgeSetup.xib */,
 				27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */,
@@ -336,6 +347,7 @@
 				27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */,
 				27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */,
 				27A8038D2219DCD900E9A6BE /* UserInterface.xib */,
+				2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,10 +356,12 @@
 			isa = PBXGroup;
 			children = (
 				27CA786421EBC06A000D517D /* AboutController.swift */,
-				27CF042E22079C6C007DFFDF /* BridgeSetupController.swift */,
+				27D20C9A223C4FC000F0D2FA /* AlertDetailsController.swift */,
 				27ACA77321FCA99400E226C2 /* BridgePreferencesController.swift */,
+				27CF042E22079C6C007DFFDF /* BridgeSetupController.swift */,
 				27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */,
 				27A0545721EB8520001F4913 /* MainMenuController.swift */,
+				2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */,
 				27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */,
 				27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */,
 			);
@@ -366,6 +380,7 @@
 		27CA785C21EBA1F0000D517D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				27D20C9E223C705000F0D2FA /* MeteoEventMonitor.swift */,
 				27ACA77921FE018A00E226C2 /* MeteoPreferences.swift */,
 				27CAA731221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift */,
 				27E6C5BE21ED595500548CF0 /* QLExtensions.swift */,
@@ -568,6 +583,7 @@
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,
 				27CF0429220735D9007DFFDF /* full-battery-color.png in Resources */,
 				27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */,
+				27D20C9D223C4FC000F0D2FA /* AlertDetails.xib in Resources */,
 				27CA786721EBC06A000D517D /* About.xib in Resources */,
 				27BBA4252231273A00DC3B5B /* NWSLogo.png in Resources */,
 				27ACA78621FE4CD500E226C2 /* pressure.png in Resources */,
@@ -584,6 +600,7 @@
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
 				275934D32221D42000910F8C /* controls.png in Resources */,
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
+				2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */,
 				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
 				27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */,
 				27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */,
@@ -688,6 +705,7 @@
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
 				2763D2C722355C110032E6A5 /* ProgressHUD.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
+				2793E3F8223DCFAF0061BDBA /* MeteoPanelController.swift in Sources */,
 				27CC8FEB21F181D500CDDF66 /* MeteobridgeSensor.swift in Sources */,
 				27E966A0222AD4470084C4B6 /* MeteoUSWeather.swift in Sources */,
 				27F8901B21F252BA00F8605E /* Meteobridge.swift in Sources */,
@@ -712,10 +730,12 @@
 				2788E2EF223AEED500635BE6 /* AlertView.swift in Sources */,
 				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,
 				27470AAB2212D8F100C7AEA9 /* IconBarView.swift in Sources */,
+				27D20C9F223C705000F0D2FA /* MeteoEventMonitor.swift in Sources */,
 				27ACA77A21FE018A00E226C2 /* MeteoPreferences.swift in Sources */,
 				27CA786621EBC06A000D517D /* AboutController.swift in Sources */,
 				27FCB6FD21F4199700A90715 /* MeteoObservation.swift in Sources */,
 				277EF6BB220619EF005DA8B4 /* MeteoCompassSettingsView.swift in Sources */,
+				27D20C9C223C4FC000F0D2FA /* AlertDetailsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
