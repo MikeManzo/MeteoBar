@@ -14,6 +14,10 @@ class MeteoPanelController: NSViewController {
     @IBOutlet weak var compassView: MeteoCompassView!
     @IBOutlet weak var iconBarView: IconBarView!
     
+    var origAlertOrigin: NSPoint?
+    var origCompassOrigin: NSPoint?
+    var origIconBarOrigin: NSPoint?
+    
     var originPoint = NSPoint(x: 0, y: 0)
     
     /// About View
@@ -34,10 +38,9 @@ class MeteoPanelController: NSViewController {
         super.viewDidLoad()
         self.view.window?.delegate = self
         
-        print("Alert:\(alertView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
-        print("Compass:\(compassView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
-        print("Icon Bar:\(iconBarView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
-        print("Frame:\(self.view.frame)")
+        origCompassOrigin   = compassView.frame.origin
+        origIconBarOrigin   = iconBarView.frame.origin
+        origAlertOrigin     = alertView.frame.origin
     }
     
     override func viewWillAppear() {
@@ -54,8 +57,8 @@ class MeteoPanelController: NSViewController {
             return
         }
         
-        if theBridge.weatherAlerts.isEmpty {    // No alerts ... move views up
-            setSize(newSize: NSSize(width: 400, height: 442))
+        if theBridge.weatherAlerts.isEmpty {                    // No alerts ... move views up
+            setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
             var compassOrigin   = compassView.frame.origin
             var iconBarOrigin   = iconBarView.frame.origin
             
@@ -65,8 +68,12 @@ class MeteoPanelController: NSViewController {
             iconBarOrigin.y += 96
             iconBarView.animator().setFrameOrigin(iconBarOrigin)
 
-        } else {                                // Alerts ... move views to defult
+        } else {                                                // Alerts ... move views to defult
+            setSize(newSize: NSSize(width: 400, height: 538))   // Size of window w/o he AlertView (which is 96 pixels)
             
+            compassView.animator().setFrameOrigin(origCompassOrigin!)
+            iconBarView.animator().setFrameOrigin(origIconBarOrigin!)
+            alertView.animator().setFrameOrigin(origAlertOrigin!)
         }
         alertView.refreshAlerts(alerts: theBridge.weatherAlerts)
     }
