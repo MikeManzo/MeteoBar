@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0930"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C48C9388FD982BC579B66EB088F85FB6"
+               BlueprintIdentifier = "ADF931E82F8161A2F259322203A7E16C"
                BuildableName = "Pods_MeteoBar.framework"
                BlueprintName = "Pods-MeteoBar"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C48C9388FD982BC579B66EB088F85FB6"
+            BlueprintIdentifier = "ADF931E82F8161A2F259322203A7E16C"
             BuildableName = "Pods_MeteoBar.framework"
             BlueprintName = "Pods-MeteoBar"
             ReferencedContainer = "container:Pods.xcodeproj">

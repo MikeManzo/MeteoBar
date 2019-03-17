@@ -55,7 +55,8 @@ class MeteoPanelController: NSViewController {
         }
         
         if theBridge.weatherAlerts.isEmpty {    // No alerts ... move views up
-/*            var compassOrigin   = compassView.frame.origin
+            setSize(newSize: NSSize(width: 400, height: 442))
+            var compassOrigin   = compassView.frame.origin
             var iconBarOrigin   = iconBarView.frame.origin
             
             compassOrigin.y += 96
@@ -63,11 +64,19 @@ class MeteoPanelController: NSViewController {
 
             iconBarOrigin.y += 96
             iconBarView.animator().setFrameOrigin(iconBarOrigin)
-*/
+
         } else {                                // Alerts ... move views to defult
             
         }
         alertView.refreshAlerts(alerts: theBridge.weatherAlerts)
+    }
+    
+    private final func setSize(newSize: NSSize) {
+        if let myWindow = self.view.window {
+            var frame = myWindow.frame
+            frame.size = newSize
+            myWindow.setFrame(frame, display: true, animate: true)
+        }
     }
     
     /// Override the dismissal so we can stop the mouse event looking for left/right mouse clicks

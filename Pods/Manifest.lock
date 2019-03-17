@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (4.8.1)
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
   - Preferences (0.2.1)
@@ -28,7 +28,7 @@ SPEC REPOS:
     - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
   Preferences: 5543bfd757a2485a310683da977d661c0ae509a9
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
