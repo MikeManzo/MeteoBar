@@ -90,6 +90,9 @@ class MainMenuController: NSViewController {
         /// Register as a delegate for the notification center
         NSUserNotificationCenter.default.delegate = self
 
+        /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
+        NotificationCenter.default.addObserver(self, selector: #selector(weatherPanelClosed(sender:)), name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil)
+
         /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
         NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(_:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
 
@@ -98,14 +101,13 @@ class MainMenuController: NSViewController {
 
         /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
         NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(_:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
-
+        
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
         
         /// Setup mouse event monitoring for so we can close our window
-        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-            if self!.meteoPanelView.isViewLoaded && (self!.meteoPanelView.view.window != nil) {
-                print("viewController is visible")
-                self?.meteoPanelView.view.window?.close()
+        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [unowned self] _ in
+            if self.meteoPanelView.isViewLoaded && (self.meteoPanelView.view.window != nil) {
+                self.meteoPanelView.view.window?.close()
             }
         }
         eventMonitor?.start()
@@ -122,12 +124,21 @@ class MainMenuController: NSViewController {
     @objc func showWeatherPanel(sender: AnyObject) {
         if meteoPanelView.isViewLoaded && (meteoPanelView.view.window != nil) {
             meteoPanelView.view.window?.close()
+            eventMonitor?.stop()
+            print("Stopped")
             return
         } else {
             let frameOrigin = statusItems["MeteoBar"]?.button?.window?.frame.origin
             meteoPanelView.originPoint = CGPoint(x: (frameOrigin?.x)!, y: (frameOrigin?.y)! - 22)
             presentAsModalWindow(meteoPanelView)
+            eventMonitor?.start()
+            print("Started")
         }
+    }
+
+    @objc func weatherPanelClosed(sender: AnyObject) {
+        eventMonitor?.stop()
+        print("Stopped")
     }
     
     /// We have creasted and configured a new meteobridge ... start the machine
