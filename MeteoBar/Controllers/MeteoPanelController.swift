@@ -32,6 +32,12 @@ class MeteoPanelController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.window?.delegate = self
+        
+        print("Alert:\(alertView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
+        print("Compass:\(compassView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
+        print("Icon Bar:\(iconBarView.frame.origin) -- Parent:\(alertView.superview?.description ?? "")")
+        print("Frame:\(self.view.frame)")
     }
     
     override func viewWillAppear() {
@@ -43,9 +49,25 @@ class MeteoPanelController: NSViewController {
         view.window!.styleMask                                          = .borderless
 
         view.window!.setFrameOrigin(originPoint)
-        if theDelegate?.theBridge != nil {
-            alertView.refreshAlerts(alerts: (theDelegate?.theBridge?.weatherAlerts)!)
+        
+        guard let theBridge = theDelegate?.theBridge else {
+            return
         }
+        
+        if theBridge.weatherAlerts.isEmpty {    // No alerts ... move views up
+/*            var compassOrigin   = compassView.frame.origin
+            var iconBarOrigin   = iconBarView.frame.origin
+            
+            compassOrigin.y += 96
+            compassView.animator().setFrameOrigin(compassOrigin)
+
+            iconBarOrigin.y += 96
+            iconBarView.animator().setFrameOrigin(iconBarOrigin)
+*/
+        } else {                                // Alerts ... move views to defult
+            
+        }
+        alertView.refreshAlerts(alerts: theBridge.weatherAlerts)
     }
     
     /// Override the dismissal so we can stop the mouse event looking for left/right mouse clicks
@@ -118,5 +140,17 @@ class MeteoPanelController: NSViewController {
     ///
     @IBAction func quitMeteoBar(_ sender: Any) {
       NSApplication.shared.terminate(self)
+    }
+}
+
+extension MeteoPanelController: NSWindowDelegate {
+    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+        if !(theDelegate?.theBridge?.weatherAlerts.isEmpty)! {
+            print("We have Alerts Alerts")
+            return NSSize(width: 400, height: 538)
+        } else {
+            print("We don't have Alerts Alerts")
+            return NSSize(width: 400, height: 442)
+        }
     }
 }

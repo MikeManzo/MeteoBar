@@ -526,8 +526,8 @@ class WeatherPlatform: Weather {
             responseHandler(nil, WeatherPlatformError.NWSAlertsError)
             return
         }
-//        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/\(usModel.forecastZoneID)")
-        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/NEC155")   /// TODO: TESTING!!!!!!
+        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/\(usModel.forecastZoneID)")
+//        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/NEC155")   /// TODO: TESTING!!!!!!
 
         Alamofire.request(stationEndpoint!).responseJSON { response in
             switch response.result {
