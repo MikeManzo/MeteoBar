@@ -90,7 +90,7 @@ class MainMenuController: NSViewController {
         /// Register as a delegate for the notification center
         NSUserNotificationCenter.default.delegate = self
 
-        /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
+        /// Setup a call-forward listener for anyone to tell the controller that our weather panel has been closed - somehow
         NotificationCenter.default.addObserver(self, selector: #selector(weatherPanelClosed(sender:)), name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil)
 
         /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
@@ -104,7 +104,7 @@ class MainMenuController: NSViewController {
         
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
         
-        /// Setup mouse event monitoring for so we can close our window
+        /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
         eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [unowned self] _ in
             if self.meteoPanelView.isViewLoaded && (self.meteoPanelView.view.window != nil) {
                 self.meteoPanelView.view.window?.close()
@@ -119,26 +119,23 @@ class MainMenuController: NSViewController {
     /// uncomment the following line to return to using this class
     /// statusItems["MeteoBar"]?.menu   = menuMain
     ///
-    /// - Parameter sender: <#sender description#>
+    /// - Parameter sender: sender of teh notification
     ///
     @objc func showWeatherPanel(sender: AnyObject) {
         if meteoPanelView.isViewLoaded && (meteoPanelView.view.window != nil) {
             meteoPanelView.view.window?.close()
             eventMonitor?.stop()
-            print("Stopped")
             return
         } else {
             let frameOrigin = statusItems["MeteoBar"]?.button?.window?.frame.origin
             meteoPanelView.originPoint = CGPoint(x: (frameOrigin?.x)!, y: (frameOrigin?.y)! - 22)
             presentAsModalWindow(meteoPanelView)
             eventMonitor?.start()
-            print("Started")
         }
     }
 
     @objc func weatherPanelClosed(sender: AnyObject) {
         eventMonitor?.stop()
-        print("Stopped")
     }
     
     /// We have creasted and configured a new meteobridge ... start the machine
@@ -346,9 +343,16 @@ class MainMenuController: NSViewController {
         notification.subtitle           = "\(theBridge.name)"
         notification.informativeText    = "Ends: \(alert.endsOn.toShortDateTimeString())"
         notification.userInfo           = ["Alert": "\(theAlertID):\(theBridge.uuid)"]
-        notification.contentImage       = NSImage(named: NSImage.Name("NWSLogo.png"))
         notification.deliveryDate       = Date(timeIntervalSinceNow: delayBeforeDelivering)
         
+        switch alert.severity {
+        case .extreme, .severe:
+            notification.contentImage   = NSImage(named: "warning-red.png")
+        case .minor, .moderate:
+            notification.contentImage   = NSImage(named: "warning-yellow.png")
+        case .unknown:
+            notification.contentImage   = NSImage(named: NSImage.Name("NWSLogo.png"))
+        }
         notificationcenter.scheduleNotification(notification)
     }
     
@@ -517,7 +521,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
         }
         
         theAlert.acknowledge()
-        log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has acknodleged alert[\(theAlert.identfier)]-->\(theAlert.headline).")
+//        log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has acknodleged alert[\(theAlert.identfier)]-->\(theAlert.headline).")
     }
     
     /// Handle the user clicking the action button
@@ -546,7 +550,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
         
         switch notification.activationType {
         case .actionButtonClicked: // "Alert" Button
-            log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has issued an alert[\(theAlert.identfier)]-->\(theAlert.headline).")
+//            log.info("bridge[\(theDelegate?.theBridge?.name ?? "")] has issued an alert[\(theAlert.identfier)]-->\(theAlert.headline).")
             theAlert.acknowledge()
             statusItems["MeteoBar"]?.button?.performClick(self)
         case .additionalActionClicked:

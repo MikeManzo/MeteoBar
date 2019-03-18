@@ -22,48 +22,48 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nm6-Sg-dP0">
-                    <rect key="frame" x="0.0" y="224" width="48" height="48"/>
+                    <rect key="frame" x="5" y="224" width="48" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="warning-red" id="QdV-YF-QM3"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PbK-8S-G0W">
-                    <rect key="frame" x="54" y="228" width="396" height="39"/>
+                    <rect key="frame" x="62" y="228" width="388" height="39"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="charWrapping" allowsUndo="NO" title="Headline" id="eAy-iT-rBJ">
-                        <font key="font" metaFont="systemSemibold" size="12"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ZSz-o5-Iza">
-                    <rect key="frame" x="56" y="217" width="392" height="5"/>
+                    <rect key="frame" x="64" y="217" width="384" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
                 <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBT-Rs-Bt8">
-                    <rect key="frame" x="56" y="0.0" width="392" height="211"/>
+                    <rect key="frame" x="64" y="0.0" width="384" height="211"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="mJf-y1-dS3">
-                        <rect key="frame" x="0.0" y="0.0" width="392" height="211"/>
+                        <rect key="frame" x="0.0" y="0.0" width="384" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView ambiguous="YES" editable="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsNonContiguousLayout="YES" textCompletion="NO" id="emV-kH-85h">
-                                <rect key="frame" x="0.0" y="0.0" width="392" height="211"/>
+                                <rect key="frame" x="0.0" y="0.0" width="384" height="211"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                <size key="minSize" width="392" height="211"/>
+                                <size key="minSize" width="384" height="211"/>
                                 <size key="maxSize" width="392" height="10000000"/>
                                 <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             </textView>
                         </subviews>
                     </clipView>
                     <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="qhP-aZ-dVQ">
-                        <rect key="frame" x="376" y="0.0" width="16" height="211"/>
+                        <rect key="frame" x="368" y="0.0" width="16" height="211"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQn-pz-5nb">
-                    <rect key="frame" x="0.0" y="163" width="48" height="48"/>
+                    <rect key="frame" x="5" y="163" width="48" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NWSLogo" id="prT-h4-sqg"/>
                 </imageView>
