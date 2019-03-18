@@ -114,12 +114,7 @@ class MeteoCompassView: SKView {
         _ = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "UpdateCompassFace"),
                                                    object: nil,
                                                    queue: .main,
-                                                   using: updateCompassFace)
-        
-        // Give the user a little eye-candy and move the carat completely around the compass face
-        if theDelegate?.theBridge == nil {
-            windDirection(direction: 0.0)
-        }
+                                                   using: updateCompassFace)       
     }
     
     ///

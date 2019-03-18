@@ -64,6 +64,18 @@ class BridgePreferencesController: NSViewController, Preferenceable {
                 collectionView.reloadData()
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
             }
+            guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            
+            guard let value = sensor.measurement.value else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            compassView.windDirection(direction: Double(value)!)
+        } else {
+            compassView.windDirection(direction: 0)
         }
     }
 

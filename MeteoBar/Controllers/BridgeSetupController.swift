@@ -82,6 +82,19 @@ class BridgeSetupController: NSViewController, Preferenceable {
         // First, check to see if we have a bridge configured, if we do update the view with the saved metadata.
         // If we don't, do nothing and wait for the user to begin the process
         if theDelegate?.theBridge != nil {
+            
+            theDelegate?.theBridge?.getSystemParameter(systemParam: MeteobridgeSystemParameter.lastgooddata, callback: { [unowned self] (_ sensor, _ error) in
+                if error == nil {
+                    // Update the status Icon
+                    guard let seconds = Int(sensor!.formattedMeasurement!) else {
+                        self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
+                        return
+                    }
+                    self.updateStatusIcon(seconds: seconds)
+                } else {
+                    log.warning(error.value)
+                }
+            })
             updateBridgeMetadata()
         }
         super.viewWillAppear()
@@ -197,18 +210,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
                         self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
                         return
                     }
-                    if seconds > 0 && seconds < 60 {
-                        self.healthIcon.image = NSImage(named: NSImage.statusAvailableName)
-                        self.healthIcon.toolTip = "Valid sensor data recieved withn the last minute"
-                    } else if seconds > 61 && seconds < 120 {
-                        self.healthIcon.image = NSImage(named: NSImage.statusPartiallyAvailableName)
-                        self.healthIcon.toolTip = "Valid sensor data recieved less than 2 minutes ago"
-                    } else {
-                        self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
-                        self.healthIcon.toolTip = "No valid data recieved in over 2 minutes"
-                    }
-                    // Update the status Icon
                     
+                    self.updateStatusIcon(seconds: seconds)
                     // Enable the connect button
                     if self.validateIPAddress(self.bridgeIP.stringValue) {
                         self.connectButton.isEnabled = true
@@ -226,6 +229,23 @@ class BridgeSetupController: NSViewController, Preferenceable {
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
             }
+        }
+    }
+    
+    /// Update the bridge indicator (Red/Yellow/Green) for valid data
+    ///
+    /// - Parameter seconds: the number of seconds since last valid data
+    ///
+    private func updateStatusIcon(seconds: Int) {
+        if seconds > 0 && seconds < 60 {
+            self.healthIcon.image = NSImage(named: NSImage.statusAvailableName)
+            self.healthIcon.toolTip = "Valid sensor data recieved withn the last minute"
+        } else if seconds > 61 && seconds < 120 {
+            self.healthIcon.image = NSImage(named: NSImage.statusPartiallyAvailableName)
+            self.healthIcon.toolTip = "Valid sensor data recieved less than 2 minutes ago"
+        } else {
+            self.healthIcon.image = NSImage(named: NSImage.statusUnavailableName)
+            self.healthIcon.toolTip = "No valid data recieved in over 2 minutes"
         }
     }
     

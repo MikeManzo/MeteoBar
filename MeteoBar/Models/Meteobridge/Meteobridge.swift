@@ -43,7 +43,7 @@ enum MeteobridgeSystemParameter: String {
     case altitude
     case latitude
     case longitude
-    case lastgooddate
+    case lastgooddata
     case uptime
 }
 
@@ -258,7 +258,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 callback(nil, MeteobridgeError.observationError)
                 return
             }
-            guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
+            guard let hourPair = timeArray[0].components(separatedBy: "|")  as Array? else {  // [0] = Time [1] = HH
                 callback(nil, MeteobridgeError.observationError)
                 return
             }
@@ -268,7 +268,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             }
             
             for pair in bridgeResponse {
-                let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
+                let subPair = pair.components(separatedBy: "|")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
                     guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {   // Find the sensor with this tag
                         callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))

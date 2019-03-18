@@ -184,7 +184,7 @@ class WeatherPlatform: Weather {
         let alamoManager = Alamofire.SessionManager.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
-        var templateString = "Time:[hh];[mm];[ss],"
+        var templateString = "Time|[hh];[mm];[ss],"
        
         guard let sensor = (theBridge.sensors[.system]?.filter {$0.name == param.rawValue}.first) else {
             callback(nil, WeatherPlatformError.urlError)
@@ -192,7 +192,8 @@ class WeatherPlatform: Weather {
         }
         
         templateString.append("\(sensor.bridgeTemplate)")
-        
+        templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
+
         guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {
             callback(nil, WeatherPlatformError.urlError)
             return

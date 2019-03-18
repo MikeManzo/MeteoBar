@@ -76,6 +76,22 @@ class MeteoPanelController: NSViewController {
             alertView.animator().setFrameOrigin(origAlertOrigin!)
         }
         alertView.refreshAlerts(alerts: theBridge.weatherAlerts)
+        
+        // Give the user a little eye-candy and move the carat completely around the compass face
+        if theDelegate?.theBridge == nil {
+            compassView.windDirection(direction: 0.0)
+        } else {
+            guard let sensor = theDelegate?.theBridge?.findSensor(sensorName: "wind0dir") else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            
+            guard let value = sensor.measurement.value else {
+                log.warning(MeteoCompassViewError.windSensorError)
+                return
+            }
+            compassView.windDirection(direction: Double(value)!)
+        }
     }
     
     private final func setSize(newSize: NSSize) {
