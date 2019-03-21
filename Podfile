@@ -12,6 +12,7 @@ target 'MeteoBar' do
     pod 'SwiftyJSON'
     pod 'Repeat'
     pod 'SwiftyUserDefaults', '4.0.0-alpha.1'
+    pod 'Ansi', :git => 'https://github.com/MikeManzo/Ansi.git'
 end
 
 =begin

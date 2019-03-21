@@ -344,10 +344,10 @@
 				27CF042F22079C6C007DFFDF /* BridgeSetup.xib */,
 				27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */,
 				277658DE21EA6063007BA05A /* MainMenu.xib */,
+				2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */,
 				27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */,
 				27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */,
 				27A8038D2219DCD900E9A6BE /* UserInterface.xib */,
-				2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -647,29 +647,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MeteoBar/Pods-MeteoBar-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/Preferences/Preferences.framework",
-				"${BUILT_PRODUCTS_DIR}/Repeat/Repeat.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MeteoBar/Pods-MeteoBar-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Preferences.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Repeat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyBeaver.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MeteoBar/Pods-MeteoBar-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MeteoBar/Pods-MeteoBar-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MeteoBar/Pods-MeteoBar-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FC7E646D9747A89EDD9B4369 /* [CP] Check Pods Manifest.lock */ = {

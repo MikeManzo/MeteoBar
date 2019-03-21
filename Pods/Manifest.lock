@@ -2,6 +2,13 @@ PODS:
   - Alamofire (4.8.1)
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
+  - Ansi (2.0.0):
+    - BonMot (~> 5.3)
+    - FootlessParser (~> 0.5.1)
+    - Hue (~> 4.0.0)
+  - BonMot (5.3)
+  - FootlessParser (0.5.1)
+  - Hue (4.0.0)
   - Preferences (0.2.1)
   - Repeat (0.5.7)
   - SwiftyBeaver (1.6.1)
@@ -11,6 +18,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage
+  - Ansi (from `https://github.com/MikeManzo/Ansi.git`)
   - Preferences
   - Repeat
   - SwiftyBeaver
@@ -21,21 +29,37 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - BonMot
+    - FootlessParser
+    - Hue
     - Preferences
     - Repeat
     - SwiftyBeaver
     - SwiftyJSON
     - SwiftyUserDefaults
 
+EXTERNAL SOURCES:
+  Ansi:
+    :git: https://github.com/MikeManzo/Ansi.git
+
+CHECKOUT OPTIONS:
+  Ansi:
+    :commit: 0c224288a26318c96f25cb28cd2cd6998e9c5596
+    :git: https://github.com/MikeManzo/Ansi.git
+
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
+  Ansi: 90051de8743bb9d79f381a942de860fe704f2ac5
+  BonMot: 0104d1b4eda54f4a4b7393d6559539ef25498fbd
+  FootlessParser: d59a9266ec55ed5a801fb171e25be43abfb42927
+  Hue: afe18b4e819e2848e7d2d5b4b33f4d3f88dd921b
   Preferences: 5543bfd757a2485a310683da977d661c0ae509a9
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
   SwiftyBeaver: ccfcdf85a04d429f1633f668650b0ce8020bda3a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
 
-PODFILE CHECKSUM: 315234dd9e8704f753d4aa334552e3167670081e
+PODFILE CHECKSUM: ed3e1d8351ee72695218a6b69a3e954b214d0b2e
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.7.0.beta.2

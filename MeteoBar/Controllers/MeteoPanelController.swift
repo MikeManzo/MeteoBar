@@ -9,6 +9,11 @@
 import Preferences
 import Cocoa
 
+enum WeatherPanelState {
+    case expanded
+    case contracted
+}
+
 class MeteoPanelController: NSViewController {
     @IBOutlet weak var alertView: AlertView!
     @IBOutlet weak var compassView: MeteoCompassView!
@@ -19,6 +24,7 @@ class MeteoPanelController: NSViewController {
     var origIconBarOrigin: NSPoint?
     
     var originPoint = NSPoint(x: 0, y: 0)
+    var panelState: WeatherPanelState = .expanded
     
     /// About View
     lazy var aboutView: AboutController = {
@@ -58,22 +64,28 @@ class MeteoPanelController: NSViewController {
         }
         
         if theBridge.weatherAlerts.isEmpty {                    // No alerts ... move views up
-            setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
-            var compassOrigin   = compassView.frame.origin
-            var iconBarOrigin   = iconBarView.frame.origin
-            
-            compassOrigin.y += 96
-            compassView.animator().setFrameOrigin(compassOrigin)
-
-            iconBarOrigin.y += 96
-            iconBarView.animator().setFrameOrigin(iconBarOrigin)
-
+            switch panelState {
+            case .expanded:
+                setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
+                var compassOrigin   = compassView.frame.origin
+                var iconBarOrigin   = iconBarView.frame.origin
+                
+                compassOrigin.y += 96
+                compassView.animator().setFrameOrigin(compassOrigin)
+                
+                iconBarOrigin.y += 96
+                iconBarView.animator().setFrameOrigin(iconBarOrigin)
+                panelState = .contracted
+            case .contracted:
+                break
+            }
         } else {                                                // Alerts ... move views to defult
             setSize(newSize: NSSize(width: 400, height: 538))   // Size of window w/o he AlertView (which is 96 pixels)
             
             compassView.animator().setFrameOrigin(origCompassOrigin!)
             iconBarView.animator().setFrameOrigin(origIconBarOrigin!)
             alertView.animator().setFrameOrigin(origAlertOrigin!)
+            panelState = .expanded
         }
         alertView.refreshAlerts(alerts: theBridge.weatherAlerts)
         
