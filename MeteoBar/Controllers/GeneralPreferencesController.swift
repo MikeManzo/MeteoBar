@@ -84,7 +84,7 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         super.viewDidLoad()
         
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
-        tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 135
+        tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 132
     }
 }
 

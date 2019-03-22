@@ -51,7 +51,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="O4f-Qx-THd" userLabel="Category">
-                                                        <rect key="frame" x="1" y="0.0" width="175" height="17"/>
+                                                        <rect key="frame" x="17" y="0.0" width="159" height="17"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="155" id="t5z-O8-dfx"/>
+                                                        </constraints>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Category" id="icb-XB-Hdp" userLabel="Category">
                                                             <font key="font" metaFont="systemBold"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -59,7 +62,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DRj-aF-0E6">
-                                                        <rect key="frame" x="182" y="-2" width="16" height="16"/>
+                                                        <rect key="frame" x="182" y="1" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="16" id="nEK-mr-Alw"/>
                                                             <constraint firstAttribute="height" constant="16" id="quH-gb-HmK"/>
@@ -68,11 +71,10 @@
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="DRj-aF-0E6" secondAttribute="trailing" constant="3" id="7ZJ-xN-MNy"/>
-                                                    <constraint firstItem="DRj-aF-0E6" firstAttribute="top" secondItem="XpK-fY-XTM" secondAttribute="top" constant="3" id="OOB-bC-q66"/>
-                                                    <constraint firstItem="DRj-aF-0E6" firstAttribute="leading" secondItem="O4f-Qx-THd" secondAttribute="trailing" constant="8" symbolic="YES" id="PB3-b0-Z5W"/>
-                                                    <constraint firstItem="O4f-Qx-THd" firstAttribute="leading" secondItem="XpK-fY-XTM" secondAttribute="leading" constant="3" id="PMU-dG-jZA"/>
-                                                    <constraint firstItem="O4f-Qx-THd" firstAttribute="centerY" secondItem="XpK-fY-XTM" secondAttribute="centerY" id="bGU-iH-Tcf"/>
+                                                    <constraint firstItem="DRj-aF-0E6" firstAttribute="leading" secondItem="O4f-Qx-THd" secondAttribute="trailing" constant="8" id="3ha-CF-a4s"/>
+                                                    <constraint firstItem="O4f-Qx-THd" firstAttribute="centerY" secondItem="XpK-fY-XTM" secondAttribute="centerY" id="fzQ-Os-k45"/>
+                                                    <constraint firstItem="DRj-aF-0E6" firstAttribute="centerY" secondItem="XpK-fY-XTM" secondAttribute="centerY" id="mqy-Qo-qYz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="DRj-aF-0E6" secondAttribute="trailing" constant="3" id="tNv-ye-fMb"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="imageView" destination="DRj-aF-0E6" id="JGt-tn-Zsk"/>
@@ -84,7 +86,10 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LPD-3O-MRh" userLabel="Sensor">
-                                                        <rect key="frame" x="1" y="0.0" width="172" height="17"/>
+                                                        <rect key="frame" x="27" y="0.0" width="146" height="17"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="142" id="nz4-DG-JT8"/>
+                                                        </constraints>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Sensor" id="e2M-tD-yzF" userLabel="Sensor">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -101,11 +106,11 @@
                                                     </imageView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="LPD-3O-MRh" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="16K-bs-BUm"/>
-                                                    <constraint firstItem="INS-oT-5WX" firstAttribute="leading" secondItem="LPD-3O-MRh" secondAttribute="trailing" constant="11" id="UqA-4H-Ewp"/>
-                                                    <constraint firstAttribute="trailing" secondItem="INS-oT-5WX" secondAttribute="trailing" constant="3" id="fra-zZ-uaZ"/>
-                                                    <constraint firstItem="INS-oT-5WX" firstAttribute="top" secondItem="XBa-WP-Db3" secondAttribute="top" id="nm3-Hd-eQE"/>
-                                                    <constraint firstItem="LPD-3O-MRh" firstAttribute="leading" secondItem="XBa-WP-Db3" secondAttribute="leading" constant="3" id="xds-e6-IKJ"/>
+                                                    <constraint firstItem="INS-oT-5WX" firstAttribute="leading" secondItem="LPD-3O-MRh" secondAttribute="trailing" constant="11" id="B9u-59-Qik"/>
+                                                    <constraint firstItem="LPD-3O-MRh" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="FVs-9O-THx"/>
+                                                    <constraint firstAttribute="trailing" secondItem="INS-oT-5WX" secondAttribute="trailing" constant="3" id="dmY-Uh-o1P"/>
+                                                    <constraint firstItem="LPD-3O-MRh" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="fwZ-qU-Rad"/>
+                                                    <constraint firstItem="INS-oT-5WX" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="yrc-QY-OP9"/>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="imageView" destination="INS-oT-5WX" id="KOR-KW-wu1"/>

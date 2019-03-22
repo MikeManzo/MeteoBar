@@ -71,7 +71,11 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FMR-Sd-yWk" userLabel="Category">
-                                                                    <rect key="frame" x="1" y="0.0" width="175" height="17"/>
+                                                                    <rect key="frame" x="17" y="0.0" width="159" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="155" id="CiQ-V5-APg"/>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="155" id="TdP-Gg-fir"/>
+                                                                    </constraints>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Category" id="tvW-bq-jdW" userLabel="Category">
                                                                         <font key="font" metaFont="systemBold"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -79,7 +83,7 @@
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="S5i-de-Y3D">
-                                                                    <rect key="frame" x="182" y="-2" width="16" height="16"/>
+                                                                    <rect key="frame" x="182" y="1" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="TXU-H4-pTY"/>
                                                                         <constraint firstAttribute="width" constant="16" id="oRp-lW-wqm"/>
@@ -88,11 +92,10 @@
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="S5i-de-Y3D" firstAttribute="leading" secondItem="FMR-Sd-yWk" secondAttribute="trailing" constant="8" symbolic="YES" id="NT7-IP-yip"/>
-                                                                <constraint firstItem="S5i-de-Y3D" firstAttribute="top" secondItem="1DU-N6-dwA" secondAttribute="top" constant="3" id="Q1H-yC-IMT"/>
-                                                                <constraint firstAttribute="trailing" secondItem="S5i-de-Y3D" secondAttribute="trailing" constant="3" id="c0j-DH-vVR"/>
-                                                                <constraint firstItem="FMR-Sd-yWk" firstAttribute="leading" secondItem="1DU-N6-dwA" secondAttribute="leading" constant="3" id="liw-nW-Zti"/>
-                                                                <constraint firstItem="FMR-Sd-yWk" firstAttribute="centerY" secondItem="1DU-N6-dwA" secondAttribute="centerY" id="whn-fZ-EGI"/>
+                                                                <constraint firstItem="FMR-Sd-yWk" firstAttribute="centerY" secondItem="1DU-N6-dwA" secondAttribute="centerY" id="Kcg-7q-400"/>
+                                                                <constraint firstItem="S5i-de-Y3D" firstAttribute="leading" secondItem="FMR-Sd-yWk" secondAttribute="trailing" constant="8" id="MXA-tB-Bp2"/>
+                                                                <constraint firstAttribute="trailing" secondItem="S5i-de-Y3D" secondAttribute="trailing" constant="3" id="ach-9c-E99"/>
+                                                                <constraint firstItem="S5i-de-Y3D" firstAttribute="centerY" secondItem="1DU-N6-dwA" secondAttribute="centerY" id="tKf-rG-TRz"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="imageView" destination="S5i-de-Y3D" id="BbT-hq-J7D"/>
@@ -104,7 +107,10 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="atD-4P-YGj" userLabel="Sensor">
-                                                                    <rect key="frame" x="1" y="0.0" width="172" height="17"/>
+                                                                    <rect key="frame" x="27" y="0.0" width="146" height="17"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="142" id="cf6-go-GXl"/>
+                                                                    </constraints>
                                                                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sensor" id="cq8-De-YOk" userLabel="Sensor">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -121,11 +127,10 @@
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="JfP-Ht-JLt" firstAttribute="leading" secondItem="atD-4P-YGj" secondAttribute="trailing" constant="11" id="8bb-eh-05d"/>
-                                                                <constraint firstItem="atD-4P-YGj" firstAttribute="leading" secondItem="7xH-Fc-ZVn" secondAttribute="leading" constant="3" id="NcU-08-IX4"/>
-                                                                <constraint firstAttribute="trailing" secondItem="JfP-Ht-JLt" secondAttribute="trailing" constant="3" id="Q5T-Ag-wP7"/>
-                                                                <constraint firstItem="atD-4P-YGj" firstAttribute="centerY" secondItem="7xH-Fc-ZVn" secondAttribute="centerY" id="YnX-3Y-9SW"/>
-                                                                <constraint firstItem="JfP-Ht-JLt" firstAttribute="top" secondItem="7xH-Fc-ZVn" secondAttribute="top" id="qtq-2t-qzs"/>
+                                                                <constraint firstAttribute="trailing" secondItem="JfP-Ht-JLt" secondAttribute="trailing" constant="3" id="103-0K-5xY"/>
+                                                                <constraint firstItem="JfP-Ht-JLt" firstAttribute="leading" secondItem="atD-4P-YGj" secondAttribute="trailing" constant="11" id="DSx-Ce-yvf"/>
+                                                                <constraint firstItem="JfP-Ht-JLt" firstAttribute="centerY" secondItem="7xH-Fc-ZVn" secondAttribute="centerY" id="bHk-Ar-7Ma"/>
+                                                                <constraint firstItem="atD-4P-YGj" firstAttribute="centerY" secondItem="7xH-Fc-ZVn" secondAttribute="centerY" id="nIh-Xx-o80"/>
                                                             </constraints>
                                                             <connections>
                                                                 <outlet property="imageView" destination="JfP-Ht-JLt" id="IGJ-2o-3Vy"/>
@@ -150,7 +155,7 @@
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" identifier="SensorHeader" id="zhh-38-pxG">
+                                <tableHeaderView key="headerView" identifier="SensorHeader" wantsLayer="YES" id="zhh-38-pxG">
                                     <rect key="frame" x="0.0" y="0.0" width="204" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
