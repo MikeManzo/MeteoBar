@@ -26,7 +26,7 @@
                         <rect key="frame" x="1" y="0.0" width="204" height="274"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="R2u-am-Gy6" viewBased="YES" indentationPerLevel="8" outlineTableColumn="E1S-rL-Z96" id="HKM-qY-eZb">
+                            <outlineView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="R2u-am-Gy6" viewBased="YES" indentationPerLevel="8" outlineTableColumn="E1S-rL-Z96" id="HKM-qY-eZb">
                                 <rect key="frame" x="0.0" y="0.0" width="204" height="249"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -79,8 +79,8 @@
                                                     <outlet property="textField" destination="O4f-Qx-THd" id="OcN-Rs-G4B"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="SensorView" misplaced="YES" id="XBa-WP-Db3" userLabel="Sensor View">
-                                                <rect key="frame" x="1" y="20" width="201" height="17"/>
+                                            <tableCellView identifier="SensorView" id="XBa-WP-Db3" userLabel="Sensor View">
+                                                <rect key="frame" x="1" y="20" width="201" height="16"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="LPD-3O-MRh" userLabel="Sensor">
