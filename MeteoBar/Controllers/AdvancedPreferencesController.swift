@@ -36,12 +36,13 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
     @IBOutlet weak var sensorMaxValue: NSTextField!
     @IBOutlet weak var sensorValue: NSTextField!
     @IBOutlet weak var sensorTree: NSOutlineView!
+    @IBOutlet weak var sensorProgress: NSProgressIndicator!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
-        tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 135
+        tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 135    // Used for the height determination in the OutlineView row
     }
     
     override func viewWillAppear() {
@@ -85,7 +86,7 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
         }
         
         sensorUnits.removeAllItems()
-        
+        sensorProgress.startAnimation(nil)
         theBridge.getObservation(sensor: sensorToDisplay, { [unowned self] _, error in
             if error == nil {
                 DispatchQueue.main.async { [unowned self] in
@@ -120,6 +121,8 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                     self.sensorValue.stringValue = sensorToDisplay.formattedMeasurement!
                     self.sensorInfo.stringValue = sensorToDisplay.information
                     self.sensorName.stringValue = sensorToDisplay.name
+                    
+                    self.sensorProgress.stopAnimation(nil)
                 }
             }
         })

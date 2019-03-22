@@ -18,6 +18,7 @@
                 <outlet property="sensorMinValue" destination="Vkq-rw-VVU" id="Ynp-Ct-Oew"/>
                 <outlet property="sensorName" destination="WGl-SF-D4z" id="FSs-lN-jPN"/>
                 <outlet property="sensorParam" destination="tAO-ai-1OX" id="xZp-RJ-rvW"/>
+                <outlet property="sensorProgress" destination="RsB-i3-QOT" id="zQ7-uV-Npq"/>
                 <outlet property="sensorTree" destination="4T8-9M-GDR" id="9Ip-k3-aFZ"/>
                 <outlet property="sensorUnits" destination="9ZE-YI-0hq" id="kO0-ph-XAc"/>
                 <outlet property="sensorValue" destination="1sC-8o-t7E" id="tte-yk-itZ"/>
@@ -400,6 +401,10 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="RsB-i3-QOT">
+                                <rect key="frame" x="547" y="364" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
                         </subviews>
                     </view>
                 </box>
@@ -418,6 +423,7 @@
                 <outlet property="sensorMinValue" destination="Vkq-rw-VVU" id="N3N-Wd-dlp"/>
                 <outlet property="sensorName" destination="WGl-SF-D4z" id="uE5-IQ-dnu"/>
                 <outlet property="sensorParam" destination="tAO-ai-1OX" id="IGT-bc-UN0"/>
+                <outlet property="sensorProgress" destination="RsB-i3-QOT" id="63b-qq-8kQ"/>
                 <outlet property="sensorTree" destination="4T8-9M-GDR" id="qvW-fp-53z"/>
                 <outlet property="sensorUnits" destination="9ZE-YI-0hq" id="NVA-am-2oO"/>
                 <outlet property="sensorValue" destination="1sC-8o-t7E" id="dPp-6J-O58"/>
