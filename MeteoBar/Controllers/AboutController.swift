@@ -34,6 +34,13 @@ class AboutController: NSViewController {
          "copyHolder": "Alamofire Software Foundation",
          "copyURL": "https://github.com/Alamofire/Alamofire"
         ],
+        ["copyImage": "detector.png",
+         "copyType": "Icon",
+         "invertable": "no",
+         "copyName": "Smoke Detector Icon",
+         "copyHolder": "Flaticon",
+         "copyURL": "https://www.flaticon.com"
+        ],
         ["copyImage": "AppIcon",
          "copyType": "Icon",
          "invertable": "no",

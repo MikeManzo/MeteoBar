@@ -140,6 +140,34 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         return prettyMinMax
     }
     
+    /// Formatted Min Measurement
+    var formattedMin: String? {
+        var prettyMin: String?
+        
+        switch category {
+        case .system, .unk:
+            prettyMin = ""  // Just eat it
+        case .energy, .humidity, .pressure, .rain, .solar, .wind, .temperature:
+            prettyMin = String("⤓ \(minMeasurement.value ?? "") \(currentUnit!.representation)")
+        }
+        
+        return prettyMin
+    }
+
+    /// Formatted Max Measurement
+    var formattedMax: String? {
+        var prettyMax: String?
+        
+        switch category {
+        case .system, .unk:
+            prettyMax = ""  // Just eat it
+        case .energy, .humidity, .pressure, .rain, .solar, .wind, .temperature:
+            prettyMax = String("⤒ \(maxMeasurement.value ?? "") \(currentUnit!.representation)")
+        }
+        
+        return prettyMax
+    }
+    
     /// Observing property
     var isObserving: Bool {
         get {

@@ -69,7 +69,8 @@ class MainMenuController: NSViewController {
         return PreferencesWindowController(viewControllers: [ GeneralPreferencesController(),
                                                               BridgeSetupController(),
                                                               BridgePreferencesController(),
-                                                              UserInterfaceController()
+                                                              UserInterfaceController(),
+                                                              AdvancedPreferencesController()
                                                             ])
     }()
     
