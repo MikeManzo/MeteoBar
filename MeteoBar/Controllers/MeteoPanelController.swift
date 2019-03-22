@@ -74,7 +74,7 @@ class MeteoPanelController: NSViewController {
                 compassOrigin.y += 96
                 compassView.animator().setFrameOrigin(compassOrigin)
                 
-                iconBarOrigin.y += 96
+                iconBarOrigin.y += 98
                 iconBarView.animator().setFrameOrigin(iconBarOrigin)
                 panelState = .contracted
             case .contracted:

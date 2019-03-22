@@ -98,20 +98,20 @@
                                                                 <outlet property="textField" destination="FMR-Sd-yWk" id="M8I-Pg-znq"/>
                                                             </connections>
                                                         </tableCellView>
-                                                        <tableCellView identifier="SensorView" id="7xH-Fc-ZVn" userLabel="Sensor View">
+                                                        <tableCellView identifier="SensorView" misplaced="YES" id="7xH-Fc-ZVn" userLabel="Sensor View">
                                                             <rect key="frame" x="1" y="20" width="201" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="atD-4P-YGj" userLabel="Sensor">
                                                                     <rect key="frame" x="1" y="0.0" width="172" height="17"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Sensor" id="cq8-De-YOk" userLabel="Sensor">
+                                                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Sensor" id="cq8-De-YOk" userLabel="Sensor">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
                                                                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JfP-Ht-JLt">
-                                                                    <rect key="frame" x="182" y="1" width="16" height="16"/>
+                                                                    <rect key="frame" x="182" y="0.0" width="16" height="16"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="16" id="JmU-Nv-3kd"/>
                                                                         <constraint firstAttribute="width" constant="16" id="tQi-B0-FLD"/>
@@ -121,6 +121,7 @@
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="JfP-Ht-JLt" firstAttribute="leading" secondItem="atD-4P-YGj" secondAttribute="trailing" constant="11" id="8bb-eh-05d"/>
+                                                                <constraint firstItem="JfP-Ht-JLt" firstAttribute="centerY" secondItem="7xH-Fc-ZVn" secondAttribute="centerY" id="BbX-hE-YAe"/>
                                                                 <constraint firstItem="atD-4P-YGj" firstAttribute="leading" secondItem="7xH-Fc-ZVn" secondAttribute="leading" constant="3" id="NcU-08-IX4"/>
                                                                 <constraint firstAttribute="trailing" secondItem="JfP-Ht-JLt" secondAttribute="trailing" constant="3" id="Q5T-Ag-wP7"/>
                                                                 <constraint firstItem="atD-4P-YGj" firstAttribute="centerY" secondItem="7xH-Fc-ZVn" secondAttribute="centerY" id="YnX-3Y-9SW"/>

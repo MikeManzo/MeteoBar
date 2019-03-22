@@ -14,6 +14,7 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
     let toolbarItemTitle = "General"
     let toolbarItemIcon = NSImage(named: NSImage.advancedName)!
     
+    var tableViewCellForSizing: NSTableCellView?
     var categories = [SensorCat]()
     
     // MARK: - Outlets
@@ -81,6 +82,9 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
+        tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 135
     }
 }
 
@@ -123,6 +127,37 @@ extension GeneralPreferencesController: NSOutlineViewDelegate {
     
     func outlineView(_ outlineView: NSOutlineView, shouldExpandItem: Any) -> Bool {
         return true
+    }
+
+    /// Auto height for Row
+    ///
+    /// - Parameters:
+    ///   - outlineView: our outlineView
+    ///   - item: the item in question (we only want sensors)
+    /// - Returns: height of row
+    ///
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        guard let tableCellView = tableViewCellForSizing else { return 17 }
+        
+        switch item {
+        case is MeteobridgeSensor:
+            let strokeTextAttributes: [NSAttributedString.Key: Any]?
+            strokeTextAttributes = [
+                .strokeColor: NSColor.controlTextColor,
+                .foregroundColor: NSColor.controlTextColor,
+                .strokeWidth: -2.0,
+                .font: NSFont.systemFont(ofSize: NSFont.Weight.regular.rawValue)
+            ]
+            tableCellView.textField?.attributedStringValue = NSAttributedString(string: (item as? MeteobridgeSensor)!.information, attributes: strokeTextAttributes)
+        default:
+            break
+        }
+        if let height = tableCellView.textField?.fittingSize.height, height > 0 {
+            print(height)
+            return height
+        }
+        
+        return 17 // <-- Defult height for system font of regular value
     }
     
     /// Customize the view for presentation

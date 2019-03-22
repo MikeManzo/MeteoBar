@@ -79,7 +79,7 @@
                                                     <outlet property="textField" destination="O4f-Qx-THd" id="OcN-Rs-G4B"/>
                                                 </connections>
                                             </tableCellView>
-                                            <tableCellView identifier="SensorView" id="XBa-WP-Db3" userLabel="Sensor View">
+                                            <tableCellView identifier="SensorView" misplaced="YES" id="XBa-WP-Db3" userLabel="Sensor View">
                                                 <rect key="frame" x="1" y="20" width="201" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
@@ -92,7 +92,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INS-oT-5WX">
-                                                        <rect key="frame" x="182" y="1" width="16" height="16"/>
+                                                        <rect key="frame" x="182" y="0.0" width="16" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="Uz8-nM-oFZ"/>
                                                             <constraint firstAttribute="width" constant="16" id="knV-eg-z2n"/>
@@ -103,6 +103,7 @@
                                                 <constraints>
                                                     <constraint firstItem="LPD-3O-MRh" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="16K-bs-BUm"/>
                                                     <constraint firstItem="INS-oT-5WX" firstAttribute="leading" secondItem="LPD-3O-MRh" secondAttribute="trailing" constant="11" id="UqA-4H-Ewp"/>
+                                                    <constraint firstItem="INS-oT-5WX" firstAttribute="centerY" secondItem="XBa-WP-Db3" secondAttribute="centerY" id="ZwW-1n-Ipr"/>
                                                     <constraint firstAttribute="trailing" secondItem="INS-oT-5WX" secondAttribute="trailing" constant="3" id="fra-zZ-uaZ"/>
                                                     <constraint firstItem="INS-oT-5WX" firstAttribute="top" secondItem="XBa-WP-Db3" secondAttribute="top" id="nm3-Hd-eQE"/>
                                                     <constraint firstItem="LPD-3O-MRh" firstAttribute="leading" secondItem="XBa-WP-Db3" secondAttribute="leading" constant="3" id="xds-e6-IKJ"/>
