@@ -115,9 +115,9 @@ extension AlertView: NSTableViewDataSource, NSTableViewDelegate {
                     result.alertDescription.stringValue = myAlert.detail
                     switch myAlert.severity {
                     case .extreme, .severe:
-                        result.imageView?.image = NSImage(named: "warning-red.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
+                        result.imgAlert?.image = NSImage(named: "warning-red.png")
                     case .minor, .moderate:
-                        result.imageView?.image = NSImage(named: "warning-yellow.png")?.resized(to: NSSize(width: 16.0, height: 16.0))
+                        result.imgAlert?.image = NSImage(named: "warning-yellow.png")
                     case .unknown:
                         log.warning("Unkown alert passed")
                     }

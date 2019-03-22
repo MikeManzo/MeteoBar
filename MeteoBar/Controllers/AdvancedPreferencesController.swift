@@ -191,7 +191,6 @@ extension AdvancedPreferencesController: NSOutlineViewDelegate {
             break
         }
         if let height = tableCellView.textField?.fittingSize.height, height > 0 {
-            print(height)
             return height
         }
         

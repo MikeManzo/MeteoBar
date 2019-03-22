@@ -35,9 +35,9 @@ class AlertDetailsController: NSViewController {
                 
                 switch self.alert!.severity {
                 case .extreme, .severe:
-                    self.alertImage.image = NSImage(named: "warning-red.png")?.resized(to: NSSize(width: 48.0, height: 48.0))
+                    self.alertImage.image = NSImage(named: "warning-red.png")
                 case .minor, .moderate:
-                    self.alertImage.image = NSImage(named: "warning-yellow.png")?.resized(to: NSSize(width: 48.0, height: 48.0))
+                    self.alertImage.image = NSImage(named: "warning-yellow.png")
                 case .unknown:
                     log.warning("Unkown alert passed")
                 }
@@ -48,7 +48,7 @@ class AlertDetailsController: NSViewController {
                 }
                 switch model {
                 case is MeteoUSWeather:
-                    self.agencyImage.image = NSImage(named: "NWSLogo.png")?.resized(to: NSSize(width: 48.0, height: 48.0))
+                    self.agencyImage.image = NSImage(named: "NWSLogo.png")
                 default:
                     self.agencyImage.image = NSImage(named: "NSadvanced")
                 }
