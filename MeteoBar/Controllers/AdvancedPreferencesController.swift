@@ -80,7 +80,27 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
         categories.removeAll()
     }
   
-    private func updateSensorData(sensorToDisplay: MeteobridgeSensor) {
+    /// Tell the controller that the user has changed teh desired unit to disply
+    ///
+    /// - Parameter sender: the popupbutton that sent the message
+    ///
+    @IBAction func unitsChanged(_ sender: NSPopUpButton) {
+        
+        let selectedIndex = sensorTree.selectedRow
+        guard let sensor = sensorTree.item(atRow: selectedIndex) as? MeteobridgeSensor else {
+            return
+        }
+
+        updateSensorData(sensorToDisplay: sensor, desiredUnit: sender.titleOfSelectedItem)
+    }
+    
+    /// helper to update the controller with all of the revelant sensor data based on the selection and desired unit
+    ///
+    /// - Parameters:
+    ///   - sensorToDisplay: sensor to display
+    ///   - desiredUnit: the unit we want to use
+    ///
+    private func updateSensorData(sensorToDisplay: MeteobridgeSensor, desiredUnit: String? = nil) {
         guard let theBridge = theDelegate?.theBridge else {
             return
         }
@@ -116,6 +136,12 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                 }
             })
         default:
+            if desiredUnit != nil {
+                let error = tempSensor.setCurrentUnit(stringUnit: desiredUnit!)
+                if error != nil {
+                    log.warning(error.value)
+                }
+            }
             Meteobridge.pollWeatherSensor(sensor: tempSensor, bridgeIP: theBridge.ipAddress, { [unowned self] (_ sensor, _ error) in
                 if error == nil {
                     DispatchQueue.main.async { [unowned self] in
@@ -155,55 +181,7 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                 }
             })
         }
-    }
-    
-/*    private func updateSensorData(sensorToDisplay: MeteobridgeSensor) {
-        guard let theBridge = theDelegate?.theBridge else {
-            return
-        }
-        
-        sensorUnits.removeAllItems()
-        sensorProgress.startAnimation(nil)
-        theBridge.getObservation(sensor: sensorToDisplay, { [unowned self] _, error in
-            if error == nil {
-                DispatchQueue.main.async { [unowned self] in
-                    for unit in sensorToDisplay.supportedUnits {
-                        self.sensorUnits.addItem(withTitle: unit.name)
-                        if unit.isCurrent {
-                            self.sensorUnits.selectItem(withTitle: unit.name)
-                        }
-                    }
-                    
-                    self.sensorCategory.stringValue = sensorToDisplay.category.rawValue
-                    self.senorBattParam.stringValue = sensorToDisplay.batteryParamater
-                    switch sensorToDisplay.category {
-                    case .system:
-                        break
-                    default:
-                        self.sensorMinParam.stringValue = (sensorToDisplay.currentUnit?.parameterMin)!
-                        self.sensorMaxParam.stringValue = (sensorToDisplay.currentUnit?.parameterMax)!
-                        self.sensorMinValue.stringValue = sensorToDisplay.formattedMin!
-                        self.sensorMaxValue.stringValue = sensorToDisplay.formattedMax!
-                    }
-                    switch sensorToDisplay.batteryStatus {
-                    case .good:
-                        self.sensorBattery.image = NSImage(named: NSImage.statusAvailableName)
-                    case .low:
-                        self.sensorBattery.image = NSImage(named: NSImage.statusUnavailableName)
-                    case .unknown:
-                        self.sensorBattery.image = NSImage(named: NSImage.statusNoneName)
-                    }
-                    self.valueTime.stringValue = (sensorToDisplay.measurement.time?.toShortDateTimeString())!
-                    self.sensorParam.stringValue = (sensorToDisplay.currentUnit?.parameter)!
-                    self.sensorValue.stringValue = sensorToDisplay.formattedMeasurement!
-                    self.sensorInfo.stringValue = sensorToDisplay.information
-                    self.sensorName.stringValue = sensorToDisplay.name
-                    
-                    self.sensorProgress.stopAnimation(nil)
-                }
-            }
-        })
-    } */
+    }    
 }
 
 /// We are the data delegate ... let's setup the model to be the data-pump
