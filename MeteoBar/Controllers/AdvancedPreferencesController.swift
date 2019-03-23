@@ -11,7 +11,7 @@ import Preferences
 
 class AdvancedPreferencesController: NSViewController, Preferenceable {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "Advanced"
+    let toolbarItemTitle = "Sensor Details"
     let toolbarItemIcon = NSImage(named: "detector.png")!
 
     var tableViewCellForSizing: NSTableCellView?
@@ -79,8 +79,85 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
         super.viewDidDisappear()
         categories.removeAll()
     }
-    
+  
     private func updateSensorData(sensorToDisplay: MeteobridgeSensor) {
+        guard let theBridge = theDelegate?.theBridge else {
+            return
+        }
+        let tempSensor = sensorToDisplay
+        
+        sensorUnits.removeAllItems()
+        sensorProgress.startAnimation(nil)
+        switch tempSensor.category {
+        case .system:
+            Meteobridge.pollSystemParameter(sensor: tempSensor, bridgeIP: theBridge.ipAddress, { [unowned self] (_ sensor, _ error) in
+                if error == nil {
+                    DispatchQueue.main.async { [unowned self] in
+                        self.sensorUnits.isEnabled = false
+                        
+                        self.sensorCategory.stringValue = sensor!.category.rawValue
+                        self.senorBattParam.stringValue = "--"
+                        self.sensorMinParam.stringValue = "--"
+                        self.sensorMaxParam.stringValue = "--"
+                        self.sensorMinValue.stringValue = "--"
+                        self.sensorMaxValue.stringValue = "--"
+                        self.sensorBattery.image = NSImage(named: NSImage.statusAvailableName)
+                        self.valueTime.stringValue = (sensor!.measurement.time?.toShortDateTimeString())!
+                        self.sensorParam.stringValue = sensor!.batteryParamater
+                        self.sensorValue.stringValue = sensor!.formattedMeasurement!
+                        self.sensorInfo.stringValue = sensor!.information
+                        self.sensorInfo.toolTip = sensor!.information
+                        self.sensorName.stringValue = sensor!.name
+                        
+                        self.sensorProgress.stopAnimation(nil)
+                    }
+                } else {
+                    log.warning(error.value)
+                }
+            })
+        default:
+            Meteobridge.pollWeatherSensor(sensor: tempSensor, bridgeIP: theBridge.ipAddress, { [unowned self] (_ sensor, _ error) in
+                if error == nil {
+                    DispatchQueue.main.async { [unowned self] in
+                        self.sensorUnits.isEnabled = true
+                        for unit in sensor!.supportedUnits {
+                            self.sensorUnits.addItem(withTitle: unit.name)
+                            if unit.isCurrent {
+                                self.sensorUnits.selectItem(withTitle: unit.name)
+                            }
+                        }
+                        
+                        self.sensorCategory.stringValue = sensor!.category.rawValue
+                        self.senorBattParam.stringValue = sensor!.batteryParamater
+                        self.sensorMinParam.stringValue = (sensor!.currentUnit?.parameterMin)!
+                        self.sensorMaxParam.stringValue = (sensor!.currentUnit?.parameterMax)!
+                        self.sensorMinValue.stringValue = sensor!.formattedMin!
+                        self.sensorMaxValue.stringValue = sensor!.formattedMax!
+                        switch sensor!.batteryStatus {
+                        case .good:
+                            self.sensorBattery.image = NSImage(named: NSImage.statusAvailableName)
+                        case .low:
+                            self.sensorBattery.image = NSImage(named: NSImage.statusUnavailableName)
+                        case .unknown:
+                            self.sensorBattery.image = NSImage(named: NSImage.statusNoneName)
+                        }
+                        self.valueTime.stringValue = (sensor!.measurement.time?.toShortDateTimeString())!
+                        self.sensorParam.stringValue = (sensor!.currentUnit?.parameter)!
+                        self.sensorValue.stringValue = sensor!.formattedMeasurement!
+                        self.sensorInfo.stringValue = sensor!.information
+                        self.sensorInfo.toolTip = sensor!.information
+                        self.sensorName.stringValue = sensor!.name
+                        
+                        self.sensorProgress.stopAnimation(nil)
+                    }
+                } else {
+                    log.warning(error.value)
+                }
+            })
+        }
+    }
+    
+/*    private func updateSensorData(sensorToDisplay: MeteobridgeSensor) {
         guard let theBridge = theDelegate?.theBridge else {
             return
         }
@@ -126,7 +203,7 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                 }
             }
         })
-    }
+    } */
 }
 
 /// We are the data delegate ... let's setup the model to be the data-pump

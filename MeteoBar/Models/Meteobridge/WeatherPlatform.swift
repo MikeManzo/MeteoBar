@@ -48,7 +48,8 @@ protocol Weather: class {
     static func getNWSPolygon(forecastZone: String, countyZone: String, responseHandler: @escaping (_ forecastZone: MKMeteoPolyline?, _ countyZone: MKMeteoPolyline?,_ error: Error?) -> Void)
     static func getNWSForecastEndpoints(lat: Double, lon: Double, responseHandler: @escaping (_ city: String?, _ forecast: String?, _ forecastHourly: String?, _ error: Error?) -> Void)
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
-    static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func getBridgeParameter(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
+    static func getConditionsForSensor(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func initializeBridgeSpecification(ipAddress: String, bridgeName: String, callback: @escaping (_ station: Meteobridge?, _ error: Error?) -> Void)
     static func getConditions(theBridge: Meteobridge, allParamaters: Bool, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
     static func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void)
@@ -113,7 +114,7 @@ class WeatherPlatform: Weather {
     ///   - sensor:     the sensor to get data for
     ///   - callback:   callback to recieve the results
     ///
-    static func getConditionsForSensor(theBridge: Meteobridge, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+    static func getConditionsForSensor(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
         let alamoManager = Alamofire.SessionManager.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
@@ -122,7 +123,7 @@ class WeatherPlatform: Weather {
         templateString.append("\(sensor.bridgeTemplate)")
         templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
         
-        guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {
+        guard let bridgeEndpoint: URL = URL(string: "http://\(theBridgeIP)/cgi-bin/template.cgi?template=\(templateString)") else {
             callback(nil, WeatherPlatformError.urlError)
             return
         }
@@ -195,6 +196,30 @@ class WeatherPlatform: Weather {
         templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
 
         guard let bridgeEndpoint: URL = URL(string: "http://\(theBridge.ipAddress)/cgi-bin/template.cgi?template=\(templateString)") else {
+            callback(nil, WeatherPlatformError.urlError)
+            return
+        }
+        
+        alamoManager.request(bridgeEndpoint).responseData { bridgeResponse in
+            switch bridgeResponse.result {
+            case .success (let stationData):
+                callback(stationData as AnyObject, nil)
+            case .failure(let stationError):
+                callback(nil, PlatformError.passthroughSystem(systemError: stationError))
+            }
+        }
+    }
+    
+    static func getBridgeParameter(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
+        let alamoManager = Alamofire.SessionManager.default
+        alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
+        alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
+        var templateString = "Time|[hh];[mm];[ss],"
+        
+        templateString.append("\(sensor.bridgeTemplate)")
+        templateString = templateString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!     // May contain spaces
+        
+        guard let bridgeEndpoint: URL = URL(string: "http://\(theBridgeIP)/cgi-bin/template.cgi?template=\(templateString)") else {
             callback(nil, WeatherPlatformError.urlError)
             return
         }

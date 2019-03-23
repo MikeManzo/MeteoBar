@@ -181,7 +181,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VDq-mx-vzy">
                                 <rect key="frame" x="380" y="299" width="171" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Info" id="Ust-Vy-MFy">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Info" id="Ust-Vy-MFy">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -190,7 +190,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="V3R-6T-ejd">
                                 <rect key="frame" x="380" y="324" width="171" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Cat" id="vXP-vX-wcI">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Cat" id="vXP-vX-wcI">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -199,7 +199,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGl-SF-D4z">
                                 <rect key="frame" x="380" y="349" width="171" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Name" id="977-6G-6CP">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Name" id="977-6G-6CP">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -278,23 +278,23 @@
                                 </textFieldCell>
                             </textField>
                             <box fixedFrame="YES" title="Current Data" translatesAutoresizingMaskIntoConstraints="NO" id="F1y-1v-bAr">
-                                <rect key="frame" x="239" y="16" width="313" height="88"/>
+                                <rect key="frame" x="239" y="16" width="318" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <view key="contentView" id="B5a-3M-sdP">
-                                    <rect key="frame" x="3" y="3" width="307" height="70"/>
+                                    <rect key="frame" x="3" y="3" width="312" height="70"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7tp-Oc-2CC">
-                                            <rect key="frame" x="7" y="13" width="43" height="17"/>
+                                            <rect key="frame" x="4" y="13" width="38" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Value:" id="Yqn-4b-tid">
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Data:" id="Yqn-4b-tid">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K92-gB-d8p">
-                                            <rect key="frame" x="7" y="42" width="40" height="17"/>
+                                            <rect key="frame" x="4" y="42" width="40" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Time:" id="Fve-V2-d3i">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
@@ -302,17 +302,8 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUc-Mo-pCl">
-                                            <rect key="frame" x="54" y="42" width="108" height="17"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Time Val" id="G5v-b7-QaJ">
-                                                <font key="font" usesAppearanceFont="YES"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            </textFieldCell>
-                                        </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1sC-8o-t7E">
-                                            <rect key="frame" x="54" y="13" width="108" height="17"/>
+                                            <rect key="frame" x="46" y="13" width="122" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Val Val" id="ruz-Yi-69s">
                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -330,7 +321,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vd0-YU-X51">
-                                            <rect key="frame" x="208" y="13" width="96" height="17"/>
+                                            <rect key="frame" x="208" y="13" width="106" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Max Val" id="rFD-N7-Clk">
                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -339,7 +330,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vkq-rw-VVU">
-                                            <rect key="frame" x="208" y="42" width="96" height="17"/>
+                                            <rect key="frame" x="208" y="42" width="106" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Min Val" id="whx-u9-qBn">
                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -352,6 +343,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="Min:" id="18Y-QO-14M">
                                                 <font key="font" metaFont="systemSemibold" size="13"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XUc-Mo-pCl">
+                                            <rect key="frame" x="46" y="42" width="122" height="17"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="Time Val" id="G5v-b7-QaJ">
+                                                <font key="font" usesAppearanceFont="YES"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
