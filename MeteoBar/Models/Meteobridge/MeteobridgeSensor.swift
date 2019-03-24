@@ -88,9 +88,10 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     enum CodingKeys: String, CodingKey {
         case batteryParamater
         case supportedUnits
+        case batteryStatus
+        case _isObserving
         case information
         case isOutdoor
-        case _isObserving
         case category
         case name
     }
@@ -289,6 +290,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         supportedUnits = try container.decode([MeteoSensorUnit].self, forKey: .supportedUnits)
+        batteryStatus = try container.decode(SensorBatteryStatus.self, forKey: .batteryStatus)
         batteryParamater = try container.decode(String.self, forKey: .batteryParamater)
         category = try container.decode(MeteoSensorCategory.self, forKey: .category)
         information = try container.decode(String.self, forKey: .information)
