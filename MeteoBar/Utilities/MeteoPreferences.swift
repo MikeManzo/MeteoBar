@@ -218,24 +218,16 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
 }
 
 /// Defaults - in case we want to individually reset a parameter
+// MARK: - Resets
 extension MeteoPreferences {
+
+    ///
+    /// Reset all of the user defaults
+    ///
     func resetDefautls() {
-        compassCardinalMinorTickColor   = SKColor.white
-        compassCardinalMajorTickColor   = SKColor.blue
-        compassCrosshairColor           = SKColor.white
-        compassSensorMajorColor         = SKColor.white
-        compassSensorMinorColor         = SKColor.white
-        compassCardinalMajorColor       = SKColor.white
-        compassCardinalMinorColor       = SKColor.white
-        compassRingColor                = SKColor.yellow
-        compassFrameColor               = SKColor.black
-        compassFaceColor                = SKColor.black
-        compassCaratColor               = SKColor.red
-        menubarSensor                   = "th0temp"         // Temp outside
-        compassULSensor                 = "th0temp"         // Upper Left:  Temp
-        compassURSensor                 = "thb0press"       // Upper Right: Pressure
-        compassLLSensor                 = "th0hum"          // Lower Left:  Humidity
-        compassLRSensor                 = "sol0rad"         // Lower Right: Solar Radiation
+        resetSensorsForDsiplay()
+        resetCompassColors()
+        
         compassShowSensorBox            = false
         weatherAlerts                   = true
         showForecastPolygon             = true
@@ -244,6 +236,35 @@ extension MeteoPreferences {
         logFileEnabled                  = true
     }
     
+    ///
+    /// Reset all of the colors for the compass face
+    ///
+    func resetCompassColors() {
+        compassRingColor                = SKColor.yellow
+        compassCardinalMinorTickColor   = SKColor.white
+        compassCrosshairColor           = SKColor.white
+        compassSensorMajorColor         = SKColor.white
+        compassSensorMinorColor         = SKColor.white
+        compassCardinalMajorColor       = SKColor.white
+        compassCardinalMinorColor       = SKColor.white
+        compassFrameColor               = SKColor.black
+        compassFaceColor                = SKColor.black
+        compassCardinalMajorTickColor   = SKColor.blue
+        compassCaratColor               = SKColor.red
+    }
+    
+    ///
+    /// Reset all of the sensors for the display
+    ///
+    func resetSensorsForDsiplay() {
+        compassURSensor                 = "thb0press"       // Upper Right: Pressure
+        menubarSensor                   = "th0temp"         // Temp outside
+        compassULSensor                 = "th0temp"         // Upper Left:  Temp
+        compassLRSensor                 = "sol0rad"         // Lower Right: Solar Radiation
+        compassLLSensor                 = "th0hum"          // Lower Left:  Humidity
+    }
+
+    // MARK: - Individual Resets
     func resetCompassCardinalMinorTickColor() -> SKColor {
         compassCardinalMinorTickColor = SKColor.white
         return compassCardinalMinorTickColor

@@ -98,6 +98,28 @@ class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable
     func updateCompass(caller: UITableCellView) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
     }
+    
+    @IBAction func resetToDefaults(_ sender: Any) {
+        let alert = NSAlert()
+        alert.messageText = "You are about to reset all of the compass colors to MeteoBar defaults"
+        alert.informativeText = "If you proceed, you will lose all of your color custimizations"
+        alert.alertStyle = .warning
+        alert.icon = NSImage(named: NSImage.cautionName)
+        alert.addButton(withTitle: "Cancel")
+        alert.addButton(withTitle: "Reset")
+        alert.beginSheetModal(for: self.view.window!) { (_ returnCode: NSApplication.ModalResponse) -> Void in
+            switch returnCode {
+            case .alertFirstButtonReturn:
+                // Eat it; the user selected cancel ... do nothing
+                break
+            case .alertSecondButtonReturn:
+                theDelegate?.resetCompassColors()
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateCompassFace"), object: nil, userInfo: nil)
+            default:
+                break
+            }
+        }
+    }
 }
 
 /// We are the data delegate ... let's setup the model to be the data-pump

@@ -114,6 +114,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
+    /// Reset the compass colors to application defaults
+    ///
+    func resetCompassColors() {
+        theDefaults?.resetCompassColors()
+        Defaults[.meteoBarDefaults]  = theDefaults
+        log.info("Compass colors reset to application defaults")
+    }
+
+    /// Reset the compass sensors to application defaults
+    ///
+    func resetCompassSensors() {
+        theDefaults?.resetSensorsForDsiplay()
+        Defaults[.meteoBarDefaults]  = theDefaults
+        log.info("Sensors for display reset to application defaults")
+    }
+    
     /// Save the current bridge to user defaults
     ///
     func updateBridge() {

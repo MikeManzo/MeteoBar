@@ -20,14 +20,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYK-MQ-l6Q">
-                    <rect key="frame" x="20" y="20" width="256" height="400"/>
+                    <rect key="frame" x="20" y="57" width="256" height="363"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" ambiguous="YES" id="Un4-ru-Uil">
-                        <rect key="frame" x="1" y="1" width="254" height="398"/>
+                        <rect key="frame" x="1" y="1" width="254" height="361"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="qq5-7n-MBU" id="GMa-dY-xqX" userLabel="Interface Elements">
-                                <rect key="frame" x="0.0" y="0.0" width="254" height="398"/>
+                                <rect key="frame" x="0.0" y="0.0" width="254" height="361"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -124,6 +124,17 @@
                     <rect key="frame" x="284" y="20" width="400" height="400"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </customView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDt-HX-elG">
+                    <rect key="frame" x="138" y="13" width="144" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset to Defaults" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OhI-PW-laB">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetToDefaults:" target="-2" id="UAa-AU-m5k"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="95" y="-113"/>
         </customView>

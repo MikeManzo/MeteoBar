@@ -90,6 +90,7 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         case supportedUnits
         case batteryStatus
         case _isObserving
+        case _measurement
         case information
         case isOutdoor
         case category
@@ -298,7 +299,12 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         isOutdoor = try container.decode(Bool.self, forKey: .isOutdoor)
         name = try container.decode(String.self, forKey: .name)
         
-        batteryStatus = .unknown
+        switch category {
+        case .system:
+            _measurement = try container.decode(MeteoObservation.self, forKey: ._measurement)
+        default:
+            break
+        }
     }
     
     /// Copy MeteobridgeSensor
