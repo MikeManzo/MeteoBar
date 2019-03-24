@@ -20,6 +20,8 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
     // MARK: - Outlets
     @IBOutlet weak var sensorTree: NSOutlineView!
     @IBOutlet weak var updateInterval: NSPopUpButton!
+    @IBOutlet weak var alertUpdateInterval: NSPopUpButton!
+    @IBOutlet weak var alertIntervalLabel: NSTextField!
     @IBOutlet weak var weatherAlerts: NSButton!
     
     // MARK: - Overrides
@@ -60,9 +62,20 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         // Update view based on defaults
         if theDelegate?.theBridge != nil {
             updateInterval.isEnabled = true
+            alertUpdateInterval.isEnabled = true
             updateInterval.setTitle((theDelegate?.theBridge?.updateInterval.description)!)
+            
+            let minutes = ((theDelegate?.theBridge?.alertUpdateInterval)!) / 60
+            alertUpdateInterval.setTitle(minutes.description)
+            
+            if minutes == 1 {
+                alertIntervalLabel.stringValue = "minute"
+            } else {
+                alertIntervalLabel.stringValue = "minutes"
+            }
         } else {
             updateInterval.isEnabled = false
+            alertUpdateInterval.isEnabled = false
         }
         weatherAlerts.state = (theDelegate?.theDefaults?.weatherAlerts)! ? .on : .off
         // Update view based on defaults
@@ -74,6 +87,7 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         
         if theDelegate?.theBridge != nil {
             theDelegate?.theBridge?.updateInterval = Int(updateInterval.titleOfSelectedItem!)!
+            theDelegate?.theBridge?.alertUpdateInterval = Int(alertUpdateInterval.titleOfSelectedItem!)! * 60
         }
         theDelegate?.theDefaults?.weatherAlerts = (weatherAlerts.state == .on) ? true : false
         
@@ -85,6 +99,15 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
         tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 132
+    }
+    
+    @IBAction func alertIntervalChanged(_ sender: Any) {
+        switch alertUpdateInterval.titleOfSelectedItem {
+        case "1":
+            alertIntervalLabel.stringValue = "minute"
+        default:
+            alertIntervalLabel.stringValue = "minutes"
+        }
     }
 }
 
