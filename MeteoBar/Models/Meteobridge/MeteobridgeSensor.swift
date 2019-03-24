@@ -80,6 +80,21 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     private var _minMeasurement = MeteoObservation()
     private var _isObserving: Bool
     
+    /// Because they are all transient and based on observations,
+    /// we want to exclude the following from being saved:
+    ///  - _measurement
+    ///  - _maxMeasurement
+    ///  - _minMeasurement
+    enum CodingKeys: String, CodingKey {
+        case batteryParamater
+        case supportedUnits
+        case information
+        case isOutdoor
+        case _isObserving
+        case category
+        case name
+    }
+    
     /// Measurement property
     var measurement: MeteoObservation {
         get {
@@ -263,6 +278,25 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
         }
         
         super.init()
+    }
+    
+    /// Need to manually decode since we're excluind some variables form being codable
+    ///
+    /// - Parameter decoder: the coder
+    /// - Throws: error if we cannot decode
+    ///
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        supportedUnits = try container.decode([MeteoSensorUnit].self, forKey: .supportedUnits)
+        batteryParamater = try container.decode(String.self, forKey: .batteryParamater)
+        category = try container.decode(MeteoSensorCategory.self, forKey: .category)
+        information = try container.decode(String.self, forKey: .information)
+        _isObserving = try container.decode(Bool.self, forKey: ._isObserving)
+        isOutdoor = try container.decode(Bool.self, forKey: .isOutdoor)
+        name = try container.decode(String.self, forKey: .name)
+        
+        batteryStatus = .unknown
     }
     
     /// Copy MeteobridgeSensor

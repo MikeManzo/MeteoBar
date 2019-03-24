@@ -299,8 +299,9 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
                             <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="Checkmark"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="GreenCheckmark"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="defaultEnabled" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="ignoreRatio" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="forecastSwitchClicked:" target="-2" id="RGr-8N-RuM"/>
@@ -323,7 +324,7 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
                             <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="Checkmark"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="GreenCheckmark"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="defaultEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -347,7 +348,7 @@
                         <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
                             <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                         </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="Checkmark"/>
+                        <userDefinedRuntimeAttribute type="image" keyPath="activeIcon" value="GreenCheckmark"/>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="defaultEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -381,7 +382,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="Checkmark" width="35" height="34"/>
+        <image name="GreenCheckmark" width="35" height="34"/>
         <image name="NSStatusNone" width="16" height="16"/>
         <image name="map-zoom" width="384" height="384"/>
         <image name="play-button" width="384" height="384"/>

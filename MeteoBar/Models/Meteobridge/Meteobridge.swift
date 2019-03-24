@@ -519,6 +519,10 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 callback(self, MeteobridgeError.weatherAlertError)
             }
             
+            if alerts == nil {
+                callback(nil, nil)
+            }
+            
             for alert in alerts! {
                 guard let filteredAlert = (self.weatherAlerts.filter {$0.identfier == alert.identfier}.first) else {    // Is this alert ID in the list?
                     self.weatherAlerts.append(alert)                                                                    // No; add it to the list

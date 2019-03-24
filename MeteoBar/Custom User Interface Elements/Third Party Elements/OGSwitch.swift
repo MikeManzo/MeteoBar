@@ -100,10 +100,15 @@ import QuartzCore
     
     convenience public init(size: CGSize) {
         self.init(frame: NSRect(origin: .zero, size: size))
+        setup()
     }
     
     override public init(frame: NSRect) {
         super.init(frame: frame)
+        setup()
+    }
+    
+    override public func awakeFromNib() {
         setup()
     }
     

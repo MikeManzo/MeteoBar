@@ -61,13 +61,17 @@ class MeteoPanelController: NSViewController {
         view.window!.setFrameOrigin(originPoint)
         
         guard let theBridge = theDelegate?.theBridge else {
+            contractPanel()
+            compassView.windDirection(direction: 0)
+            
             return
         }
         
         if theBridge.weatherAlerts.isEmpty {                    // No alerts ... move views up
             switch panelState {
             case .expanded:
-                setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
+                contractPanel()
+/*                setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
                 var compassOrigin   = compassView.frame.origin
                 var iconBarOrigin   = iconBarView.frame.origin
                 
@@ -77,6 +81,7 @@ class MeteoPanelController: NSViewController {
                 iconBarOrigin.y += 98
                 iconBarView.animator().setFrameOrigin(iconBarOrigin)
                 panelState = .contracted
+*/
             case .contracted:
                 break
             }
@@ -105,6 +110,19 @@ class MeteoPanelController: NSViewController {
             }
             compassView.windDirection(direction: Double(value)!)
         }
+    }
+    
+    private func contractPanel() {
+        setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
+        var compassOrigin   = compassView.frame.origin
+        var iconBarOrigin   = iconBarView.frame.origin
+        
+        compassOrigin.y += 96
+        compassView.animator().setFrameOrigin(compassOrigin)
+        
+        iconBarOrigin.y += 98
+        iconBarView.animator().setFrameOrigin(iconBarOrigin)
+        panelState = .contracted
     }
     
     private final func setSize(newSize: NSSize) {
