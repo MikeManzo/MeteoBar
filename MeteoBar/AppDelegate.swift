@@ -86,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         case true:
             for aDestination in log.destinations {
                 switch aDestination {
-                case FileDestination():
+                case is FileDestination:
                     log.warning("File Logging Already Enabled ... taking no action")
                     return
                 default:
@@ -95,9 +95,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
             
             let file            = FileDestination()
-            file.logFileURL     = URL(fileURLWithPath: "meteobar_console.log")
+            file.logFileURL     = URL(fileURLWithPath: "meteobar_log.json")
             file.format         = "$Dyyyy-MM-dd HH:mm:ss.SSS$d $C$L$c: $M"
             file.minLevel       = .verbose
+            file.format         = "$J"
             
             log.addDestination(file)
             log.info("File Logging Enabled")
@@ -112,6 +113,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
+    }
+    
+    ///
+    /// Get the file logger (if one exists)
+    ///
+    /// - Returns: the FileDestination object
+    ///
+    func getFileLogger() -> FileDestination? {
+        var fileDestination: FileDestination?
+        
+        for aDestination in log.destinations {
+            switch aDestination {
+            case is FileDestination:
+                fileDestination = aDestination as? FileDestination
+            default:
+                break
+            }
+        }
+        
+        return fileDestination
     }
     
     /// Reset the compass colors to application defaults

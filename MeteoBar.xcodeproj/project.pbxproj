@@ -10,6 +10,7 @@
 		2703FADF2243A0850092AE4B /* AdvancedPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2703FADD2243A0850092AE4B /* AdvancedPreferencesController.swift */; };
 		2703FAE02243A0850092AE4B /* AdvancedPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2703FADE2243A0850092AE4B /* AdvancedPreferences.xib */; };
 		2703FAE22243F8000092AE4B /* detector.png in Resources */ = {isa = PBXBuildFile; fileRef = 2703FAE12243F8000092AE4B /* detector.png */; };
+		2724080D2247F2A600D54DC3 /* MeteoLogReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2724080C2247F2A600D54DC3 /* MeteoLogReader.swift */; };
 		27365DE6223802C500CD27A8 /* warning-red.png in Resources */ = {isa = PBXBuildFile; fileRef = 27365DE5223802C500CD27A8 /* warning-red.png */; };
 		27365DE8223802D100CD27A8 /* warning-yellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 27365DE7223802D100CD27A8 /* warning-yellow.png */; };
 		27365DEB22381BD900CD27A8 /* MeteoWeatherAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27365DEA22381BD900CD27A8 /* MeteoWeatherAlert.swift */; };
@@ -31,6 +32,9 @@
 		277EF6BB220619EF005DA8B4 /* MeteoCompassSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */; };
 		2780456821EAB9290026E1F7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2780456721EAB9290026E1F7 /* README.md */; };
 		2788E2EF223AEED500635BE6 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2788E2EE223AEED500635BE6 /* AlertView.swift */; };
+		278DF09F22486108004BA69F /* MeteoConsoleLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278DF09D22486108004BA69F /* MeteoConsoleLogController.swift */; };
+		278DF0A022486108004BA69F /* MeteoConsoleLog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 278DF09E22486108004BA69F /* MeteoConsoleLog.xib */; };
+		278DF0A222486328004BA69F /* console.png in Resources */ = {isa = PBXBuildFile; fileRef = 278DF0A122486328004BA69F /* console.png */; };
 		27937BF22221C12F00E0E5F3 /* OGSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27937BF12221C12F00E0E5F3 /* OGSwitch.swift */; };
 		2793E3F8223DCFAF0061BDBA /* MeteoPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */; };
 		2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */; };
@@ -114,6 +118,7 @@
 		2703FADD2243A0850092AE4B /* AdvancedPreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedPreferencesController.swift; sourceTree = "<group>"; };
 		2703FADE2243A0850092AE4B /* AdvancedPreferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvancedPreferences.xib; sourceTree = "<group>"; };
 		2703FAE12243F8000092AE4B /* detector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = detector.png; sourceTree = "<group>"; };
+		2724080C2247F2A600D54DC3 /* MeteoLogReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoLogReader.swift; sourceTree = "<group>"; };
 		27365DE5223802C500CD27A8 /* warning-red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning-red.png"; sourceTree = "<group>"; };
 		27365DE7223802D100CD27A8 /* warning-yellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "warning-yellow.png"; sourceTree = "<group>"; };
 		27365DEA22381BD900CD27A8 /* MeteoWeatherAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoWeatherAlert.swift; sourceTree = "<group>"; };
@@ -142,6 +147,9 @@
 		277EF6BA220619EF005DA8B4 /* MeteoCompassSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoCompassSettingsView.swift; sourceTree = "<group>"; };
 		2780456721EAB9290026E1F7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		2788E2EE223AEED500635BE6 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		278DF09D22486108004BA69F /* MeteoConsoleLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoConsoleLogController.swift; sourceTree = "<group>"; };
+		278DF09E22486108004BA69F /* MeteoConsoleLog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeteoConsoleLog.xib; sourceTree = "<group>"; };
+		278DF0A122486328004BA69F /* console.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = console.png; sourceTree = "<group>"; };
 		27937BF12221C12F00E0E5F3 /* OGSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OGSwitch.swift; sourceTree = "<group>"; };
 		2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoPanelController.swift; sourceTree = "<group>"; };
 		2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeteoPanel.xib; sourceTree = "<group>"; };
@@ -351,6 +359,7 @@
 				27CF042F22079C6C007DFFDF /* BridgeSetup.xib */,
 				27ACA77021FCA8A700E226C2 /* GeneralPreferences.xib */,
 				277658DE21EA6063007BA05A /* MainMenu.xib */,
+				278DF09E22486108004BA69F /* MeteoConsoleLog.xib */,
 				2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */,
 				27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */,
 				27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */,
@@ -370,6 +379,7 @@
 				27ACA76F21FCA8A700E226C2 /* GeneralPreferencesController.swift */,
 				27A0545721EB8520001F4913 /* MainMenuController.swift */,
 				2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */,
+				278DF09D22486108004BA69F /* MeteoConsoleLogController.swift */,
 				27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */,
 				27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */,
 			);
@@ -393,6 +403,7 @@
 				27CAA731221DD01A0092EB1B /* QLDoubleClickGestureRecognizer.swift */,
 				27E6C5BE21ED595500548CF0 /* QLExtensions.swift */,
 				27CA785D21EBA22B000D517D /* QuantumLogger.swift */,
+				2724080C2247F2A600D54DC3 /* MeteoLogReader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -424,6 +435,7 @@
 				2744B781220E793600A61514 /* compass-north.png */,
 				2744B783220E79FC00A61514 /* configurator.png */,
 				275934D22221D42000910F8C /* controls.png */,
+				278DF0A122486328004BA69F /* console.png */,
 				27A8038A2219D5F100E9A6BE /* dashboard.png */,
 				2703FAE12243F8000092AE4B /* detector.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
@@ -610,11 +622,13 @@
 				27ACA79E21FF4CDE00E226C2 /* no-battery.png in Resources */,
 				275934D32221D42000910F8C /* controls.png in Resources */,
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
+				278DF0A022486108004BA69F /* MeteoConsoleLog.xib in Resources */,
 				2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */,
 				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
 				27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */,
 				27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */,
 				2703FAE22243F8000092AE4B /* detector.png in Resources */,
+				278DF0A222486328004BA69F /* console.png in Resources */,
 				27ACA77621FCA99400E226C2 /* BridgePreferences.xib in Resources */,
 				2744B784220E79FC00A61514 /* configurator.png in Resources */,
 				27F8902121F2D24B00F8605E /* Config in Resources */,
@@ -701,6 +715,7 @@
 				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
 				2703FADF2243A0850092AE4B /* AdvancedPreferencesController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
+				2724080D2247F2A600D54DC3 /* MeteoLogReader.swift in Sources */,
 				2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */,
 				2763D2C722355C110032E6A5 /* ProgressHUD.swift in Sources */,
 				27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */,
@@ -727,6 +742,7 @@
 				277EF6B9220614A8005DA8B4 /* MeteoSensorNodePair.swift in Sources */,
 				27CA786B21EC1B4F000D517D /* QJQuickResponseTableView.swift in Sources */,
 				2788E2EF223AEED500635BE6 /* AlertView.swift in Sources */,
+				278DF09F22486108004BA69F /* MeteoConsoleLogController.swift in Sources */,
 				27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */,
 				27470AAB2212D8F100C7AEA9 /* IconBarView.swift in Sources */,
 				27D20C9F223C705000F0D2FA /* MeteoEventMonitor.swift in Sources */,

@@ -37,7 +37,8 @@ class MeteoPanelController: NSViewController {
                                                               BridgeSetupController(),
                                                               BridgePreferencesController(),
                                                               UserInterfaceController(),
-                                                              AdvancedPreferencesController()
+                                                              AdvancedPreferencesController(),
+                                                              MeteoConsoleLogController()
                                                             ])
     }()
     
@@ -117,10 +118,10 @@ class MeteoPanelController: NSViewController {
         var compassOrigin   = compassView.frame.origin
         var iconBarOrigin   = iconBarView.frame.origin
         
-        compassOrigin.y += 96
+        compassOrigin.y += 100
         compassView.animator().setFrameOrigin(compassOrigin)
         
-        iconBarOrigin.y += 98
+        iconBarOrigin.y += 100
         iconBarView.animator().setFrameOrigin(iconBarOrigin)
         panelState = .contracted
     }
