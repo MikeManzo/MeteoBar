@@ -30,7 +30,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     let toolbarItemTitle = "Console Log"
     let toolbarItemIcon = NSImage(named: "console.png")!
     
-    var tableConsoleData = [MeteoLogReader]()
+    var tableConsoleData = [MeteoLog]()
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -49,7 +49,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
         let stream = StreamReader(url: logFile.logFileURL!)
         while let json = stream?.nextLine() {
             do {
-                tableConsoleData.append(try MeteoLogReader(json))
+                tableConsoleData.append(try MeteoLog(json))
             } catch {
                 log.warning(ConsoleLogError.logFileError)
             }
