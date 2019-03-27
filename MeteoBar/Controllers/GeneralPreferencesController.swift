@@ -100,7 +100,6 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
         tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 132
     }
-    
     @IBAction func alertIntervalChanged(_ sender: Any) {
         switch alertUpdateInterval.titleOfSelectedItem {
         case "1":

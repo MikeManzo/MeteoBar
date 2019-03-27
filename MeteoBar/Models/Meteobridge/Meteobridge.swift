@@ -258,6 +258,11 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 callback(nil, MeteobridgeError.observationError)
                 return
             }
+            
+            if timeArray.count != 3 {
+                callback(nil, MeteobridgeError.observationError)
+            }
+            
             guard let hourPair = timeArray[0].components(separatedBy: "|")  as Array? else {  // [0] = Time [1] = HH
                 callback(nil, MeteobridgeError.observationError)
                 return
@@ -278,7 +283,6 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                     callback(filteredSensor, nil) // <-- Just return the filtered (and now populated) system sensor
                 }
             }
-//            callback(self, nil)
         })
     }
  

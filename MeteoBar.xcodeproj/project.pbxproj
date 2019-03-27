@@ -21,6 +21,12 @@
 		27470AAF221437D800C7AEA9 /* QJHighlightImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */; };
 		27470AB12214381000C7AEA9 /* QJHighlightButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */; };
 		275934D32221D42000910F8C /* controls.png in Resources */ = {isa = PBXBuildFile; fileRef = 275934D22221D42000910F8C /* controls.png */; };
+		27607488224A876900FE5507 /* log-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 27607485224A876900FE5507 /* log-warning.png */; };
+		27607489224A876900FE5507 /* log-error.png in Resources */ = {isa = PBXBuildFile; fileRef = 27607486224A876900FE5507 /* log-error.png */; };
+		2760748A224A876900FE5507 /* log-info.png in Resources */ = {isa = PBXBuildFile; fileRef = 27607487224A876900FE5507 /* log-info.png */; };
+		2760748D224A895700FE5507 /* log-verbose.png in Resources */ = {isa = PBXBuildFile; fileRef = 2760748B224A895600FE5507 /* log-verbose.png */; };
+		2760748E224A895700FE5507 /* log-debug.png in Resources */ = {isa = PBXBuildFile; fileRef = 2760748C224A895600FE5507 /* log-debug.png */; };
+		27607490224A8A1E00FE5507 /* question.png in Resources */ = {isa = PBXBuildFile; fileRef = 2760748F224A8A1E00FE5507 /* question.png */; };
 		2763D2C722355C110032E6A5 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2763D2C622355C110032E6A5 /* ProgressHUD.swift */; };
 		2771085422011CA0009A3C86 /* CollectionItemDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2771085322011CA0009A3C86 /* CollectionItemDropView.swift */; };
 		277658DB21EA6062007BA05A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277658DA21EA6062007BA05A /* AppDelegate.swift */; };
@@ -129,6 +135,12 @@
 		27470AAE221437D800C7AEA9 /* QJHighlightImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightImageView.swift; sourceTree = "<group>"; };
 		27470AB02214381000C7AEA9 /* QJHighlightButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJHighlightButtonView.swift; sourceTree = "<group>"; };
 		275934D22221D42000910F8C /* controls.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = controls.png; sourceTree = "<group>"; };
+		27607485224A876900FE5507 /* log-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-warning.png"; sourceTree = "<group>"; };
+		27607486224A876900FE5507 /* log-error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-error.png"; sourceTree = "<group>"; };
+		27607487224A876900FE5507 /* log-info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-info.png"; sourceTree = "<group>"; };
+		2760748B224A895600FE5507 /* log-verbose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-verbose.png"; sourceTree = "<group>"; };
+		2760748C224A895600FE5507 /* log-debug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "log-debug.png"; sourceTree = "<group>"; };
+		2760748F224A8A1E00FE5507 /* question.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question.png; sourceTree = "<group>"; };
 		2763D2C622355C110032E6A5 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		2771085322011CA0009A3C86 /* CollectionItemDropView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionItemDropView.swift; sourceTree = "<group>"; };
 		277658D721EA6062007BA05A /* MeteoBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeteoBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -434,8 +446,8 @@
 				27E6C5BC21ED58C800548CF0 /* books.png */,
 				2744B781220E793600A61514 /* compass-north.png */,
 				2744B783220E79FC00A61514 /* configurator.png */,
-				275934D22221D42000910F8C /* controls.png */,
 				278DF0A122486328004BA69F /* console.png */,
+				275934D22221D42000910F8C /* controls.png */,
 				27A8038A2219D5F100E9A6BE /* dashboard.png */,
 				2703FAE12243F8000092AE4B /* detector.png */,
 				27ACA77F21FE4AE500E226C2 /* drop.png */,
@@ -445,18 +457,24 @@
 				27CF0428220735D9007DFFDF /* full-battery-color.png */,
 				27ACA79B21FF4CD300E226C2 /* full-battery.png */,
 				27ACA78321FE4BFF00E226C2 /* humidity.png */,
+				2760748C224A895600FE5507 /* log-debug.png */,
+				27607486224A876900FE5507 /* log-error.png */,
+				27607487224A876900FE5507 /* log-info.png */,
+				2760748B224A895600FE5507 /* log-verbose.png */,
+				27607485224A876900FE5507 /* log-warning.png */,
 				27470AAC2212E1F100C7AEA9 /* logout.png */,
 				27BBA42622312DF700DC3B5B /* map-zoom.png */,
 				27ACA79D21FF4CDE00E226C2 /* no-battery.png */,
 				27BBA4242231273A00DC3B5B /* NWSLogo.png */,
 				27CF04322207A519007DFFDF /* play-button.png */,
 				27ACA78521FE4CD500E226C2 /* pressure.png */,
+				2760748F224A8A1E00FE5507 /* question.png */,
 				27ACA78721FE4D4800E226C2 /* solar-energy.png */,
 				27ACA78921FE4DEE00E226C2 /* system.png */,
 				27ACA77B21FE492100E226C2 /* thermometer.png */,
 				27CF042C22073A18007DFFDF /* unknown-battery-color.png */,
-				27365DE7223802D100CD27A8 /* warning-yellow.png */,
 				27365DE5223802C500CD27A8 /* warning-red.png */,
+				27365DE7223802D100CD27A8 /* warning-yellow.png */,
 				27ACA77D21FE4A1A00E226C2 /* wind-sock.png */,
 			);
 			path = Graphics;
@@ -593,10 +611,12 @@
 			files = (
 				27A8038F2219DCD900E9A6BE /* UserInterface.xib in Resources */,
 				27ACA78221FE4B5C00E226C2 /* energy.png in Resources */,
+				27607490224A8A1E00FE5507 /* question.png in Resources */,
 				27E6C5BD21ED58C800548CF0 /* books.png in Resources */,
 				27ACA77E21FE4A1A00E226C2 /* wind-sock.png in Resources */,
 				27CA786121EBA7CD000D517D /* .swiftlint.yml in Resources */,
 				2703FAE02243A0850092AE4B /* AdvancedPreferences.xib in Resources */,
+				2760748E224A895700FE5507 /* log-debug.png in Resources */,
 				27ACA77221FCA8A700E226C2 /* GeneralPreferences.xib in Resources */,
 				27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */,
 				27BBA42722312DF700DC3B5B /* map-zoom.png in Resources */,
@@ -605,12 +625,15 @@
 				27ACA77C21FE492100E226C2 /* thermometer.png in Resources */,
 				27CF0429220735D9007DFFDF /* full-battery-color.png in Resources */,
 				27ACA79C21FF4CD300E226C2 /* full-battery.png in Resources */,
+				2760748A224A876900FE5507 /* log-info.png in Resources */,
 				27D20C9D223C4FC000F0D2FA /* AlertDetails.xib in Resources */,
 				27CA786721EBC06A000D517D /* About.xib in Resources */,
 				27BBA4252231273A00DC3B5B /* NWSLogo.png in Resources */,
 				27ACA78621FE4CD500E226C2 /* pressure.png in Resources */,
 				27365DE8223802D100CD27A8 /* warning-yellow.png in Resources */,
+				27607488224A876900FE5507 /* log-warning.png in Resources */,
 				27365DE6223802C500CD27A8 /* warning-red.png in Resources */,
+				2760748D224A895700FE5507 /* log-verbose.png in Resources */,
 				27CF04332207A519007DFFDF /* play-button.png in Resources */,
 				27ACA78A21FE4DEE00E226C2 /* system.png in Resources */,
 				27ACA78421FE4BFF00E226C2 /* humidity.png in Resources */,
@@ -624,6 +647,7 @@
 				27ACA78021FE4AE500E226C2 /* drop.png in Resources */,
 				278DF0A022486108004BA69F /* MeteoConsoleLog.xib in Resources */,
 				2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */,
+				27607489224A876900FE5507 /* log-error.png in Resources */,
 				27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */,
 				27CF043122079C6C007DFFDF /* BridgeSetup.xib in Resources */,
 				27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */,

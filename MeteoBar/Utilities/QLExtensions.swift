@@ -107,6 +107,26 @@ extension Date {
         //Return Short Time String
         return timeString
     }
+
+    func toLongDateString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
+    
+    func toShortDateString() -> String {
+        //Get Short Time String
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        let timeString = formatter.string(from: self)
+        
+        //Return Short Time String
+        return timeString
+    }
     
     func toLongDateTimeString() -> String {
         //Get Short Time String

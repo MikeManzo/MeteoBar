@@ -617,6 +617,6 @@ class MeteoCompassView: SKView {
         LRMajor.addChild(LRNode)
         
         lowerRight = MeteoSensorNodePair(major: LRMajor, minor: LRMinor, battery: LRBattery, icon: LRNode, sensorID: theDelegate?.theDefaults?.compassLRSensor)
-        if theDelegate?.theBridge != nil { upperRight?.update() }
+        if theDelegate?.theBridge != nil { lowerRight?.update() }
     }
 }
