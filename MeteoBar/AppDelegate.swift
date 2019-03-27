@@ -66,6 +66,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             enableFileLogging(enable: true)
         }
         // SwiftyBeaver Config
+
+        // ***** TESTING *****
+        do {
+            let dbLog = try SQLDestination(dbName: "meteolog.sqlight")
+            log.addDestination(dbLog)
+        } catch {
+            print("Oops")
+        }
+        // ***** TESTING *****
     }
 
     /// MeteoBar is about to close ... clean-up
@@ -113,6 +122,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
+    }
+
+    ///
+    /// Get the DB logger (if one exists)
+    ///
+    /// - Returns: the FileDestination object
+    ///
+    func getDBLogger() -> SQLDestination? {
+        var dbDestination: SQLDestination?
+        
+        for aDestination in log.destinations {
+            switch aDestination {
+            case is SQLDestination:
+                dbDestination = aDestination as? SQLDestination
+            default:
+                break
+            }
+        }
+        
+        return dbDestination
     }
     
     ///

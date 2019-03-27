@@ -30,7 +30,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     let toolbarItemTitle = "Console Log"
     let toolbarItemIcon = NSImage(named: "console.png")!
     
-    var tableConsoleData = [MeteoLog]()
+    var tableConsoleData = [MeteoLogDB]()
     
     // MARK: - Overrides
     override var nibName: NSNib.Name? {
@@ -40,23 +40,23 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+       
     override func viewWillAppear() {
-        guard let logFile = theDelegate?.getFileLogger() else {
+        guard let logDB = theDelegate?.getDBLogger() else {
             return
         }
         
-        let stream = StreamReader(url: logFile.logFileURL!)
-        while let json = stream?.nextLine() {
-            do {
-                tableConsoleData.append(try MeteoLog(json))
-            } catch {
-                log.warning(ConsoleLogError.logFileError)
+        do {
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
             }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.warning(ConsoleLogError.logFileError)
         }
-        consoleTable.reloadData()
     }
-    
+
     override func viewDidDisappear() {
         tableConsoleData.removeAll()
         consoleTable.reloadData()
@@ -104,13 +104,13 @@ extension MeteoConsoleLogController: NSTableViewDataSource, NSTableViewDelegate 
             default:
                 icon = NSImage(named: "question.png")
             }
-
-            result.date.stringValue         = Date(timeIntervalSince1970: consoleEntry.timestamp).toLongDateString()
-            result.time.stringValue         = Date(timeIntervalSince1970: consoleEntry.timestamp).toLongTimeString()
+            
+            result.date.stringValue         = consoleEntry.date.toLongDateString()
+            result.time.stringValue         = consoleEntry.date.toLongTimeString()
             result.lineNumber.stringValue   = consoleEntry.line.description
             result.function.stringValue     = consoleEntry.function
-            result.message.stringValue      = consoleEntry.message
             result.file.stringValue         = consoleEntry.file
+            result.message.stringValue      = consoleEntry.msg
             result.imageIcon.image          = icon
         }
 

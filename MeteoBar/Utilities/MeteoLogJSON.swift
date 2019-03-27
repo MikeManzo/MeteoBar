@@ -33,7 +33,7 @@
 import Foundation
 import Alamofire
 
-class MeteoLog: Codable {
+class MeteoLogJSON: Codable {
     let file, thread, function: String
     let timestamp: Double
     let message: String
@@ -51,9 +51,9 @@ class MeteoLog: Codable {
 }
 
 // MARK: Convenience initializers and mutators
-extension MeteoLog {
+extension MeteoLogJSON {
     convenience init(data: Data) throws {
-        let me = try newJSONDecoder().decode(MeteoLog.self, from: data)
+        let me = try newJSONDecoder().decode(MeteoLogJSON.self, from: data)
         self.init(file: me.file, thread: me.thread, function: me.function, timestamp: me.timestamp, message: me.message, line: me.line, level: me.level)
     }
     
@@ -76,8 +76,8 @@ extension MeteoLog {
         message: String? = nil,
         line: Int? = nil,
         level: Int? = nil
-        ) -> MeteoLog {
-        return MeteoLog(
+        ) -> MeteoLogJSON {
+        return MeteoLogJSON(
             file: file ?? self.file,
             thread: thread ?? self.thread,
             function: function ?? self.function,
@@ -133,7 +133,7 @@ extension DataRequest {
     }
     
     @discardableResult
-    func responseMeteoLogReader(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<MeteoLog>) -> Void) -> Self {
+    func responseMeteoLogReader(queue: DispatchQueue? = nil, completionHandler: @escaping (DataResponse<MeteoLogJSON>) -> Void) -> Self {
         return responseDecodable(queue: queue, completionHandler: completionHandler)
     }
 }
