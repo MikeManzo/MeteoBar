@@ -391,7 +391,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             
             // Guard against poor data data
             if hourPair.count != 2 {
-                log.warning("Meteobridge Timestamp returned:\(hourPair)")
+                log.warning("Incorrect Timestamp returned:\(hourPair)")
                 callback(nil, MeteobridgeError.observationDateError)
                 return
             }
@@ -468,7 +468,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             
             // Guard against poor data data
             if hourPair.count != 2 {
-                log.warning("Meteobridge Timestamp returned:\(hourPair)")
+                log.warning("Incorrect Timestamp returned:\(hourPair)")
                 callback(nil, MeteobridgeError.observationDateError)
                 return
             }
@@ -689,7 +689,7 @@ extension Meteobridge {
             
             // Guard against poor data data
             if hourPair.count != 2 {
-                log.warning("Meteobridge Timestamp returned:\(hourPair)")
+                log.warning("Invalid Timestamp returned:\(hourPair)")
                 callback(nil, MeteobridgeError.observationDateError)
                 return
             }

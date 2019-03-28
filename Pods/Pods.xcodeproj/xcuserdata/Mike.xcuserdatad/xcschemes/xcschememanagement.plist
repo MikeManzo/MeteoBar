@@ -18,12 +18,32 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Ansi.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>BonMot.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>FootlessParser.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>GRDB.swift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>Hue.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>Pods-MeteoBar.xcscheme</key>
 		<dict>

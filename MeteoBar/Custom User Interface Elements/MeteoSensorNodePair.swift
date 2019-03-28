@@ -11,13 +11,13 @@ import SpriteKit
 import SceneKit
 
 enum MeteoSensorNodePairError: Error, CustomStringConvertible {
-    case invalidSensorID
+    case invalidSensorID (sensor: String)
     case invalidSprite
     
     var description: String {
         switch self {
-        case .invalidSensorID: return "Invalid SensorID"
-        case .invalidSprite: return "Invalid Sprite"
+        case .invalidSensorID(let sensor): return "Sensor:[\(sensor)] not found.  If you have not yet initialized yor Meteobridge, this is normal."
+        case .invalidSprite: return "Sprite not found"
         }
     }
 }
@@ -138,12 +138,12 @@ final class MeteoSensorNodePair {
         
         if _sensorID != nil {
             guard let sensor = WeatherPlatform.findSensorInBridge(searchID: _sensorID!) else {
-                log.warning(MeteoSensorNodePairError.invalidSensorID)
+                log.warning(MeteoSensorNodePairError.invalidSensorID(sensor: _sensorID!))
                 return
             }
 
             guard let sprite = _iconNode?.children.first as? SKSpriteNode else {
-                log.warning(MeteoSensorNodePairError.invalidSprite)
+                log.error(MeteoSensorNodePairError.invalidSprite)
                 return
             }
             

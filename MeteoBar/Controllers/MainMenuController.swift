@@ -21,7 +21,7 @@ enum MeteobarError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .observationError: return "Error reading observation from Meteobridge"
-        case .bridgeError: return "Error reading data from Meteobridg"
+        case .bridgeError: return "Error reading data from Meteobridge"
         case .missingBridge: return "No Meteobridge found in User Defaults"
         case .missingMenubarSensor: return "No sensor selected for display in menubar"
         case .weatherAlertWarning: return "Unable to find the weather alert"
@@ -145,7 +145,7 @@ class MainMenuController: NSViewController {
     ///
     @objc private func newBridgeInitialized(_ theNotification: Notification) {
         guard let bridge = theDelegate?.theBridge else {
-            log.warning(MeteobarError.bridgeError)
+            log.error(MeteobarError.bridgeError)
             return
         }
         
@@ -169,7 +169,7 @@ class MainMenuController: NSViewController {
     ///
     private func addBridgeToQueue(theBridge: Meteobridge?) {
         if theBridge == nil {
-            log.warning(MeteobarError.missingBridge)
+            log.error(MeteobarError.missingBridge)
             return
         }
         
@@ -199,7 +199,7 @@ class MainMenuController: NSViewController {
     ///
     private func addBridgeToAlertQueue(theBridge: Meteobridge?) {
         if theBridge == nil {
-            log.warning(MeteobarError.missingBridge)
+            log.error(MeteobarError.missingBridge)
             return
         }
         
@@ -236,7 +236,7 @@ class MainMenuController: NSViewController {
         bridge.getObservation { (_ response: AnyObject?, _ error: Error?) in
             if error == nil {
                 guard let bridge: Meteobridge = response as? Meteobridge else {
-                    log.warning(MeteobarError.bridgeError)
+                    log.error(MeteobarError.bridgeError)
                     return
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewObservationReceived"),
@@ -249,7 +249,7 @@ class MainMenuController: NSViewController {
                     self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
                 }
             } else {
-                log.warning(error.value)
+                log.error(error.value)
                 return
             }
         }

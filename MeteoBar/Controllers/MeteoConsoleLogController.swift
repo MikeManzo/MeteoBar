@@ -53,7 +53,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             tableConsoleData = tempData
             consoleTable.reloadData()
         } catch {
-            log.warning(ConsoleLogError.logFileError)
+            log.error(ConsoleLogError.logFileError)
         }
     }
 
@@ -82,7 +82,7 @@ extension MeteoConsoleLogController: NSTableViewDataSource, NSTableViewDelegate 
     /// - Returns: the fully formatted view (AttributionTableCellView in our case)
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let result = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DefaultRow"), owner: self) as? ConsoleTableCellView else {
-            log.warning(ConsoleLogError.viewError)
+            log.error(ConsoleLogError.viewError)
             return nil
         }
 

@@ -132,14 +132,14 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                         self.sensorProgress.stopAnimation(nil)
                     }
                 } else {
-                    log.warning(error.value)
+                    log.error(error.value)
                 }
             })
         default:
             if desiredUnit != nil {
                 let error = tempSensor.setCurrentUnit(stringUnit: desiredUnit!)
                 if error != nil {
-                    log.warning(error.value)
+                    log.error(error.value)
                 }
             }
             Meteobridge.pollWeatherSensor(sensor: tempSensor, bridgeIP: theBridge.ipAddress, { [unowned self] (_ sensor, _ error) in
@@ -177,7 +177,7 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
                         self.sensorProgress.stopAnimation(nil)
                     }
                 } else {
-                    log.warning(error.value)
+                    log.error(error.value)
                 }
             })
         }

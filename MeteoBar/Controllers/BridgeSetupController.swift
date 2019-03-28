@@ -92,7 +92,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                     }
                     self.updateStatusIcon(seconds: seconds)
                 } else {
-                    log.warning(error.value)
+                    log.error(error.value)
                 }
             })
             updateBridgeMetadata()
@@ -285,52 +285,60 @@ class BridgeSetupController: NSViewController, Preferenceable {
         ProgressHUD.setDismissable(false)
         ProgressHUD.setSpinnerSize(32.0)
         ProgressHUD.setOpacity(0.75)
+        
+        var errorThrown = false
 
         ProgressHUD.show(withStatus: BridgeSetupControllerHUD.readingConfigurationFile.description)
         WeatherPlatform.initializeBridgeSpecification(ipAddress: bridgeIP.stringValue, bridgeName: bridgeName.stringValue, callback: { [unowned self] response, error in
             if error == nil {
                 theDelegate!.theBridge = response                                           // Bridge was successfully initialized from the json description
                 guard let theBridge = theDelegate!.theBridge else {                         // Cheksum that we're good to go
-                    log.warning(BridgeSetupControllerError.noBridge)                        // Warn the user - something is not right
+                    log.error(BridgeSetupControllerError.noBridge)                          // Warn the user - something is not right
+                    self.dismissHUD()
                     return                                                                  // Bail gracefully
                 }
                 ProgressHUD.show(withStatus: BridgeSetupControllerHUD.pollingForSystemParameters.description)
                 theBridge.getAllSystemParameters { [unowned self] (_ , error: Error?) in    // Get All the System Paramaters that this Meteobridge Supports
                     if error == nil {                                                       // Any errors?
                         ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpWeatherModels.description)
-                        theBridge.updateWeatherModel { (_ , error: Error?) in               // Ret to populate the weather model for forecasts/alerts/warnings
+                        theBridge.updateWeatherModel { (_ , error: Error?) in               // Try to populate the weather model for forecasts/alerts/warnings
                             if error != nil {
-                                log.warning(error.value)                                    // Warn the user that we're unable to update the model
+                                log.error(error.value)                                      // Warn the user that we're unable to update the model
                             }                                                               // We still want to continue though ...
                             ProgressHUD.show(withStatus: BridgeSetupControllerHUD.gettingObservation.description)
-                            theBridge.getObservation(allParams: true, { _, error in         // Get a "FULL" observation so we can see what's going on outside
+                            theBridge.getObservation(allParams: true, { (_, error: Error?) in         // Get a "FULL" observation so we can see what's going on outside
                                 if error == nil {
                                     guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")
+                                        self.dismissHUD()
                                         return
                                     }
                                     sensorUL.isObserving = true
                                     
                                     guard let sensorUR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassURSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassURSensor ?? "")]: to observe.")
+                                        self.dismissHUD()
                                         return
                                     }
                                     sensorUR.isObserving = true
                                     
                                     guard let sensorLL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLLSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLLSensor ?? "")]: to observe.")
+                                        self.dismissHUD()
                                         return
                                     }
                                     sensorLL.isObserving = true
                                     
                                     guard let sensorLR = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassLRSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassLRSensor ?? "")]: to observe.")
+                                        self.dismissHUD()
                                         return
                                     }
                                     sensorLR.isObserving = true
                                     
                                     guard let sensorWind = theDelegate!.theBridge?.findSensor(sensorName: ("wind0dir")) else {
                                         log.warning("Cannot find Senor[wind0dir]: to observe.")
+                                        self.dismissHUD()
                                         return
                                     }
                                     sensorWind.isObserving = true
@@ -341,25 +349,55 @@ class BridgeSetupController: NSViewController, Preferenceable {
                                 } else {
                                     log.error(error.value)  // Error with getObservation
                                     self.dismissHUD()
+                                    return
                                 }
                             })
                         }
                     } else {
-                        log.error(error.value)  // Error with allSystemParamaters
-                        self.dismissHUD()
+                        if !errorThrown {
+                            errorThrown = true
+                            log.error(error.value)  // Error with allSystemParamaters
+                            self.dismissHUD()
+                            
+                            let alert = NSAlert()
+                            alert.messageText = "MeteoBar is unable to conenct to your Meteobridge"
+                            alert.informativeText = "The request timed out"
+                            alert.alertStyle = .critical
+                            alert.addButton(withTitle: "Ok")
+                            alert.beginSheetModal(for: self.view.window!) { (_ returnCode: NSApplication.ModalResponse) -> Void in
+                                theDelegate?.theBridge = nil
+                                theDelegate?.updateBridge()
+                                return
+                            }
+                        }
                     }
                 }
             } else {
-                log.error(error.value)  // Error with initializeBridgeSpecification
-                self.dismissHUD()
+                if !errorThrown {
+                    errorThrown = true
+                    log.error(error.value)  // Error with initializeBridgeSpecification
+                    self.dismissHUD()
+                    
+                    let alert = NSAlert()
+                    alert.messageText = "MeteoBar is unable to initialize the Meteobridge model"
+                    alert.informativeText = "There is an error in the Meteobridge.json file"
+                    alert.alertStyle = .critical
+                    alert.addButton(withTitle: "Ok")
+                    alert.beginSheetModal(for: self.view.window!) { (_ returnCode: NSApplication.ModalResponse) -> Void in
+                        theDelegate?.theBridge = nil
+                        theDelegate?.updateBridge()
+                        return
+                    }
+                }
             }
         })
     }
     
     /// Quick helper to dismiss the HUD if it's visible
     ///
+    /// Dismiss our HUD if it's showing
+    ///
     fileprivate func dismissHUD() {
-        // Dismiss our HUD if it's showing
         if ProgressHUD.isVisible() {
             ProgressHUD.dismiss(delay: 1.0)
         }

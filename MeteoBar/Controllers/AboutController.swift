@@ -265,13 +265,13 @@ extension AboutController: NSTableViewDataSource, NSTableViewDelegate {
     /// - Returns: the fully formatted view (AttributionTableCellView in our case)
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let result = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "defaultRow"), owner: self) as? AttributionTableCellView else {
-            log.warning("Cannot display attribution table")
+            log.error("Cannot display attribution table")
             return nil
         }
         
         if !tableViewData.isEmpty {
             guard let icon = NSImage(named: NSImage.Name(tableViewData[row]["copyImage"]!)) else {
-                log.warning("Cannot display image: ", tableViewData[row]["copyImage"] ?? "N/A")
+                log.error("Cannot display image: ", tableViewData[row]["copyImage"] ?? "N/A")
                 return nil
             }
             

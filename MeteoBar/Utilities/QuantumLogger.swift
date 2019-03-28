@@ -41,7 +41,7 @@ open class QuantumLogger: SwiftyBeaver {
                                    context: Any? = nil) {
         
         super.error(message, file, function,  line: line,  context: context)
-        
+/*
         let alert = NSAlert()
         alert.messageText = "Meteobar has encountred an error"
         alert.informativeText = message() as? String ?? "Something went wrong. No Message provided."
@@ -51,6 +51,7 @@ open class QuantumLogger: SwiftyBeaver {
         DispatchQueue.main.async {
             alert.runModal()
         }
+ */
     }
 }
 

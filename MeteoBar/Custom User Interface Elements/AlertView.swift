@@ -101,7 +101,7 @@ extension AlertView: NSTableViewDataSource, NSTableViewDelegate {
     ///
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let result = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DefaultRow"), owner: self) as? AlertTableCellView else {
-            log.warning("Cannot display alerts table")
+            log.error("Cannot display alerts table")
             return nil
         }
 

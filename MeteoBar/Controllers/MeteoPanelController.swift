@@ -64,7 +64,6 @@ class MeteoPanelController: NSViewController {
         guard let theBridge = theDelegate?.theBridge else {
             contractPanel()
             compassView.windDirection(direction: 0)
-            
             return
         }
         
@@ -72,17 +71,6 @@ class MeteoPanelController: NSViewController {
             switch panelState {
             case .expanded:
                 contractPanel()
-/*                setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
-                var compassOrigin   = compassView.frame.origin
-                var iconBarOrigin   = iconBarView.frame.origin
-                
-                compassOrigin.y += 96
-                compassView.animator().setFrameOrigin(compassOrigin)
-                
-                iconBarOrigin.y += 98
-                iconBarView.animator().setFrameOrigin(iconBarOrigin)
-                panelState = .contracted
-*/
             case .contracted:
                 break
             }
@@ -114,16 +102,18 @@ class MeteoPanelController: NSViewController {
     }
     
     private func contractPanel() {
-        setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
-        var compassOrigin   = compassView.frame.origin
-        var iconBarOrigin   = iconBarView.frame.origin
-        
-        compassOrigin.y += 100
-        compassView.animator().setFrameOrigin(compassOrigin)
-        
-        iconBarOrigin.y += 100
-        iconBarView.animator().setFrameOrigin(iconBarOrigin)
-        panelState = .contracted
+        if panelState == .expanded {
+            setSize(newSize: NSSize(width: 400, height: 442))   // Size of window w/o he AlertView (which is 96 pixels)
+            var compassOrigin   = compassView.frame.origin
+            var iconBarOrigin   = iconBarView.frame.origin
+            
+            compassOrigin.y += 100
+            compassView.animator().setFrameOrigin(compassOrigin)
+            
+            iconBarOrigin.y += 100
+            iconBarView.animator().setFrameOrigin(iconBarOrigin)
+            panelState = .contracted
+        }
     }
     
     private final func setSize(newSize: NSSize) {
