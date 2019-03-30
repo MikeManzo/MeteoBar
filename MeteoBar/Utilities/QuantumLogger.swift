@@ -13,11 +13,13 @@ import GRDB
 enum DBLogError: Error, CustomStringConvertible {
     case dateError
     case dbCreateError
+    case dbDeleteError
     
     var description: String {
         switch self {
         case .dateError: return "Unable to sort logs by date"
         case .dbCreateError: return "Warning! Could not create folder /Library/Caches/<App Name>"
+        case .dbDeleteError: return "Unable to delete desired rows"
         }
     }
 }
@@ -150,7 +152,7 @@ struct AppDatabase {
                 
                 // Sort player names in a localized case insensitive fashion by default
                 // [See](https://github.com/groue/GRDB.swift/blob/master/README.md#unicode)
-                t.column("date", .date).notNull().collate(.localizedCaseInsensitiveCompare)
+                t.column("date", .date).notNull()//.collate(.localizedCaseInsensitiveCompare)
                 t.column("level", .integer).notNull()
                 t.column("msg", .text).notNull().collate(.localizedCaseInsensitiveCompare)
                 t.column("line", .integer).notNull()
@@ -216,6 +218,9 @@ public class SQLDestination: BaseDestination {
     }
 
     /// send the log to the destination (DB in this case)
+    ///
+    /// - Notes
+    ///   - Dates are stored using the format "YYYY-MM-DD HH:MM:SS.SSS" in the UTC time zone. It is precise to the millisecond.
     ///
     /// - Parameters:
     ///   - level: level of loggable event
@@ -358,7 +363,100 @@ public class SQLDestination: BaseDestination {
         
         return logs
     }
+
+    /// return an array of MeteoDB objects in level-descending order
+    ///
+    /// SELECT * FROM meteologdb WHERE date BETWEEN '2019-03-28 09:30:00' and '2019-03-28 10:00:00'
+    ///
+    /// - Returns: MeteoDB objects in level-descending order
+    /// - Throws: error if we cannot make this happen
+    ///
+    func recordsByDateRange(dateFrom: Date, dateTo: Date) throws -> [MeteoLogDB]? {
+        var logs: [MeteoLogDB]?
+        
+        dbQueue.read { db in
+            do {
+//                let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '2019-03-27 21:08:00' and '2019-03-27 22:00:00'"
+                let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '\(dateFrom)' and '\(dateTo)'"
+                print(sql)
+                
+                logs = try MeteoLogDB.fetchAll(db, sql)
+            } catch {
+                log.error(DBLogError.dateError)
+            }
+        }
+        
+        return logs
+    }
+
+    /// deletes MeteoDB objects identified by the array of IDs
+    ///
+    /// - Returns: true if we were able to delete the # of rows identifed by teh IDs
+    /// - Throws: error if we cannot make this happen
+    ///
+    func deleteRecords(recordIDs: [Int64]) throws -> Bool {
+        var bResult = false
+        
+        try dbQueue.write { db in
+            do {
+                let deleted = try MeteoLogDB.deleteAll(db, keys: recordIDs)
+                bResult = deleted == recordIDs.count ? true : false
+            } catch let error as DatabaseError {
+                log.error(error.description)
+            } catch {
+                log.warning("Unidentifed error encountered while attempting to delete rows")
+            }
+        }
+        
+        return bResult
+    }
     
+    /// deletes MeteoDB objects identified by the log level
+    ///
+    /// - Returns: true if we were able to delete the # of rows identifed by the log level
+    /// - Throws: error if we cannot make this happen
+    ///
+    func deleteLevelRecords(level: SwiftyBeaver.Level) throws -> Bool {
+        var bResult = false
+        
+        try dbQueue.write { db in
+            do {
+                bResult = try MeteoLogDB
+                    .filter(Column("level") == level.rawValue)
+                    .deleteAll(db) > 0 ? true : false
+            } catch let error as DatabaseError {
+                log.error(error.description)
+            } catch {
+                log.warning("Unidentifed error encountered while attempting to delete rows")
+            }
+        }
+        
+        return bResult
+    }
+
+    /// deletes MeteoDB objects identified by the log level
+    ///
+    /// - Returns: true if we were able to delete the # of rows identifed by the log level
+    /// - Throws: error if we cannot make this happen
+    ///
+    func returnRecordsbyLevel(level: SwiftyBeaver.Level) throws -> [MeteoLogDB]? {
+        var logs: [MeteoLogDB]?
+        
+        dbQueue.read { db in
+            do {
+                logs = try MeteoLogDB
+                    .filter(Column("level") == level.rawValue)
+                    .fetchAll(db)
+            } catch let error as DatabaseError {
+                log.error(error.description)
+            } catch {
+                log.warning("Unidentifed error encountered while attempting to delete rows")
+            }
+        }
+        
+        return logs
+    }
+
     /// Let's do some housecleaning
     ///
     deinit {

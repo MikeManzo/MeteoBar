@@ -25,7 +25,7 @@
                         <rect key="frame" x="1" y="1" width="877" height="360"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="76" viewBased="YES" id="B1y-8O-YFj">
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowHeight="76" viewBased="YES" id="B1y-8O-YFj">
                                 <rect key="frame" x="0.0" y="0.0" width="877" height="360"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -236,6 +236,7 @@ Message 2</string>
                                 <connections>
                                     <outlet property="dataSource" destination="-2" id="vKK-yn-sw4"/>
                                     <outlet property="delegate" destination="-2" id="qMO-D7-gAg"/>
+                                    <outlet property="menu" destination="IPn-yU-Tcc" id="9qD-Cy-BOt"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -252,6 +253,141 @@ Message 2</string>
             </subviews>
             <point key="canvasLocation" x="112.5" y="134"/>
         </customView>
+        <menu id="IPn-yU-Tcc">
+            <items>
+                <menuItem title="Show" id="8DZ-RA-Bvq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Show" id="JwY-Qb-yPT">
+                        <items>
+                            <menuItem title="All" id="doO-le-rFC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showAllRecords:" target="-2" id="jKG-VP-3BW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="41X-i8-UdS"/>
+                            <menuItem title="Debug" id="HtN-Qy-zK4">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showDebugOnly:" target="-2" id="AC5-Mx-tKp"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Error" id="erI-pQ-Lcz">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showErrorOnly:" target="-2" id="xwM-IZ-vBl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Information" id="3FB-La-pzn">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showInformationOnly:" target="-2" id="hjw-9I-UOn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Verbose" id="PXy-D1-2si">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showVerboseOnly:" target="-2" id="EMC-Of-krT"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Warning" id="K3I-vA-NX9">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showWarningOnly:" target="-2" id="Uwm-De-r0y"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="tWt-pQ-VY3"/>
+                            <menuItem title="Today" id="rCS-yS-b2v">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showToday:" target="-2" id="xLY-M6-8o1"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="This week" id="H9s-zz-oQN">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showWeek:" target="-2" id="rsy-9b-yrk"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="This month" id="Uaw-t2-KCx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showMonth:" target="-2" id="FUz-OV-9UG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="This year" id="8Kh-i5-Wq8">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showYear:" target="-2" id="H6r-fp-J0F"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Delete" id="1Zp-vC-Myk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Delete" id="iEN-rj-pB3">
+                        <items>
+                            <menuItem title="All" id="6Kd-ir-R3M">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="WMC-BT-Uen"/>
+                            <menuItem title="Selected" id="Dfo-88-tnF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteSelectedRows:" target="-2" id="S4q-P9-6OU"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BKz-FW-xZM"/>
+                            <menuItem title="Debug" id="MKs-FS-nNf">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteDebugRecods:" target="-2" id="SbI-Yn-Yx4"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Error" id="FwC-7v-axe">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteErrorRecords:" target="-2" id="oKl-en-3zw"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Information" id="7n6-nk-XEH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteInformationRecords:" target="-2" id="qjp-R6-9TV"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Verbose" id="FjY-Xy-2na" userLabel="Verbose">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteVerboseRecords:" target="-2" id="WzZ-cp-1IF"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Warning" id="ZvV-la-4GN" userLabel="Warning">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteWarningRecords:" target="-2" id="39y-DD-xkW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="R3I-bX-o1x"/>
+                            <menuItem title="Today" id="ePl-tM-y45">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="This week" id="dUZ-jg-QPk">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="This month" id="Mac-nN-Vck">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="This year" id="jOV-5q-uZH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="84" y="-145"/>
+        </menu>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

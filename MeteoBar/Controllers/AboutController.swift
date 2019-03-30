@@ -104,6 +104,13 @@ class AboutController: NSViewController {
          "copyHolder": "Round Icons",
          "copyURL": "https://www.flaticon.com/authors/roundicons"
         ],
+        ["copyImage": "books.png",
+         "copyType": "Library",
+         "invertable": "yes",
+         "copyName": "GRDB.swift",
+         "copyHolder": "Gwendal Roué",
+         "copyURL": "https://github.com/groue/GRDB.swift"
+        ],
         ["copyImage": "humidity.png",
          "copyType": "Icon",
          "invertable": "yes",
@@ -202,7 +209,14 @@ class AboutController: NSViewController {
          "copyHolder": "Phatplus",
          "copyURL": "https://www.flaticon.com/authors/phatplus"
         ],
-       ["copyImage": "thermometer.png",
+        ["copyImage": "books.png",
+         "copyType": "Library",
+         "invertable": "yes",
+         "copyName": "SwiftDate",
+         "copyHolder": "Daniele Margutti",
+         "copyURL": "https://github.com/malcommac/SwiftDate"
+        ],
+        ["copyImage": "thermometer.png",
          "copyType": "Icon",
          "invertable": "yes",
          "copyName": "Thermometer Sensor Icon",

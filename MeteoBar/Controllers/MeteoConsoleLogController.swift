@@ -7,16 +7,19 @@
 //
 
 import Preferences
+import SwiftDate
 import Cocoa
 
 enum ConsoleLogError: Error, CustomStringConvertible {
     case viewError
     case logFileError
+    case deleteError
     
     var description: String {
         switch self {
         case .viewError: return "Unknown error creating table view"
         case .logFileError: return "Unable to reade log file"
+        case .deleteError: return "Unable to delete records from log"
         }
     }
 }
@@ -42,6 +45,119 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     }
        
     override func viewWillAppear() {
+        showAllRecords(self)
+    }
+
+    @IBAction func deleteSelectedRows(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+
+        var logs: [Int64] = []
+        
+        for indexPath in consoleTable.selectedRowIndexes {
+            logs.append(tableConsoleData[indexPath].id!)
+        }
+        
+        do {
+            _ = try logDB.deleteRecords(recordIDs: logs)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func deleteWarningRecords(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .warning)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func deleteVerboseRecords(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .verbose)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func deleteInformationRecords(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .info)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func deleteErrorRecords(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .error)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func deleteDebugRecods(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .debug)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func showAllRecords(_ sender: Any) {
         guard let logDB = theDelegate?.getDBLogger() else {
             return
         }
@@ -56,7 +172,147 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             log.error(ConsoleLogError.logFileError)
         }
     }
+    
+    @IBAction func showYear(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        
+        do {
+            guard let tempData = try logDB.recordsByDateRange(dateFrom: Date() - 1.years, dateTo: Date()) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.logFileError)
+        }
+    }
 
+    @IBAction func showMonth(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        
+        do {
+            guard let tempData = try logDB.recordsByDateRange(dateFrom: Date() - 30.days, dateTo: Date()) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.logFileError)
+        }
+    }
+
+    @IBAction func showWeek(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        
+        do {
+            guard let tempData = try logDB.recordsByDateRange(dateFrom: Date() - 7.days, dateTo: Date()) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.logFileError)
+        }
+    }
+
+    @IBAction func showToday(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        
+        do {
+            guard let tempData = try logDB.recordsByDateRange(dateFrom: Date().dateBySet([.month: 0, .day: 0, .hour: 0, .minute: 0, .second: 0])!,
+                                                              dateTo: Date()) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.logFileError)
+        }
+    }
+
+    @IBAction func showWarningOnly(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            guard let tempData = try logDB.returnRecordsbyLevel(level: .warning) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func showVerboseOnly(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            guard let tempData = try logDB.returnRecordsbyLevel(level: .verbose) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func showInformationOnly(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            guard let tempData = try logDB.returnRecordsbyLevel(level: .info) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func showErrorOnly(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            guard let tempData = try logDB.returnRecordsbyLevel(level: .error) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
+    @IBAction func showDebugOnly(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            guard let tempData = try logDB.returnRecordsbyLevel(level: .debug) else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
     override func viewDidDisappear() {
         tableConsoleData.removeAll()
         consoleTable.reloadData()

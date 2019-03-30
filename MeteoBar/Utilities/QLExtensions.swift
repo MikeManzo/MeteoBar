@@ -21,7 +21,7 @@ var theDelegate: AppDelegate? {
     return appDelegate
 }
 
-/// Extensions
+// MARK: - Bundle Extensions
 extension Bundle {
     class var applicationVersionNumber: String {
         if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
@@ -38,6 +38,7 @@ extension Bundle {
     }    
 }
 
+// MARK: - Date Extensions
 extension Date {
     func dayOfWeek() -> String? {
         
@@ -149,8 +150,17 @@ extension Date {
         //Return Short Time String
         return timeString
     }
+    
+    func localToUTCDateTime() -> String {
+        // 2019-01-08T17:04:16-08:00 (RFC3339 accounting for local time zone)
+        let format = ISO8601DateFormatter()
+        format.formatOptions = [.withInternetDateTime]
+        format.timeZone = TimeZone.current
+        return format.string(from: self)
+    }
 }
 
+// MARK: - FloatingPoint Extensions
 extension FloatingPoint {
     var minutes: Self {
         return (self*3600)
@@ -163,6 +173,7 @@ extension FloatingPoint {
     }
 }
 
+// MARK: - CLGeocoder Extensions
 extension CLGeocoder {
     static func getCountryCode(lat: Double, lon: Double, _ callback: @escaping (_ country: String?, _ error: Error?) -> Void) {
         CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: lat, longitude: lon)) { (placemarks, err) in
@@ -177,6 +188,7 @@ extension CLGeocoder {
     }
 }
 
+// MARK: - CLLocationCoordinate2D Extensions
 extension CLLocationCoordinate2D {
     ///
     /// [Reference](https://www.latlong.net/lat-long-dms.html)
@@ -195,6 +207,7 @@ extension CLLocationCoordinate2D {
     }
 }
 
+// MARK: - MKMultiPoint Extensions
 public extension MKMultiPoint {
     var coordinates: [CLLocationCoordinate2D] {
         var coords = [CLLocationCoordinate2D](repeating: kCLLocationCoordinate2DInvalid,
@@ -206,9 +219,7 @@ public extension MKMultiPoint {
     }
 }
 
-///
-///
-///
+// MARK: - MKMapView Extensions
 extension MKMapView {
     /// This Mercator is valid for 21 zoom levels
     private var mercatorOffset: Double {
@@ -329,6 +340,7 @@ extension MKMapView {
     }
 }
 
+// MARK: - MKMapRect Extensions
 ///
 /// [Zooms out a MKMapView to enclose all its annotations](https://gist.github.com/andrewgleave/915374)
 ///
@@ -350,6 +362,7 @@ extension MKMapRect {
     }
 }
 
+// MARK: - MKPolygon Extensions
 extension MKPolygon {
     func doesContain(coordinate: CLLocationCoordinate2D) -> Bool {
         let polygonRenderer = MKPolygonRenderer(polygon: self)
@@ -360,6 +373,7 @@ extension MKPolygon {
     }
 }
 
+// MARK: - MKMeteoPolyline Extensions
 ///
 /// [To-From Archive Reference](https://stackoverflow.com/questions/36761841/how-to-store-an-mkpolyline-attribute-as-transformable-in-ios-coredata-with-swift#)
 ///
@@ -420,6 +434,7 @@ extension MKMeteoPolyline {
     }
 }
 
+// MARK: - NSApplication Extensions
 extension NSApplicationDelegate {
     /// Ask the system if it's in Dark Mode
     ///
@@ -429,11 +444,13 @@ extension NSApplicationDelegate {
     }
 }
 
+// MARK: - CGFloat Extensions
 extension CGFloat {
     var degreesToRadians: CGFloat { return self * .pi / 180 }
     var radiansToDegrees: CGFloat { return self * 180 / .pi }
 }
 
+// MARK: - Int64 Extensions
 extension Int64 {
     static func randomNumber<T: SignedInteger>(inRange range: ClosedRange<T> = 1...6) -> T {
         let length = Int64(range.upperBound - range.lowerBound + 1)
@@ -442,6 +459,7 @@ extension Int64 {
     }
 }
 
+// MARK: - NSFont Extensions
 //[How to apply bold and italics](https://stackoverflow.com/questions/34499735/how-to-apply-bold-and-italics-to-an-nsmutableattributedstring-range))
 extension NSFont {
     func withTraits(_ traits: NSFontDescriptor.SymbolicTraits) -> NSFont {
@@ -464,6 +482,7 @@ extension NSFont {
     }
 }
 
+// MARK: - NSImage Extensions
 extension NSImage {
     /// Apply snadard filters to an NSImage
     ///
@@ -510,6 +529,7 @@ extension NSImage {
     }
 }
 
+// MARK: - NSTableView Extensions
 extension NSTableView {
     func reloadDataKeepingSelection(extendSelection: Bool = false) {
         let selectedRowIndexes = self.selectedRowIndexes
@@ -525,6 +545,7 @@ extension NSTableView {
     }
 }
 
+// MARK: - NSTextField Extensions
 extension NSTextField {
     func bestheight(text: String, width: CGFloat) -> CGFloat {
         self.stringValue = text
@@ -544,6 +565,7 @@ extension NSTextField {
     }
 }
 
+// MARK: - NSView Extensions
 extension NSView {
     var viewBackgroundColor: NSColor? {
         get {
@@ -573,6 +595,7 @@ extension NSView {
     }
 }
 
+// MARK: - Optional Extensions
 extension Optional {
     public var value: String {
         switch self {
@@ -584,6 +607,7 @@ extension Optional {
     }
 }
 
+// MARK: - String Extensions
 extension String {
     func toDouble() -> Double? {
         return NumberFormatter().number(from: self)?.doubleValue
@@ -593,6 +617,33 @@ extension String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"
         return (dateFormatter.date(from: self)!)
+    }
+    
+    //Convert UTC To Local Date by passing date formats value
+    func UTCToLocal(incomingFormat: String, outGoingFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = incomingFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        
+        let dt = dateFormatter.date(from: self)
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = outGoingFormat
+        
+        return dateFormatter.string(from: dt ?? Date())
+    }
+    
+    //Convert Local To UTC Date by passing date formats value
+    func localToUTC(incomingFormat: String, outGoingFormat: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = incomingFormat
+        dateFormatter.calendar = NSCalendar.current
+        dateFormatter.timeZone = TimeZone.current
+        
+        let dt = dateFormatter.date(from: self)
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = outGoingFormat
+        
+        return dateFormatter.string(from: dt ?? Date())
     }
 }
 
