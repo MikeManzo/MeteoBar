@@ -434,12 +434,12 @@ public class SQLDestination: BaseDestination {
         return bResult
     }
 
-    /// deletes MeteoDB objects identified by the log level
+    /// returns MeteoDB objects identified by the log level
     ///
     /// - Returns: true if we were able to delete the # of rows identifed by the log level
     /// - Throws: error if we cannot make this happen
     ///
-    func returnRecordsbyLevel(level: SwiftyBeaver.Level) throws -> [MeteoLogDB]? {
+    func recordsByLevel(level: SwiftyBeaver.Level) throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
         dbQueue.read { db in
@@ -455,6 +455,27 @@ public class SQLDestination: BaseDestination {
         }
         
         return logs
+    }
+
+    /// returns record count
+    ///
+    /// - Returns: the number of records in teh DB
+    /// - Throws: error if we cannot make this happen
+    ///
+    func recordCount() throws -> Int {
+        var count = -1
+        
+        dbQueue.read { db in
+            do {
+                count = try MeteoLogDB.fetchCount(db)
+            } catch let error as DatabaseError {
+                log.error(error.description)
+            } catch {
+                log.warning("Unidentifed error encountered while attempting to delete rows")
+            }
+        }
+        
+        return count
     }
 
     /// Let's do some housecleaning

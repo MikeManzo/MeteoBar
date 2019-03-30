@@ -29,6 +29,7 @@ enum ConsoleLogError: Error, CustomStringConvertible {
 ///
 class MeteoConsoleLogController: NSViewController, Preferenceable {
     @IBOutlet weak var consoleTable: NSTableView!
+    @IBOutlet weak var boxContainer: NSBox!
     // MARK: - Protocol Variables
     let toolbarItemTitle = "Console Log"
     let toolbarItemIcon = NSImage(named: "console.png")!
@@ -166,8 +167,10 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             guard let tempData = try logDB.orderByDateAscending() else {
                 return
             }
+            
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.logFileError)
         }
@@ -184,6 +187,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.logFileError)
         }
@@ -200,6 +204,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.logFileError)
         }
@@ -216,6 +221,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.logFileError)
         }
@@ -233,6 +239,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.logFileError)
         }
@@ -243,11 +250,12 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             return
         }
         do {
-            guard let tempData = try logDB.returnRecordsbyLevel(level: .warning) else {
+            guard let tempData = try logDB.recordsByLevel(level: .warning) else {
                 return
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -258,11 +266,12 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             return
         }
         do {
-            guard let tempData = try logDB.returnRecordsbyLevel(level: .verbose) else {
+            guard let tempData = try logDB.recordsByLevel(level: .verbose) else {
                 return
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -273,11 +282,12 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             return
         }
         do {
-            guard let tempData = try logDB.returnRecordsbyLevel(level: .info) else {
+            guard let tempData = try logDB.recordsByLevel(level: .info) else {
                 return
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -288,11 +298,12 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             return
         }
         do {
-            guard let tempData = try logDB.returnRecordsbyLevel(level: .error) else {
+            guard let tempData = try logDB.recordsByLevel(level: .error) else {
                 return
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -303,11 +314,12 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             return
         }
         do {
-            guard let tempData = try logDB.returnRecordsbyLevel(level: .debug) else {
+            guard let tempData = try logDB.recordsByLevel(level: .debug) else {
                 return
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
