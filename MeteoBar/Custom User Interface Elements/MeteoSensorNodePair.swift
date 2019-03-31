@@ -57,7 +57,9 @@ final class MeteoSensorNodePair {
         }
         set {
             if _majorNode != nil || _minorNode != nil {
+                _majorNode = nil    // MRM: Memoeyr Leak?
                 _majorNode?.name = newValue
+                _minorNode = nil    // MRM: Memoeyr Leak?
                 _minorNode?.name = newValue
             }
             _sensorID = newValue
@@ -170,5 +172,14 @@ final class MeteoSensorNodePair {
                 _iconNode!.filter = CIFilter(name: "CIColorInvert")
             }
         }
+    }
+    
+    deinit {
+        print("Deinitializing SensorNodePair")
+        _majorNode?.path    = nil
+        _minorNode?.path    = nil
+        _iconNode           = nil
+        _battery            = nil
+        _sensorID           = nil
     }
 }

@@ -185,6 +185,7 @@ class QJSKMultiLineLabel: SKNode {
     func showBorder() {
         if !shouldShowBorder { return }
         if let rect = self.rect {
+            rect.path = nil // MRM: Memory Leak?
             self.removeChildren(in: [rect])
         }
         self.rect = SKShapeNode(rectOf: CGSize(width: labelWidth, height: labelHeight))

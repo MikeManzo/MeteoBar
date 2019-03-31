@@ -38,13 +38,13 @@ enum MeteobarError: Error, CustomStringConvertible {
 class MainMenuController: NSViewController {
 
     // MARK: - Outlets
-    @IBOutlet weak var menuMain: NSMenu!
-    @IBOutlet weak var alertView: AlertView!
-    @IBOutlet weak var iconBarView: IconBarView!
-    @IBOutlet weak var compassView: MeteoCompassView!
-    @IBOutlet weak var iconBarManuItem: NSMenuItem!
-    @IBOutlet weak var compassItem: NSMenuItem!
-    @IBOutlet weak var alertItem: NSMenuItem!
+//    @IBOutlet weak var menuMain: NSMenu!
+//    @IBOutlet weak var alertView: AlertView!
+//    @IBOutlet weak var iconBarView: IconBarView!
+ //   @IBOutlet weak var compassView: MeteoCompassView!
+//    @IBOutlet weak var iconBarManuItem: NSMenuItem!
+//    @IBOutlet weak var compassItem: NSMenuItem!
+//    @IBOutlet weak var alertItem: NSMenuItem!
     
     // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
@@ -54,9 +54,9 @@ class MainMenuController: NSViewController {
 
     // MARK: - Views
     /// About View
-    lazy var aboutView: AboutController = {
-        return AboutController(nibName: NSNib.Name("About"), bundle: nil)
-    }()
+//    lazy var aboutView: AboutController = {
+//        return AboutController(nibName: NSNib.Name("About"), bundle: nil)
+//    }()
 
     // MARK: - Views
     /// About View
@@ -65,7 +65,7 @@ class MainMenuController: NSViewController {
     }()
     
     /// Preferences
-    lazy var preferencesView: PreferencesWindowController = {
+/*    lazy var preferencesView: PreferencesWindowController = {
         return PreferencesWindowController(viewControllers: [ GeneralPreferencesController(),
                                                               BridgeSetupController(),
                                                               BridgePreferencesController(),
@@ -73,6 +73,7 @@ class MainMenuController: NSViewController {
                                                               AdvancedPreferencesController()
                                                             ])
     }()
+*/
     
     // MARK: - Overrides
     override func awakeFromNib() {
@@ -81,12 +82,12 @@ class MainMenuController: NSViewController {
 //        statusItems["MeteoBar"]?.menu   = menuMain
 
         statusItems["MeteoBar"]?.button!.target = self
-        statusItems["MeteoBar"]?.button!.target = self
+//        statusItems["MeteoBar"]?.button!.target = self
         statusItems["MeteoBar"]?.button!.action = #selector(showWeatherPanel(sender:))
 
-        iconBarManuItem.view            = iconBarView
-        compassItem.view                = compassView
-        alertItem.view                  = alertView
+//        iconBarManuItem.view            = iconBarView
+//        compassItem.view                = compassView
+//        alertItem.view                  = alertView
 
         /// Register as a delegate for the notification center
         NSUserNotificationCenter.default.delegate = self
@@ -107,7 +108,7 @@ class MainMenuController: NSViewController {
         
         /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
         eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [unowned self] _ in
-            if self.meteoPanelView.isViewLoaded && (self.meteoPanelView.view.window != nil) {
+            if self.meteoPanelView.isViewLoaded && self.meteoPanelView.view.window != nil {
                 self.meteoPanelView.view.window?.close()
             }
         }
@@ -174,14 +175,14 @@ class MainMenuController: NSViewController {
         }
         
         let queue = Repeater(interval: .seconds(Double(theBridge!.updateInterval)), mode: .infinite) { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: ["Bridge": theBridge!])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil/*["Bridge": theBridge!]*/)
         }
         
         observerQueue[theBridge!.uuid] = queue
         queue.start()
         
-        DispatchQueue.main.async { // Kick off the first observation while we wait for the timers to count down
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: ["Bridge": theBridge!])
+        DispatchQueue.main.async { [weak theBridge] in // Kick off the first observation while we wait for the timers to count down
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil/*["Bridge": theBridge!]*/)
             log.info("Meteobridge[\(theBridge!.name)] will poll every \(theBridge!.updateInterval) seconds.")
         }
     }
@@ -204,14 +205,14 @@ class MainMenuController: NSViewController {
         }
         
         let queue = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: ["Bridge": theBridge!])
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil/*["Bridge": theBridge!]*/)
         }
             
         alertQueue[theBridge!.uuid] = queue
         queue.start()
             
-        DispatchQueue.main.async { // Kick off the first alert while we wait for the timers to count down
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: ["Bridge": theBridge!])
+        DispatchQueue.main.async { [weak theBridge] in // Kick off the first alert while we wait for the timers to count down
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil /*["Bridge": theBridge!]*/)
             log.info("Meteobridge[\(theBridge!.name)] will poll for alerts every \(theBridge!.alertUpdateInterval) seconds.")
         }
     }
@@ -229,23 +230,29 @@ class MainMenuController: NSViewController {
     /// - returns:  Nothing
     ///
     @objc private func getObservation(_ theNotification: Notification) {
-        guard let bridge = theNotification.userInfo!["Bridge"] as? Meteobridge else {
+/*        guard let bridge = theNotification.userInfo!["Bridge"] as? Meteobridge else {
             log.error(MeteobarError.bridgeError)
             return
         }
-        bridge.getObservation { (_ response: AnyObject?, _ error: Error?) in
+*/
+        guard let bridge = theDelegate?.theBridge else {
+            log.error(MeteobarError.bridgeError)
+            return
+        }
+        
+        bridge.getObservation { [unowned self] (_ response: AnyObject?, _ error: Error?) in
             if error == nil {
                 guard let bridge: Meteobridge = response as? Meteobridge else {
                     log.error(MeteobarError.bridgeError)
                     return
                 }
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewObservationReceived"),
-                                                object: nil, userInfo: ["Bridge": bridge])  // Broadcast to all listeners - we have a new measurement.  Update as needed.
+                                                object: nil, userInfo: nil/*["Bridge": bridge]*/)  // Broadcast to all listeners - we have a new measurement.  Update as needed.
                 guard let sensor = bridge.findSensor(sensorName: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     log.warning(MeteobarError.missingMenubarSensor)
                     return
                 }
-                DispatchQueue.main.async { [unowned self] in
+                DispatchQueue.main.async { [unowned self, unowned sensor] in
                     self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
                 }
             } else {
@@ -267,7 +274,12 @@ class MainMenuController: NSViewController {
     /// - returns:  Nothing
     ///
     @objc private func getAlerts(_ theNotification: Notification) {
-        guard let theBridge = theNotification.userInfo!["Bridge"] as? Meteobridge else {
+/*        guard let theBridge = theNotification.userInfo!["Bridge"] as? Meteobridge else {
+            log.error(MeteobarError.bridgeError)
+            return
+        }
+*/
+        guard let theBridge = theDelegate?.theBridge else {
             log.error(MeteobarError.bridgeError)
             return
         }
@@ -365,10 +377,10 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+/*        DispatchQueue.main.async { [unowned self] in
             sender.superview?.window?.orderOut(self)
             self.preferencesView.showWindow(tabIndex: 1)
-        }
+        } */
     }
     
     /// Show the preferences Tab
@@ -379,10 +391,10 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+/*        DispatchQueue.main.async { [unowned self] in
             sender.superview?.window?.orderOut(self)
             self.preferencesView.showWindow(tabIndex: 2)
-        }
+        } */
     }
     
     /// Show the preferences tab
@@ -393,11 +405,11 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func meteoBarPreferences(_ sender: Any) {
-        preferencesView.showWindow()
+/*        preferencesView.showWindow()
         guard let myView = sender as? NSView else {
             return
         }
-        myView.superview?.window?.close()
+        myView.superview?.window?.close() */
     }
     
     /// Show the User Interface configuration tab
@@ -408,10 +420,10 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showUIConfiguration(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+/*        DispatchQueue.main.async { [unowned self] in
             sender.superview?.window?.orderOut(self)
             self.preferencesView.showWindow(tabIndex: 3)
-        }
+        } */
     }
 
     /// Show the "About" Window
@@ -419,8 +431,8 @@ class MainMenuController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func aboutMeteoBar(_ sender: Any) {
-        (sender as AnyObject).superview?.window?.orderOut(self)
-        presentAsModalWindow(aboutView)
+ /*       (sender as AnyObject).superview?.window?.orderOut(self)
+        presentAsModalWindow(aboutView) */
     }
 
     /// Quit - we're done!
@@ -478,7 +490,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
     ///   - notification: <#notification description#>
     ///
     func userNotificationCenter(_ center: NSUserNotificationCenter, didDeliver notification: NSUserNotification) {
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async { [unowned self] in
             var notificationStillPresent: Bool
             repeat {
                 notificationStillPresent = false
@@ -492,7 +504,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
                 }
             } while notificationStillPresent
             
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [unowned self] in
                 self.dismissClicked(notification: notification)
             }
         }
@@ -574,7 +586,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
 /// *** DEPRECATED ***
 /// *** Look in MeteoPanelController for updated logic
 ///
-extension MainMenuController: NSMenuDelegate {
+/*extension MainMenuController: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         for item in menu.items {
             switch item.view {
@@ -595,3 +607,4 @@ extension MainMenuController: NSMenuDelegate {
 
     }
 }
+*/

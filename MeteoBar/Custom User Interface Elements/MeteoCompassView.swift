@@ -58,6 +58,13 @@ class MeteoCompassView: SKView {
         self.init(frame: frameRect)
     }
     
+    deinit {
+        upperRight  = nil
+        upperLeft   = nil
+        lowerRight  = nil
+        lowerLeft   = nil
+    }
+    
     /// Make sure we save the user's preferences for the compass
     open func updatePreferences() {
         theDelegate?.theDefaults?.compassULSensor = (upperLeft?.sensorID)!
@@ -232,6 +239,7 @@ class MeteoCompassView: SKView {
         }
         
         if caratPathNode != nil {
+            caratPathNode?.path = nil   // MRM: Memory Leak?
             theKitScene!.removeChildren(in: [caratPathNode!])
         }
         

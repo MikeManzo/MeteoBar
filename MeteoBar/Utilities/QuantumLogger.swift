@@ -145,21 +145,21 @@ struct AppDatabase {
     static var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
         
-        migrator.registerMigration("createLog") { db in
+        migrator.registerMigration("createLog") { [] db in
             // Create the table [Example](https://github.com/groue/GRDB.swift#create-tables)
-            try db.create(table: "meteologdb") { t in
-                t.autoIncrementedPrimaryKey("id")
+            try db.create(table: "meteologdb") { table in
+                table.autoIncrementedPrimaryKey("id")
                 
                 // Sort player names in a localized case insensitive fashion by default
                 // [See](https://github.com/groue/GRDB.swift/blob/master/README.md#unicode)
-                t.column("date", .date).notNull()//.collate(.localizedCaseInsensitiveCompare)
-                t.column("level", .integer).notNull()
-                t.column("msg", .text).notNull().collate(.localizedCaseInsensitiveCompare)
-                t.column("line", .integer).notNull()
-                t.column("function", .text).notNull().collate(.localizedCaseInsensitiveCompare)
-                t.column("file", .text).notNull().collate(.localizedCaseInsensitiveCompare)
-                t.column("thread", .text).notNull().collate(.localizedCaseInsensitiveCompare)
-                t.column("context", .text).notNull().collate(.localizedCaseInsensitiveCompare)
+                table.column("date", .date).notNull()//.collate(.localizedCaseInsensitiveCompare)
+                table.column("level", .integer).notNull()
+                table.column("msg", .text).notNull().collate(.localizedCaseInsensitiveCompare)
+                table.column("line", .integer).notNull()
+                table.column("function", .text).notNull().collate(.localizedCaseInsensitiveCompare)
+                table.column("file", .text).notNull().collate(.localizedCaseInsensitiveCompare)
+                table.column("thread", .text).notNull().collate(.localizedCaseInsensitiveCompare)
+                table.column("context", .text).notNull().collate(.localizedCaseInsensitiveCompare)
             }
         }
         

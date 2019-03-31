@@ -609,7 +609,10 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             _weatherModel = try container.decode(MeteoWeather.self, forKey: .weatherModel)
         }
         
-        sensors = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
+//        sensors = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
+        var temp = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
+        sensors = temp
+        temp.removeAll()
     }
     
     /// We have to roll our own Codable class

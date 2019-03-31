@@ -128,7 +128,7 @@ class MeteoPanelController: NSViewController {
     /// Send a message back to the listener that we've closed ...
     ///
     override func viewDidDisappear() {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil, userInfo: ["Controller": self])
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil, userInfo: nil /*["Controller": self]*/ )
     }
 
     /// Show the "About" Window
@@ -157,7 +157,7 @@ class MeteoPanelController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [unowned self, unowned sender] in
             self.preferencesView.showWindow()
             self.preferencesView.selectTab(tabIndex: 1)
             sender.superview?.window?.close()
@@ -169,7 +169,7 @@ class MeteoPanelController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [unowned self, unowned sender]  in
             self.preferencesView.showWindow()
             self.preferencesView.selectTab(tabIndex: 2)
             sender.superview?.window?.close()
@@ -181,7 +181,7 @@ class MeteoPanelController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func showUIConfiguration(_ sender: QJHighlightButtonView) {
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [unowned self, unowned sender] in
             self.preferencesView.showWindow()
             self.preferencesView.selectTab(tabIndex: 3)
             sender.superview?.window?.close()

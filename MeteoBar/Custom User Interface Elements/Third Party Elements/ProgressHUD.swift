@@ -378,7 +378,7 @@ class ProgressHUD: NSView {
         default: break
         }
         if dismissible {
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [unowned self] in
                 self.hide(self.useAnimation)
             }
         }

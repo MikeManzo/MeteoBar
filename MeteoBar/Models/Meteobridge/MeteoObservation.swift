@@ -66,4 +66,10 @@ class MeteoObservation: NSObject, Codable, Copyable {
             _time  = observation?.time
         }
     }
+    
+    ///
+    deinit {
+        _value  = nil
+        _time   = nil
+    }
 }

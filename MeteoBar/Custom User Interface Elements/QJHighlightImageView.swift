@@ -12,7 +12,7 @@ import Cocoa
 /// [Custom Highlight](https://stackoverflow.com/questions/43265671/osx-nsmenuitem-with-custom-nsview-does-not-highlight-swift#)
 ///
 class QJHighlightImageView: NSImageView {
-    var trackingArea: NSTrackingArea?
+//    var trackingArea: NSTrackingArea?
     
     override var isHighlighted: Bool {
         didSet {
@@ -32,11 +32,16 @@ class QJHighlightImageView: NSImageView {
     }
     
     override func awakeFromNib() {
-        trackingArea = NSTrackingArea(rect: NSRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height),
+/*        trackingArea = NSTrackingArea(rect: NSRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height),
                                       options: [NSTrackingArea.Options.activeAlways ,NSTrackingArea.Options.mouseEnteredAndExited],
                                       owner: self, userInfo: nil)
-        addTrackingArea(trackingArea!)
+        addTrackingArea(trackingArea)
         self.wantsLayer = true
+ */
+        addTrackingArea(NSTrackingArea(rect: NSRect(x: 0.0, y: 0.0, width: frame.width, height: frame.height),
+                                      options: [NSTrackingArea.Options.activeAlways ,NSTrackingArea.Options.mouseEnteredAndExited],
+                                      owner: self, userInfo: nil))
+//        wantsLayer = true
     }
     
     override func draw(_ dirtyRect: NSRect) {

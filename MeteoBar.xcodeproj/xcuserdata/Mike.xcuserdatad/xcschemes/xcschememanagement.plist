@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MeteoBar.xcscheme_^#shared#^_</key>
+		<key>Memory Management.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>10</integer>
+		</dict>
+		<key>MeteoBar.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>11</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>277658D621EA6062007BA05A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>277658E621EA6063007BA05A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>277658F121EA6063007BA05A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

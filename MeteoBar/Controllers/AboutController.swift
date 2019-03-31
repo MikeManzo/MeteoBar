@@ -123,7 +123,7 @@ class AboutController: NSViewController {
          "invertable": "yes",
          "copyName": "Library Icon: A group of books representing a library",
          "copyHolder": "Freepick",
-         "copyURL": "https://www.flaticon.com/free-icon/living-room-books-group_47536#term=library&page=1&position=23"
+         "copyURL": "https://www.freepik.com/"
         ],
         ["copyImage": "console.png",
          "copyType": "Icon",
