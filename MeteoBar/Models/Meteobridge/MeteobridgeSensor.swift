@@ -290,7 +290,11 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        supportedUnits = try container.decode([MeteoSensorUnit].self, forKey: .supportedUnits)
+//        supportedUnits = try container.decode([MeteoSensorUnit].self, forKey: .supportedUnits)
+        var temp = try container.decode([MeteoSensorUnit].self, forKey: .supportedUnits)
+        supportedUnits.append(contentsOf: temp)
+        temp.removeAll()
+        
         batteryStatus = try container.decode(SensorBatteryStatus.self, forKey: .batteryStatus)
         batteryParamater = try container.decode(String.self, forKey: .batteryParamater)
         category = try container.decode(MeteoSensorCategory.self, forKey: .category)
@@ -330,11 +334,41 @@ class MeteobridgeSensor: NSObject, Codable, Copyable {
     ///   - newMeasurement: current measurement
     ///   - maxMeasurement: max measurement
     ///   - minMeasurement: min measurement
-    func updateMeasurement(newMeasurement: MeteoObservation, maxMeasurement: MeteoObservation? = nil, minMeasurement: MeteoObservation? = nil) {
+/*    func updateMeasurement(newMeasurement: MeteoObservation?, maxMeasurement: MeteoObservation? = nil, minMeasurement: MeteoObservation? = nil) {
         _measurement.update(observation: newMeasurement)
         
         if maxMeasurement != nil { _maxMeasurement.update(observation: maxMeasurement) }
         if minMeasurement != nil { _minMeasurement.update(observation: minMeasurement) }
+    }
+*/
+    /// Update the sensor with the latest data
+    ///
+    /// - Parameters:
+    ///   - value: value of measurement
+    ///   - date: time of collection
+    ///
+    func updateMeasurement(value: String, time: Date) {
+        _measurement.update(value: value, time: time)
+    }
+
+    /// Update the sensor with the latest minimum data
+    ///
+    /// - Parameters:
+    ///   - value: value of minimum measurement
+    ///   - date: time of collection
+    ///
+    func updateMinMeasurement(value: String, time: Date) {
+        _minMeasurement.update(value: value, time: time)
+    }
+
+    /// Update the sensor with the latest maximum data
+    ///
+    /// - Parameters:
+    ///   - value: value of minimum measurement
+    ///   - date: time of collection
+    ///
+    func updateMaxMeasurement(value: String, time: Date) {
+        _maxMeasurement.update(value: value, time: time)
     }
     
     /// Updte the health of the battery

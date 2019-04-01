@@ -180,7 +180,7 @@ class SensorCollectionItemController: NSCollectionViewItem {
                         // Eat it; the user selected cancel ... do nothing
                         break
                     case .alertSecondButtonReturn:
-                        theDelegate?.theBridge?.getObservation(sensor: sensor, { [unowned self] _, error in // Call the bridge and see if anything has changed
+                        theDelegate?.theBridge?.getObservation(sensor: sensor, { [unowned self] error in // Call the bridge and see if anything has changed
                             if error != nil {
                                 return
                             }

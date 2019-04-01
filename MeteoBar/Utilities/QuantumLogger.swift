@@ -172,7 +172,7 @@ public class SQLDestination: BaseDestination {
     public var logFileURL: URL?
 
     // The shared database queue
-    var dbQueue: DatabaseQueue!
+    var dbQueue: DatabaseQueue?
     
     override public var defaultHashValue: Int {return 2}
     
@@ -236,7 +236,7 @@ public class SQLDestination: BaseDestination {
                               file: String, function: String, line: Int, context: Any? = nil) -> String? {
         let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
         do {
-            try dbQueue.write { db in
+            try dbQueue?.write { db in
                 var newLog = MeteoLogDB(function: function, context: "", thread: thread, file: file, msg: msg,
                                  date: Date(), level: level.rawValue, id: nil, line: line)
                 try newLog.insert(db)
@@ -258,7 +258,7 @@ public class SQLDestination: BaseDestination {
     func orderByDateAscending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
     
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByDateAscending().fetchAll(db)
             } catch {
@@ -277,7 +277,7 @@ public class SQLDestination: BaseDestination {
     func orderByDateDescending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByDateDescending().fetchAll(db)
             } catch {
@@ -296,7 +296,7 @@ public class SQLDestination: BaseDestination {
     func orderByLineAscending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByLineAscending().fetchAll(db)
             } catch {
@@ -315,7 +315,7 @@ public class SQLDestination: BaseDestination {
     func orderByLineDescending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByLineDescending().fetchAll(db)
             } catch {
@@ -334,7 +334,7 @@ public class SQLDestination: BaseDestination {
     func orderByLevelAscending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByLevelAscending().fetchAll(db)
             } catch {
@@ -353,7 +353,7 @@ public class SQLDestination: BaseDestination {
     func orderByLevelDescending() throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB.orderedByLevelDescending().fetchAll(db)
             } catch {
@@ -374,7 +374,7 @@ public class SQLDestination: BaseDestination {
     func recordsByDateRange(dateFrom: Date, dateTo: Date) throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
 //                let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '2019-03-27 21:08:00' and '2019-03-27 22:00:00'"
                 let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '\(dateFrom)' and '\(dateTo)'"
@@ -397,7 +397,7 @@ public class SQLDestination: BaseDestination {
     func deleteRecords(recordIDs: [Int64]) throws -> Bool {
         var bResult = false
         
-        try dbQueue.write { db in
+        try dbQueue?.write { db in
             do {
                 let deleted = try MeteoLogDB.deleteAll(db, keys: recordIDs)
                 bResult = deleted == recordIDs.count ? true : false
@@ -419,7 +419,7 @@ public class SQLDestination: BaseDestination {
     func deleteLevelRecords(level: SwiftyBeaver.Level) throws -> Bool {
         var bResult = false
         
-        try dbQueue.write { db in
+        try dbQueue?.write { db in
             do {
                 bResult = try MeteoLogDB
                     .filter(Column("level") == level.rawValue)
@@ -442,7 +442,7 @@ public class SQLDestination: BaseDestination {
     func recordsByLevel(level: SwiftyBeaver.Level) throws -> [MeteoLogDB]? {
         var logs: [MeteoLogDB]?
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 logs = try MeteoLogDB
                     .filter(Column("level") == level.rawValue)
@@ -465,7 +465,7 @@ public class SQLDestination: BaseDestination {
     func recordCount() throws -> Int {
         var count = -1
         
-        dbQueue.read { db in
+        dbQueue?.read { db in
             do {
                 count = try MeteoLogDB.fetchCount(db)
             } catch let error as DatabaseError {

@@ -411,6 +411,7 @@ extension MKMeteoPolyline {
         }
         var coordinates = locations.map({(location: CLLocation) -> CLLocationCoordinate2D in return location.coordinate})
         let result = MKMeteoPolyline(coordinates: &coordinates, count: locations.count)
+        locations.removeAll()
         return (result, lineName)
     }
     
@@ -430,6 +431,8 @@ extension MKMeteoPolyline {
             coords.append(coord)
         }
         let polylineData = NSKeyedArchiver.archivedData(withRootObject: [lineName: coords])
+        
+        coords.removeAll()
         return polylineData as Data
     }
 }

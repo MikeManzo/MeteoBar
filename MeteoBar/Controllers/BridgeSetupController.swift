@@ -306,7 +306,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
                                 log.error(error.value)                                      // Warn the user that we're unable to update the model
                             }                                                               // We still want to continue though ...
                             ProgressHUD.show(withStatus: BridgeSetupControllerHUD.gettingObservation.description)
-                            theBridge.getObservation(allParams: true, { (_, error: Error?) in         // Get a "FULL" observation so we can see what's going on outside
+                            theBridge.getObservation(allParams: true, { (error: Error?) in         // Get a "FULL" observation so we can see what's going on outside
                                 if error == nil {
                                     guard let sensorUL = theDelegate!.theBridge?.findSensor(sensorName: (theDelegate?.theDefaults!.compassULSensor)!) else {
                                         log.warning("Cannot find Senor[\(theDelegate?.theDefaults!.compassULSensor ?? "")]: to observe.")

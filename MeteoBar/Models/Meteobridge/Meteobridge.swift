@@ -279,7 +279,8 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                         callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
                         return
                     }
-                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+//                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+                    filteredSensor.updateMeasurement(value: subPair[1], time: timeCollect)     // MRM: Record the observation
                     callback(filteredSensor, nil) // <-- Just return the filtered (and now populated) system sensor
                 }
             }
@@ -336,7 +337,8 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                         callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
                         return
                     }
-                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+//                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+                    filteredSensor.updateMeasurement(value: subPair[1], time: timeCollect)     // MRM: Record the observation
                 }
             }
             
@@ -364,41 +366,41 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///     - allParams:    do we want to grab everything and ignore the 'isObserving' flag?
     ///     - callback:     return function
     ///
-    func getObservation(allParams: Bool = false, _ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+    func getObservation(allParams: Bool = false, _ callback: @escaping (_ error: Error?) -> Void) {
         WeatherPlatform.getConditions(theBridge: self, allParamaters: allParams, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
-                callback(nil, bridgeError)
+                callback(bridgeError)
             }
             
             guard let validData = bridgeData as? Data else {
-                callback(nil, MeteobridgeError.dataError)
+                callback(MeteobridgeError.dataError)
                 return
             }
             
             guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
-                callback(nil, MeteobridgeError.dataError)
+                callback(MeteobridgeError.dataError)
                 return
             }
             
             guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             
             // Guard against poor data data
             if hourPair.count != 2 {
                 log.warning("Incorrect Timestamp returned:\(hourPair)")
-                callback(nil, MeteobridgeError.observationDateError)
+                callback(MeteobridgeError.observationDateError)
                 return
             }
             // Guard against poor data data
 
             guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             
@@ -413,17 +415,21 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
                 guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {       // Find the sensor with this tag
-                    callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                    callback(PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
                     return
                 }
                     let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
-                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
-                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
-                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+//                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
+//                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
+//                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+                    filteredSensor.updateMeasurement(value: battPair[0], time: timeCollect)     // MRM: Record the observation
+                    filteredSensor.updateMaxMeasurement(value: battPair[1], time: timeCollect)  // MRM: Record the max observation
+                    filteredSensor.updateMinMeasurement(value: battPair[2], time: timeCollect)  // MRM: Record the min observation
+
                     filteredSensor.updateBatteryHealth(observation: battPair[3])                // Record the battery health
                 }
             }
-            callback(self, nil)
+            callback(nil)
         })
     }
 
@@ -441,41 +447,41 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     ///     - sensor:   sensor to get measurement for
     ///     - callback: return function
     ///
-    func getObservation(sensor: MeteobridgeSensor, _ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+    func getObservation(sensor: MeteobridgeSensor, _ callback: @escaping (_ error: Error?) -> Void) {
         WeatherPlatform.getConditionsForSensor(theBridgeIP: self.ipAddress, sensor: sensor, callback: { [unowned self] bridgeData, bridgeError in
             if bridgeError != nil {
-                callback(nil, bridgeError)
+                callback(bridgeError)
             }
             
             guard let validData = bridgeData as? Data else {
-                callback(nil, MeteobridgeError.dataError)
+                callback(MeteobridgeError.dataError)
                 return
             }
             
             guard let bridgeResponse: [String] = String(data: validData, encoding: .utf8)?.components(separatedBy: ",") else {
-                callback(nil, MeteobridgeError.dataError)
+                callback(MeteobridgeError.dataError)
                 return
             }
             
             guard let timeArray = bridgeResponse[0].components(separatedBy: ";") as Array? else { // Time:HH;MM;SS (note the semi-colon)
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             guard let hourPair = timeArray[0].components(separatedBy: ":")  as Array? else {  // [0] = Time [1] = HH
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             
             // Guard against poor data data
             if hourPair.count != 2 {
                 log.warning("Incorrect Timestamp returned:\(hourPair)")
-                callback(nil, MeteobridgeError.observationDateError)
+                callback(MeteobridgeError.observationDateError)
                 return
             }
             // Guard against poor data data
             
             guard let timeCollect = Calendar.current.date(bySettingHour: Int(hourPair[1])!, minute: Int(timeArray[1])!, second: Int(timeArray[2])!, of: Date())! as Date? else {
-                callback(nil, MeteobridgeError.observationError)
+                callback(MeteobridgeError.observationError)
                 return
             }
             
@@ -490,17 +496,20 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 let subPair = pair.components(separatedBy: ":")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
                     guard let filteredSensor = self.findSensor(sensorName: subPair[0]) else {       // Find the sensor with this tag
-                        callback(nil, PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
+                        callback(PlatformError.custom(message: "Unknown sensor:[\(subPair[0])] detected"))
                         return
                     }
                     let battPair = subPair[1].components(separatedBy: "|")                      // We're going to get something like this "993.0|--" for the observation / battery health
-                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
-                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
-                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+//                    filteredSensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
+//                                                     maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
+//                                                     minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))     // Record the observation, max & min
+                    filteredSensor.updateMeasurement(value: battPair[0], time: timeCollect)     // MRM: Record the observation
+                    filteredSensor.updateMaxMeasurement(value: battPair[1], time: timeCollect)  // MRM: Record the max observation
+                    filteredSensor.updateMinMeasurement(value: battPair[2], time: timeCollect)  // MRM: Record the min observation
                     filteredSensor.updateBatteryHealth(observation: battPair[3])                // Record the battery health
                 }
             }
-            callback(self, nil)
+            callback(nil)
         })
     }
     
@@ -516,15 +525,15 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     /// - throws:   Nothing
     /// - returns:  Self ... with a fresh set of alerts (if any exist)
     ///
-    func getWeatherAlerts(_ callback: @escaping (_ theBridge: Meteobridge?, _ error: Error?) -> Void) {
+    func getWeatherAlerts(_ callback: @escaping (_ error: Error?) -> Void) {
         WeatherPlatform.getNWSAlerts(theBridge: self, responseHandler: { [unowned self] alerts, error in
             if error != nil {
                 log.warning(error.value)
-                callback(self, MeteobridgeError.weatherAlertError)
+                callback(MeteobridgeError.weatherAlertError)
             }
             
             if alerts == nil {
-                callback(nil, nil)
+                callback(nil)
             }
             
             for alert in alerts! {
@@ -543,7 +552,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
                 self.weatherAlerts.removeAll()                                                                          // alerts, remove anything we had been tracking
             }                                                                                                           // This will help the UI deal with expiration
             
-            callback(self, nil)
+            callback(nil)
         })
     }
     
@@ -612,6 +621,10 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
 //        sensors = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
         var temp = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
         sensors = temp
+        for (_ , var key) in temp {
+            print("Clearing \(key.count) keys")
+            key.removeAll()
+        }
         temp.removeAll()
     }
     
@@ -714,9 +727,12 @@ extension Meteobridge {
                 let subPair = pair.components(separatedBy: ":")                                                         // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
                     let battPair = subPair[1].components(separatedBy: "|")                                              // We're going to get something like this "993.0|--" for the observation / battery health
-                    sensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
-                                             maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
-                                             minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))   // Record the observation, max & min
+//                    sensor.updateMeasurement(newMeasurement: MeteoObservation(value: battPair[0], time: timeCollect),
+//                                             maxMeasurement: MeteoObservation(value: battPair[1], time: timeCollect),
+//                                             minMeasurement: MeteoObservation(value: battPair[2], time: timeCollect))   // Record the observation, max & min
+                    sensor.updateMeasurement(value: battPair[0], time: timeCollect)     // MRM: Record the observation
+                    sensor.updateMaxMeasurement(value: battPair[1], time: timeCollect)  // MRM: Record the max observation
+                    sensor.updateMinMeasurement(value: battPair[2], time: timeCollect)  // MRM: Record the min observation
                     sensor.updateBatteryHealth(observation: battPair[3])                                                // Record the battery health
                 }
             }
@@ -762,7 +778,8 @@ extension Meteobridge {
             for pair in bridgeResponse {
                 let subPair = pair.components(separatedBy: "|")                                 // th0temp:30.4 <-- We want to break this into [0]th0temp & [1]30.4
                 if subPair[0] != "Time" {
-                    sensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+//                    sensor.updateMeasurement(newMeasurement: MeteoObservation(value: subPair[1], time: timeCollect))     // Record the observation
+                    sensor.updateMeasurement(value: subPair[1], time: timeCollect)     // MRM: Record the observation
                     callback(sensor, nil) // <-- Just return the filtered (and now populated) system sensor
                 }
             }
