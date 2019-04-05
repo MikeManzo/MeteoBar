@@ -622,7 +622,6 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
         var temp = try container.decode([MeteoSensorCategory: [MeteobridgeSensor]].self, forKey: .sensors)
         sensors = temp
         for (_ , var key) in temp {
-            print("Clearing \(key.count) keys")
             key.removeAll()
         }
         temp.removeAll()

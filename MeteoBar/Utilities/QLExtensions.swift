@@ -580,10 +580,10 @@ extension NSView {
             layer?.backgroundColor = newValue?.cgColor
         }
     }
-
+/*
     func bringSubviewToFront(_ view: NSView) {
         var theView = view
-        self.sortSubviews({(viewA,viewB,rawPointer) in
+        self.sortSubviews({ [unowned self] (viewA,viewB,rawPointer) in
             let view = rawPointer?.load(as: NSView.self)
             
             switch view {
@@ -596,6 +596,7 @@ extension NSView {
             }
         }, context: &theView)
     }
+*/
 }
 
 // MARK: - Optional Extensions

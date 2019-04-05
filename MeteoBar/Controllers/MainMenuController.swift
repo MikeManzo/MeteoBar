@@ -267,7 +267,6 @@ class MainMenuController: NSViewController {
             if theBridge.weatherAlerts.isEmpty {
                 self.statusItems["MeteoBar"]?.button?.image = nil
             }
-            print("********* Memory go up? **********")
         }
     }
     
