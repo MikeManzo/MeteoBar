@@ -73,12 +73,13 @@ class MainMenuController: NSViewController {
         newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
         
         /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
-        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [unowned self] _ in
-            if self.meteoPanelView.isViewLoaded && self.meteoPanelView.view.window != nil {
-                self.meteoPanelView.view.window?.close()
+        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+            if self!.meteoPanelView.isViewLoaded && self!.meteoPanelView.view.window != nil {
+                self!.meteoPanelView.view.window?.close()
+                self?.eventMonitor!.stop()
             }
         }
-        eventMonitor?.start()
+//        eventMonitor?.start()
     }
 
     /// EXPIRIMENTAL
@@ -144,8 +145,8 @@ class MainMenuController: NSViewController {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
         }
         
-        observerQueue[theBridge!.uuid] = queue
         queue.start()
+        observerQueue[theBridge!.uuid] = queue
         
         DispatchQueue.main.async { [weak theBridge] in // Kick off the first observation while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
@@ -320,29 +321,6 @@ class MainMenuController: NSViewController {
         }
         notificationcenter.scheduleNotification(notification)
     }
-    
-    /// Quit - we're done!
-    ///
-    /// *** DEPRECATED ***
-    /// *** Look in MeteoPanelController for updated logic
-    ///
-    /// - Parameter sender: The Caller who sent the message
-    ///
-    @IBAction func quitMeteoBar(_ sender: Any) {
-        for key in observerQueue.keys {
-            observerQueue[key]?.pause()
-            observerQueue.removeValue(forKey: key)
-        }
-        
-        for key in alertQueue.keys {
-            alertQueue[key]?.pause()
-            alertQueue.removeValue(forKey: key)
-        }
-        
-        observerQueue.removeAll()
-        alertQueue.removeAll()
-        NSApplication.shared.terminate(self)
-    }    
 }
 
 // MARK: NSUserNotificationCenterDelegate Extension

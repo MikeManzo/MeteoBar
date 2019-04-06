@@ -8,10 +8,10 @@
 
 import Cocoa
 
-class MeteoEventMonitor: NSObject {
+class MeteoEventMonitor/*: NSObject*/ {
     private let eventMask: NSEvent.EventTypeMask
     private let eventHandler: (NSEvent?) -> Void
-    private var theMonitor: Any?
+    private var theMonitor: AnyObject?
     private var _listening = false
 
     var listening: Bool {
@@ -47,10 +47,10 @@ class MeteoEventMonitor: NSObject {
     ///
     public func start() {
         if _listening {
-            log.warning("MeteoEventMonitor already listening; returnign with no action.")
+            log.warning("MeteoEventMonitor already listening; returning with no action.")
             return
         }
-        theMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventMask, handler: eventHandler)
+        theMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventMask, handler: eventHandler) as AnyObject?
         _listening = true
     }
     
@@ -63,6 +63,7 @@ class MeteoEventMonitor: NSObject {
     ///
     public func stop() {
         if theMonitor != nil {
+            print("Stopping Event Monitor")
             NSEvent.removeMonitor(theMonitor!)
             theMonitor = nil
             _listening = false
@@ -77,6 +78,7 @@ class MeteoEventMonitor: NSObject {
     /// - returns:  Nothing
     ///
     deinit {
+        print("DEINIT: Event Monitor")
         stop()
     }
 }

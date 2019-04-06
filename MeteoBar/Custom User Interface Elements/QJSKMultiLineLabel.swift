@@ -23,66 +23,47 @@ class QJSKMultiLineLabel: SKNode {
     
     /// Width of the Label
     var labelWidth: Double {
-        didSet {
-            update()
-            }
+        didSet { update() }
     }
 
     /// Display Text
     var text: String? {
-        didSet {
-            update()
-            
-        }
+        didSet { update() }
     }
 
     /// Name of font to use
     var fontName: String {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Size of font to use
     var fontSize: CGFloat {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Center Point of Node
     var pos: CGPoint {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Color of Text
     var fontColor: SKColor {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Spacing between lines
     var leading: Double {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Alignment
     var alignment: SKLabelHorizontalAlignmentMode {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
     
     /// Do we want to show the enclosing box?
     var shouldShowBorder: Bool = false {
-        didSet {
-            update()
-        }
+        didSet { update() }
     }
 
     // MARK: - Implementation
@@ -119,7 +100,7 @@ class QJSKMultiLineLabel: SKNode {
             for label in labels {
                 label.removeFromParent()
             }
-            labels = []
+//            labels = []
         }
         
         let separators = CharacterSet.whitespacesAndNewlines
