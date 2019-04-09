@@ -3,16 +3,22 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+        <customObject id="-2" userLabel="File's Owner" customClass="MainMenuController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
-                <outlet property="delegate" destination="Voe-Tx-rLC" id="HQp-40-y0J"/>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="htV-OI-1zy"/>
+                <outlet property="view" destination="qqB-17-jul" id="MYN-Wk-hWc"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MeteoBar" customModuleProvider="target"/>
-        <viewController nibName="MainMenu" id="qZU-Zb-ECd" userLabel="Main Menu Controller" customClass="MainMenuController" customModule="MeteoBar" customModuleProvider="target"/>
+        <customView id="qqB-17-jul">
+            <rect key="frame" x="0.0" y="0.0" width="1" height="1"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <point key="canvasLocation" x="-275" y="-445.5"/>
+        </customView>
     </objects>
 </document>

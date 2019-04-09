@@ -41,7 +41,9 @@ class MainMenuController: NSViewController {
     var observerQueue   = [String: Repeater]()
     var alertQueue      = [String: Repeater]()
     var eventMonitor: MeteoEventMonitor?
-
+    @IBOutlet weak var delegate: AppDelegate!   // w/o this we get a memory leak
+    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
+    
     // MARK: - Views
     /// Main Weather Panel
     lazy var meteoPanelView: MeteoPanelController = {
@@ -62,16 +64,16 @@ class MainMenuController: NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(weatherPanelClosed(sender:)), name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil)
 
         /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
-        NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(_:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(sender:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
 
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
-        NotificationCenter.default.addObserver(self, selector: #selector(getObservation(_:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getObservation(sender:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
 
         /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
-        NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(_:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(sender:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
         
-        newBridgeInitialized(Notification(name: NSNotification.Name(rawValue: "BridgeInitialized")))
-        
+        newBridgeInitialized(sender: self)
+
         /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
         eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
             if self!.meteoPanelView.isViewLoaded && self!.meteoPanelView.view.window != nil {
@@ -79,9 +81,8 @@ class MainMenuController: NSViewController {
                 self?.eventMonitor!.stop()
             }
         }
-//        eventMonitor?.start()
     }
-
+    
     /// EXPIRIMENTAL
     ///
     /// ## SPECIAL NOTE ##
@@ -111,7 +112,7 @@ class MainMenuController: NSViewController {
     ///
     /// - Parameter theNotification: the notifcation letting us knoe
     ///
-    @objc private func newBridgeInitialized(_ theNotification: Notification) {
+    @objc private func newBridgeInitialized(sender: AnyObject) {
         guard let bridge = theDelegate?.theBridge else {
             log.error(MeteobarError.bridgeError)
             return
@@ -150,7 +151,7 @@ class MainMenuController: NSViewController {
         
         DispatchQueue.main.async { [weak theBridge] in // Kick off the first observation while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
-            log.info("Meteobridge[\(theBridge!.name)] will poll every \(theBridge!.updateInterval) seconds.")
+            log.info("\(theBridge!.name) will poll every \(theBridge!.updateInterval) seconds.")
         }
     }
 
@@ -180,7 +181,7 @@ class MainMenuController: NSViewController {
             
         DispatchQueue.main.async { [weak theBridge] in // Kick off the first alert while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
-            log.info("Meteobridge[\(theBridge!.name)] will poll for alerts every \(theBridge!.alertUpdateInterval) seconds.")
+            log.info("\(theBridge!.name) will poll for alerts every \(theBridge!.alertUpdateInterval) seconds.")
         }
     }
 
@@ -196,7 +197,8 @@ class MainMenuController: NSViewController {
     /// - throws: Nothing
     /// - returns:  Nothing
     ///
-    @objc private func getObservation(_ theNotification: Notification) {
+//    @objc private func getObservation(_ theNotification: Notification) {
+    @objc private func getObservation(sender: AnyObject) {
         guard let bridge = theDelegate?.theBridge else {
             log.error(MeteobarError.bridgeError)
             return
@@ -231,7 +233,8 @@ class MainMenuController: NSViewController {
     /// - throws: Nothing
     /// - returns:  Nothing
     ///
-    @objc private func getAlerts(_ theNotification: Notification) {
+//    @objc private func getAlerts(_ theNotification: Notification) {
+    @objc private func getAlerts(sender: AnyObject) {
         guard let theBridge = theDelegate?.theBridge else {
             log.error(MeteobarError.bridgeError)
             return

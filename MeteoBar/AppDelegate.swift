@@ -41,6 +41,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var theDefaults = Defaults[.meteoBarDefaults]
     var theBridge   = Defaults[.bridgesDefaults]
 
+    lazy var mainMenu: MainMenuController = {
+        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
+    }()
+
     override init() {
         if theDefaults == nil {
             theDefaults = MeteoPreferences()
@@ -75,6 +79,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print("Oops")
         }
         // ***** TESTING *****
+
+        _ = mainMenu.view   // Initialize the controller and wake-up the nib
     }
 
     /// MeteoBar is about to close ... clean-up
