@@ -433,6 +433,7 @@ extension MKMeteoPolyline {
         let polylineData = NSKeyedArchiver.archivedData(withRootObject: [lineName: coords])
         
         coords.removeAll()
+        coordsPointer.deallocate()
         return polylineData as Data
     }
 }

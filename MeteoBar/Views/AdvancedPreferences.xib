@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="AdvancedPreferences" customModule="MeteoBar" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="AdvancedPreferencesController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
                 <outlet property="senorBattParam" destination="e9C-Lc-wLD" id="Ips-vc-XqR"/>
                 <outlet property="sensorBattery" destination="tcR-86-lKu" id="Gfo-CF-jc6"/>
@@ -419,25 +419,6 @@
             </subviews>
             <point key="canvasLocation" x="-16.5" y="154"/>
         </customView>
-        <viewController id="5vk-1x-xxn" customClass="AdvancedPreferencesController" customModule="MeteoBar" customModuleProvider="target">
-            <connections>
-                <outlet property="senorBattParam" destination="e9C-Lc-wLD" id="L8m-nm-RwC"/>
-                <outlet property="sensorBattery" destination="tcR-86-lKu" id="hkd-0x-kZI"/>
-                <outlet property="sensorCategory" destination="V3R-6T-ejd" id="vrN-GA-OLu"/>
-                <outlet property="sensorInfo" destination="VDq-mx-vzy" id="OCb-B4-hcs"/>
-                <outlet property="sensorMaxParam" destination="riv-Fw-LAw" id="dDV-rE-fqx"/>
-                <outlet property="sensorMaxValue" destination="vd0-YU-X51" id="MaB-v1-SrJ"/>
-                <outlet property="sensorMinParam" destination="idx-CE-NbC" id="Qwr-K0-TPh"/>
-                <outlet property="sensorMinValue" destination="Vkq-rw-VVU" id="N3N-Wd-dlp"/>
-                <outlet property="sensorName" destination="WGl-SF-D4z" id="uE5-IQ-dnu"/>
-                <outlet property="sensorParam" destination="tAO-ai-1OX" id="IGT-bc-UN0"/>
-                <outlet property="sensorProgress" destination="RsB-i3-QOT" id="63b-qq-8kQ"/>
-                <outlet property="sensorTree" destination="4T8-9M-GDR" id="qvW-fp-53z"/>
-                <outlet property="sensorUnits" destination="9ZE-YI-0hq" id="NVA-am-2oO"/>
-                <outlet property="sensorValue" destination="1sC-8o-t7E" id="dPp-6J-O58"/>
-                <outlet property="valueTime" destination="XUc-Mo-pCl" id="vJn-cy-YBF"/>
-            </connections>
-        </viewController>
     </objects>
     <resources>
         <image name="NSAdvanced" width="32" height="32"/>
