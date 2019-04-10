@@ -39,7 +39,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="aboutMeteoBar:" target="Jbm-OC-mfA" id="qyv-UX-2el"/>
+                                        <action selector="aboutMeteoBar:" target="-2" id="LKs-6d-JBy"/>
                                     </connections>
                                 </button>
                                 <button toolTip="General Preferences" translatesAutoresizingMaskIntoConstraints="NO" id="LHw-cZ-6O7" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
@@ -53,7 +53,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="meteoBarPreferences:" target="Jbm-OC-mfA" id="N0K-kO-vIP"/>
+                                        <action selector="meteoBarPreferences:" target="-2" id="tee-oR-ymj"/>
                                     </connections>
                                 </button>
                                 <button toolTip="Meteobridge Setup" translatesAutoresizingMaskIntoConstraints="NO" id="5Hh-Ha-E8a" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
@@ -67,7 +67,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="showBridgeSetupTab:" target="Jbm-OC-mfA" id="fhd-Jz-SAi"/>
+                                        <action selector="showBridgeSetupTab:" target="-2" id="6z4-C5-YUC"/>
                                     </connections>
                                 </button>
                                 <button identifier="Meteobridge Configuration" toolTip="Sensor Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="EKN-4w-bFb" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
@@ -81,7 +81,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="showBridgeConfiguration:" target="Jbm-OC-mfA" id="Sef-Sj-tCe"/>
+                                        <action selector="showBridgeConfiguration:" target="-2" id="BeK-sK-Xrm"/>
                                     </connections>
                                 </button>
                                 <button toolTip="User Interface Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="UpO-EY-7aQ" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
@@ -95,7 +95,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="showUIConfiguration:" target="Jbm-OC-mfA" id="zsD-3i-s9x"/>
+                                        <action selector="showUIConfiguration:" target="-2" id="kzg-Xt-k6X"/>
                                     </connections>
                                 </button>
                                 <button toolTip="Exit" translatesAutoresizingMaskIntoConstraints="NO" id="28p-u9-5Vs" customClass="QJHighlightButtonView" customModule="MeteoBar" customModuleProvider="target">
@@ -112,7 +112,7 @@
                                         <userDefinedRuntimeAttribute type="boolean" keyPath="invert" value="YES"/>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="quitMeteoBar:" target="Jbm-OC-mfA" id="aY8-cz-2IW"/>
+                                        <action selector="quitMeteoBar:" target="-2" id="gR7-DX-shZ"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -235,13 +235,6 @@
             </subviews>
             <point key="canvasLocation" x="-50" y="78"/>
         </customView>
-        <viewController id="Jbm-OC-mfA" customClass="MeteoPanelController" customModule="MeteoBar" customModuleProvider="target">
-            <connections>
-                <outlet property="alertView" destination="bYM-6G-BEM" id="xDM-eR-IQm"/>
-                <outlet property="compassView" destination="z9d-If-O6K" id="VuD-Vs-kTz"/>
-                <outlet property="iconBarView" destination="CjE-37-4fe" id="qAQ-1O-qJr"/>
-            </connections>
-        </viewController>
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>

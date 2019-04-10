@@ -500,7 +500,9 @@ extension NSImage {
             currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
             if let output = currentFilter.outputImage {
                 if let cgimg = context.createCGImage(output, from: output.extent) {
+                    context.clearCaches()
                     return NSImage(cgImage: cgimg, size: NSSize(width: 0, height: 0))
+//                    return returnImage
                 } else {return nil}
             } else {return nil}
         } else {return nil}
