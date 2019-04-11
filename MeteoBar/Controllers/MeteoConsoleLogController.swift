@@ -48,7 +48,25 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     override func viewWillAppear() {
         showAllRecords(self)
     }
-
+    
+    @IBAction func deleteAllRows(_ sender: Any) {
+        guard let logDB = theDelegate?.getDBLogger() else {
+            return
+        }
+        do {
+            _ = try logDB.deleteLevelRecords(level: .verbose)
+            
+            guard let tempData = try logDB.orderByDateAscending() else {
+                return
+            }
+            tableConsoleData = tempData
+            consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
+        } catch {
+            log.error(ConsoleLogError.deleteError)
+        }
+    }
+    
     @IBAction func deleteSelectedRows(_ sender: Any) {
         guard let logDB = theDelegate?.getDBLogger() else {
             return

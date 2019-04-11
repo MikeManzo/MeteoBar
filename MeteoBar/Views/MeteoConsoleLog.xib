@@ -341,6 +341,9 @@ Message 2</string>
                         <items>
                             <menuItem title="All" id="6Kd-ir-R3M">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deleteAllRows:" target="-2" id="FM8-A9-xdT"/>
+                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="WMC-BT-Uen"/>
                             <menuItem title="Selected" id="Dfo-88-tnF">

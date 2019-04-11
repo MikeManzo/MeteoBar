@@ -421,9 +421,15 @@ public class SQLDestination: BaseDestination {
         
         try dbQueue?.write { db in
             do {
-                bResult = try MeteoLogDB
-                    .filter(Column("level") == level.rawValue)
-                    .deleteAll(db) > 0 ? true : false
+                switch level {
+                case .verbose:
+                    bResult = try MeteoLogDB
+                        .deleteAll(db) > 0 ? true : false
+                default:
+                    bResult = try MeteoLogDB
+                        .filter(Column("level") == level.rawValue)
+                        .deleteAll(db) > 0 ? true : false
+                }
             } catch let error as DatabaseError {
                 log.error(error.description)
             } catch {
