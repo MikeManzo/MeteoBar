@@ -86,6 +86,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -103,6 +104,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -120,6 +122,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -137,6 +140,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -154,6 +158,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
@@ -171,6 +176,7 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             }
             tableConsoleData = tempData
             consoleTable.reloadData()
+            boxContainer.title = "Shwowing \(tempData.count) of \(try logDB.recordCount()) records"
         } catch {
             log.error(ConsoleLogError.deleteError)
         }
