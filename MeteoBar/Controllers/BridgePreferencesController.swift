@@ -114,7 +114,7 @@ class BridgePreferencesController: NSViewController, Preferenceable {
     func highlightItems(selected: Bool, atIndexPaths: Set<NSIndexPath>) {
         for indexPath in atIndexPaths {
             guard let item = collectionView.item(at: indexPath as IndexPath) else {continue}
-            (item as? SensorCollectionItemController)!.setHighlight(selected: selected)
+            (item as? SensorCollectionItem)!.setHighlight(selected: selected)
         }
     }
 }
@@ -151,7 +151,7 @@ extension BridgePreferencesController: NSCollectionViewDataSource {
                         itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         
         let item: NSCollectionViewItem? = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier("SensorCollectionItem"), for: indexPath)
-        guard let collectionViewItem = item as? SensorCollectionItemController else {
+        guard let collectionViewItem = item as? SensorCollectionItem else {
             return item!
         }
         

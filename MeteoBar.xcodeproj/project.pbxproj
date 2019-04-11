@@ -65,7 +65,7 @@
 		27ACA78A21FE4DEE00E226C2 /* system.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78921FE4DEE00E226C2 /* system.png */; };
 		27ACA78E21FE68CD00E226C2 /* SensorCollectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */; };
 		27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */; };
-		27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */; };
+		27ACA79321FE6C0B00E226C2 /* SensorCollectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79121FE6C0B00E226C2 /* SensorCollectionItem.swift */; };
 		27ACA79421FE6C0B00E226C2 /* SensorCollectionItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */; };
 		27ACA79621FE785600E226C2 /* SensorCollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */; };
 		27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */; };
@@ -186,7 +186,7 @@
 		27ACA78921FE4DEE00E226C2 /* system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = system.png; sourceTree = "<group>"; };
 		27ACA78D21FE68CD00E226C2 /* SensorCollectionHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorCollectionHeader.xib; sourceTree = "<group>"; };
 		27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionHeaderView.swift; sourceTree = "<group>"; };
-		27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionItemController.swift; sourceTree = "<group>"; };
+		27ACA79121FE6C0B00E226C2 /* SensorCollectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionItem.swift; sourceTree = "<group>"; };
 		27ACA79221FE6C0B00E226C2 /* SensorCollectionItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SensorCollectionItem.xib; sourceTree = "<group>"; };
 		27ACA79521FE785600E226C2 /* SensorCollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SensorCollectionModel.swift; sourceTree = "<group>"; };
 		27ACA79721FE7BF900E226C2 /* MeteoSensorImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoSensorImage.swift; sourceTree = "<group>"; };
@@ -344,6 +344,7 @@
 				27CA786821EC19DE000D517D /* QJHyperTextField.swift */,
 				27CA786A21EC1B4E000D517D /* QJQuickResponseTableView.swift */,
 				27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */,
+				27ACA79121FE6C0B00E226C2 /* SensorCollectionItem.swift */,
 				27ACA78F21FE691400E226C2 /* SensorCollectionHeaderView.swift */,
 				27AA71222221986100AFDD78 /* Third Party Elements */,
 			);
@@ -392,7 +393,6 @@
 				27A0545721EB8520001F4913 /* MainMenuController.swift */,
 				2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */,
 				278DF09D22486108004BA69F /* MeteoConsoleLogController.swift */,
-				27ACA79121FE6C0B00E226C2 /* SensorCollectionItemController.swift */,
 				27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */,
 			);
 			path = Controllers;
@@ -739,7 +739,7 @@
 				27470AAF221437D800C7AEA9 /* QJHighlightImageView.swift in Sources */,
 				27ACA77121FCA8A700E226C2 /* GeneralPreferencesController.swift in Sources */,
 				27ACA77821FCB40B00E226C2 /* MeteoCompassView.swift in Sources */,
-				27ACA79321FE6C0B00E226C2 /* SensorCollectionItemController.swift in Sources */,
+				27ACA79321FE6C0B00E226C2 /* SensorCollectionItem.swift in Sources */,
 				2703FADF2243A0850092AE4B /* AdvancedPreferencesController.swift in Sources */,
 				27ACA77521FCA99400E226C2 /* BridgePreferencesController.swift in Sources */,
 				2724080D2247F2A600D54DC3 /* MeteoLogJSON.swift in Sources */,

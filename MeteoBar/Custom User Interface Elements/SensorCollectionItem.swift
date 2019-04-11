@@ -8,7 +8,7 @@
 
 import Cocoa
 
-enum SensorCollectionItemControllerInfo: String, CustomStringConvertible {
+enum SensorCollectionItemInfo: String, CustomStringConvertible {
     case sensorIsAvailable
     case sensorIsNotAvailable
     
@@ -20,7 +20,7 @@ enum SensorCollectionItemControllerInfo: String, CustomStringConvertible {
     }
 }
 
-class SensorCollectionItemController: NSCollectionViewItem {
+class SensorCollectionItem: NSCollectionViewItem {
 
     @IBOutlet weak var sensorImage: NSImageView!
     @IBOutlet weak var sensorAvailability: NSImageView!
@@ -102,8 +102,8 @@ class SensorCollectionItemController: NSCollectionViewItem {
         }
         
         sensorAvailability.image = sensor!.isAvailable ? NSImage(named: NSImage.statusAvailableName) : NSImage(named: NSImage.statusUnavailableName)
-        sensorAvailability.toolTip = sensor!.isAvailable ? SensorCollectionItemControllerInfo.sensorIsAvailable.description:
-                                                           SensorCollectionItemControllerInfo.sensorIsNotAvailable.description
+        sensorAvailability.toolTip = sensor!.isAvailable ? SensorCollectionItemInfo.sensorIsAvailable.description:
+                                                           SensorCollectionItemInfo.sensorIsNotAvailable.description
     }
     
     /// Just some perfunctary setup for a better viewing experience
