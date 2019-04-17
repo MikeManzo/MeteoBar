@@ -41,11 +41,13 @@ import Cocoa
                                       options: [NSTrackingArea.Options.activeAlways ,NSTrackingArea.Options.mouseEnteredAndExited],
                                       owner: self, userInfo: nil)
         addTrackingArea(trackingArea!)
-        wantsLayer = true
-        canDrawSubviewsIntoLayer = true
+//        wantsLayer = true
+//        canDrawSubviewsIntoLayer = true
 
         if invert {
-            image = image!.filter(filter: "CIColorInvert")
+            autoreleasepool {
+                image = image!.filter(filter: "CIColorInvert")
+            }
         }
     }
     

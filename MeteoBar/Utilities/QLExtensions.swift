@@ -492,23 +492,77 @@ extension NSImage {
     ///
     /// - Parameter filter: Filter Name
     /// - Returns: NSImage based on the valid filter requested
+/*
     func filter(filter: String) -> NSImage? {
-        let context = CIContext(options: nil)
-        
-        if let currentFilter = CIFilter(name: filter) {
-            let imageData = self.tiffRepresentation!
-            let beginImage = CIImage(data: imageData)
-            currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-            if let output = currentFilter.outputImage {
-                if let cgimg = context.createCGImage(output, from: output.extent) {
+        let image = CIImage(data: (self.tiffRepresentation!))
+            
+            if let filter = CIFilter(name: filter) {
+                filter.setDefaults()
+                filter.setValue(image, forKey: kCIInputImageKey)
+                
+                let context = CIContext(options: [CIContextOption.useSoftwareRenderer: true])
+                return autoreleasepool { () -> NSImage? in
+                    guard let imageRef = context.createCGImage(filter.outputImage!, from: image!.extent) else {
+                        context.clearCaches()
+                        context.reclaimResources()
+                        return nil
+                    }
                     context.clearCaches()
-                    return NSImage(cgImage: cgimg, size: NSSize(width: 0, height: 0))
-//                    return returnImage
-                } else {return nil}
-            } else {return nil}
-        } else {return nil}
+                    context.reclaimResources()
+                    return NSImage(cgImage: imageRef, size: NSSize(width: 0, height: 0))
+                }
+            } else {
+                return nil
+            }
     }
-    
+*/
+/*    func filter(filter: String) -> NSImage? {
+        return autoreleasepool { [weak self] () -> NSImage? in
+            let image = CIImage(data: (self?.tiffRepresentation!)!)
+            
+            if let filter = CIFilter(name: filter) {
+                filter.setDefaults()
+                filter.setValue(image, forKey: kCIInputImageKey)
+                
+                let context = CIContext(options: [CIContextOption.useSoftwareRenderer: true])
+                guard let imageRef = context.createCGImage(filter.outputImage!, from: image!.extent) else {
+                    context.clearCaches()
+                    context.reclaimResources()
+                    return nil
+                }
+                context.clearCaches()
+                context.reclaimResources()
+                return NSImage(cgImage: imageRef, size: NSSize(width: 0, height: 0))
+            } else {
+                return nil
+            }
+        }
+    }
+*/
+    func filter(filter: String) -> NSImage? {
+        return autoreleasepool { [weak self] () -> NSImage? in
+            let image = CIImage(data: (self?.tiffRepresentation!)!)
+            var imageRef: CGImage?
+            
+            if let filter = CIFilter(name: filter) {
+                filter.setDefaults()
+                filter.setValue(image, forKey: kCIInputImageKey)
+                
+                let context = CIContext(options: [CIContextOption.useSoftwareRenderer: true])
+                imageRef = context.createCGImage(filter.outputImage!, from: image!.extent)
+
+                context.clearCaches()
+                context.reclaimResources()
+                let img =  NSImage(cgImage: imageRef!, size: NSSize(width: 0, height: 0))
+                
+                imageRef = nil
+                return img
+            } else {
+                return nil
+            }
+        }
+    }
+
     /// Resize existing image to new size
     ///
     /// - Parameter newSize: desired width and height

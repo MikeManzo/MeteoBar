@@ -175,7 +175,7 @@ final class MeteoSensorNodePair {
     }
     
     deinit {
-        print("Deinitializing SensorNodePair")
+//        print("Deinitializing SensorNodePair")
         _majorNode?.path    = nil
         _minorNode?.path    = nil
         _iconNode           = nil

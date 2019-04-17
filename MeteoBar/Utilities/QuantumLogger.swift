@@ -12,6 +12,7 @@ import GRDB
 
 enum DBLogError: Error, CustomStringConvertible {
     case dateError
+    case dbUnknown
     case dbCreateError
     case dbDeleteError
     
@@ -20,6 +21,7 @@ enum DBLogError: Error, CustomStringConvertible {
         case .dateError: return "Unable to sort logs by date"
         case .dbCreateError: return "Warning! Could not create folder /Library/Caches/<App Name>"
         case .dbDeleteError: return "Unable to delete desired rows"
+        case .dbUnknown: return "Unknown databse error occured"
         }
     }
 }
@@ -36,11 +38,8 @@ open class QuantumLogger: SwiftyBeaver {
     ///   - function: <#function description#>
     ///   - line: <#line description#>
     ///   - context: <#context description#>
-    override open class func error(_ message: @autoclosure () -> Any, _
-                                    file: String = #file,
-                                   _ function: String = #function,
-                                   line: Int = #line,
-                                   context: Any? = nil) {
+    override open class func error(_ message: @autoclosure () -> Any, _ file: String = #file,
+                                   _ function: String = #function, line: Int = #line, context: Any? = nil) {
         
         super.error(message, file, function,  line: line,  context: context)
 /*
@@ -242,9 +241,9 @@ public class SQLDestination: BaseDestination {
                 try newLog.insert(db)
             }
         } catch let error as DatabaseError {
-            print("Code: \(error.resultCode), Extended:\(error.extendedResultCode), Message:\(error.message ?? ""), SQL:\(error.sql ?? ""), Desc:\(error.description)")
+            log.error("Code: \(error.resultCode), Extended:\(error.extendedResultCode), Message:\(error.message ?? ""), SQL:\(error.sql ?? ""), Desc:\(error.description)")
         } catch {
-            print("Huh?")
+            log.error(DBLogError.dbUnknown)
         }
         
         return formattedString

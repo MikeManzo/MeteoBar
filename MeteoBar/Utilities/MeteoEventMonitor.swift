@@ -63,7 +63,7 @@ class MeteoEventMonitor/*: NSObject*/ {
     ///
     public func stop() {
         if theMonitor != nil {
-            print("Stopping Event Monitor")
+//            print("Stopping Event Monitor")
             NSEvent.removeMonitor(theMonitor!)
             theMonitor = nil
             _listening = false
@@ -78,7 +78,7 @@ class MeteoEventMonitor/*: NSObject*/ {
     /// - returns:  Nothing
     ///
     deinit {
-        print("DEINIT: Event Monitor")
+//        print("DEINIT: Event Monitor")
         stop()
     }
 }
