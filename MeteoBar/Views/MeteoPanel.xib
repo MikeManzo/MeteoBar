@@ -104,7 +104,7 @@
                                         <constraint firstAttribute="width" constant="24" id="0cj-qi-FkA"/>
                                         <constraint firstAttribute="height" constant="24" id="mqK-rx-jzU"/>
                                     </constraints>
-                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="logout" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="lJ7-ym-Apy">
+                                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="logout" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="lJ7-ym-Apy">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>

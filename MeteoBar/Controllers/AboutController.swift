@@ -105,6 +105,13 @@ class AboutController: NSViewController {
          "copyURL": "https://www.flaticon.com/authors/roundicons"
         ],
         ["copyImage": "books.png",
+         "copyType": "Icon",
+         "invertable": "yes",
+         "copyName": "FlexibleImage",
+         "copyHolder": "Jungwon An",
+         "copyURL": "https://github.com/kawoou/FlexibleImage"
+        ],
+        ["copyImage": "books.png",
          "copyType": "Library",
          "invertable": "yes",
          "copyName": "GRDB.swift",

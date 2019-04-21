@@ -45,9 +45,9 @@ import Cocoa
 //        canDrawSubviewsIntoLayer = true
 
         if invert {
-            autoreleasepool {
+//            autoreleasepool {
                 image = image!.filter(filter: "CIColorInvert")
-            }
+//            }
         }
     }
     

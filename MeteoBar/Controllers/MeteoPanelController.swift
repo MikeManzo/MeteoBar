@@ -18,6 +18,7 @@ class MeteoPanelController: NSViewController {
     @IBOutlet weak var alertView: AlertView!
     @IBOutlet weak var compassView: MeteoCompassView!
     @IBOutlet weak var iconBarView: IconBarView!
+    @IBOutlet weak var stackView: NSStackView!
     
     var origAlertOrigin: NSPoint?
     var origCompassOrigin: NSPoint?

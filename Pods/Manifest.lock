@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.8.1)
   - AlamofireImage (3.5.0):
     - Alamofire (~> 4.8)
+  - FlexibleImage (1.10)
   - GRDB.swift (3.7.0)
   - Preferences (0.2.1)
   - Repeat (0.5.7)
@@ -13,6 +14,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage
+  - FlexibleImage (~> 1.9)
   - GRDB.swift
   - Preferences
   - Repeat
@@ -25,6 +27,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireImage
+    - FlexibleImage
     - GRDB.swift
     - Preferences
     - Repeat
@@ -36,6 +39,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
+  FlexibleImage: 22bf26c42f1b6299b94bc5001e6ec310c94e6786
   GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
   Preferences: 5543bfd757a2485a310683da977d661c0ae509a9
   Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
@@ -44,6 +48,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
   SwiftyUserDefaults: cebe0ff9472f52699772a514b6f7155861d8069b
 
-PODFILE CHECKSUM: efa54bddb83b931dfcad99b594ade50974ff927b
+PODFILE CHECKSUM: 930909085639500d6ba8220e26e2c3192cd47196
 
 COCOAPODS: 1.7.0.beta.2

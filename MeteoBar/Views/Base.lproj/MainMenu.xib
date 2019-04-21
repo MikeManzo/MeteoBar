@@ -9,7 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MainMenuController" customModule="MeteoBar" customModuleProvider="target">
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="htV-OI-1zy"/>
-                <outlet property="view" destination="qqB-17-jul" id="MYN-Wk-hWc"/>
+                <outlet property="view" destination="qqB-17-jul" id="DXF-kT-90f"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>

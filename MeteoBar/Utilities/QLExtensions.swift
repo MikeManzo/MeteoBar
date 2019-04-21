@@ -12,6 +12,7 @@ import Foundation
 import SpriteKit
 import MapKit
 import Cocoa
+import FlexibleImage
 
 /// Handy non-class related variables
 var theDelegate: AppDelegate? {
@@ -490,8 +491,26 @@ extension NSFont {
 extension NSImage {
     /// Apply snadard filters to an NSImage
     ///
+    /// Special Notes:
+    /// - If you experience a failed assertion:
+    ///   Function writes texture (outTexture[1]) whose usage (0x01) doesn't specify MTLTextureUsageShaderWrite (0x02)
+    ///   Go to Edit Scheme > Options > Metal API Validation and set to disabled.
+    ///
     /// - Parameter filter: Filter Name
     /// - Returns: NSImage based on the valid filter requested
+    ///
+    func filter(filter: String) -> NSImage? {
+        let processMetal = self.adjust()
+        
+        switch filter {
+        case "CIColorInvert":
+            _ = processMetal.invert()
+        default:
+            break
+        }
+        
+        return processMetal.image()
+    }
 /*
     func filter(filter: String) -> NSImage? {
         let image = CIImage(data: (self.tiffRepresentation!))
@@ -539,9 +558,10 @@ extension NSImage {
         }
     }
 */
+/*
     func filter(filter: String) -> NSImage? {
         return autoreleasepool { [weak self] () -> NSImage? in
-            let image = CIImage(data: (self?.tiffRepresentation!)!)
+            var image = CIImage(data: (self?.tiffRepresentation!)!)
             var imageRef: CGImage?
             
             if let filter = CIFilter(name: filter) {
@@ -556,12 +576,14 @@ extension NSImage {
                 let img =  NSImage(cgImage: imageRef!, size: NSSize(width: 0, height: 0))
                 
                 imageRef = nil
+                image = nil
                 return img
             } else {
                 return nil
             }
         }
     }
+ */
 
     /// Resize existing image to new size
     ///
