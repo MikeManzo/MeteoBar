@@ -530,10 +530,12 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
             if error != nil {
                 log.warning(error.value)
                 callback(MeteobridgeError.weatherAlertError)
+                return
             }
             
             if alerts == nil {
                 callback(nil)
+                return
             }
             
             for alert in alerts! {

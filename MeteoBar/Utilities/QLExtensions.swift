@@ -499,7 +499,8 @@ extension NSImage {
     /// - Parameter filter: Filter Name
     /// - Returns: NSImage based on the valid filter requested
     ///
-    func filter(filter: String) -> NSImage? {
+/*
+     func filter(filter: String) -> NSImage? {
         let processMetal = self.adjust()
         
         switch filter {
@@ -511,6 +512,7 @@ extension NSImage {
         
         return processMetal.image()
     }
+*/
 /*
     func filter(filter: String) -> NSImage? {
         let image = CIImage(data: (self.tiffRepresentation!))
@@ -535,7 +537,8 @@ extension NSImage {
             }
     }
 */
-/*    func filter(filter: String) -> NSImage? {
+/*
+ func filter(filter: String) -> NSImage? {
         return autoreleasepool { [weak self] () -> NSImage? in
             let image = CIImage(data: (self?.tiffRepresentation!)!)
             
@@ -558,7 +561,7 @@ extension NSImage {
         }
     }
 */
-/*
+
     func filter(filter: String) -> NSImage? {
         return autoreleasepool { [weak self] () -> NSImage? in
             var image = CIImage(data: (self?.tiffRepresentation!)!)
@@ -583,8 +586,6 @@ extension NSImage {
             }
         }
     }
- */
-
     /// Resize existing image to new size
     ///
     /// - Parameter newSize: desired width and height

@@ -130,9 +130,9 @@ class MeteoWeatherAlert: NSObject {
     /// - throws: Nothing
     /// - returns: True/False depending on equality
     ///
-    static func == (lhs: MeteoWeatherAlert, rhs: MeteoWeatherAlert) -> Bool {
-        return lhs._identifier == rhs._identifier && lhs._type == rhs._type
-    }
+//    static func == (lhs: MeteoWeatherAlert, rhs: MeteoWeatherAlert) -> Bool {
+//        return lhs._identifier == rhs._identifier && lhs._type == rhs._type
+//    }
     
     ///
     /// Are the two Alerts the same?  We want to check IDs and Alert Types
@@ -162,5 +162,20 @@ class MeteoWeatherAlert: NSObject {
     ///
     public func isAcknoledged() -> Bool {
         return _acknowdleged
+    }
+}
+
+extension MeteoWeatherAlert {
+    ///
+    /// Are the two Alerts the same?  We want to check IDs and Alert Types
+    ///
+    /// - throws: Nothing
+    /// - returns: True/False depending on equality
+    ///
+    override func isEqual(_ object: Any?) -> Bool {
+        if let object = object as? MeteoWeatherAlert {
+            return self._identifier == object._identifier && self._type == object._type
+        }
+        return false
     }
 }

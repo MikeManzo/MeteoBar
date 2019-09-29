@@ -15,6 +15,7 @@ target 'MeteoBar' do
     pod 'GRDB.swift'
     pod 'SwiftDate'
     pod 'FlexibleImage', '~> 1.9'
+    pod 'ReachabilitySwift'
     #    pod 'Ansi', :git => 'https://github.com/MikeManzo/Ansi.git'
 end
 

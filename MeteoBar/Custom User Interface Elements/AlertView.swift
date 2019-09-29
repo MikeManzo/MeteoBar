@@ -155,12 +155,12 @@ extension AlertView {
     
     func showAlertPopover(sender: Any?) {
         guard let myRow = sender as? Int else {
-            print("Row Error")
+            log.error("Row Error")
             return
         }
         
         guard let myView = alertsTable.view(atColumn: 0, row: myRow, makeIfNecessary: true) as? AlertTableCellView else {
-            print ("ViewError")
+            log.error("ViewError")
             return
         }
 

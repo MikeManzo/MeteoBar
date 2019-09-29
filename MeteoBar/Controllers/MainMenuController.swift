@@ -7,6 +7,7 @@
 //
 
 import SwiftyUserDefaults
+import Reachability
 import Preferences
 import Repeat
 import Cocoa
@@ -44,6 +45,9 @@ class MainMenuController: NSViewController {
     @IBOutlet weak var delegate: AppDelegate!   // w/o this we get a memory leak
     @IBOutlet var newView: NSView!              // w/o this we get a memory leak
     
+    let reachability    = Reachability()        // Network Testing
+    var bConnected      = false
+    
     // MARK: - Views
     /// Main Weather Panel
     lazy var meteoPanelView: MeteoPanelController = {
@@ -72,6 +76,14 @@ class MainMenuController: NSViewController {
         /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
         NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(sender:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
         
+        /// Setup a call-forward listener for reachability notifcations
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        do {
+            try reachability!.startNotifier()
+        } catch {
+            log.error("Could not start reachability notifier")
+        }
+        
         newBridgeInitialized(sender: self)
 
         /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
@@ -80,6 +92,28 @@ class MainMenuController: NSViewController {
                 self!.meteoPanelView.view.window?.close()
                 self?.eventMonitor!.stop()
             }
+        }
+    }
+    
+    /// Notifier to let the app know whether there is any network connectivity
+    /// - Parameter note: notifcation message
+    ///
+    @objc func reachabilityChanged(note: Notification) {
+        guard let reachability = note.object as? Reachability else {
+            log.error("Could not determine notification")
+            return
+        }
+                
+        switch reachability.connection {
+        case .wifi:
+            log.info("Connected via WiFi")
+            bConnected = true
+        case .cellular:
+            log.info("Connected via Cellular")
+            bConnected = true
+        case .none:
+            log.error("No longer connected to network; suspending network calls")
+            bConnected = false
         }
     }
     
@@ -142,8 +176,10 @@ class MainMenuController: NSViewController {
             return
         }
         
-        let queue = Repeater(interval: .seconds(Double(theBridge!.updateInterval)), mode: .infinite) { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
+        let queue = Repeater(interval: .seconds(Double(theBridge!.updateInterval)), mode: .infinite) { [unowned self] _ in
+            if self.bConnected {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
+            }
         }
         
         queue.start()
@@ -172,8 +208,10 @@ class MainMenuController: NSViewController {
             return
         }
         
-        let queue = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { _ in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
+        let queue = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { [unowned self] _ in
+            if self.bConnected {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
+            }
         }
             
         alertQueue[theBridge!.uuid] = queue
@@ -294,7 +332,7 @@ class MainMenuController: NSViewController {
     /// - returns:      Nothing
     ///
     private func postNotifcationForStation(theBridge: Meteobridge, theAlertID: String) {
-        guard let alert = theBridge.weatherAlerts.filter ({$0.identfier == theAlertID}).first else {
+        guard let alert = theBridge.weatherAlerts.filter({$0.identfier == theAlertID}).first else {
             log.warning(MeteobarError.weatherAlertWarning)
             return
         }
@@ -395,7 +433,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
             return
         }
         
-        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter ({$0.identfier == userPair[0]}).first else {
+        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter({$0.identfier == userPair[0]}).first else {
             log.warning("Warning: Unable to determine AlertID for alert; skipping further action.")
             return
         }
@@ -423,7 +461,7 @@ extension MainMenuController: NSUserNotificationCenterDelegate {
             return
         }
         
-        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter ({$0.identfier == userPair[0]}).first else {
+        guard let theAlert = theDelegate?.theBridge?.weatherAlerts.filter({$0.identfier == userPair[0]}).first else {
             log.warning("Warning: Unable to determine AlertID for alert; skipping further action.")
             return
         }

@@ -273,7 +273,7 @@ class WeatherPlatform: Weather {
                     Alamofire.request(file).responseJSON { jsonResponse in
                         switch jsonResponse.result {
                         case .success(let jsonModel):   // JSON Read Successful
-                            var bridgeModel: JSON = JSON(jsonModel)
+                            let bridgeModel: JSON = JSON(jsonModel)
                             
                             theBridge = Meteobridge(bridgeIP: ipAddress, bridgeName: bridgeName)
                             
@@ -300,7 +300,7 @@ class WeatherPlatform: Weather {
                                     theBridge?.addSensor(sensor: theSensor)
                                 }
                             } /// Weather Sensors
-                            callback (theBridge, nil)                                       // <-- We're finished; we should return the populated Meteobridge object
+                            callback(theBridge, nil)                                       // <-- We're finished; we should return the populated Meteobridge object
                         case .failure(let jsonError):   // JSON Read Failed
                             callback(nil, jsonError)
                         }
@@ -399,7 +399,7 @@ class WeatherPlatform: Weather {
         Alamofire.request(stationEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
-                var data: JSON = JSON(retJSON)
+                let data: JSON = JSON(retJSON)
                 grid.x          = CGFloat(Int(data["properties"]["gridX"].stringValue)!)
                 grid.y          = CGFloat(Int(data["properties"]["gridY"].stringValue)!)
                 forecastZone    = data["properties"]["forecastZone"].stringValue
@@ -457,7 +457,7 @@ class WeatherPlatform: Weather {
         Alamofire.request(stationEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
-                var data: JSON = JSON(retJSON)
+                let data: JSON = JSON(retJSON)
                 forecast        = data["properties"]["forecast"].stringValue
                 forecastHourly  = data["properties"]["forecastHourly"].stringValue
                 city            = data["properties"]["relativeLocation"]["properties"]["city"].stringValue
@@ -497,7 +497,7 @@ class WeatherPlatform: Weather {
         Alamofire.request(forecastEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
-                var retData: JSON = JSON(retJSON)
+                let retData: JSON = JSON(retJSON)
                 var forecastPoints = [CLLocationCoordinate2D]()
                 
                 if let coordinates: Array = retData["geometry"]["coordinates"][0][0].array {
@@ -510,7 +510,7 @@ class WeatherPlatform: Weather {
                 Alamofire.request(zoneEndpoint!).responseJSON { response in
                     switch response.result {
                     case .success(let retJSON):
-                        var retData: JSON = JSON(retJSON)
+                        let retData: JSON = JSON(retJSON)
                         var countyPoints = [CLLocationCoordinate2D]()
 
                         if let coordinates: Array = retData["geometry"]["coordinates"][0][0].array {

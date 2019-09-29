@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "95A0F813-709D-4DA9-A412-848924EF0B79"
    type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "D083EEB8-B064-4CFF-9C59-EA0C6B9F67DC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -22,6 +24,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "CF3EB402-61B8-4832-B74A-68EE0E100ADA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -29,79 +32,16 @@
             timestampString = "577188006.023735"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
-            landmarkName = "userNotificationCenter(_:didDeliver:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MeteoBar.MainMenuController.userNotificationCenter(_: __C.NSUserNotificationCenter, didDeliver: __C.NSUserNotification) -&gt; ()"
-                  moduleName = "MeteoBar"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mike/Documents/Dev/MeteoBar/MeteoBar/Controllers/MainMenuController.swift"
-                  timestampString = "577507780.161669"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "238">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in MeteoBar.MainMenuController.userNotificationCenter(_: __C.NSUserNotificationCenter, didDeliver: __C.NSUserNotification) -&gt; ()"
-                  moduleName = "MeteoBar"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mike/Documents/Dev/MeteoBar/MeteoBar/Controllers/MainMenuController.swift"
-                  timestampString = "577507780.163125"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "360"
-                  endingLineNumber = "360"
-                  offsetFromSymbolStart = "191">
-               </Location>
-            </Locations>
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MeteoBar/Controllers/MainMenuController.swift"
-            timestampString = "577188006.024114"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "448"
-            endingLineNumber = "448"
-            landmarkName = "userNotificationCenter(_:shouldPresent:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MeteoBar/Controllers/MainMenuController.swift"
-            timestampString = "577188006.024389"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
-            landmarkName = "userNotificationCenter(_:didActivate:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
+            uuid = "5500CA27-934E-45D9-9AA4-F37C47620CD7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -109,10 +49,10 @@
             timestampString = "577188006.02466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "388"
-            endingLineNumber = "388"
-            landmarkName = "dismissClicked(notification:)"
-            landmarkType = "7">
+            startingLineNumber = "396"
+            endingLineNumber = "396"
+            landmarkName = "MainMenuController"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

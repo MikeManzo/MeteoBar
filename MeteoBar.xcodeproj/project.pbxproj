@@ -563,12 +563,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = "Quantum Joker";
 				TargetAttributes = {
 					277658D621EA6062007BA05A = {
 						CreatedOnToolsVersion = 10.1;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1100;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
 								enabled = 1;
@@ -949,6 +949,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = MeteoBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -974,6 +975,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 3ETXMLGRJN;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = MeteoBar/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
