@@ -176,14 +176,16 @@ extension BridgePreferencesController: NSCollectionViewDataSource {
                         viewForSupplementaryElementOfKind kind: NSCollectionView.SupplementaryElementKind,
                         at indexPath: IndexPath) -> NSView {
         
-        var view = NSView()
+//        var view = NSView()
+        var view: NSView?
+        
         switch kind {
         case NSCollectionView.elementKindSectionHeader:
             guard let headerView = collectionView.makeSupplementaryView(ofKind: kind,
                                                         withIdentifier: NSUserInterfaceItemIdentifier("SensorCollectionHeader"),
                                                         for: indexPath) as? SensorCollectionHeaderView else {
                 log.error("Something has gone wrong.  Cannot generate Header for CollectionView")
-                return view
+                                                            return view!
             }
 
             switch indexPath.section {
@@ -214,6 +216,7 @@ extension BridgePreferencesController: NSCollectionViewDataSource {
             default: // Error
                 log.warning("Something has gone wrong.  Unkown Sensor Type Detected.")
             }
+            view = headerView
         case NSCollectionView.elementKindSectionFooter:
             log.error("Something has gone wrong.  Footers are not supported in this CollectionView")
         case NSCollectionView.elementKindInterItemGapIndicator:
@@ -222,7 +225,7 @@ extension BridgePreferencesController: NSCollectionViewDataSource {
             log.error("Error: We should not have gotten here.  Unknown Element Kind in sensor collectiom view")
         }
         
-        return view
+        return view!
     }
 }
 
