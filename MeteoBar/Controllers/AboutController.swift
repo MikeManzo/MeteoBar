@@ -216,6 +216,13 @@ class AboutController: NSViewController {
          "copyHolder": "Freepik",
          "copyURL": "https://www.freepik.com/"
         ],
+        ["copyImage": "books.png",
+         "copyType": "Library",
+         "invertable": "yes",
+         "copyName": "Reachability.swift: Replacement for Apple's Reachability re-written in Swift with closures",
+         "copyHolder": "Ashley Mills",
+         "copyURL": "https://github.com/ashleymills/Reachability.swift"
+        ],
         ["copyImage": "solar-energy.png",
          "copyType": "Icon",
          "invertable": "yes",
