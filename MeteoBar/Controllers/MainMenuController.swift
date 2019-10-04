@@ -158,6 +158,23 @@ class MainMenuController: NSViewController {
         addBridgeToAlertQueue(theBridge: bridge)
     }
     
+    /// Display a change in color and text in the menubar f there is an error
+    ///
+    /// - Parameter message: Message to display
+    ///
+    ///
+    /// - Throws: Nothing
+    /// - Returns: Nothing
+    ///
+    private func displayError(message: String) {
+        let font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: NSColor.red
+        ]
+        statusItems["MeteoBar"]?.attributedTitle = NSAttributedString(string: message, attributes: attributes)
+    }
+    
     ///
     /// Queue managament ... we want to be able to add stations to the queue at-will
     ///
@@ -172,6 +189,7 @@ class MainMenuController: NSViewController {
     ///
     private func addBridgeToQueue(theBridge: Meteobridge?) {
         if theBridge == nil {
+            displayError(message: "--")
             log.error(MeteobarError.missingBridge)
             return
         }
@@ -179,6 +197,8 @@ class MainMenuController: NSViewController {
         let queue = Repeater(interval: .seconds(Double(theBridge!.updateInterval)), mode: .infinite) { [unowned self] _ in
             if self.bConnected {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
+            } else {
+                self.displayError(message: "N.C.")
             }
         }
         
@@ -254,6 +274,7 @@ class MainMenuController: NSViewController {
                     self.statusItems["MeteoBar"]?.title = sensor.formattedMeasurement
                 }
             } else {
+                self.displayError(message: "--")
                 log.error(error.value)
                 return
             }
