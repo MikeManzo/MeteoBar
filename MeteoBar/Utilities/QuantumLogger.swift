@@ -40,20 +40,80 @@ open class QuantumLogger: SwiftyBeaver {
     ///   - context: <#context description#>
     override open class func error(_ message: @autoclosure () -> Any, _ file: String = #file,
                                    _ function: String = #function, line: Int = #line, context: Any? = nil) {
-        
-        super.error(message, file, function,  line: line,  context: context)
-/*
-        let alert = NSAlert()
-        alert.messageText = "Meteobar has encountred an error"
-        alert.informativeText = message() as? String ?? "Something went wrong. No Message provided."
-        alert.alertStyle = .critical
-        alert.addButton(withTitle: "Resume")
-        
-        DispatchQueue.main.async {
-            alert.runModal()
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                super.error(message, file, function,  line: line,  context: context)
+            }
         }
- */
     }
+    /// Catch errors so we can notify the user
+    ///
+    /// - Parameters:
+    ///   - message: <#message description#>
+    ///   - file: <#file description#>
+    ///   - function: <#function description#>
+    ///   - line: <#line description#>
+    ///   - context: <#context description#>
+    override open class func debug(_ message: @autoclosure () -> Any, _ file: String = #file,
+                                   _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                super.debug(message, file, function,  line: line,  context: context)
+            }
+        }
+    }
+    
+    /// Catch errors so we can notify the user
+    ///
+    /// - Parameters:
+    ///   - message: <#message description#>
+    ///   - file: <#file description#>
+    ///   - function: <#function description#>
+    ///   - line: <#line description#>
+    ///   - context: <#context description#>
+    override open class func info(_ message: @autoclosure () -> Any, _ file: String = #file,
+                                  _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                super.info(message, file, function,  line: line,  context: context)
+            }
+        }
+    }
+
+    /// Catch errors so we can notify the user
+    ///
+    /// - Parameters:
+    ///   - message: <#message description#>
+    ///   - file: <#file description#>
+    ///   - function: <#function description#>
+    ///   - line: <#line description#>
+    ///   - context: <#context description#>
+    override open class func verbose(_ message: @autoclosure () -> Any, _ file: String = #file,
+                                     _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                super.verbose(message, file, function,  line: line,  context: context)
+            }
+        }
+    }
+    
+    /// Catch errors so we can notify the user
+    ///
+    /// - Parameters:
+    ///   - message: <#message description#>
+    ///   - file: <#file description#>
+    ///   - function: <#function description#>
+    ///   - line: <#line description#>
+    ///   - context: <#context description#>
+    override open class func warning(_ message: @autoclosure () -> Any, _ file: String = #file,
+                                     _ function: String = #function, line: Int = #line, context: Any? = nil) {
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                super.warning(message, file, function,  line: line,  context: context)
+            }
+        }
+    }
+
 }
 
 // A plain MeteoLogDB struct that represents what we want to store in th DB
@@ -233,20 +293,26 @@ public class SQLDestination: BaseDestination {
     ///
     override public func send(_ level: SwiftyBeaver.Level, msg: String, thread: String,
                               file: String, function: String, line: Int, context: Any? = nil) -> String? {
-        let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
-        do {
-            try dbQueue?.write { db in
-                var newLog = MeteoLogDB(function: function, context: "", thread: thread, file: file, msg: msg,
-                                 date: Date(), level: level.rawValue, id: nil, line: line)
-                try newLog.insert(db)
+        if theDelegate?.theBridge != nil {
+            if (theDelegate?.theDefaults!.loggingEnabled)! {
+                let formattedString = super.send(level, msg: msg, thread: thread, file: file, function: function, line: line, context: context)
+                do {
+                    try dbQueue?.write { db in
+                        var newLog = MeteoLogDB(function: function, context: "", thread: thread, file: file, msg: msg,
+                                                date: Date(), level: level.rawValue, id: nil, line: line)
+                        try newLog.insert(db)
+                    }
+                } catch let error as DatabaseError {
+                    log.error("Code: \(error.resultCode), Extended:\(error.extendedResultCode), Message:\(error.message ?? ""), SQL:\(error.sql ?? ""), Desc:\(error.description)")
+                } catch {
+                    log.error(DBLogError.dbUnknown)
+                }
+                return formattedString
             }
-        } catch let error as DatabaseError {
-            log.error("Code: \(error.resultCode), Extended:\(error.extendedResultCode), Message:\(error.message ?? ""), SQL:\(error.sql ?? ""), Desc:\(error.description)")
-        } catch {
-            log.error(DBLogError.dbUnknown)
+        } else {
+            return ""
         }
-        
-        return formattedString
+        return ""
     }
     
     /// return an array of MeteoDB objects in date-ascending order

@@ -30,6 +30,7 @@ enum ConsoleLogError: Error, CustomStringConvertible {
 class MeteoConsoleLogController: NSViewController, Preferenceable {
     @IBOutlet weak var consoleTable: NSTableView!
     @IBOutlet weak var boxContainer: NSBox!
+    @IBOutlet weak var loggingEnabled: NSButton!
     // MARK: - Protocol Variables
     let toolbarItemTitle = "Console Log"
     let toolbarItemIcon = NSImage(named: "console.png")!
@@ -43,10 +44,20 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if theDelegate?.theBridge != nil {
+            loggingEnabled.state = ((theDelegate?.theDefaults!.loggingEnabled)! ? .on : .off)
+        }
     }
        
     override func viewWillAppear() {
         showAllRecords(self)
+    }
+    
+    override func viewWillDisappear() {
+        if theDelegate?.theBridge != nil {
+            theDelegate?.theDefaults!.loggingEnabled = loggingEnabled.state == .on ? true: false
+            theDelegate?.updateConfiguration()
+        }
     }
     
     @IBAction func deleteAllRows(_ sender: Any) {

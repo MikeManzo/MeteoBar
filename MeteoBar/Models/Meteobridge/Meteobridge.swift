@@ -142,7 +142,7 @@ final class Meteobridge: NSObject, Codable, Copyable, DefaultsSerializable, MKAn
     var latitude: Double {
         var lat = 53.877382 // Defaults to the latitude of smartbedded GmbH
         guard let sensor = (sensors[.system]?.filter {$0.name == "latitude"}.first) else {
-            log.warning("Check Bridge Latitude.  Using Default longitude.  The Meteobridge is either not configured with a valid latitude or there is a different problem.")
+            log.warning("Check Bridge Latitude.  Using Default latitude.  The Meteobridge is either not configured with a valid latitude or there is a different problem.")
             return lat
         }
 

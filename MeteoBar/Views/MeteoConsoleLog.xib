@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="boxContainer" destination="VqE-ID-nHm" id="dp1-6u-KBT"/>
                 <outlet property="consoleTable" destination="B1y-8O-YFj" id="iv4-tv-R1L"/>
+                <outlet property="loggingEnabled" destination="7pz-kI-u9f" id="okj-kH-O0p"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -29,20 +30,20 @@
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="78" horizontalPageScroll="10" verticalLineScroll="78" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DWg-Lp-GIg">
                                 <rect key="frame" x="0.0" y="0.0" width="879" height="386"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <clipView key="contentView" ambiguous="YES" id="ud9-cs-Oa8">
+                                <clipView key="contentView" id="ud9-cs-Oa8">
                                     <rect key="frame" x="1" y="1" width="877" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveColumns="NO" rowHeight="76" viewBased="YES" id="B1y-8O-YFj">
                                             <rect key="frame" x="0.0" y="0.0" width="877" height="384"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
                                                 <tableColumn width="874" minWidth="40" maxWidth="1000" id="YYz-Zd-E1p">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <font key="font" metaFont="message" size="11"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                                     </tableHeaderCell>
@@ -73,7 +74,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KtN-x2-wT6">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KtN-x2-wT6">
                                                                     <rect key="frame" x="51" y="55" width="40" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Date:" id="7m5-v1-0xB">
                                                                         <font key="font" metaFont="systemHeavy" size="13"/>
@@ -81,7 +82,7 @@
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sN8-QE-6Za">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sN8-QE-6Za">
                                                                     <rect key="frame" x="49" y="32" width="42" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Time:" id="CUC-wP-Rf4">
                                                                         <font key="font" metaFont="systemHeavy" size="13"/>
@@ -159,7 +160,7 @@ Message 2</string>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
                                                                 </textField>
-                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ehl-Z7-SpS">
+                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehl-Z7-SpS">
                                                                     <rect key="frame" x="49" y="9" width="66" height="17"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="File:" id="EG4-VL-hGc">
                                                                         <font key="font" metaFont="systemHeavy" size="13"/>
@@ -261,6 +262,14 @@ Message 2</string>
                         </subviews>
                     </view>
                 </box>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7pz-kI-u9f">
+                    <rect key="frame" x="785" y="405" width="116" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Enable Logging" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Re8-OL-h6P">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
             </subviews>
             <point key="canvasLocation" x="269.5" y="287"/>
         </customView>
@@ -400,7 +409,7 @@ Message 2</string>
                     </menu>
                 </menuItem>
             </items>
-            <point key="canvasLocation" x="269" y="-15"/>
+            <point key="canvasLocation" x="167" y="-187"/>
         </menu>
     </objects>
     <resources>

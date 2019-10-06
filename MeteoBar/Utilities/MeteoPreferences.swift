@@ -31,6 +31,7 @@ enum CodingKeys: String, CodingKey {
     case compassLLSensor
     case compassLRSensor
     case logFileEnabled
+    case loggingEnabled
     case menubarSensor
     case weatherAlerts
 }
@@ -82,6 +83,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
     var showForecastPolygon: Bool = true
     var showCountyPolygon: Bool = true
     var showAlertPolygon: Bool = true
+    var loggingEnabled: Bool = false
     var logFileEnabled: Bool = true
 
     // MARK: - Codable Compliance
@@ -103,6 +105,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         showCountyPolygon = try container.decode(Bool.self, forKey: .showCountyPolygon)
         showAlertPolygon = try container.decode(Bool.self, forKey: .showAlertPolygon)
         logFileEnabled = try container.decode(Bool.self, forKey: .logFileEnabled)
+        loggingEnabled = try container.decode(Bool.self, forKey: .loggingEnabled)
         weatherAlerts = try container.decode(Bool.self, forKey: .weatherAlerts)
         
         var colorData = try container.decode(Data.self, forKey: .compassCardinalMinorTickColor)
@@ -165,6 +168,7 @@ final class MeteoPreferences: NSObject, Codable, DefaultsSerializable {
         try container.encode(showCountyPolygon, forKey: .showCountyPolygon)
         try container.encode(showAlertPolygon, forKey: .showAlertPolygon)
         try container.encode(logFileEnabled, forKey: .logFileEnabled)
+        try container.encode(loggingEnabled, forKey: .loggingEnabled)
         try container.encode(weatherAlerts, forKey: .weatherAlerts)
 
         var colorData = NSKeyedArchiver.archivedData(withRootObject: compassCardinalMinorTickColor)
@@ -229,6 +233,7 @@ extension MeteoPreferences {
         resetCompassColors()
         
         compassShowSensorBox            = false
+        loggingEnabled                  = false
         weatherAlerts                   = true
         showForecastPolygon             = true
         showCountyPolygon               = true
