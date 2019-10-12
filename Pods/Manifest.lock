@@ -6,7 +6,7 @@ PODS:
   - GRDB.swift (3.7.0)
   - Preferences (0.2.1)
   - ReachabilitySwift (4.3.1)
-  - Repeat (0.5.7)
+  - Repeat (0.5.8)
   - SwiftDate (5.1.0)
   - SwiftyBeaver (1.6.2)
   - SwiftyJSON (4.2.0)
@@ -32,13 +32,13 @@ SPEC REPOS:
     - FlexibleImage
     - GRDB.swift
     - Preferences
-    - Repeat
+    - ReachabilitySwift
     - SwiftDate
     - SwiftyBeaver
     - SwiftyJSON
     - SwiftyUserDefaults
   trunk:
-    - ReachabilitySwift
+    - Repeat
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -47,7 +47,7 @@ SPEC CHECKSUMS:
   GRDB.swift: 51cc9e57ae8ff7083a9d674c97925aa1de06aac5
   Preferences: 5543bfd757a2485a310683da977d661c0ae509a9
   ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
-  Repeat: 73c5ee602aed8f3c7bf1aa12d4cd0d3dc3edea0a
+  Repeat: 8e65710d09da68f06ed79e865b091ffdcc8d0279
   SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
   SwiftyBeaver: 8e67ab3cd94389cbbb7a9c7cc02748d98bfee68e
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96

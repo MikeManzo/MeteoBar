@@ -100,8 +100,9 @@ class QJSKMultiLineLabel: SKNode {
             for label in labels {
                 label.removeFromParent()
             }
-//            labels = []
         }
+        
+        self.removeChildren(in: labels)
         
         let separators = CharacterSet.whitespacesAndNewlines
         let lineSeparators = NSCharacterSet.newlines

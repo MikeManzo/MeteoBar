@@ -49,8 +49,8 @@ class MeteoCompassView: SKView {
     var upperLeft: MeteoSensorNodePair?     // Upper Left Sensor Grouping <major, minor>
 
     // MARK: - Sensor Pairs
-    lazy var updateCompassFace: (Notification) -> Void = { [weak self] _ in
-        self!.updateCompassScene()
+    lazy var updateCompassFace: (Notification) -> Void = { [/*weak*/unowned self] _ in
+        self.updateCompassScene()
     }
 
     // MARK: - Overrides
@@ -261,6 +261,7 @@ class MeteoCompassView: SKView {
         
         let myAction = SKAction.follow(caratPathNode!.path!, asOffset: false, orientToPath: true, duration: 3)
         compassNeedle!.run(myAction)
+        theKitScene!.removeChildren(in: [caratPathNode!])
     }
     
     /// Draws the major/minor cardinal ticks around the compass face
