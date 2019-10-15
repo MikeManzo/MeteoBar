@@ -39,11 +39,13 @@ enum MeteobarError: Error, CustomStringConvertible {
 class MainMenuController: NSViewController {
     // MARK: - Local properties
     var statusItems     = [String: NSStatusItem]()
-    var observerQueue   = [String: Repeater]()
-    var alertQueue      = [String: Repeater]()
+//    var observerQueue   = [String: Repeater]()
+//    var alertQueue      = [String: Repeater]()
+    var observer: Repeater?
+    var alerter: Repeater?
     var eventMonitor: MeteoEventMonitor?
     @IBOutlet weak var delegate: AppDelegate!   // w/o this we get a memory leak
-    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
+//    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
     
     let reachability    = Reachability()        // Network Testing
     var bConnected      = false
@@ -152,7 +154,9 @@ class MainMenuController: NSViewController {
             return
         }
         
-        observerQueue.removeAll()
+//        observerQueue.removeAll()
+        observer?.removeAllObservers(thenStop: true)
+        alerter?.removeAllObservers(thenStop: true)
         
         addBridgeToQueue(theBridge: bridge)
         addBridgeToAlertQueue(theBridge: bridge)
@@ -167,12 +171,14 @@ class MainMenuController: NSViewController {
     /// - Returns: Nothing
     ///
     private func displayError(message: String) {
-        let font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: NSColor.red
-        ]
-        statusItems["MeteoBar"]?.attributedTitle = NSAttributedString(string: message, attributes: attributes)
+        DispatchQueue.main.async { [unowned self] in
+            let font = NSFont.boldSystemFont(ofSize: NSFont.systemFontSize)
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: NSColor.red
+            ]
+            self.statusItems["MeteoBar"]?.attributedTitle = NSAttributedString(string: message, attributes: attributes)
+        }
     }
     
     ///
@@ -194,16 +200,20 @@ class MainMenuController: NSViewController {
             return
         }
         
-        let queue = Repeater(interval: .seconds(Double(theBridge!.updateInterval)), mode: .infinite) { [unowned self] _ in
+        let pollInterval = Double(theBridge!.updateInterval)
+        /*let queue*/ observer = Repeater(interval: .seconds(pollInterval), mode: .infinite) { [unowned self] _ in
             if self.bConnected {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
+                }
             } else {
                 self.displayError(message: "N.C.")
             }
         }
-        
-        queue.start()
-        observerQueue[theBridge!.uuid] = queue
+  
+        observer?.start()
+//        queue.start()
+//        observerQueue[theBridge!.uuid] = queue
         
         DispatchQueue.main.async { [weak theBridge] in // Kick off the first observation while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
@@ -228,14 +238,17 @@ class MainMenuController: NSViewController {
             return
         }
         
-        let queue = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { [unowned self] _ in
+        /*let queue*/ alerter = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { [unowned self] _ in
             if self.bConnected {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
+                }
             }
         }
-            
-        alertQueue[theBridge!.uuid] = queue
-        queue.start()
+  
+        alerter?.start()
+//        alertQueue[theBridge!.uuid] = queue
+//        queue.start()
             
         DispatchQueue.main.async { [weak theBridge] in // Kick off the first alert while we wait for the timers to count down
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
@@ -264,8 +277,10 @@ class MainMenuController: NSViewController {
         
         bridge.getObservation { [unowned self, unowned bridge] (_ error: Error?) in
             if error == nil {
+                DispatchQueue.main.async {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "NewObservationReceived"),
                                                 object: nil, userInfo: nil)  // Broadcast to all listeners - we have a new measurement.  Update as needed.
+                }
                 guard let sensor = bridge.findSensor(sensorName: (theDelegate?.theDefaults?.menubarSensor)!) else {
                     log.warning(MeteobarError.missingMenubarSensor)
                     return

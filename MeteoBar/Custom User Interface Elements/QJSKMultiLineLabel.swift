@@ -96,13 +96,16 @@ class QJSKMultiLineLabel: SKNode {
     func update() {
         if dontUpdate { return }
 
-        if !labels.isEmpty {
+/*        if !labels.isEmpty {
+            removeChildren(in: labels)
+
             for label in labels {
                 label.removeFromParent()
             }
         }
-        
-        self.removeChildren(in: labels)
+*/
+        removeAllChildren()
+        labels.removeAll()
         
         let separators = CharacterSet.whitespacesAndNewlines
         let lineSeparators = NSCharacterSet.newlines

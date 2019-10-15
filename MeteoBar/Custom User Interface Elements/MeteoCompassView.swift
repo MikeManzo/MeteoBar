@@ -260,8 +260,14 @@ class MeteoCompassView: SKView {
         prevDirection = direction
         
         let myAction = SKAction.follow(caratPathNode!.path!, asOffset: false, orientToPath: true, duration: 3)
-        compassNeedle!.run(myAction)
-        theKitScene!.removeChildren(in: [caratPathNode!])
+//        compassNeedle!.run(myAction)
+//        theKitScene!.removeChildren(in: [caratPathNode!])
+        
+        compassNeedle!.run(myAction, completion: { [unowned caratPathNode] in
+            caratPathNode?.removeFromParent()
+//            self.theKitScene!.removeChildren(in: [caratPathNode!])
+//            caratPathNode?.path = nil   // MRM: Memory Leak?
+        })
     }
     
     /// Draws the major/minor cardinal ticks around the compass face

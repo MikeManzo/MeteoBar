@@ -111,6 +111,8 @@ final class MeteoSensorNodePair {
             minorText = sensor.formattedMinMax
             
             battery?.isHidden = false
+            battery?.removeAllChildren()
+//            battery?.removeFromParent()
             switch sensor.batteryStatus {
             case .good:
                 battery?.texture = SKTexture(imageNamed: "full-battery-color")
