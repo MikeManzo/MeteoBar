@@ -48,7 +48,8 @@ class MainMenuController: NSViewController {
 //    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
     
     let reachability    = Reachability()        // Network Testing
-    var bConnected      = false
+    var bConnected      = false                 // Let's not assume we're comnnected to teh network
+    var bAsleep         = false                 // Let's assume we're not asleep when we launch
     
     // MARK: - Views
     /// Main Weather Panel
@@ -66,6 +67,12 @@ class MainMenuController: NSViewController {
         /// Register as a delegate for the notification center
         NSUserNotificationCenter.default.delegate = self
 
+        /// Setup a call-forward listener for anyone to tell the controller that tehe computer is going to sleep
+        NSWorkspace.shared.notificationCenter.addObserver( self, selector: #selector(onWakeNote(note:)), name: NSWorkspace.didWakeNotification, object: nil)
+
+        /// Setup a call-forward listener for anyone to tell the controller that tehe computer is awaking from sleep
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onSleepNote(note:)), name: NSWorkspace.willSleepNotification, object: nil)
+        
         /// Setup a call-forward listener for anyone to tell the controller that our weather panel has been closed - somehow
         NotificationCenter.default.addObserver(self, selector: #selector(weatherPanelClosed(sender:)), name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil)
 
@@ -80,6 +87,7 @@ class MainMenuController: NSViewController {
         
         /// Setup a call-forward listener for reachability notifcations
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        
         do {
             try reachability!.startNotifier()
         } catch {
@@ -97,6 +105,20 @@ class MainMenuController: NSViewController {
         }
     }
     
+    /// Notifier to let the app know whether we have awakened from sleep
+    /// - Parameter note: notifcation message
+    ///
+    @objc func onWakeNote(note: NSNotification) {
+        bAsleep = false
+    }
+
+    /// Notifier to let the app know whether we are going to sleep
+    /// - Parameter note: notifcation message
+    ///
+    @objc func onSleepNote(note: NSNotification) {
+        bAsleep = true
+    }
+
     /// Notifier to let the app know whether there is any network connectivity
     /// - Parameter note: notifcation message
     ///
@@ -202,7 +224,7 @@ class MainMenuController: NSViewController {
         
         let pollInterval = Double(theBridge!.updateInterval)
         /*let queue*/ observer = Repeater(interval: .seconds(pollInterval), mode: .infinite) { [unowned self] _ in
-            if self.bConnected {
+            if self.bConnected && !self.bAsleep {   // Only get a measurement if we're connected and awake
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil, userInfo: nil)
                 }
@@ -239,7 +261,7 @@ class MainMenuController: NSViewController {
         }
         
         /*let queue*/ alerter = Repeater(interval: .seconds(Double(theBridge!.alertUpdateInterval)), mode: .infinite) { [unowned self] _ in
-            if self.bConnected {
+            if self.bConnected && !self.bAsleep {   // Only get an alert if we're connected and awake
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil, userInfo: nil)
                 }
@@ -375,6 +397,7 @@ class MainMenuController: NSViewController {
         
         let notification = NSUserNotification()
         let delayBeforeDelivering: TimeInterval = 0.25  // A quarter-second delay
+        let delayBeforeDismissing: TimeInterval = 10.0  // If no user acknoledgement after 10 seconds
         let notificationcenter = NSUserNotificationCenter.default
         
         notification.soundName          = NSUserNotificationDefaultSoundName
@@ -396,7 +419,11 @@ class MainMenuController: NSViewController {
         case .unknown:
             notification.contentImage   = NSImage(named: NSImage.Name("NWSLogo.png"))
         }
+        
         notificationcenter.scheduleNotification(notification)
+        notificationcenter.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),
+                                   with: notification,
+                                   afterDelay: (delayBeforeDelivering + delayBeforeDismissing))
     }
 }
 

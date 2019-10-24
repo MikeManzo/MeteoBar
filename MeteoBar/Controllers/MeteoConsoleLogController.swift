@@ -58,6 +58,9 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
             theDelegate?.theDefaults!.loggingEnabled = loggingEnabled.state == .on ? true: false
             theDelegate?.updateConfiguration()
         }
+        
+        tableConsoleData.removeAll()
+        consoleTable.reloadData()
     }
     
     @IBAction func deleteAllRows(_ sender: Any) {

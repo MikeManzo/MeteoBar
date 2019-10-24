@@ -1,7 +1,7 @@
 //
 // SwiftyUserDefaults
 //
-// Copyright (c) 2015-2018 Radosław Pietruszewski, Łukasz Mróz
+// Copyright (c) 2015-present Radosław Pietruszewski, Łukasz Mróz
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,67 +24,95 @@
 
 import Foundation
 
-// DefaultsKey
+public extension DefaultsAdapter {
+
+    subscript<T: DefaultsSerializable>(key key: DefaultsKey<T>) -> T.T where T: OptionalType, T.T == T {
+        get {
+            return defaults[key]
+        }
+        set {
+            defaults[key] = newValue
+        }
+    }
+
+    subscript<T: DefaultsSerializable>(key key: DefaultsKey<T>) -> T.T where T.T == T {
+        get {
+            return defaults[key]
+        }
+        set {
+            defaults[key] = newValue
+        }
+    }
+
+    subscript<T: DefaultsSerializable>(keyPath: KeyPath<KeyStore, DefaultsKey<T>>) -> T.T where T: OptionalType, T.T == T {
+        get {
+            return defaults[keyStore[keyPath: keyPath]]
+        }
+        set {
+            defaults[keyStore[keyPath: keyPath]] = newValue
+        }
+    }
+
+    subscript<T: DefaultsSerializable>(keyPath: KeyPath<KeyStore, DefaultsKey<T>>) -> T.T where T.T == T {
+        get {
+            return defaults[keyStore[keyPath: keyPath]]
+        }
+        set {
+            defaults[keyStore[keyPath: keyPath]] = newValue
+        }
+    }
+
+    // Weird flex, but needed these two for the dynamicMemberLookup :shrug:
+
+    subscript<T: DefaultsSerializable>(dynamicMember keyPath: KeyPath<KeyStore, DefaultsKey<T>>) -> T.T where T: OptionalType, T.T == T {
+        get {
+            return self[keyPath]
+        }
+        set {
+            self[keyPath] = newValue
+        }
+    }
+
+    subscript<T: DefaultsSerializable>(dynamicMember keyPath: KeyPath<KeyStore, DefaultsKey<T>>) -> T.T where T.T == T {
+        get {
+            return self[keyPath]
+        }
+        set {
+            self[keyPath] = newValue
+        }
+    }
+}
+
 public extension UserDefaults {
 
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T?>) -> T? {
+    subscript<T: DefaultsSerializable>(key: DefaultsKey<T>) -> T.T where T: OptionalType, T.T == T {
         get {
-            return T.get(key: key._key, userDefaults: self) ?? key.defaultValue as? T
+            if let value = T._defaults.get(key: key._key, userDefaults: self), let _value = value as? T.T.Wrapped {
+                // swiftlint:disable:next force_cast
+                return _value as! T
+            } else if let defaultValue = key.defaultValue {
+                return defaultValue
+            } else {
+                return T.T.empty
+            }
         }
         set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
+            T._defaults.save(key: key._key, value: newValue, userDefaults: self)
         }
     }
 
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T?>) -> T? where T: DefaultsDefaultValueType {
+    subscript<T: DefaultsSerializable>(key: DefaultsKey<T>) -> T.T where T.T == T {
         get {
-            return T.get(key: key._key, userDefaults: self) ?? key.defaultValue ?? T.defaultValue
-        }
-        set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
-        }
-    }
-
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T?>) -> T? where T: Collection, T.Element: DefaultsDefaultArrayValueType {
-        get {
-            return T.get(key: key._key, userDefaults: self) ?? key.defaultValue ?? T.Element.defaultArrayValue as? T
-        }
-        set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
-        }
-    }
-
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T>) -> T where T: DefaultsDefaultValueType {
-        get {
-            return T.get(key: key._key, userDefaults: self) ?? key.defaultValue ?? T.defaultValue
-        }
-        set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
-        }
-    }
-
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T>) -> T where T: Collection, T.Element: DefaultsDefaultArrayValueType {
-        get {
-            // There _must_ be a value: you can't create a key without a default value in type or in the key itself
-            return T.get(key: key._key, userDefaults: self) ?? key.defaultValue ?? T.Element.defaultArrayValue as! T // swiftlint:disable:this force_cast
-        }
-        set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
-        }
-    }
-
-    subscript<T: DefaultsSerializable>(key: DefaultsKey<T>) -> T {
-        get {
-            if let value = T.get(key: key._key, userDefaults: self) {
+            if let value = T._defaults.get(key: key._key, userDefaults: self) {
                 return value
             } else if let defaultValue = key.defaultValue {
                 return defaultValue
             } else {
-                fatalError("Shouldn't really happen, `DefaultsKey` can be initialized only with defaultValue or with a type that conforms to `DefaultsDefaultValueType`.")
+                fatalError("Shouldn't happen, please report!")
             }
         }
         set {
-            T.save(key: key._key, value: newValue, userDefaults: self)
+            T._defaults.save(key: key._key, value: newValue, userDefaults: self)
         }
     }
 }

@@ -34,6 +34,7 @@ class MeteoCompassView: SKView {
     var angle: Double = 0.0
     var tickOffset = 0.0
     var prevDirection = 359.0
+    var updateInterval = 0.0
 
     // MARK: - Compass
     var caratPathNode: SKShapeNode?
@@ -121,7 +122,11 @@ class MeteoCompassView: SKView {
         _ = NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: "UpdateCompassFace"),
                                                    object: nil,
                                                    queue: .main,
-                                                   using: updateCompassFace)       
+                                                   using: updateCompassFace)
+        
+        if theDelegate?.theBridge != nil {
+            updateInterval = Double((theDelegate?.theBridge!.updateInterval)!)
+        }
     }
     
     ///
@@ -196,6 +201,10 @@ class MeteoCompassView: SKView {
                 labelNode.strokeColor = defaults.compassCardinalMinorTickColor
             }
         }
+        
+        if theDelegate?.theBridge != nil {
+            updateInterval = Double((theDelegate?.theBridge!.updateInterval)!)
+        }
     }
     
     @objc private func observationRecieved(_ theNotification: Notification) {
@@ -238,11 +247,11 @@ class MeteoCompassView: SKView {
             return  // No change in direction; no need to do anything ...
         }
         
-        if caratPathNode != nil {
+/*        if caratPathNode != nil {
             caratPathNode?.path = nil   // MRM: Memory Leak?
             theKitScene!.removeChildren(in: [caratPathNode!])
         }
-        
+*/
         if direction - prevDirection  <= -36.0 { // Just reverse it if it's between +- 36°
             compassNeedle!.xScale = -1
             myNewPath.addArc(center: CGPoint(x: 0, y: 0), radius: radiusCompass + 15, startAngle: start,
@@ -259,13 +268,14 @@ class MeteoCompassView: SKView {
         theKitScene!.addChild(caratPathNode!)
         prevDirection = direction
         
-        let myAction = SKAction.follow(caratPathNode!.path!, asOffset: false, orientToPath: true, duration: 3)
+        // Move the carat ... also, make sure the animation fits within the update interval the user set
+        let myAction = SKAction.follow(caratPathNode!.path!, asOffset: false, orientToPath: true, duration: updateInterval - 0.5)
 //        compassNeedle!.run(myAction)
 //        theKitScene!.removeChildren(in: [caratPathNode!])
         
-        compassNeedle!.run(myAction, completion: { [unowned caratPathNode] in
+        compassNeedle!.run(myAction, completion: { [unowned self, unowned caratPathNode] in
             caratPathNode?.removeFromParent()
-//            self.theKitScene!.removeChildren(in: [caratPathNode!])
+            self.theKitScene!.removeChildren(in: [caratPathNode!])
 //            caratPathNode?.path = nil   // MRM: Memory Leak?
         })
     }

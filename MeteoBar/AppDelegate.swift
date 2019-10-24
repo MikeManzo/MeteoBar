@@ -18,8 +18,8 @@ let log = QuantumLogger.self
 
 /// User Defaults
 extension DefaultsKeys {
-    static let bridgesDefaults  = DefaultsKey<Meteobridge?>("DefaultBridges")
-    static let meteoBarDefaults = DefaultsKey<MeteoPreferences?>("MeteoBarPrefwerences")
+    var bridgesDefaults: DefaultsKey<Meteobridge?> { return .init("DefaultBridges") }
+    var meteoBarDefaults: DefaultsKey<MeteoPreferences?> {return .init("MeteoBarPrefwerences") }
 }
 /// User Defaults
 
@@ -38,8 +38,8 @@ enum PlatformError: Error, CustomStringConvertible {
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    var theDefaults = Defaults[.meteoBarDefaults]
-    var theBridge   = Defaults[.bridgesDefaults]
+    var theDefaults = Defaults.meteoBarDefaults
+    var theBridge   = Defaults.bridgesDefaults
 
 //    lazy var mainMenu: MainMenuController = {
 //        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     override init() {
         if theDefaults == nil {
             theDefaults = MeteoPreferences()
-            Defaults[.meteoBarDefaults] = theDefaults
+            Defaults.meteoBarDefaults = theDefaults
         }
     }
     
@@ -68,9 +68,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         console.useNSLog    = true
         log.addDestination(console)
         
-        if (theDefaults?.logFileEnabled)! {
-            enableFileLogging(enable: true)
-        }
+//        if (theDefaults?.logFileEnabled)! {
+//            enableFileLogging(enable: true)
+//        }
         // SwiftyBeaver Config
 
         // ***** TESTING *****
@@ -177,7 +177,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     func resetCompassColors() {
         theDefaults?.resetCompassColors()
-        Defaults[.meteoBarDefaults]  = theDefaults
+        Defaults.meteoBarDefaults  = theDefaults
         log.info("Compass colors reset to application defaults")
     }
 
@@ -185,29 +185,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     func resetCompassSensors() {
         theDefaults?.resetSensorsForDsiplay()
-        Defaults[.meteoBarDefaults]  = theDefaults
+        Defaults.meteoBarDefaults  = theDefaults
         log.info("Sensors for display reset to application defaults")
     }
     
     /// Save the current bridge to user defaults
     ///
     func updateBridge() {
-        Defaults[.bridgesDefaults]  = theBridge
+        Defaults.bridgesDefaults  = theBridge
         log.info("Bridge configuration updated")
     }
     
     /// Save the current UI configuration to the user defaults
     ///
     func updateConfiguration() {
-        Defaults[.meteoBarDefaults] = theDefaults
+        Defaults.meteoBarDefaults = theDefaults
         log.info("User interface configuration updated")
     }
     
     /// Save the entire app's configuration to user defaults
     ///
     func updateMeteoBar() {
-        Defaults[.bridgesDefaults]  = theBridge
-        Defaults[.meteoBarDefaults] = theDefaults
+        Defaults.bridgesDefaults  = theBridge
+        Defaults.meteoBarDefaults = theDefaults
         log.info("Meteobar configuration updated")
     }
 }

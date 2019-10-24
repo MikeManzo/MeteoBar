@@ -228,7 +228,7 @@ struct AppDatabase {
 
 /// SQLight Destination
 public class SQLDestination: BaseDestination {
-    public var logFileURL: URL?
+//    public var logFileURL: URL?
 
     // The shared database queue
     var dbQueue: DatabaseQueue?
@@ -242,9 +242,9 @@ public class SQLDestination: BaseDestination {
     ///
     public init(dbName: String = "swiftybeaver.sqlite") throws {
         let fileManager = FileManager.default
+        var logFileURL: URL?
         var baseURL: URL?
 
-        #if os(OSX)
         if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
             baseURL = url
             if let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String {
@@ -258,21 +258,14 @@ public class SQLDestination: BaseDestination {
                 }
             }
         }
-        #else
-        #if os(Linux)
-        baseURL = URL(fileURLWithPath: "/var/cache")
-        #else
-        // iOS, watchOS, etc. are using the caches directory
-        if let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
-            baseURL = url
-        }
-        #endif
-        #endif
         
-        if let baseURL = baseURL {
-            logFileURL = baseURL.appendingPathComponent(dbName, isDirectory: false)
+        if baseURL != nil {
+            logFileURL = baseURL?.appendingPathComponent(dbName, isDirectory: false)
             dbQueue = try AppDatabase.openDatabase(atPath: logFileURL!.path)
+            baseURL = nil
+            logFileURL = nil
         }
+        
         super.init()
     }
 
@@ -443,9 +436,9 @@ public class SQLDestination: BaseDestination {
             do {
 //                let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '2019-03-27 21:08:00' and '2019-03-27 22:00:00'"
                 let sql = "SELECT * FROM meteologdb WHERE date BETWEEN '\(dateFrom)' and '\(dateTo)'"
-                print(sql)
+//                print(sql)
                 
-                logs = try MeteoLogDB.fetchAll(db, sql)
+                logs = try MeteoLogDB.fetchAll(db, sql: sql)
             } catch {
                 log.error(DBLogError.dateError)
             }

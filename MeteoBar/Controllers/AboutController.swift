@@ -19,7 +19,8 @@ class AboutController: NSViewController {
     @IBOutlet weak var appImageView: NSImageView!
     
     /// Custom variables
-    let tableViewData = [
+    var tableViewData = [[String: String]]()
+/*    let tableViewData = [
         ["copyImage": "pressure.png",
          "copyType": "Icon",
          "invertable": "yes",
@@ -294,7 +295,293 @@ class AboutController: NSViewController {
          "copyURL": "https://www.flaticon.com/authors/yannick"
         ]
     ]
+*/
+    override func viewWillAppear() {
+        super.viewWillAppear()
         
+        tableViewData = [
+            ["copyImage": "pressure.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Air Pressure Sensor Icon",
+             "copyHolder": "Swifticons",
+             "copyURL": "https://www.flaticon.com/authors/swifticons"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "Alamo Fire: Elegant Networkign in Swift",
+             "copyHolder": "Alamofire Software Foundation",
+             "copyURL": "https://github.com/Alamofire/Alamofire"
+            ],
+            ["copyImage": "detector.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Smoke Detector Icon",
+             "copyHolder": "Flaticon",
+             "copyURL": "https://www.flaticon.com"
+            ],
+            ["copyImage": "AppIcon",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Application Icon: A meteobridge transmitting to a terminal",
+             "copyHolder": "Iconfu",
+             "copyURL": "https://iconfu.com"
+            ],
+            ["copyImage": "compass-north.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Compass facing North Icon",
+             "copyHolder": "Icons8",
+             "copyURL": "https://icons8.com/icon/set/compass/color"
+            ],
+            ["copyImage": "configurator.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Configuration Icon",
+             "copyHolder": "Icons8",
+             "copyURL": "https://icons8.com/icon/set/config/color"
+            ],
+            ["copyImage": "controls.png",
+             "copyType": "Control",
+             "invertable": "yes",
+             "copyName": "Controls Icon",
+             "copyHolder": "Smashicons",
+             "copyURL": "https://www.flaticon.com/authors/smashicons"
+            ],
+            ["copyImage": "dashboard.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Dashboard Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "unknown-battery-color.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Unknown Battery Icon (Yellow)",
+             "copyHolder": "Icons8",
+             "copyURL": "https://icons8.it/icon/53345/batterie-inconnue"
+            ],
+            ["copyImage": "empty-battery-color.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Empty Battery Icon (Red)",
+             "copyHolder": "Round Icons",
+             "copyURL": "https://www.flaticon.com/authors/roundicons"
+            ],
+            ["copyImage": "energy.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Energy Sensor Icon",
+             "copyHolder": "Freepik",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "full-battery-color.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Full Battery Icon (Green)",
+             "copyHolder": "Round Icons",
+             "copyURL": "https://www.flaticon.com/authors/roundicons"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "FlexibleImage",
+             "copyHolder": "Jungwon An",
+             "copyURL": "https://github.com/kawoou/FlexibleImage"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "GRDB.swift",
+             "copyHolder": "Gwendal Roué",
+             "copyURL": "https://github.com/groue/GRDB.swift"
+            ],
+            ["copyImage": "humidity.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Humidity Sensor Icon",
+             "copyHolder": "Freepik",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Library Icon: A group of books representing a library",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "console.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Console Log Icon",
+             "copyHolder": "Kiranshastry",
+             "copyURL": "https://www.flaticon.com/authors/kiranshastry/"
+            ],
+            ["copyImage": "logout.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Logout Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "log-debug.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Debug Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "log-error.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Error Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "log-info.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Information Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "log-verbose.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Verbose Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "log-warning.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "Warning Icon",
+             "copyHolder": "Freepick",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "map-zoom.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Map Zoom Icon",
+             "copyHolder": "Freepik",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "play-button.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Play Button",
+             "copyHolder": "Appzgear",
+             "copyURL": "https://www.flaticon.com/authors/appzgear"
+            ],
+            ["copyImage": "NWSLogo.png",
+             "copyType": "Icon",
+             "invertable": "no",
+             "copyName": "National Weather Service: Forecasts, Alerts",
+             "copyHolder": "National Weather Service",
+             "copyURL": "https://www.weather.gov"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "Preferences: Flexible User Preferences",
+             "copyHolder": "Sindre Sorhus",
+             "copyURL": "https://github.com/sindresorhus/Preferences"
+            ],
+            ["copyImage": "drop.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Rain Sensor Icon",
+             "copyHolder": "Freepik",
+             "copyURL": "https://www.freepik.com/"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "Reachability.swift: Replacement for Apple's Reachability re-written in Swift with closures",
+             "copyHolder": "Ashley Mills",
+             "copyURL": "https://github.com/ashleymills/Reachability.swift"
+            ],
+            ["copyImage": "solar-energy.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Solar Sensor Icon",
+             "copyHolder": "Prettycons",
+             "copyURL": "https://www.flaticon.com/authors/prettycons/"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "Swifty Beaver: Colorful, flexible, lightweight logging for Swift 2, Swift 3 & Swift 4",
+             "copyHolder": "Swifty Beaver",
+             "copyURL": "https://swiftybeaver.com"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "SwiftyJSON",
+             "copyHolder": "SwiftyJSON",
+             "copyURL": "https://github.com/SwiftyJSON/SwiftyJSON"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "SwiftyUserDefaults: Modern Swift API for NSUserDefaults",
+             "copyHolder": "Radek Pietruszewski",
+             "copyURL": "https://github.com/radex/SwiftyUserDefaults"
+            ],
+            ["copyImage": "system.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "System Sensor Icon",
+             "copyHolder": "Phatplus",
+             "copyURL": "https://www.flaticon.com/authors/phatplus"
+            ],
+            ["copyImage": "books.png",
+             "copyType": "Library",
+             "invertable": "yes",
+             "copyName": "SwiftDate",
+             "copyHolder": "Daniele Margutti",
+             "copyURL": "https://github.com/malcommac/SwiftDate"
+            ],
+            ["copyImage": "thermometer.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Thermometer Sensor Icon",
+             "copyHolder": "Epic Coders",
+             "copyURL": "https://www.flaticon.com/authors/epiccoders"
+            ],
+           ["copyImage": "warning-red.png",
+            "copyType": "Icon",
+            "invertable": "no",
+            "copyName": "Red Warning Icon",
+            "copyHolder": "Heydon",
+            "copyURL": "https://www.flaticon.com/authors/heydon"
+            ],
+           ["copyImage": "warning-yellow.png",
+            "copyType": "Icon",
+            "invertable": "no",
+            "copyName": "Yellow Warning Icon",
+            "copyHolder": "Heydon",
+            "copyURL": "https://www.flaticon.com/authors/heydon"
+            ],
+            ["copyImage": "wind-sock.png",
+             "copyType": "Icon",
+             "invertable": "yes",
+             "copyName": "Wind Sensor Icon",
+             "copyHolder": "Yannick",
+             "copyURL": "https://www.flaticon.com/authors/yannick"
+            ]
+        ]
+        tableAttribution.reloadData()
+    }
+    
+    override func viewWillDisappear() {
+        tableViewData.removeAll()
+        tableAttribution.reloadData()
+    }
+    
     /// Standard override for viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
