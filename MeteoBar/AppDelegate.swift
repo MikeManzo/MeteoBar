@@ -41,11 +41,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var theDefaults = Defaults.meteoBarDefaults
     var theBridge   = Defaults.bridgesDefaults
 
-//    lazy var mainMenu: MainMenuController = {
-//        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
-//    }()
+    lazy var mainMenu: MainMenuController = {
+        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
+    }()
 
-    var mainMenu = MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
+//    var mainMenu = MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
     
     override init() {
         if theDefaults == nil {
@@ -67,23 +67,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         console.format      = "$DHH:mm:ss.SSS$d $C$L$c $N.$F:$l - $M"
         console.useNSLog    = true
         log.addDestination(console)
-        
-//        if (theDefaults?.logFileEnabled)! {
-//            enableFileLogging(enable: true)
-//        }
-        // SwiftyBeaver Config
 
-        // ***** TESTING *****
         do {
             let dbLog = try SQLDestination(dbName: "meteolog.sqlight")
             log.addDestination(dbLog)
         } catch {
-            print("Oops")
+            print("An error has occured trying to create the database log")
         }
-        // ***** TESTING *****
+        // SwiftyBeaver Config
 
-        NSApplication.shared.keyWindow?.contentViewController = mainMenu
         _ = mainMenu.view   // Initialize the controller and wake-up the nib
+        NSApplication.shared.keyWindow?.contentViewController = mainMenu
     }
 
     /// MeteoBar is about to close ... clean-up
@@ -99,7 +93,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// ## Notes ##
     ///   [Log to File - SwiftyBeaver Docs](https://docs.swiftybeaver.com/article/10-log-to-file)
     ///
-    func enableFileLogging(enable: Bool) {
+/*    func enableFileLogging(enable: Bool) {
         switch enable {
         case true:
             for aDestination in log.destinations {
@@ -132,7 +126,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-
+*/
     ///
     /// Get the DB logger (if one exists)
     ///
@@ -158,7 +152,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///
     /// - Returns: the FileDestination object
     ///
-    func getFileLogger() -> FileDestination? {
+/*    func getFileLogger() -> FileDestination? {
         var fileDestination: FileDestination?
         
         for aDestination in log.destinations {
@@ -172,7 +166,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         return fileDestination
     }
-    
+*/
     /// Reset the compass colors to application defaults
     ///
     func resetCompassColors() {

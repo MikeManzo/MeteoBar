@@ -49,9 +49,10 @@ class MeteoEventMonitor/*: NSObject*/ {
         if _listening {
             log.warning("MeteoEventMonitor already listening; returning with no action.")
             return
+        } else {
+            theMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventMask, handler: eventHandler) as AnyObject?
+            _listening = true
         }
-        theMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventMask, handler: eventHandler) as AnyObject?
-        _listening = true
     }
     
     ///

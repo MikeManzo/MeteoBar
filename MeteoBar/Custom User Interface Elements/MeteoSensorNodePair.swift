@@ -24,10 +24,10 @@ enum MeteoSensorNodePairError: Error, CustomStringConvertible {
 
 /// Easy way to group the sensors for teh compas view (etiher quad or tri-view)
 final class MeteoSensorNodePair {
-    private var _majorNode: SKShapeNode?
-    private var _minorNode: SKShapeNode?
-    private var _iconNode: SKEffectNode?
-    private var _battery: SKSpriteNode?
+    private weak var _majorNode: SKShapeNode?
+    private weak var _minorNode: SKShapeNode?
+    private weak var _iconNode: SKEffectNode?
+    private weak var _battery: SKSpriteNode?
     private var _sensorID: String?
     
     /// Major Shape Node

@@ -41,7 +41,9 @@ class MeteoCompassView: SKView {
     var compassNeedle: SKShapeNode?
     var compassFace: SKShapeNode?
     var centerNode: SKShapeNode?
-    var theKitScene: SKScene?
+
+    // MARK: - Canvas
+    weak var theKitScene: SKScene?
     
     // MARK: - Sensor Pairs
     var upperRight: MeteoSensorNodePair?    // Upper Right Sensor Grouping <major, minor>
@@ -85,7 +87,8 @@ class MeteoCompassView: SKView {
         radiusCompass = (min(frame.height, frame.width)) * 0.4 //0.333
 
         // Create a scene, add something to it
-        theKitScene = SKScene(size: frame.size)
+        let s = SKScene(size: frame.size)
+        theKitScene = s
         theKitScene!.backgroundColor = (theDelegate?.theDefaults?.compassFrameColor)! // NSColor.black
 
         // Determine radian spacing...
@@ -114,7 +117,7 @@ class MeteoCompassView: SKView {
         
         fourQuadsMajorMinor(border: (theDelegate?.theDefaults?.compassShowSensorBox)!)
         
-        self.presentScene(theKitScene)
+        presentScene(theKitScene)
         
         /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
         NotificationCenter.default.addObserver(self, selector: #selector(observationRecieved(_:)), name: NSNotification.Name(rawValue: "NewObservationReceived"), object: nil)
@@ -518,7 +521,8 @@ class MeteoCompassView: SKView {
 
         upperLeft = MeteoSensorNodePair(major: ULMajor, minor: ULMinor, battery: ULBattery, icon: ULNode, sensorID: theDelegate?.theDefaults?.compassULSensor)
         if theDelegate?.theBridge != nil { upperLeft?.update() }
-        
+        /// ***** Upper Left *****
+
         /// ***** Upper Right *****
         let URMajor: SKShapeNode = boxGenerator(size: CGSize(width: radiusCompass * 0.468, height: radiusCompass * 0.343),
                                                        point: CGPoint(x: midPoint.x + radiusCompass * 0.3, y: midPoint.y + radiusCompass * 0.406),

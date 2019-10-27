@@ -231,7 +231,7 @@ public class SQLDestination: BaseDestination {
 //    public var logFileURL: URL?
 
     // The shared database queue
-    var dbQueue: DatabaseQueue?
+    weak var dbQueue: DatabaseQueue?
     
     override public var defaultHashValue: Int {return 2}
     

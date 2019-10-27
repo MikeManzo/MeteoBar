@@ -44,7 +44,7 @@ class MainMenuController: NSViewController {
     var observer: Repeater?
     var alerter: Repeater?
     var eventMonitor: MeteoEventMonitor?
-    @IBOutlet weak var delegate: AppDelegate!   // w/o this we get a memory leak
+    @IBOutlet weak var delegate: AppDelegate?   // w/o this we get a memory leak
 //    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
     
     let reachability    = Reachability()        // Network Testing
@@ -97,10 +97,11 @@ class MainMenuController: NSViewController {
         newBridgeInitialized(sender: self)
 
         /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
-        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-            if self!.meteoPanelView.isViewLoaded && self!.meteoPanelView.view.window != nil {
-                self!.meteoPanelView.view.window?.close()
-                self?.eventMonitor!.stop()
+        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [/*weak*/unowned self] _ in
+            if self.meteoPanelView.isViewLoaded && self.meteoPanelView.view.window != nil {
+                //self.meteoPanelView.view.window?.close()
+                self.dismiss(self.meteoPanelView)
+                self.eventMonitor!.stop()
             }
         }
     }
