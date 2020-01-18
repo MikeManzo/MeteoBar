@@ -45,6 +45,7 @@
 		2793E3F8223DCFAF0061BDBA /* MeteoPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */; };
 		2793E3F9223DCFAF0061BDBA /* MeteoPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */; };
 		27A0545821EB8520001F4913 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A0545721EB8520001F4913 /* MainMenuController.swift */; };
+		27A35826236DF87A00008366 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A35825236DF87A00008366 /* main.swift */; };
 		27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */; };
 		27A8038B2219D5F100E9A6BE /* dashboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 27A8038A2219D5F100E9A6BE /* dashboard.png */; };
 		27A8038E2219DCD900E9A6BE /* UserInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */; };
@@ -166,6 +167,7 @@
 		2793E3F6223DCFAF0061BDBA /* MeteoPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoPanelController.swift; sourceTree = "<group>"; };
 		2793E3F7223DCFAF0061BDBA /* MeteoPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeteoPanel.xib; sourceTree = "<group>"; };
 		27A0545721EB8520001F4913 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
+		27A35825236DF87A00008366 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		27A80388221887A400E9A6BE /* QJSKMultiLineLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QJSKMultiLineLabel.swift; sourceTree = "<group>"; };
 		27A8038A2219D5F100E9A6BE /* dashboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dashboard.png; sourceTree = "<group>"; };
 		27A8038C2219DCD900E9A6BE /* UserInterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInterfaceController.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				277658E121EA6063007BA05A /* Info.plist */,
 				277658E221EA6063007BA05A /* MeteoBar.entitlements */,
 				277658DA21EA6062007BA05A /* AppDelegate.swift */,
+				27A35825236DF87A00008366 /* main.swift */,
 				277658DC21EA6063007BA05A /* Assets.xcassets */,
 				27A0545621EB82AB001F4913 /* Controllers */,
 				27A0545321EB80CC001F4913 /* Custom User Interface Elements */,
@@ -755,6 +758,7 @@
 				27CF043022079C6C007DFFDF /* BridgeSetupController.swift in Sources */,
 				27E6C5BF21ED595500548CF0 /* QLExtensions.swift in Sources */,
 				27A80389221887A400E9A6BE /* QJSKMultiLineLabel.swift in Sources */,
+				27A35826236DF87A00008366 /* main.swift in Sources */,
 				27365DEB22381BD900CD27A8 /* MeteoWeatherAlert.swift in Sources */,
 				27ACA79821FE7BF900E226C2 /* MeteoSensorImage.swift in Sources */,
 				27ACA79021FE691400E226C2 /* SensorCollectionHeaderView.swift in Sources */,

@@ -35,17 +35,19 @@ enum PlatformError: Error, CustomStringConvertible {
     }
 }
 
-@NSApplicationMain
+//@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var theDefaults = Defaults.meteoBarDefaults
     var theBridge   = Defaults.bridgesDefaults
+    var newWindow: NSWindow?
 
-    lazy var mainMenu: MainMenuController = {
-        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
-    }()
+//    lazy var mainMenu: MainMenuController = {
+//        return MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
+//    }()
 
 //    var mainMenu = MainMenuController(nibName: NSNib.Name("MainMenu"), bundle: nil)
+    var mainMenu = MainMenuController()
     
     override init() {
         if theDefaults == nil {
@@ -76,8 +78,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         // SwiftyBeaver Config
 
-        _ = mainMenu.view   // Initialize the controller and wake-up the nib
-        NSApplication.shared.keyWindow?.contentViewController = mainMenu
+//        newWindow = NSWindow()
+//        let content = newWindow!.contentView! as NSView
+//        let view = mainMenu.view
+//        content.addSubview(view)
+//        newWindow!.makeKeyAndOrderFront(nil)
+        
+        let mainView = mainMenu.view   // Initialize the controller and wake-up the nib
+        NSApplication.shared.keyWindow?.contentView?.addSubview(mainView)
+//        NSApplication.shared.keyWindow?.contentViewController = mainMenu
     }
 
     /// MeteoBar is about to close ... clean-up

@@ -44,10 +44,10 @@ class MainMenuController: NSViewController {
     var observer: Repeater?
     var alerter: Repeater?
     var eventMonitor: MeteoEventMonitor?
-    @IBOutlet weak var delegate: AppDelegate?   // w/o this we get a memory leak
+//    @IBOutlet weak var delegate: AppDelegate?   // w/o this we get a memory leak
 //    @IBOutlet var newView: NSView!              // w/o this we get a memory leak
     
-    let reachability    = Reachability()        // Network Testing
+    var reachability: Reachability?             // Network Testing
     var bConnected      = false                 // Let's not assume we're comnnected to teh network
     var bAsleep         = false                 // Let's assume we're not asleep when we launch
     
@@ -58,7 +58,66 @@ class MainMenuController: NSViewController {
     }()
     
     // MARK: - Overrides
-    override func awakeFromNib() {
+    override func loadView() {
+      self.view = NSView()
+    }
+    
+    override func viewDidDisappear() {
+        reachability?.stopNotifier()
+        NotificationCenter.default.removeObserver(self, name: .reachabilityChanged, object: nil)
+        reachability = nil
+    }
+    
+    override func viewDidLoad() {
+        statusItems["MeteoBar"]                 = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItems["MeteoBar"]?.title          = "--"
+        statusItems["MeteoBar"]?.button!.target = self
+        statusItems["MeteoBar"]?.button!.action = #selector(showWeatherPanel(sender:))
+        
+        /// Register as a delegate for the notification center
+        NSUserNotificationCenter.default.delegate = self
+        
+        /// Setup a call-forward listener for anyone to tell the controller that the computer is going to sleep
+        NSWorkspace.shared.notificationCenter.addObserver( self, selector: #selector(onWakeNote(note:)), name: NSWorkspace.didWakeNotification, object: nil)
+        
+        /// Setup a call-forward listener for anyone to tell the controller that the computer is awaking from sleep
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(onSleepNote(note:)), name: NSWorkspace.willSleepNotification, object: nil)
+        
+        /// Setup a call-forward listener for anyone to tell the controller that our weather panel has been closed - somehow
+        NotificationCenter.default.addObserver(self, selector: #selector(weatherPanelClosed(sender:)), name: NSNotification.Name(rawValue: "WeatherPanelClosed"), object: nil)
+        
+        /// Setup a call-forward listener for anyone to tell the controller that we have a new bridge
+        NotificationCenter.default.addObserver(self, selector: #selector(newBridgeInitialized(sender:)), name: NSNotification.Name(rawValue: "BridgeInitialized"), object: nil)
+        
+        /// Setup a call-forward listener for anyone to ask the Menu to update with a new observation
+        NotificationCenter.default.addObserver(self, selector: #selector(getObservation(sender:)), name: NSNotification.Name(rawValue: "UpdateObservation"), object: nil)
+        
+        /// Setup a call-forward listener for anyone to tell the controller to retrive alerts
+        NotificationCenter.default.addObserver(self, selector: #selector(getAlerts(sender:)), name: NSNotification.Name(rawValue: "RetrieveAlerts"), object: nil)
+        
+        /// Setup a call-forward listener for reachability notifcations
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
+        
+        reachability = try? Reachability()
+        
+        do {
+            try reachability?.startNotifier()
+        } catch {
+            log.error("Could not start reachability notifier")
+        }
+        
+        newBridgeInitialized(sender: self)
+        
+        /// Setup mouse event monitoring for a click anywhere so we can close our weather panel
+        eventMonitor = MeteoEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [/*weak*/unowned self] _ in
+            if self.meteoPanelView.isViewLoaded && self.meteoPanelView.view.window != nil {
+                self.dismiss(self.meteoPanelView)
+                self.eventMonitor!.stop()
+            }
+        }
+    }
+    
+/*    override func awakeFromNib() {
         statusItems["MeteoBar"]                 = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         statusItems["MeteoBar"]?.title          = "--"
         statusItems["MeteoBar"]?.button!.target = self
@@ -105,7 +164,7 @@ class MainMenuController: NSViewController {
             }
         }
     }
-    
+*/
     /// Notifier to let the app know whether we have awakened from sleep
     /// - Parameter note: notifcation message
     ///
@@ -136,8 +195,11 @@ class MainMenuController: NSViewController {
         case .cellular:
             log.info("Connected via Cellular")
             bConnected = true
-        case .none:
+        case .unavailable:
             log.error("No longer connected to network; suspending network calls")
+            bConnected = false
+        case .none:
+            log.error("Not connected to the network; suspending network calls")
             bConnected = false
         }
     }

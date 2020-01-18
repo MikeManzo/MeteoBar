@@ -140,7 +140,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
             ProgressHUD.show(withStatus: BridgeSetupControllerHUD.settingUpDisplayElements.description)
         }
         // Grab the image <from the meteobridge> for the platform hosting meteobridge
-        WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { (_ image, _ error) in
+        WeatherPlatform.getPlatformImage(theBridge.findSensor(sensorName: "platform")!.formattedMeasurement!) { [unowned self] (_ image, _ error) in
             if error == nil {
                 // Let's update the user interface
                 DispatchQueue.main.async { [unowned self] in    // Use DispatchQueue.main to ensure UI updates are done on the main thread
@@ -228,6 +228,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
                 }
             } else {
                 log.warning(BridgeSetupControllerError.noBridgeImage)
+                ProgressHUD.show(withStatus: error.value)
+                self.dismissHUD()
             }
         }
     }
@@ -404,7 +406,7 @@ class BridgeSetupController: NSViewController, Preferenceable {
         // Dismiss our HUD if it's showing
     }
     
-    /// MARK - Actions
+    // MARK: - Actions
     @IBAction func mapZoomClicked(_ sender: Any) {
         guard let theBridge = theDelegate?.theBridge! else {
             log.error(BridgeSetupControllerError.noBridge)

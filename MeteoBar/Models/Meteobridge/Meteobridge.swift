@@ -48,14 +48,14 @@ enum MeteobridgeSystemParameter: String {
 }
 
 let platformImages = [
-                        "TL-MR3020": "/meteobridge/pix/TL-MR3020.png",
-                        "TL-WR902AC": "/meteobridge/pix/TL-WR902AC.png",
-                        "TL-MR3020v3": "/meteobridge/pix/TL-MR3020V3.png",
-                        "TL-WR703N": "/meteobridge/pix/TL-WR703N.png",
-                        "WL-330N3G": "/meteobridge/pix/WL-330N3G.png",
-                        "DIR-505": "/meteobridge/pix/DIR-505.png",
-                        "TL-MR3040": "/meteobridge/pix/TL-MR3040.png",
-                        "Meteobridge PRO": "/meteobridge/pix/mbpro.png"
+                        "TL-MR3020": "/meteobridge/pix/TL-MR3020.gif",
+                        "TL-WR902AC": "/meteobridge/pix/TL-WR902AC.gif",
+                        "TL-MR3020v3": "/meteobridge/pix/TL-MR3020V3.gif",
+                        "TL-WR703N": "/meteobridge/pix/TL-WR703N.gif",
+                        "WL-330N3G": "/meteobridge/pix/WL-330N3G.gif",
+                        "DIR-505": "/meteobridge/pix/DIR-505.gif",
+                        "TL-MR3040": "/meteobridge/pix/TL-MR3040.gif",
+                        "Meteobridge PRO": "/meteobridge/pix/mbpro.gif"
                      ]
 
 /*
