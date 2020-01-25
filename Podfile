@@ -11,7 +11,7 @@ target 'MeteoBar' do
     pod 'AlamofireImage'
     pod 'SwiftyJSON'
     pod 'Repeat'
-    pod 'SwiftyUserDefaults', '5.0.0-beta.5' 
+    pod 'SwiftyUserDefaults', '5.0.0-beta.5'
     pod 'GRDB.swift'
     pod 'SwiftDate'
     pod 'FlexibleImage', '~> 1.9'
