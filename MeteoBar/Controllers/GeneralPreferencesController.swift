@@ -9,10 +9,11 @@
 import Cocoa
 import Preferences
 
-class GeneralPreferencesController: NSViewController, Preferenceable {
+class GeneralPreferencesController: NSViewController, PreferencePane {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "General"
+    let preferencePaneTitle = "General"
     let toolbarItemIcon = NSImage(named: NSImage.advancedName)!
+    let preferencePaneIdentifier = PreferencePane.Identifier.general
     
     var tableViewCellForSizing: NSTableCellView?
     var categories = [SensorCat]()
@@ -99,6 +100,8 @@ class GeneralPreferencesController: NSViewController, Preferenceable {
         
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
         tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 132
+        
+        preferredContentSize    = NSSize(width: 489, height: 314)      // Set the size of our view
     }
     @IBAction func alertIntervalChanged(_ sender: Any) {
         switch alertUpdateInterval.titleOfSelectedItem {

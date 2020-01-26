@@ -27,13 +27,14 @@ enum ConsoleLogError: Error, CustomStringConvertible {
 ///
 /// [NSTableView, Bindings, and Array Controllers](https://medium.com/@jamesktan/swift-xcode-8-1-nstableview-bindings-and-array-controllers-oh-my-c595623cae0d)
 ///
-class MeteoConsoleLogController: NSViewController, Preferenceable {
+class MeteoConsoleLogController: NSViewController, PreferencePane {
     @IBOutlet weak var consoleTable: NSTableView!
     @IBOutlet weak var boxContainer: NSBox!
     @IBOutlet weak var loggingEnabled: NSButton!
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "Console Log"
+    let preferencePaneTitle = "Console Log"
     let toolbarItemIcon = NSImage(named: "console.png")!
+    let preferencePaneIdentifier = PreferencePane.Identifier.log
     
     var tableConsoleData = [MeteoLogDB]()
     
@@ -46,7 +47,9 @@ class MeteoConsoleLogController: NSViewController, Preferenceable {
         super.viewDidLoad()
         if theDelegate?.theBridge != nil {
             loggingEnabled.state = ((theDelegate?.theDefaults!.loggingEnabled)! ? .on : .off)
+            
         }
+        preferredContentSize    = NSSize(width: 919, height: 440)      // Set the size of our view
     }
        
     override func viewWillAppear() {

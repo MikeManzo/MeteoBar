@@ -10,10 +10,11 @@ import Cocoa
 import Preferences
 import SceneKit
 
-class BridgePreferencesController: NSViewController, Preferenceable {
+class BridgePreferencesController: NSViewController, PreferencePane {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "Bridge Config"
+    let preferencePaneTitle = "Bridge Config"
     let toolbarItemIcon = NSImage(named: "compass-north.png")!
+    let preferencePaneIdentifier = PreferencePane.Identifier.pref
     
     // MARK: - Outlets
     @IBOutlet weak var compassView: MeteoCompassSettingsView!
@@ -41,6 +42,8 @@ class BridgePreferencesController: NSViewController, Preferenceable {
         collectionView.collectionViewLayout = flowLayout
         collectionView.setDraggingSourceOperationMask(.every, forLocal: true)
         collectionView.setDraggingSourceOperationMask(.every, forLocal: false)
+        
+        preferredContentSize    = NSSize(width: 919, height: 440)      // Set the size of our view
     }
     
     ///

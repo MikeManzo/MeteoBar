@@ -9,10 +9,11 @@
 import Cocoa
 import Preferences
 
-class AdvancedPreferencesController: NSViewController, Preferenceable {
+class AdvancedPreferencesController: NSViewController, PreferencePane {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "Sensor Details"
+    let preferencePaneTitle = "Sensor Details"
     let toolbarItemIcon = NSImage(named: "detector.png")!
+    let preferencePaneIdentifier = PreferencePane.Identifier.advanced
 
     var tableViewCellForSizing: NSTableCellView?
     var categories = [SensorCat]()
@@ -43,6 +44,8 @@ class AdvancedPreferencesController: NSViewController, Preferenceable {
         
         tableViewCellForSizing = sensorTree.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "SensorView"), owner: self) as? NSTableCellView
         tableViewCellForSizing?.textField?.preferredMaxLayoutWidth = 135    // Used for the height determination in the OutlineView row
+        
+        preferredContentSize    = NSSize(width: 609, height: 440)      // Set the size of our view
     }
     
     override func viewWillAppear() {

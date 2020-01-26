@@ -14,10 +14,11 @@ protocol CompassDelegate: class {
     func updateCompass(caller: UITableCellView)
 }
 
-class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable {
+class UserInterfaceController: NSViewController, CompassDelegate, PreferencePane {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "User Interface"
+    let preferencePaneTitle = "User Interface"
     let toolbarItemIcon = NSImage(named: "dashboard.png")!
+    let preferencePaneIdentifier = PreferencePane.Identifier.interafce
 
     // MARK: Outlets
     @IBOutlet weak var elementTree: NSOutlineView!
@@ -33,6 +34,8 @@ class UserInterfaceController: NSViewController, CompassDelegate, Preferenceable
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        preferredContentSize    = NSSize(width: 704, height: 440)      // Set the size of our view
     }
     
     override func viewWillAppear() {

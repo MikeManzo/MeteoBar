@@ -11,20 +11,9 @@ target 'MeteoBar' do
     pod 'AlamofireImage'
     pod 'SwiftyJSON'
     pod 'Repeat'
-    pod 'SwiftyUserDefaults', '5.0.0-beta.5'
+    pod 'SwiftyUserDefaults', '~> 5.0'
     pod 'GRDB.swift'
     pod 'SwiftDate'
     pod 'FlexibleImage', '~> 1.9'
     pod 'ReachabilitySwift'
-    #    pod 'Ansi', :git => 'https://github.com/MikeManzo/Ansi.git'
 end
-
-=begin
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['CONFIGURATION_BUILD_DIR'] = '$PODS_CONFIGURATION_BUILD_DIR'
-        end
-    end
-end
-=end

@@ -1,18 +1,18 @@
 PODS:
-  - Alamofire (4.8.1)
-  - AlamofireImage (3.5.0):
-    - Alamofire (~> 4.8)
+  - Alamofire (4.9.1)
+  - AlamofireImage (3.6.0):
+    - Alamofire (~> 4.9)
   - FlexibleImage (1.10)
-  - GRDB.swift (4.5.0):
-    - GRDB.swift/standard (= 4.5.0)
-  - GRDB.swift/standard (4.5.0)
-  - Preferences (0.2.1)
+  - GRDB.swift (4.9.0):
+    - GRDB.swift/standard (= 4.9.0)
+  - GRDB.swift/standard (4.9.0)
+  - Preferences (1.0.1)
   - ReachabilitySwift (5.0.0)
   - Repeat (0.5.8)
-  - SwiftDate (5.1.0)
-  - SwiftyBeaver (1.6.2)
-  - SwiftyJSON (4.2.0)
-  - SwiftyUserDefaults (5.0.0-beta.5)
+  - SwiftDate (6.1.0)
+  - SwiftyBeaver (1.8.4)
+  - SwiftyJSON (5.0.0)
+  - SwiftyUserDefaults (5.0.0)
 
 DEPENDENCIES:
   - Alamofire
@@ -25,36 +25,35 @@ DEPENDENCIES:
   - SwiftDate
   - SwiftyBeaver
   - SwiftyJSON
-  - SwiftyUserDefaults (= 5.0.0-beta.5)
+  - SwiftyUserDefaults (~> 5.0)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - Alamofire
     - AlamofireImage
     - FlexibleImage
+    - GRDB.swift
     - Preferences
+    - ReachabilitySwift
+    - Repeat
     - SwiftDate
     - SwiftyBeaver
     - SwiftyJSON
-  trunk:
-    - GRDB.swift
-    - ReachabilitySwift
-    - Repeat
     - SwiftyUserDefaults
 
 SPEC CHECKSUMS:
-  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
-  AlamofireImage: 1aea346f4dda2f6c67622fa5a89fcbb80d79cc16
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   FlexibleImage: 22bf26c42f1b6299b94bc5001e6ec310c94e6786
-  GRDB.swift: f9c4cabfb4d1266685e80b1f6ea433eb61c7950c
-  Preferences: 5543bfd757a2485a310683da977d661c0ae509a9
+  GRDB.swift: 4a6aab0c6f492db0ed42c76efdd5733245516db4
+  Preferences: a5afbe0ae3e6bd886328b1960f4998e65d58f2c4
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Repeat: 8e65710d09da68f06ed79e865b091ffdcc8d0279
-  SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
-  SwiftyBeaver: 8e67ab3cd94389cbbb7a9c7cc02748d98bfee68e
-  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
-  SwiftyUserDefaults: 8880483e55be344dce2e5e2f18c70b0564ff7676
+  SwiftDate: fa2bb3962056bb44047b4b85a30044e5eae30b03
+  SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
+  SwiftyUserDefaults: 33fcb42bd1feb53a37d873feb62c82967db5f7f6
 
-PODFILE CHECKSUM: 0f8e9e757473d6eb0d3faf23e640fb90b3fbba4d
+PODFILE CHECKSUM: 03b85f1800009342e99d28546767e7a31f5e8ab1
 
 COCOAPODS: 1.8.4

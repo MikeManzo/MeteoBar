@@ -14,6 +14,15 @@ enum WeatherPanelState {
     case contracted
 }
 
+extension PreferencePane.Identifier {
+    static let interafce = Identifier("interface")
+    static let advanced = Identifier("advanced")
+    static let general = Identifier("general")
+    static let setup = Identifier("setup")
+    static let pref = Identifier("pref")
+    static let log = Identifier("log")
+}
+
 class MeteoPanelController: NSViewController {
     @IBOutlet weak var alertView: AlertView!
     @IBOutlet weak var compassView: MeteoCompassView!
@@ -34,7 +43,7 @@ class MeteoPanelController: NSViewController {
     
     /// Preferences
     lazy var preferencesView: PreferencesWindowController = {
-        return PreferencesWindowController(viewControllers: [ GeneralPreferencesController(),
+        return PreferencesWindowController(preferencePanes: [ GeneralPreferencesController(),
                                                               BridgeSetupController(),
                                                               BridgePreferencesController(),
                                                               UserInterfaceController(),
@@ -146,7 +155,7 @@ class MeteoPanelController: NSViewController {
     /// - Parameter sender: The Caller who sent the message
     ///
     @IBAction func meteoBarPreferences(_ sender: Any) {
-        preferencesView.showWindow()
+        preferencesView.show()
         guard let myView = sender as? NSView else {
             return
         }
@@ -159,8 +168,8 @@ class MeteoPanelController: NSViewController {
     ///
     @IBAction func showBridgeSetupTab(_ sender: QJHighlightButtonView) {
         DispatchQueue.main.async { [unowned self, unowned sender] in
-            self.preferencesView.showWindow()
-            self.preferencesView.selectTab(tabIndex: 1)
+//            self.preferencesView.showWindow()
+            self.preferencesView.show(preferencePane: .setup)
             sender.superview?.window?.close()
         }
     }
@@ -171,8 +180,8 @@ class MeteoPanelController: NSViewController {
     ///
     @IBAction func showBridgeConfiguration(_ sender: QJHighlightButtonView) {
         DispatchQueue.main.async { [unowned self, unowned sender]  in
-            self.preferencesView.showWindow()
-            self.preferencesView.selectTab(tabIndex: 2)
+//            self.preferencesView.showWindow()
+            self.preferencesView.show(preferencePane: .pref)
             sender.superview?.window?.close()
         }
     }
@@ -183,8 +192,8 @@ class MeteoPanelController: NSViewController {
     ///
     @IBAction func showUIConfiguration(_ sender: QJHighlightButtonView) {
         DispatchQueue.main.async { [unowned self, unowned sender] in
-            self.preferencesView.showWindow()
-            self.preferencesView.selectTab(tabIndex: 3)
+//            self.preferencesView.showWindow()
+            self.preferencesView.show(preferencePane: .interafce)
             sender.superview?.window?.close()
         }
     }

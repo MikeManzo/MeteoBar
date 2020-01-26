@@ -46,10 +46,11 @@ enum BridgeSetupControllerHUD: String, CustomStringConvertible {
     }
 }
 
-class BridgeSetupController: NSViewController, Preferenceable {
+class BridgeSetupController: NSViewController, PreferencePane {
     // MARK: - Protocol Variables
-    let toolbarItemTitle = "Bridge Setup"
+    let preferencePaneTitle = "Bridge Setup"
     let toolbarItemIcon = NSImage(named: "configurator.png")!
+    let preferencePaneIdentifier = PreferencePane.Identifier.setup
 
     // MARK: - Outlets
     @IBOutlet weak var mapView: MKMapView!
@@ -125,6 +126,8 @@ class BridgeSetupController: NSViewController, Preferenceable {
         connectButton.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "play-button.png")!.filter(filter: "CIColorInvert") : NSImage(named: "play-button.png")
         mapZoomButton.image = (theDelegate?.isVibrantMode())! ? NSImage(named: "map-zoom.png")!.filter(filter: "CIColorInvert") : NSImage(named: "map-zoom.png")
         // Take care of our black/white icons
+        
+        preferredContentSize    = NSSize(width: 919, height: 440)      // Set the size of our view
     }
     
     ///

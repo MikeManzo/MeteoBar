@@ -223,6 +223,8 @@
 		27F8901C21F2A25D00F8605E /* WeatherPlatform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPlatform.swift; sourceTree = "<group>"; };
 		27F8902021F2D24B00F8605E /* Config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Config; path = MeteoBar/Config; sourceTree = "<group>"; };
 		27FCB6FC21F4199700A90715 /* MeteoObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoObservation.swift; sourceTree = "<group>"; };
+		2B0D5EC636D69DA23E1A8015 /* Pods-MeteoBar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteoBar.debug.xcconfig"; path = "Target Support Files/Pods-MeteoBar/Pods-MeteoBar.debug.xcconfig"; sourceTree = "<group>"; };
+		6DEDE5F3A23C90AC6357C1AB /* Pods-MeteoBar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MeteoBar.release.xcconfig"; path = "Target Support Files/Pods-MeteoBar/Pods-MeteoBar.release.xcconfig"; sourceTree = "<group>"; };
 		949E236247E7C9ADBF55C395 /* Pods_MeteoBar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MeteoBar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -273,6 +275,7 @@
 				277658F521EA6063007BA05A /* MeteoBarUITests */,
 				277658D821EA6062007BA05A /* Products */,
 				4AE0CA2D802B1E020E7ED7D3 /* Frameworks */,
+				3A3FD4C41B8EE7ABC0F2892A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -478,6 +481,16 @@
 				27ACA77D21FE4A1A00E226C2 /* wind-sock.png */,
 			);
 			path = Graphics;
+			sourceTree = "<group>";
+		};
+		3A3FD4C41B8EE7ABC0F2892A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2B0D5EC636D69DA23E1A8015 /* Pods-MeteoBar.debug.xcconfig */,
+				6DEDE5F3A23C90AC6357C1AB /* Pods-MeteoBar.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		4AE0CA2D802B1E020E7ED7D3 /* Frameworks */ = {
@@ -933,6 +946,7 @@
 		};
 		277658FC21EA6063007BA05A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2B0D5EC636D69DA23E1A8015 /* Pods-MeteoBar.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MeteoBar/MeteoBar.entitlements;
@@ -958,6 +972,7 @@
 		};
 		277658FD21EA6063007BA05A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6DEDE5F3A23C90AC6357C1AB /* Pods-MeteoBar.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MeteoBar/MeteoBar.entitlements;
