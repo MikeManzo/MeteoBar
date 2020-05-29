@@ -113,8 +113,8 @@ private func newJSONEncoder() -> JSONEncoder {
     return encoder
 }
 
-// MARK: - Alamofire response handlers
-extension DataRequest {
+// MARK: - Alamofire response handlers // MRM: 05-29-2020
+/*extension DataRequest {
     fileprivate func decodableResponseSerializer<T: Decodable>() -> DataResponseSerializer<T> {
         return DataResponseSerializer { _, _, data, error in
             guard error == nil else { return .failure(error!) }
@@ -137,7 +137,7 @@ extension DataRequest {
         return responseDecodable(queue: queue, completionHandler: completionHandler)
     }
 }
-
+*/
 /// StreamReader is a helper class for reading a single line at a time
 /// Our log file is JSON formatted ... BUT ... each line is its own container
 /// So ...we need to feed the MeteoLogReader a one-line formatted string object to

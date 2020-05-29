@@ -70,7 +70,7 @@ class WeatherPlatform: Weather {
     ///   - callback:       callback to recieve the results
     ///
     static func getConditions(theBridge: Meteobridge, allParamaters: Bool = false, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time:[hh];[mm];[ss],"
@@ -115,7 +115,7 @@ class WeatherPlatform: Weather {
     ///   - callback:   callback to recieve the results
     ///
     static func getConditionsForSensor(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time:[hh];[mm];[ss],"
@@ -145,7 +145,7 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to recieve the results
     ///
     static func getAllSupportedSystemParameters(theBridge: Meteobridge, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time|[hh];[mm];[ss],"
@@ -182,7 +182,7 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to recieve the results
     ///
     static func getBridgeParameter(theBridge: Meteobridge, param: MeteobridgeSystemParameter, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time|[hh];[mm];[ss],"
@@ -211,7 +211,7 @@ class WeatherPlatform: Weather {
     }
     
     static func getBridgeParameter(theBridgeIP: String, sensor: MeteobridgeSensor, callback: @escaping (_ response: AnyObject?, _ error: Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
         var templateString = "Time|[hh];[mm];[ss],"
@@ -270,7 +270,7 @@ class WeatherPlatform: Weather {
             for bridge in bridgeConfigs {
                 if let file = Bundle.main.url(forResource: bridge, withExtension: nil, subdirectory: "/Config") {
                     
-                    Alamofire.request(file).responseJSON { jsonResponse in
+                    AF.request(file).responseJSON { jsonResponse in
                         switch jsonResponse.result {
                         case .success(let jsonModel):   // JSON Read Successful
                             let bridgeModel: JSON = JSON(jsonModel)
@@ -349,7 +349,7 @@ class WeatherPlatform: Weather {
     ///   - callback: callback to return the image to
     ///
     static func getPlatformImage(_ platform: String, handler: @escaping (NSImage?, Error?) -> Void) {
-        let alamoManager = Alamofire.SessionManager.default
+        let alamoManager = Alamofire.Session.default
         alamoManager.session.configuration.timeoutIntervalForRequest     = fireTimeOut
         alamoManager.session.configuration.timeoutIntervalForResource    = fireTimeOut
 
@@ -361,7 +361,8 @@ class WeatherPlatform: Weather {
         let imgURL = "http://\(ipAddress)\(platformImages[platform]!)"
         
         alamoManager.request(imgURL).responseImage { response in
-            guard let image = response.result.value else {
+//            guard let image = response.result.value else {    // MRM: 05-29-2020
+                guard let image = response.value else {
                 handler(nil, WeatherPlatformError.platformImageError)
                 return
             }
@@ -396,7 +397,7 @@ class WeatherPlatform: Weather {
         var countyZone: String?
         var radar: String?
         
-        Alamofire.request(stationEndpoint!).responseJSON { response in
+        AF.request(stationEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
                 let data: JSON = JSON(retJSON)
@@ -454,7 +455,7 @@ class WeatherPlatform: Weather {
         var forecast: String?
         var city: String?
         
-        Alamofire.request(stationEndpoint!).responseJSON { response in
+        AF.request(stationEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
                 let data: JSON = JSON(retJSON)
@@ -494,7 +495,7 @@ class WeatherPlatform: Weather {
         var forecastZonePoly: MKMeteoPolyline?
         var countyZonePoly: MKMeteoPolyline?
 
-        Alamofire.request(forecastEndpoint!).responseJSON { response in
+        AF.request(forecastEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
                 let retData: JSON = JSON(retJSON)
@@ -507,7 +508,7 @@ class WeatherPlatform: Weather {
                 }
                 forecastZonePoly = MKMeteoPolyline(coordinates: forecastPoints)
                 
-                Alamofire.request(zoneEndpoint!).responseJSON { response in
+                AF.request(zoneEndpoint!).responseJSON { response in
                     switch response.result {
                     case .success(let retJSON):
                         let retData: JSON = JSON(retJSON)
@@ -555,7 +556,7 @@ class WeatherPlatform: Weather {
         let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/\(usModel.forecastZoneID)")
 //        let stationEndpoint = URL(string: "\(nwsEndPoint)/alerts/active/zone/NEC155")   ///  TESTING!!!!!!
 
-        Alamofire.request(stationEndpoint!).responseJSON { response in
+        AF.request(stationEndpoint!).responseJSON { response in
             switch response.result {
             case .success(let retJSON):
                 let data: JSON = JSON(retJSON)
